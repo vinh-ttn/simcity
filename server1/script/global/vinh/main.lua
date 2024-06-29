@@ -15,4 +15,6 @@ function add_npc_vinh()
 		{103,78,1608,3235,"\\script\\global\\vinh\\simcity\\controllers\\keoxe.lua","V« Kþ"}, 
 	})
 
+
+
 end

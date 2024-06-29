@@ -217,24 +217,30 @@ SimCityNPCInfo = {
 	nhanvat = {
 		socap = {
 
-			{1480, 1488},-- 4tr6
-
+			
 			{1786, 1795}, -- 100k
-			{1765, 1774},-- 5tr
+			
 		},
 		trungcap = {
+			{1480, 1488},-- 4tr6
+			{1765, 1774},-- 5tr
+			
+
+
+		},
+		caocap = {
+
 			{1193, 1202}, --12tr
 			{1239, 1248}, --12tr
 			{1465, 1475}, --10tr
 			{1674, 1683}, --12tr
 
 		},
-		caocap = {
+		sieunhan = {
+			
 			{1355, 1368}, --20tr
 			{739, 748}, --16tr
 			{1775, 1779}, --25tr
-		},
-		sieunhan = {
 			{1849, 1852},
 			{1869, 1875},
 			{1750, 1754}, -- 99tr
@@ -353,4 +359,15 @@ function SimCityNPCInfo:getSpeed(id)
 		return self.ALLNPCs_INFO["n"..id].runspeed
 	end
 	return 0
+end
+
+function SimCityNPCInfo:getHPByCap(cap)
+
+	if cap == 0 then
+		return random(50000,200000)
+	end
+	if cap == 1 then
+		return random(200000,1000000)
+	end
+	return random(1000000,2000000)
 end

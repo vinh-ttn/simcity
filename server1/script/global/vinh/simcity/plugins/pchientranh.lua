@@ -108,7 +108,7 @@ end
 
 
 
-function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau)
+function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 
 	local name = "Kim"
 	local rank = 1
@@ -167,6 +167,8 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau)
 
 		ngoaitrang = nt or 0,
 		hardsetName = hardsetName,
+
+		cap = cap or nil,
 
 		children = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil   -- force distance check for child
@@ -412,7 +414,7 @@ function SimCityChienTranh:nv_tudo(cap)
 		local id = pool[random(1,getn(pool))]
 		local myPath = self:genWalkPath(forCamp) 
  
-		local id = self:taoNV(id, forCamp, self.nW, myPath, 1)
+		local id = self:taoNV(id, forCamp, self.nW, myPath, 1, nil, cap)
 		if id > 0 then
 			if forCamp == 1 then
 				forCamp = 2
@@ -471,7 +473,7 @@ function SimCityChienTranh:nv_tudo_xe(cap)
 		end
 
  
-		self:taoNV(pid, forCamp, self.nW, myPath, 1, children) 
+		self:taoNV(pid, forCamp, self.nW, myPath, 1, children, cap) 
 
 		if i > 5 then
 			forCamp = 2

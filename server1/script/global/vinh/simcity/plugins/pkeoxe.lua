@@ -117,7 +117,9 @@ function SimCityKeoXe:removeAll()
 			DelNpcSafe(tbNpc.finalIndex)
 			GroupFighter:DelNpcSafe_children(tbNpc.nNpcListIndex)
 			GroupFighter.tbNpcList[key] = nil
-			GroupFighter.npcByWorld["w"..tbNpc.nMapId][key] = nil
+			if (GroupFighter.npcByWorld["w"..tbNpc.nMapId]) then
+				GroupFighter.npcByWorld["w"..tbNpc.nMapId][key] = nil
+			end
 		end
 	end
 end
@@ -200,17 +202,36 @@ end
 
 
 function SimCityKeoXe:mainMenu()
-
  
  	local tbSay = {"K–o Xe"}
 
 	tinsert(tbSay, "Tπo nh„m anh hÔng/#SimCityKeoXe:goiAnhHungThiepNgoaiTrang()")
  	tinsert(tbSay, "Tπo nh„m qu∏i nh©n/#SimCityKeoXe:goiAnhHungThiep()")
 	--tinsert(tbSay, "Thi’t lÀp/#SimCityKeoXe:caidat()")	
+	tinsert(tbSay, "Tπo nh„m luy÷n c´ng/#SimCityKeoXe:luyencong()")
 	tinsert(tbSay, "Gi∂i t∏n/#SimCityKeoXe:removeAll()") 	
     tinsert(tbSay, "K’t thÛc ÆËi thoπi./no")
     CreateTaskSay(tbSay)  
 
 	return 1
+end
+
+
+function SimCityKeoXe:luyencong()
+	local tab_Content = {
+		"Qu∏i c p 10/#GroupFighter:NewLuyenCong(10)", --
+		"Qu∏i c p 20/#GroupFighter:NewLuyenCong(20)",
+		"Qu∏i c p 30/#GroupFighter:NewLuyenCong(30)",
+		"Qu∏i c p 40/#GroupFighter:NewLuyenCong(40)",
+		"Qu∏i c p 50/#GroupFighter:NewLuyenCong(50)",
+		"Qu∏i c p 60/#GroupFighter:NewLuyenCong(60)",
+		"Qu∏i c p 70/#GroupFighter:NewLuyenCong(70)",
+		"Qu∏i c p 80/#GroupFighter:NewLuyenCong(80)",
+		"Qu∏i c p 90/#GroupFighter:NewLuyenCong(90)",
+		"Qu∏i c p 100/#GroupFighter:NewLuyenCong(100)",
+		"Qu∏i c p 110/#GroupFighter:NewLuyenCong(110)",
+		"Tho∏t/no",
+	}
+	Say("Ch‰n nh„m qu∏i", getn(tab_Content), tab_Content);
 end
 

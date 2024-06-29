@@ -22,4 +22,4 @@ tg_nghingoi = {	-- nghi ngoi, khong danh nhau lai trong vong thoi gian nay
 }
 
 
-tongkim_tudongThemNV = 1
+tongkim_tudongThemNV = 0

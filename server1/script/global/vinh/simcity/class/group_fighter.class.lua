@@ -302,6 +302,14 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 				end
 				
 
+				-- Set NPC life
+				if tbNpc.cap and tbNpc.cap < 2 and NPCINFO_SetNpcCurrentLife then
+
+					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
+					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
+					NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+				end
 				return nNpcListIndex
 			end
 		end
@@ -337,6 +345,7 @@ function GroupFighter:_respawn(nListId, isAllDead, reason)
 		nX = tbNpc.walkPath[tbNpc.resetPosWhenRevive][1]
 		nY = tbNpc.walkPath[tbNpc.resetPosWhenRevive][2]
 		tbNpc.nPosId = tbNpc.resetPosWhenRevive
+		self:HardResetPos(tbNpc)
 	elseif (isAllDead == 1 and tbNpc.lastPos ~= nil) then
 		nX = tbNpc.lastPos.nX32
 		nY = tbNpc.lastPos.nY32
@@ -402,17 +411,19 @@ function GroupFighter:_getNpcAroundNpcList(nNpcIndex, radius)
 		local nW = SubWorldIdx2ID(nW32)
 
 		-- Get info for npc in this world
-		for key, nListId in self.npcByWorld["w"..nW] do
-			if nListId ~= myListId then 
-	    		local tbNpc = self.tbNpcList["n"..nListId]
-				if tbNpc then
-					if (tbNpc.isDead == 0) then
-						local oX32, oY32 = GetNpcPos(tbNpc.finalIndex)
-						local oX = oX32/32
-						local oY = oY32/32
-						if GetDistanceRadius(oX,oY,areaX,areaY) < radius then
-							tinsert(allNpcs, tbNpc.finalIndex)
-							nCount = nCount + 1
+		if self.npcByWorld["w"..nW] then
+			for key, nListId in self.npcByWorld["w"..nW] do
+				if nListId ~= myListId then 
+		    		local tbNpc = self.tbNpcList["n"..nListId]
+					if tbNpc then
+						if (tbNpc.isDead == 0) then
+							local oX32, oY32 = GetNpcPos(tbNpc.finalIndex)
+							local oX = oX32/32
+							local oY = oY32/32
+							if GetDistanceRadius(oX,oY,areaX,areaY) < radius then
+								tinsert(allNpcs, tbNpc.finalIndex)
+								nCount = nCount + 1
+							end
 						end
 					end
 				end
@@ -667,7 +678,7 @@ function GroupFighter:_debug(msg)
 end
 
 
-function GroupFighter:_generateWalkPath(tbNpc)
+function GroupFighter:_generateWalkPath(tbNpc, hasJustBeenFlipped)
 
 	-- Generate walkpath for myself
 	-- & Repeat for children
@@ -693,9 +704,20 @@ function GroupFighter:_generateWalkPath(tbNpc)
 			
 			-- RANDOM walk for everyone?
 			if tbNpc.walkMode == "random" or tbNpc.walkMode == "keoxe" then
-				tinsert(tbNpc.walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+
+				if hasJustBeenFlipped == 0 then
+					tinsert(tbNpc.walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+					
+				else
+					tinsert(tbNpc.walkPath, self:_randomRange(point, 0))
+				end
 				for j=1,childrenSize do
-					tinsert(tbNpc.children[j].walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+
+					if hasJustBeenFlipped == 0 then
+						tinsert(tbNpc.children[j].walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+					else
+						tinsert(tbNpc.children[j].walkPath, self:_randomRange(point, 0))
+					end
 				end
 
 			-- FORMATION walk?
@@ -726,7 +748,11 @@ function GroupFighter:_generateWalkPath(tbNpc)
 
 		-- No children = random path for myself
 		else
-			tinsert(tbNpc.walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+			if hasJustBeenFlipped == 0 then
+				tinsert(tbNpc.walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+			else
+				tinsert(tbNpc.walkPath, self:_randomRange(point, 0))
+			end
 		end
 
 	end
@@ -829,7 +855,7 @@ function GroupFighter:New(tbNpc)
 	-- Setup walk paths
 	if tbNpc.playerID == 0 then
 		local walkIndex = random(1,getn(walkAreas))
-		tbNpc.tbPos = tbNpc.tbPos or walkAreas[walkIndex]
+		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
 		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
 			tbNpc.tbPos = self:_makeDiagonal(tbNpc.tbPos)
 		end
@@ -851,15 +877,87 @@ function GroupFighter:New(tbNpc)
 	end
 
 	-- Calculate walk path for main + children
-	self:_generateWalkPath(tbNpc)
+	self:_generateWalkPath(tbNpc, 0)
 
 	-- Add to store and create everyone on screen 
 	return self:_addNpcGo(tbNpc, 1)
 
 end
 
+function GroupFighter:HardResetPos(tbNpc)
+
+	local result = {}
+	local nW = tbNpc.nMapId
+	local worldInfo = {}
+	
+	local walkAreas = {}
+
+	local id = tbNpc.nNpcId
+	tbNpc.playerID = tbNpc.playerID or 0
+
+	if tbNpc.playerID > 0 then
+		local pW, pX, pY = CallPlayerFunction(tbNpc.playerID, GetWorldPos)
+		worldInfo.showName = 1
+		tbNpc.tbPos = {
+			{pX, pY}
+		}
+		tbNpc.nPosId = 1
+		walkAreas =  {{
+			{pX, pY}
+		}}
+	else
+		worldInfo = SimCityWorld:Get(nW)
+		walkAreas = worldInfo.walkAreas		
+	end
+	
+
+	if walkAreas == nil then
+		return 0
+	end
+
+	-- No path to walk?
+	if getn(walkAreas) < 1 then 
+		return 0
+	end
+
+	--Not a valid char ?
+	if self:_isValid(id) == 0 then
+		return 0
+	end
+ 
+
+
+	-- Init stats 
+	tbNpc.isSpinning = 0
+	tbNpc.lastOffSetAngle = 0  
+
+	-- Setup walk paths
+	if tbNpc.playerID == 0 then
+		local walkIndex = random(1,getn(walkAreas))
+		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
+		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
+			tbNpc.tbPos = self:_makeDiagonal(tbNpc.tbPos)
+		end
+	else
+		
+	end
+
+	-- Startup position
+	tbNpc.hardsetPos = tbNpc.hardsetPos or random(1, getn(tbNpc.tbPos))
+ 
+
+	-- Calculate walk path for main + children
+	self:_generateWalkPath(tbNpc, 0)
+
+	-- Add to store and create everyone on screen 
+	return tbNpc
+
+end
  
 function GroupFighter:_randomRange(point, walkVar)
+	if walkVar == 0 then
+		return {point[1], point[2]}
+	end
 	return {point[1] +random(-walkVar,walkVar), point[2] +random(-walkVar,walkVar)}
 end
 
@@ -1085,6 +1183,13 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 					self:_randomNgoaiTrang(child, nNpcIndex)
 				end
 
+				if tbNpc.cap and tbNpc.cap < 2 and NPCINFO_SetNpcCurrentLife then
+					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
+					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
+					NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+				end
+
 				-- Store it
 				child.finalIndex = nNpcIndex
 				child.isDead = 0
@@ -1222,6 +1327,11 @@ end
 
 function GroupFighter:DelNpcSafe_children(nListId)
 	local tbNpc = self.tbNpcList["n"..nListId]
+
+	if not tbNpc then 
+		return 1
+	end
+
 	if not tbNpc.children then 
 		return 1
 	end
@@ -1300,21 +1410,21 @@ function GroupFighter:ChildrenDead(childrenIndex, playerAttacker)
 
 		if tbNpc.tongkim == 1 then
 			SimCityTongKim:OnDeath(childrenIndex, child.rank or 1)
-		else
+		--else
 
-			local oPlayerIndex = PlayerIndex
-			if playerAttacker > 0 then			
+		--	local oPlayerIndex = PlayerIndex
+		--	if playerAttacker > 0 then			
 
-				if oPlayerIndex ~= playerAttacker then
-					PlayerIndex = playerAttacker
-				end
+		--		if oPlayerIndex ~= playerAttacker then
+		--			PlayerIndex = playerAttacker
+		--		end
 
-				tbAwardTemplet:GiveAwardByList(tbAwardgive, "KillBossExp")
-				local nseries = NPCINFO_GetSeries(childrenIndex)
-				ITEM_DropRateItem(childrenIndex, 8,"\\settings\\droprate\\npcdroprate90.ini", 0, 10, nseries);
+		--		tbAwardTemplet:GiveAwardByList(tbAwardgive, "KillBossExp")
+		--		local nseries = NPCINFO_GetSeries(childrenIndex)
+		--		ITEM_DropRateItem(childrenIndex, 8,"\\settings\\droprate\\npcdroprate90.ini", 0, 10, nseries);
 
-				PlayerIndex = oPlayerIndex
-			end
+		--		PlayerIndex = oPlayerIndex
+		--	end
 		end
 
 		self:_check_full_death(nListId)
@@ -1340,17 +1450,18 @@ function GroupFighter:OnNpcDeath(nNpcIndex, playerAttacker)
 		if tbNpc.tongkim == 1 then
 			SimCityTongKim:OnDeath(nNpcIndex, tbNpc.rank or 1)
 		else
-			if playerAttacker > 0 then
+			--if playerAttacker > 0 then
 
-				local oPlayerIndex = PlayerIndex
-				if oPlayerIndex ~= playerAttacker then
-					PlayerIndex = playerAttacker
-				end
-				tbAwardTemplet:GiveAwardByList(tbAwardgive, "KillBossExp")
-				local nseries = NPCINFO_GetSeries(nNpcIndex)
-				ITEM_DropRateItem(nNpcIndex, 8,"\\settings\\droprate\\npcdroprate90.ini", 0, 10, nseries)
-				PlayerIndex = oPlayerIndex
-			end
+			--	local oPlayerIndex = PlayerIndex
+			--	if oPlayerIndex ~= playerAttacker then
+			--		PlayerIndex = playerAttacker
+			--	end
+			--	CallPlayerFunction(1, Msg2Player, "NormalDeath")
+			--	tbAwardTemplet:GiveAwardByList(tbAwardgive, "KillBossExp")
+			--	local nseries = NPCINFO_GetSeries(nNpcIndex)
+			--	ITEM_DropRateItem(nNpcIndex, 8,"\\settings\\droprate\\npcdroprate90.ini", 0, 10, nseries)
+			--	PlayerIndex = oPlayerIndex
+			--end
 		end
 
 		self:_check_full_death(nListId)
@@ -1695,7 +1806,7 @@ function GroupFighter:_doParentTick(nListId)
 						nNextPosId = 1
 						tbNpc.nPosId = nNextPosId
 
-						self:_generateWalkPath(tbNpc)
+						self:_generateWalkPath(tbNpc, 1)
 
 					else
 						tbNpc.nPosId = nNextPosId	
@@ -1728,12 +1839,12 @@ function GroupFighter:_doParentTick(nListId)
 						end
 
 						tbNpc.tbPos = newFlipArr
-						self:_generateWalkPath(tbNpc)
+						self:_generateWalkPath(tbNpc, 1)
 
 						nNextPosId = 2
 						tbNpc.nPosId = nNextPosId
 
-						self:_generateWalkPath(tbNpc)
+						self:_generateWalkPath(tbNpc, 1)
 
 					else
 						tbNpc.nPosId = nNextPosId	
@@ -1786,7 +1897,9 @@ function GroupFighter:_doParentTick(nListId)
 			needRespawn = 1
 
 			-- Remove the list from this world
-			self.npcByWorld["w"..tbNpc.nMapId]["n"..tbNpc.nNpcListIndex] = nil
+			if (self.npcByWorld["w"..tbNpc.nMapId]) then
+				self.npcByWorld["w"..tbNpc.nMapId]["n"..tbNpc.nNpcListIndex] = nil
+			end
 
 		else
 
@@ -1803,7 +1916,7 @@ function GroupFighter:_doParentTick(nListId)
 				{pX, pY}
 			}
 			tbNpc.nPosId = 1
-			self:_generateWalkPath(tbNpc)
+			self:_generateWalkPath(tbNpc, 0)
 			self:_respawn(tbNpc.nNpcListIndex, 1, "keo xe qua map khac")
 			return 1
 		end
@@ -1843,10 +1956,18 @@ function GroupFighter:ThongBaoBXH(nW)
 	for i,tbNpc in self.tbNpcList do
 		if tbNpc.nMapId == nW then 
 			tinsert(allPlayers, {
-				i, tbNpc.fightingScore
+				i, tbNpc.fightingScore, "npc"
 			})
 		end
 	end 
+
+	if (SimCityTongKim.playerInTK and SimCityTongKim.playerInTK[nW]) then
+		for pId,data in SimCityTongKim.playerInTK[nW] do
+			tinsert(allPlayers, {
+				pId, data.score, "player"
+			})
+		end
+	end
 
 	if getn(allPlayers) > 1 then
 		local maxIndex = getn(allPlayers)
@@ -1860,33 +1981,109 @@ function GroupFighter:ThongBaoBXH(nW)
 		Msg2Map(nW, "<color=yellow>=================================<color>")
 
 		for j = 1, maxIndex do	
-			local tbNpc = self.tbNpcList[allPlayers[j][1]]
-			if tbNpc then
-				local phe = ""
 
-				if (tbNpc.tongkim == 1) then
-					if (tbNpc.tongkim_name) then
-						phe = tbNpc.tongkim_name
-					else
-						phe = "Kim"			
-						if tbNpc.camp == 1 then
-							phe = "Tèng"
+			local info = allPlayers[j]
+
+			if info[3] == "npc" then
+
+				local tbNpc = self.tbNpcList[info[1]]
+				if tbNpc then
+					local phe = ""
+
+					if (tbNpc.tongkim == 1) then
+						if (tbNpc.tongkim_name) then
+							phe = tbNpc.tongkim_name
+						else
+							phe = "Kim"			
+							if tbNpc.camp == 1 then
+								phe = "Tèng"
+							end
 						end
 					end
-				end
 
-				if phe == "Kim" then
-					phe = "K"
-				else
-					phe = "T"
-				end
+					if phe == "Kim" then
+						phe = "K"
+					else
+						phe = "T"
+					end
 
-				local msg = "<color=white>"..j.." <color=yellow>["..phe.."] "..SimCityTongKim.RANKS[tbNpc.rank].." <color>"..(tbNpc.hardsetName or SimCityNPCInfo:getName(tbNpc.nNpcId)).."<color=white> ("..allPlayers[j][2]..")<color>"
+					local msg = "<color=white>"..j.." <color=yellow>["..phe.."] "..SimCityTongKim.RANKS[tbNpc.rank].." <color>"..(tbNpc.hardsetName or SimCityNPCInfo:getName(tbNpc.nNpcId)).."<color=white> ("..allPlayers[j][2]..")<color>"
+					Msg2Map(nW, msg)
+				end
+			else
+
+				local tbPlayer = SimCityTongKim.playerInTK[nW][info[1]]
+				local msg = "<color=white>"..j.." <color=red>["..(tbPlayer.phe).."] "..(tbPlayer.rank).." <color>"..(tbPlayer.name).."<color=white> ("..(tbPlayer.score)..")<color>"
 				Msg2Map(nW, msg)
+
 			end
+
+
+
 		end
 		Msg2Map(nW, "<color=yellow>=================================<color>")			
 	end 
+
+
+end
+
+
+
+function GroupFighter:NewLuyenCong(level)
+	local tbNpc = {}
+	local pW, pX, pY = GetWorldPos()
+
+	tbNpc.nMapId = pW
+	tbNpc.playerID = PlayerIndex
+	tbNpc.children = {}
+ 
+	local nMapIndex = SubWorldID2Idx(pW)
+	if nMapIndex >= 0 then
+		j = 0
+		while j < 20 do 
+
+			local nNpcIndex
+			
+
+			local tX = pX + random(-5,5)
+			local tY = pY + random(-5,5)
+
+			local id = random(1,200)
+
+			local bossType = 0
+
+			if (j == 10) then
+				bossType = 2
+			end
+
+			local nNpcIndex = AddNpcEx(id, level + 5, random(0,4), nMapIndex,tX * 32, tY * 32, 0, "" , bossType)
+
+			if nNpcIndex > 0 then
+				local kind = GetNpcKind(nNpcIndex)
+				if kind ~= 0 then 
+					DelNpcSafe(nNpcIndex)
+				else
+					j = j + 1
+					tbNpc.finalIndex = nNpcIndex					
+					local nNpcListIndex = self.counter + 0
+
+					-- Save to DB
+					self.counter = self.counter + 1
+					tbNpc.nNpcListIndex = nNpcListIndex
+					self.tbNpcList["n"..tbNpc.nNpcListIndex] = tbNpc
+
+
+					if (not self.npcByWorld["w"..tbNpc.nMapId]) then
+						self.npcByWorld["w"..tbNpc.nMapId] = {}
+					end
+					self.npcByWorld["w"..tbNpc.nMapId]["n"..tbNpc.nNpcListIndex] = tbNpc.nNpcListIndex
+					
+					
+				end
+			end
+		end
+	end
+	return 0
 
 
 end

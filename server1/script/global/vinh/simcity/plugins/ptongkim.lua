@@ -2,7 +2,11 @@ IncludeLib("BATTLE")
 Include("\\script\\battles\\battlehead.lua")
 Include("\\script\\battles\\marshal\\head.lua")
 
-SimCityTongKim = {}
+SimCityTongKim = {
+
+	playerInTK = {}
+
+}
 
 
 SimCityTongKim.RANKS={"Binh SÜ", "HiÖu óy", "Thèng LÜnh", "Phã T­íng", "§¹i T­íng" , "Nguyªn So¸i"}
@@ -153,8 +157,21 @@ function SimCityTongKim:OnDeath( nNpcIndex , currank)
 	Msg2Player("<color=pink> Chóc mõng! B¹n ®· h¹ ®­îc: "..DeathName..", Tæng PK lµ "..BT_GetData(PL_KILLPLAYER))
 	Msg2MSAll(MISSIONID, str);
 
+	
+	local nW, nX, nY = CallPlayerFunction(PlayerIndex, GetWorldPos)
+	if not self.playerInTK[nW] then
+		self.playerInTK[nW] = {}
+	end
+	self.playerInTK[nW][pId] = {
+		phe = "T",
+		rank = launrankname,
+		score = BT_GetData(PL_TOTALPOINT),
+		name = LaunName
+	}
 
 end;
+
+
 
 function SimCityTongKim:dropItem( nNpcIndex, nNpcRank, nBelongPlayerIdx )
 	local nItemCount = getn( self.ITEM_DROPRATE_TABLE );

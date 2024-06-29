@@ -104,7 +104,7 @@ SimCityNgoaiTrang.used = {}
 function SimCityNgoaiTrang:doRandom() 
 	local tbNpc = {}
 	tbNpc.nSettingsIdx = random(-2, -1)
-	tbNpc.nNewHelmType = self:getData(tbNpc.nSettingsIdx, "non") or random(1,53)
+	tbNpc.nNewHelmType = self:getData(tbNpc.nSettingsIdx, "non") or random(1,50)
 	tbNpc.nNewArmorType = self:getData(tbNpc.nSettingsIdx, "ao") or random(1,53)
 	tbNpc.nNewWeaponType =self:getData(tbNpc.nSettingsIdx, "vukhi") or random(1,50)
 	tbNpc.nNewHorseType = self:getData(tbNpc.nSettingsIdx, "ngua") or random(1,20)	 

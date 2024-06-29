@@ -54,6 +54,14 @@ function arrFlip(arr)
     return newFlipArr
 end
 
+function arrCopy(arr)
+    local newFlipArr = {}
+    local N = getn(arr)
+    for i=1,N do         
+        tinsert(newFlipArr, arr[i])
+    end
+    return newFlipArr
+end
 
 function spawnN(arr, linh, N, name) 
     N = N or 16
