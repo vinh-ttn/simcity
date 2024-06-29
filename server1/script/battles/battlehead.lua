@@ -16,7 +16,7 @@ Include("\\script\\event\\jiefang_jieri\\200904\\qianqiu_yinglie\\head.lua");
 
 Include("\\script\\battles\\doubleexp.lua")
 FRAME2TIME = 18;	--18帧游戏时间相当于1秒钟
-BAOMING_TIME = 10		-- 10分钟报名时间	
+BAOMING_TIME = 1		-- 10分钟报名时间	
 FIGHTING_TIME = 60		-- 60分钟比赛时间
 ANNOUNCE_TIME = 20		-- 20秒公布一下战况
 
@@ -803,8 +803,8 @@ function bt_assignrank(camp)--该功能已无效
 end
 --------------------------计算积分系数，重置积分---------------------------------------
 function ResetBonus()
-	CAMP1CUN = GetMSPlayerCount(MISSIONID, 1)
-	CAMP2CUN = GetMSPlayerCount(MISSIONID, 2)
+	CAMP1CUN = GetMSPlayerCount(MISSIONID, 1) + 1
+	CAMP2CUN = GetMSPlayerCount(MISSIONID, 2) + 1
 	AVRCUN = (CAMP1CUN + CAMP2CUN)/2
 	
 	if (AVRCUN == 0) then
