@@ -1,6 +1,10 @@
-# SimCity 5.0
+# SimCity Mod for JX1 Linux
 
 —vinhsmoke—
+
+**Chú ý:** Game 1ClickVMFull (xem [post của hội quán](https://www.facebook.com/groups/volamquan/permalink/1389335278442327/) hoặc [Hướng Dẫn - Võ Lâm 1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)) đã có sẵn SimCity 5.0, không phải cài theo hướng dẫn của tài liệu này. Nhưng nên liên tục update qua app để có phiên bản Simcity mới nhất.
+
+
 
 ## A. Giới thiệu tính năng
 
