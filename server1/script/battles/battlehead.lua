@@ -7,14 +7,14 @@ Include("\\script\\missions\\boss\\bigboss.lua")	-- big boss
 Include("\\script\\battles\\lang.lua")
 Include("\\script\\lib\\common.lua");
 Include("\\script\\battles\\battle_rank_award.lua")
-
-
-
+Include("\\script\\global\\pgaming\\configserver\\configall.lua")
 Include("\\script\\bonusvlmc\\head.lua");
 Include("\\script\\misc\\vngpromotion\\ipbonus\\ipbonus_2_head.lua")
 Include("\\script\\event\\jiefang_jieri\\200904\\qianqiu_yinglie\\head.lua");
 
 Include("\\script\\battles\\doubleexp.lua")
+
+
 FRAME2TIME = 18;	--18Ö¡ÓÎÏ·Ê±¼äÏàµ±ÓÚ1ÃëÖÓ
 BAOMING_TIME = 1		-- 10·ÖÖÓ±¨ÃûÊ±¼ä	
 FIGHTING_TIME = 60		-- 60·ÖÖÓ±ÈÈüÊ±¼ä
@@ -25,7 +25,8 @@ TIMER_2 = (FIGHTING_TIME + BAOMING_TIME) * 60  * FRAME2TIME; -- ½»Õ½Ê±¼äÎª1Ğ¡Ê±
 RUNGAME_TIME = BAOMING_TIME * 60 * FRAME2TIME / TIMER_1; --±¨Ãû10·ÖÖÓÖ®ºó£¬×Ô¶¯½øÈëÕ½¶·½×¶Î
 GO_TIME =  BAOMING_TIME * 60 * FRAME2TIME  / TIMER_1; -- ±¨ÃûÊ±¼äÎª10·ÖÖÓ
 
-SONGJIN_SIGNUP_FEES = 3000  -- ±¨Ãû·Ñ
+-- SONGJIN_SIGNUP_FEES = 200000  -- ±¨Ãû·Ñ
+SONGJIN_SIGNUP_FEES = 20000  -- ±¨Ãû·Ñ
 
 JUNGONGPAI = 1773 --ËÎ½ğ¾ü¹¦ÅÆID 6£¬1£¬1477
 EXPIRED_TIME = 24*60  --ËÎ½ğ¾ü¹¦ÅÆ¹ıÆÚ
@@ -312,9 +313,12 @@ function bt_camp_getbonus(camp, bonus,strmsg, percent)
 		idx, pidx = GetNextPlayer(MISSIONID, idx, camp);
  		if (pidx > 0) then
    			PlayerIndex = pidx;
+			
 			local n_bonus = bt_addtotalpoint(bonus)
-	   		Msg2Player(strmsg..n_bonus.."<color> ®iÓm tİch lòy) ")
-			Say("§ît nµy b¹n nhËn ®­îc <color=yellow> "..n_bonus.."<color> ®iÓm tİch lòy", 0)
+
+			Msg2Player("KÕt thóc Tèng kim nhËn ®­îc <color=yellow>"..n_bonus.."<color> ®iÓm tİch lòy) ")
+			Say("§ît nµy b¹n nhËn ®­îc <color=yellow> "..n_bonus.."<color> ®iÓm tİch lòy", 0)			
+			
 		end
  		if (idx <= 0) then 
 			break
@@ -585,7 +589,7 @@ function sf_callnpc(usedtime, totaltime)
 				npcfile = GetIniFileData(mapfile, "Area_"..s_area, tbNPCPOS[random(2)]);
 				bt_addrandfightnpc(npcfile, GetMissionV(MS_TRANK1_S + i - 1), GetMissionV(MS_RANK1LVL_S + i - 1), 1, nowadd, tabFILE_NPCDEATH[i], 1)
 				if (i == 6) then
-					Msg2MSAll(MISSIONID, "Phong V©n LuËn KiÕm b¸o c¸o: Nguyªn So¸i qu©n Tèng ®· xuÊt hiÖn!");
+					Msg2MSAll(MISSIONID, "Tèng Kim b¸o c¸o: Nguyªn So¸i qu©n Tèng ®· xuÊt hiÖn!");
 				end
 			end
 		end
@@ -601,7 +605,7 @@ function sf_callnpc(usedtime, totaltime)
 				npcfile = GetIniFileData(mapfile, "Area_"..j_area, tbNPCPOS[random(2)]);
 				bt_addrandfightnpc(npcfile, GetMissionV(MS_TRANK1_J + i - 1), GetMissionV(MS_RANK1LVL_J + i - 1), 2, nowadd, tabFILE_NPCDEATH[i], 1)
 				if (i == 6) then
-					Msg2MSAll(MISSIONID, "Phong V©n LuËn KiÕm b¸o c¸o: Nguyªn So¸i qu©n Kim ®· xuÊt hiÖn!");
+					Msg2MSAll(MISSIONID, "Tèng Kim b¸o c¸o: Nguyªn So¸i qu©n Kim ®· xuÊt hiÖn!");
 				end
 			end
 		end
@@ -741,7 +745,6 @@ function bt_addtotalpoint(point)
 			szName, nGameLevel, nSubWorldID, nAddPoint, nTotalPoint, nBattlePoint, nKillPlayer));
 	end
 	
-
 	BT_SetData(PL_TOTALPOINT, BT_GetData(PL_TOTALPOINT) + point)
 	BT_SetData(PL_BATTLEPOINT, BT_GetData(PL_BATTLEPOINT) + point)
 	
@@ -811,10 +814,17 @@ function ResetBonus()
 		bonuscff1 = 1
 		bonuscff2 = 1
 	else
-		bonuscff1 = 1-(CAMP1CUN-AVRCUN)/AVRCUN
-		bonuscff2 = 1-(CAMP2CUN-AVRCUN)/AVRCUN
+		if KhongCoNguoiDanhLenDiemTongKim == 1 and (CAMP1CUN==0 and CAMP2CUN~=0) then
+			bonuscff1 = 1
+			bonuscff2 = 1
+		elseif KhongCoNguoiDanhLenDiemTongKim == 1 and (CAMP1CUN~=0 and CAMP2CUN==0) then
+			bonuscff1 = 1
+			bonuscff2 = 1
+		else
+			bonuscff1 = 1-(CAMP1CUN-AVRCUN)/AVRCUN
+			bonuscff2 = 1-(CAMP2CUN-AVRCUN)/AVRCUN
+		end
 	end
-	
 	-- ¹úÕ½ËÎ½ğºöÂÔË«·½Æ½ºâ
 	if BT_GetGameData(GAME_BATTLEID) == 2 then
 		bonuscff1 = 1
@@ -926,18 +936,18 @@ end
 
 
 function bt_exchangeexp(level, mark)
-		if (level < 40) then
-			return 0
-		end
-		local base_exp = (( 700 + floor(( level - 40 ) / 5 ) * 100 ) * 60 * 7 / 3000 );	-- 1¸ö»ı·ÖµãµÄ»ù´¡¾­ÑéÖµ
-		local bonus = floor( mark * base_exp )
+		-- if (level < 40) then
+			-- return 0
+		-- end
+		-- local base_exp = (( 700 + floor(( level - 40 ) / 5 ) * 100 ) * 60 * 7 / 3000 );	-- 1¸ö»ı·ÖµãµÄ»ù´¡¾­ÑéÖµ
+		-- local bonus = floor( mark * base_exp )
+
+		-- if (level >= 120) then
+			-- bonus = floor( bonus * 2.5 * 2 )
+		-- end
 		
-		-- ËÎ½ğµ÷Õû By ²¯ÁÑÆßÏÒ 09/07/27
-		if (level >= 120) then
-			bonus = floor( bonus * 2.5 * 2 )
-		end
-		
-		return bonus
+		-- return bonus
+		return 1
 end
 -----½«Ãë´«»»³É·ÖÓëÃë£¬±ÈÈç62s = 1m2s
 function GetMinAndSec(nSec)
@@ -1000,11 +1010,14 @@ end
 
 function bt_getgn_awardtimes()
 	local nWeekDay = tonumber(GetLocalDate("%w"))
-	if nWeekDay == 2 or nWeekDay == 4 or nWeekDay == 6 then
+	if nWeekDay == 0 or nWeekDay == 1 or nWeekDay == 2 or nWeekDay == 3 or nWeekDay == 4 or nWeekDay == 5 or nWeekDay == 6  then
 		local nHour = tonumber(GetLocalDate("%H%M"))
 		--DinhHQ
 		--20110409: kh«ng kİch ho¹t hiÖu øng x4 ®iÓm tİch lòy cña TK Thiªn Tö trong c¸c giê TK th­êng
-		if( nHour >= 2045 and nHour < 2250)then
+		if( nHour >= 1245 and nHour <= 1405) and ( nHour >= 1645 and nHour <= 1805) then
+			return 2
+		end
+		if( nHour >= 2045 and nHour <= 2205) then
 			return 4
 		end
 	end
@@ -1142,7 +1155,7 @@ function bt_reportworldresult(tbPlayer)
 			ncount = 3;
 		end;
 	
-		local szParam = "Phong V©n LuËn KiÕm cao cÊp ®· kÕt thóc, Top"..ncount.." gåm: <enter>";
+		local szParam = "Tèng Kim cao cÊp ®· kÕt thóc, Top "..ncount.." gåm: <enter>";
 		for i = 1, ncount do
 			if (tbPlayer[i][1]) then
 				szParam = format("%s   XÕp h¹ng %d <color=green>%s<color>  %d<enter>",
