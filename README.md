@@ -18,17 +18,8 @@ Có thể sử dụng trên cả 2 bản server Linux 6 và 8
 
 **4) Kéo Xe:** bạn có thể gọi nhân sĩ theo sau cùng đi cho an tâm.
 
-## B. Hướng dẫn cài đặt nhanh bằng app QLSV trong bộ [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?fbclid=IwZXh0bgNhZW0CMTAAAR3PzZcvf-ZNuti7NTqlWzCv93_8NqdiuF4rRcZXQh-8MsvA1x2-EJFh9lU_aem_AZ41EjKxZjTuMZy5eYuK4u2VGydIac2wToDnNH-3oF-Bu_MY_sMT3YLr5fqft3cj3ni3VVg_TCk8GwjNzdNoYQ_E#heading=h.l35hc6lcuiio)
 
-Mở app QLSV 
-
-* chọn "Patch Server", hãy chắc chắn đúng server path đã chính xác
-* điền vào github này: `vinh-ttn/simcity`
-* chấp nhận 
-
-Xong
-
-## C. Hướng dẫn cài đặt thủ công Thành Thị, Chiến Loạn và Kéo Xe
+## B. Hướng dẫn cài đặt thủ công Thành Thị, Chiến Loạn và Kéo Xe
 
 Chú ý: 
 
@@ -71,7 +62,7 @@ Có thể xem file autoexec tham khảo trong drive để làm mẫu (nhưng đ�
      \* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
 
 
-## D. Hướng dẫn cài đặt thủ công Tống Kim (Bảo vệ nguyên soái)
+## C. Hướng dẫn cài đặt thủ công Tống Kim (Bảo vệ nguyên soái)
 
 1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
 
@@ -99,7 +90,7 @@ ngay sau dòng đó, thêm vào dòng
 Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/> 
 
 
-## E. Thông tin thêm
+## D. Thông tin thêm
 
 ### Kéo xe NPC
 
@@ -118,7 +109,7 @@ Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh
 
 
 
-## F. Thay đổi giữa các phiên bản
+## E. Thay đổi giữa các phiên bản
 
 |                          | Ngày       | Thay đổi                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | ------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
