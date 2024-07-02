@@ -23,7 +23,7 @@ Có thể sử dụng trên cả 2 bản server Linux 6 và 8
 Mở app QLSV 
 
 * chọn "Patch Server", hãy chắc chắn đúng server path đã chính xác
-* điền vào github này: `vinh-ttn/simcity`
+* điền vào github này: `vinh-ttn/simcity,8` nếu server bạn là bản 8 hoặc `vinh-ttn/simcity,6` nếu server bạn là bản 6 (quan trọng: điền sai bản sẽ làm hư Tống Kim trên server của bạn. Nếu không chắc hãy cài thủ công như ở dưới thay vì dùng app QLSV)
 * chấp nhận 
 
 Xong
