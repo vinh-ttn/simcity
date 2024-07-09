@@ -848,9 +848,9 @@ function GroupFighter:New(tbNpc)
 	tbNpc.fightingScore = 0
 	tbNpc.rank = 1
 
-	if (tbNpc.camp ==3) then
-		tbNpc.camp = 5
-	end
+	--if (tbNpc.camp ==3) then
+	--	tbNpc.camp = 5
+	--end
 
 	-- Setup walk paths
 	if tbNpc.playerID == 0 then
