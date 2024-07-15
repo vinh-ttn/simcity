@@ -289,7 +289,7 @@ function SimCityKeoXe:TaoBai(forceLevel)
             isBoss = 2
         end
         local targetLevel = data[3]
-        if (forceLevel < 999) then
+        if (forceLevel < 999 and ((targetLevel > forceLevel) or (targetLevel > 90))) then
         	targetLevel = forceLevel
     	end
         local nNpcIndex = AddNpcEx(data[1], targetLevel, random(0,4),  SubWorldID2Idx(pW),(pX + random(-5,5)) * 32, (pY + random(-5,5)) * 32, 0, data[2] , isBoss)
