@@ -5,6 +5,7 @@ GroupFighter.tbNpcList = {}
 GroupFighter.counter = 1
 GroupFighter.PARAM_LIST_ID = 1
 GroupFighter.PARAM_CHILD_ID = 2
+GroupFighter.PARAM_PLAYER_ID = 3
 GroupFighter.ATICK_TIME = 9	-- refresh rate
 
 
@@ -281,6 +282,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 				end
 				if nPosCount >= 1 or tbNpc.nSkillId then	
 					SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nNpcListIndex)
+					SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, tbNpc.playerID)
 					SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\group_fighter.timer.lua")
 					SetNpcTimer(nNpcIndex, self.ATICK_TIME)
 					
@@ -1175,6 +1177,7 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 				-- Set param to link to parent
 				SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nListId)
 				SetNpcParam(nNpcIndex, self.PARAM_CHILD_ID, i)
+				SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, tbNpc.playerID)
 				SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\group_fighter.timer.child.lua")
 				SetNpcTimer(nNpcIndex, self.ATICK_TIME)
 				
