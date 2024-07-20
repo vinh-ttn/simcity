@@ -11,15 +11,19 @@ Phiên bản hiện tại: 5.1
 Có thể sử dụng trên cả 2 bản server Linux 6 và 8
 
 **1) Thành thị:** thành thị sẽ trở nên nhộn nhịp với các gian hàng và các nhân sĩ võ lâm đi lại. Các nhân sĩ có thể đánh nhau bất cứ lúc nào. Ngoài ra bạn có thể gọi thêm quan binh tuần tra (nhưng cũng vô ích) hoặc các quái khách trên cõi giang hồ.
+
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/thanhthi.gif)
 
 **2) Chiến loạn:** khi mở, nhân sĩ ở Tương Dương và Biện Kinh sẽ trực tiếp tiến vào thành để chiếm đoạt của cải. Gây nên 1 trận chiến vô cùng khốc liệt.
+
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/chienloan.gif)
 
 **3) Tống Kim:** chiến trường ác liệt, còn gì tuyệt vời hơn với sự góp mặt của các nhân sĩ võ lâm khắp chốn ao hồ. Bạn có đủ khả năng sống sót không?
+
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/tongkim.gif)
 
 **4) Kéo Xe:** bạn có thể gọi nhân sĩ theo sau cùng đi cho an tâm.
+
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/keoxe.gif)
 
 ## B. Hướng dẫn cài đặt thủ công Thành Thị, Chiến Loạn và Kéo Xe
