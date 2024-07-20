@@ -310,7 +310,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
 					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
 					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
-					NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+					--NPCINFO_SetMaxLife(nNpcIndex, maxHP)
 				end
 				return nNpcListIndex
 			end
