@@ -5,6 +5,7 @@ GroupFighter.tbNpcList = {}
 GroupFighter.counter = 1
 GroupFighter.PARAM_LIST_ID = 1
 GroupFighter.PARAM_CHILD_ID = 2
+GroupFighter.PARAM_PLAYER_ID = 3
 GroupFighter.ATICK_TIME = 9	-- refresh rate
 
 
@@ -281,6 +282,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 				end
 				if nPosCount >= 1 or tbNpc.nSkillId then	
 					SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nNpcListIndex)
+					SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, tbNpc.playerID)
 					SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\group_fighter.timer.lua")
 					SetNpcTimer(nNpcIndex, self.ATICK_TIME)
 					
@@ -307,8 +309,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 
 					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
 					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
-					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
-					NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP) 
 				end
 				return nNpcListIndex
 			end
@@ -1175,6 +1176,7 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 				-- Set param to link to parent
 				SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nListId)
 				SetNpcParam(nNpcIndex, self.PARAM_CHILD_ID, i)
+				SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, tbNpc.playerID)
 				SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\group_fighter.timer.child.lua")
 				SetNpcTimer(nNpcIndex, self.ATICK_TIME)
 				
@@ -1186,8 +1188,7 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 				if tbNpc.cap and tbNpc.cap < 2 and NPCINFO_SetNpcCurrentLife then
 					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
 					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
-					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
-					NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP) 
 				end
 
 				-- Store it
@@ -2027,63 +2028,3 @@ function GroupFighter:ThongBaoBXH(nW)
 
 end
 
-
-
-function GroupFighter:NewLuyenCong(level)
-	local tbNpc = {}
-	local pW, pX, pY = GetWorldPos()
-
-	tbNpc.nMapId = pW
-	tbNpc.playerID = PlayerIndex
-	tbNpc.children = {}
- 
-	local nMapIndex = SubWorldID2Idx(pW)
-	if nMapIndex >= 0 then
-		j = 0
-		while j < 20 do 
-
-			local nNpcIndex
-			
-
-			local tX = pX + random(-5,5)
-			local tY = pY + random(-5,5)
-
-			local id = random(1,200)
-
-			local bossType = 0
-
-			if (j == 10) then
-				bossType = 2
-			end
-
-			local nNpcIndex = AddNpcEx(id, level + 5, random(0,4), nMapIndex,tX * 32, tY * 32, 0, "" , bossType)
-
-			if nNpcIndex > 0 then
-				local kind = GetNpcKind(nNpcIndex)
-				if kind ~= 0 then 
-					DelNpcSafe(nNpcIndex)
-				else
-					j = j + 1
-					tbNpc.finalIndex = nNpcIndex					
-					local nNpcListIndex = self.counter + 0
-
-					-- Save to DB
-					self.counter = self.counter + 1
-					tbNpc.nNpcListIndex = nNpcListIndex
-					self.tbNpcList["n"..tbNpc.nNpcListIndex] = tbNpc
-
-
-					if (not self.npcByWorld["w"..tbNpc.nMapId]) then
-						self.npcByWorld["w"..tbNpc.nMapId] = {}
-					end
-					self.npcByWorld["w"..tbNpc.nMapId]["n"..tbNpc.nNpcListIndex] = tbNpc.nNpcListIndex
-					
-					
-				end
-			end
-		end
-	end
-	return 0
-
-
-end

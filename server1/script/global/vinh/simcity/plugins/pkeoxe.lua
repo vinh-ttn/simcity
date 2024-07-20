@@ -208,7 +208,7 @@ function SimCityKeoXe:mainMenu()
 	tinsert(tbSay, "T¹o nhãm anh hïng/#SimCityKeoXe:goiAnhHungThiepNgoaiTrang()")
  	tinsert(tbSay, "T¹o nhãm qu¸i nh©n/#SimCityKeoXe:goiAnhHungThiep()")
 	--tinsert(tbSay, "ThiÕt lËp/#SimCityKeoXe:caidat()")	
-	tinsert(tbSay, "T¹o nhãm luyÖn c«ng/#SimCityKeoXe:luyencong()")
+	tinsert(tbSay, "T¹o b·i luyÖn c«ng/#SimCityKeoXe:luyencong()")
 	tinsert(tbSay, "Gi¶i t¸n/#SimCityKeoXe:removeAll()") 	
     tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
     CreateTaskSay(tbSay)  
@@ -217,21 +217,91 @@ function SimCityKeoXe:mainMenu()
 end
 
 
+
 function SimCityKeoXe:luyencong()
 	local tab_Content = {
-		"Qu¸i cÊp 10/#GroupFighter:NewLuyenCong(10)", --
-		"Qu¸i cÊp 20/#GroupFighter:NewLuyenCong(20)",
-		"Qu¸i cÊp 30/#GroupFighter:NewLuyenCong(30)",
-		"Qu¸i cÊp 40/#GroupFighter:NewLuyenCong(40)",
-		"Qu¸i cÊp 50/#GroupFighter:NewLuyenCong(50)",
-		"Qu¸i cÊp 60/#GroupFighter:NewLuyenCong(60)",
-		"Qu¸i cÊp 70/#GroupFighter:NewLuyenCong(70)",
-		"Qu¸i cÊp 80/#GroupFighter:NewLuyenCong(80)",
-		"Qu¸i cÊp 90/#GroupFighter:NewLuyenCong(90)",
-		"Qu¸i cÊp 100/#GroupFighter:NewLuyenCong(100)",
-		"Qu¸i cÊp 110/#GroupFighter:NewLuyenCong(110)",
+		"Xãa qu¸i xung quanh/#SimCityKeoXe:XoaBai()",
+		"Qu¸i th­êng/#SimCityKeoXe:TaoBai(999)",
+		"Qu¸i cÊp 110/#SimCityKeoXe:TaoBai(110)",
+		"Qu¸i cÊp 100/#SimCityKeoXe:TaoBai(100)",
+		"Qu¸i cÊp 90/#SimCityKeoXe:TaoBai(90)",
+		"Qu¸i cÊp 80/#SimCityKeoXe:TaoBai(80)",
+		"Qu¸i cÊp 70/#SimCityKeoXe:TaoBai(70)",
+		"Qu¸i cÊp 60/#SimCityKeoXe:TaoBai(60)",
+
+		"Qu¸i cÊp 50/#SimCityKeoXe:TaoBai(50)",
+		"Qu¸i cÊp 40/#SimCityKeoXe:TaoBai(40)",
+		"Qu¸i cÊp 30/#SimCityKeoXe:TaoBai(30)",
+		"Qu¸i cÊp 20/#SimCityKeoXe:TaoBai(20)",
+		"Qu¸i cÊp 10/#SimCityKeoXe:TaoBai(10)",
 		"Tho¸t/no",
 	}
 	Say("Chän nhãm qu¸i", getn(tab_Content), tab_Content);
 end
 
+function SimCityKeoXe:XoaBai()
+     
+    local tbNpcList = GetAroundNpcList(30)
+    local pW, pX, pY = GetWorldPos()
+
+    local tmpFound = {}
+    local nNpcIdx
+    for i=1,getn(tbNpcList) do
+        nNpcIdx = tbNpcList[i]
+        local kind = GetNpcKind(nNpcIdx)
+        local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
+        if nSettingIdx > 0 and kind == 0 then
+            DelNpc(nNpcIdx)
+        end
+    end 
+    return 0
+
+end
+
+
+function SimCityKeoXe:TaoBai(forceLevel)
+
+	-- Tam thoi xoa xe de tao NPC tu dong neu khong se copy NPC tu xe vao luon
+	if (forceLevel === 999) then
+ 		SimCityKeoXe:removeAll()
+	end
+     
+    local tbNpcList = GetAroundNpcList(60)
+    local pW, pX, pY = GetWorldPos()
+
+    local tmpFound = {}
+    local nNpcIdx
+    for i=1,getn(tbNpcList) do
+        nNpcIdx = tbNpcList[i]
+        local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
+        local name = GetNpcName(nNpcIdx)
+        local level = NPCINFO_GetLevel(nNpcIdx)
+        local kind = GetNpcKind(nNpcIdx)
+        if nSettingIdx > 0 and kind == 0 then
+            tinsert(tmpFound, {nSettingIdx, name, level})
+        end
+    end 
+    local total = getn(tmpFound)
+
+    if total == 0 then
+        return 0
+    end
+    local j = 0
+    while j < 20 do 
+        local data = tmpFound[random(1, total)]
+        local isBoss = 0
+        if (j==10) then
+            isBoss = 2
+        end
+        local targetLevel = data[3]
+        if (forceLevel < 999 and ((targetLevel > forceLevel) or (targetLevel > 90))) then
+        	targetLevel = forceLevel
+    	end
+        local nNpcIndex = AddNpcEx(data[1], targetLevel, random(0,4),  SubWorldID2Idx(pW),(pX + random(-5,5)) * 32, (pY + random(-5,5)) * 32, 0, data[2] , isBoss)
+        if nNpcIndex > 0 then 
+            j = j + 1
+        end
+    end
+    return 0
+
+end
