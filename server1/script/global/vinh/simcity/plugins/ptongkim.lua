@@ -162,7 +162,7 @@ function SimCityTongKim:OnDeath( nNpcIndex , currank)
 	if not self.playerInTK[nW] then
 		self.playerInTK[nW] = {}
 	end
-	self.playerInTK[nW][pId] = {
+	self.playerInTK[nW][PlayerIndex] = {
 		phe = "T",
 		rank = launrankname,
 		score = BT_GetData(PL_TOTALPOINT),

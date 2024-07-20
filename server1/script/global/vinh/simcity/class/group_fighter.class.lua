@@ -309,8 +309,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 
 					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
 					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
-					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
-					--NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP) 
 				end
 				return nNpcListIndex
 			end
@@ -1189,8 +1188,7 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 				if tbNpc.cap and tbNpc.cap < 2 and NPCINFO_SetNpcCurrentLife then
 					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
 					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
-					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP)
-					NPCINFO_SetMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP) 
 				end
 
 				-- Store it
