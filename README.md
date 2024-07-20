@@ -2,9 +2,9 @@
 
 —vinhsmoke—
 
-**Chú ý:** Game 1ClickVMFull (xem [post của hội quán](https://www.facebook.com/groups/volamquan/permalink/1389335278442327/) hoặc [Hướng Dẫn - Võ Lâm 1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)) đã có sẵn SimCity 5.0, không phải cài theo hướng dẫn của tài liệu này. Nhưng nên liên tục update qua app để có phiên bản Simcity mới nhất.
+**Chú ý:** Game 1ClickVMFull (xem [post của hội quán](https://www.facebook.com/groups/volamquan/permalink/1389335278442327/) hoặc [Hướng Dẫn - Võ Lâm 1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)) đã có sẵn SimCity 5.0, không phải cài theo hướng dẫn của tài liệu này. Nhưng nên liên tục update qua app để có phiên bản Simcity mới nhất, xem mục E và F của tài liệu này để biết cách cập nhật phiên bản.
 
-
+Phiên bản hiện tại: 5.1
 
 ## A. Giới thiệu tính năng
 
@@ -89,8 +89,27 @@ ngay sau dòng đó, thêm vào dòng
 5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
 Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/> 
 
+## D. Hướng dẫn cập nhật lên phiên bản mới nhất Simcity (thủ công)
 
-## D. Thông tin thêm
+1\) Download file simcity này về: [link simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
+
+2\) Chép đè server1 trong file lên server1 của bạn và khởi động lại game server
+
+3\) Xong
+
+
+## E. Hướng dẫn cập nhật lên phiên bản mới nhất Simcity qua app QuanLyServer
+Yêu cầu game server của bạn phải có kết nối internet 
+
+1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
+
+2\) Cửa sổ xác nhận sẽ hiện ra, gõ **co** và enter khi gặp câu hỏi xác nhận
+
+3\) Sau đó điền vào **vinh-ttn/simcity** và enter để cập nhật từ github này
+
+Xong, khởi động lại game server.
+
+## F. Thông tin thêm
 
 ### Kéo xe NPC
 
@@ -117,5 +136,6 @@ Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh
 | **2.0 Chiến Loạn**       | 10/2023    | (Mới) **Chiến loạn** - tấn công thành thị Biện Kinh (trong ra) và Tương Dương (ngoài vô)(Mới) Quan binh tuần tra theo hàng ngũ(Mới) Tình trạng kéo xe xuất hiện(Sửa) Thêm vào các thành khác:* Biện Kinh, Phượng Tường, Đại Lý - đóng góp: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/?__cft__\[0]=AZV_RO8NdTMsDVO11CipaZsHNtjqKQQsQJebqI3krEgYfekv-O3hYkpBHZRvMGotp0F36toUiCvyWK-zKBZgXLRNWp2TxuffMYJiIinfpCuSZemoGktyHngQc9mm-ATN2i9PHp5BCOw8JbQZpIOk_huce_tfE_AYsEECbgtGCdZE3JuZIH-U7QkJA_p_Os8k06j7vUapty9Q3UE48J5HjouV&__tn__=R]-R) <br>* Lâm An - đóng góp: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/?__cft__\[0]=AZV_RO8NdTMsDVO11CipaZsHNtjqKQQsQJebqI3krEgYfekv-O3hYkpBHZRvMGotp0F36toUiCvyWK-zKBZgXLRNWp2TxuffMYJiIinfpCuSZemoGktyHngQc9mm-ATN2i9PHp5BCOw8JbQZpIOk_huce_tfE_AYsEECbgtGCdZE3JuZIH-U7QkJA_p_Os8k06j7vUapty9Q3UE48J5HjouV&__tn__=R]-R) |
 | **3.0 Tống Kim**         | 10/2023    | (Mới) **Tống Kim**:* thêm map bảo vệ nguyên soái<br>* tính điểm và thông báo bảng xếp hạng<br>* thêm Vô Kỵ phe Tống, Triệu Mẫn phe Kim(Sửa) Thêm vào các thành khác:* Thành Đô, Dương Châu<br>* Chỉnh sửa các thành hiện tại để tối ưu đường đi                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | **4.0**                  | 10/2023    | (Mới) **Thay đổi toàn bộ hệ thống code** để tiện đường thêm thắt sau này (gọi là plugin). Gọp kéo xe thành 1 plugin nhỏ của SimCity thay vì 2 mod khác nhau.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| **5.0 RC1**              | 12/11/2013 | (Mới) **nhân sĩ võ lâm có hình người chơi**, bao gồm vũ khí hoàng kim và chỉ sử dụng skill người chơi(Sửa) danh sách tên lạ võ lâm(Sửa) danh sách đối thoại võ lâm(Sửa) chia cấp độ nhân sĩ theo máu cho chính xác (sơ cấp máu vẫn còn quá nhiều)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **5.0 RC1**              | 12/11/2023 | (Mới) **nhân sĩ võ lâm có hình người chơi**, bao gồm vũ khí hoàng kim và chỉ sử dụng skill người chơi(Sửa) danh sách tên lạ võ lâm(Sửa) danh sách đối thoại võ lâm(Sửa) chia cấp độ nhân sĩ theo máu cho chính xác (sơ cấp máu vẫn còn quá nhiều)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **5.1**              | 20/07/2024 | (Mới) Thêm chức năng tạo bãi luyện công trong kéo xe. (Sửa) Lỗi thanh máu khi chơi Tống Kim                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | **?**                    | ?          | (Mới) thêm công thành trong Thất Thành Đại Chiến(Sửa) máu lại cho hợp lý vì không phải ai cũng xài đồ siêu nhân =))(Sửa) thêm người chơi vào danh sách Bảng Xếp Hạng trong Tống Kim                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
