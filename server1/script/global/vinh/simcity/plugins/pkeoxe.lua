@@ -262,7 +262,7 @@ end
 function SimCityKeoXe:TaoBai(forceLevel)
 
 	-- Tam thoi xoa xe de tao NPC tu dong neu khong se copy NPC tu xe vao luon
-	if (forceLevel === 999) then
+	if (forceLevel == 999) then
  		SimCityKeoXe:removeAll()
 	end
      
