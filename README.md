@@ -35,34 +35,8 @@ Chú ý: 
 - chỉ cần chỉnh sửa và cài trên server. Không cần đồng bộ hay cài gì bên phía client.
 
 1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
-
-2\) Mở file **server1/script/global/autoexec.lua** trên server và tìm đến dòng:
-
-`function main()`
-
-thêm vào trước đó dòng này:
-
-`Include("\\script\\global\\vinh\\main.lua")`
-
-và sau đó dòng này:
-
-`add_npc_vinh()`
-
-(Mục đích là để include file và gọi hàm add_npc_vinh.) 
-
-Sau khi chỉnh xong thì tổng thể chổ đó của file nó nhìn giống như vầy:
-
-```
-Include("\\script\\global\\vinh\\main.lua")
-
-function main()
-    add_npc_vinh()
-```
-    
-
-Có thể xem file autoexec tham khảo trong drive để làm mẫu (nhưng đừng dùng trực tiếp vì mỗi server mà AE share mỗi khác)
-
-3\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
+ 
+2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
 
      \* gặp Triệu Mẫn để sử dụng simcity
 
