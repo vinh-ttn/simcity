@@ -28,12 +28,6 @@ Có thể sử dụng trên cả 2 bản server Linux 6 và 8
 
 ## B. Hướng dẫn cài đặt thủ công Thành Thị, Chiến Loạn và Kéo Xe
 
-Chú ý: 
-
-- khi sửa và lưu bất kỳ file nào trên server thì cần lưu dưới dạng windows-1252 encode chứ không phải unicode utf-8. Nhớ xem kỹ editor của WinSCP coi cài đặt đúng chưa trước khi lưu file.
-- nên tạo backup autoexec.lua trước khi bắt đầu chỉnh sửa để có gì còn phục hồi lại được 
-- chỉ cần chỉnh sửa và cài trên server. Không cần đồng bộ hay cài gì bên phía client.
-
 1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
  
 2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
