@@ -1,5 +1,5 @@
-Include("\\script\\global\\vinh\\simcity\\head.lua")
-
+--Include("\\script\\global\\vinh\\simcity\\head.lua")
+Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")
 SimCityMainThanhThi = {
 	_dataStorage = {}
 }
@@ -302,6 +302,9 @@ function  SimCityMainThanhThi:thanhthiMenu()
 	local worldInfo = SimCityWorld:Get(nW)
 
 	if not worldInfo.name then
+		if nW == 380 or nW == 378 or nW == 379 then
+			return SimCityMainTongKim:mainMenu()
+		end
 		Say("TriÖu MÉn: thµnh thÞ nµy ch­a ®­îc më.<enter><enter>C¸c h¹ cã thÓ ®ãng gãp <color=yellow>b¶n ®å ®­îc ®­êng ®i<color> ®Õn t¸c gi¶ trªn fb héi qu¸n kh«ng?")
 	else
 	 	local tbSay = {worldInfo.name.." Vâ L©m §¹i Héi"}
