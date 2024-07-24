@@ -16,6 +16,7 @@ function SimCityMainThanhThi:_createSingle(id, Map, bt)
 		--kind = 0
 	end
 
+	local hardsetName = (bt == 1 and SimCityPlayerName:getName()) or SimCityNPCInfo:getName(id)
 
 	local nListId = GroupFighter:New({
 
@@ -29,7 +30,8 @@ function SimCityMainThanhThi:_createSingle(id, Map, bt)
 		attackNpcChance = fightChance,	-- co hoi bat chien dau
 		joinFightChance = joinFightChance,	-- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		ngoaitrang = bt or 0,
-		noRevive = 0
+		noRevive = 0,
+		hardsetName = hardsetName
 
 	})
 
