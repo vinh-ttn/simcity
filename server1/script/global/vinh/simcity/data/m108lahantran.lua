@@ -1,4 +1,4 @@
-108lahantran ={
+lahantran108 ={
 {1499,3312},
 {1516,3297},
 {1533,3317},
@@ -69,7 +69,7 @@ map_108lahantran = {
 	worldId = 114, 
 	name = "108 La H¸n TrËn", 
 	walkAreas = {
-		108lahantran
+		lahantran108
 	}, 
 	decoration = {},
 	chientranh = {}

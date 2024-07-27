@@ -5,6 +5,10 @@ SimCityWorld = {
 }
 
 function SimCityWorld:New(data)
+	if not data then
+		print("NOT FOUND SIMCITY MAP")
+		return 1
+	end
 	if self.data["w"..data.worldId] == nil then
 
 
@@ -95,7 +99,7 @@ function SimCityWorld:initThanhThi()
 	self:New(map_phuongtuong)
 	self:New(map_balanghuyen)
 	self:New(map_longtuyenthon)
-	self:New(map_giangtanthon
+	self:New(map_giangtanthon)
 	self:New(map_vinhlactran)
 	self:New(map_chutientran)
 	self:New(map_daohuongthon)
@@ -162,8 +166,8 @@ function SimCityWorld:initThanhThi()
 	self:New(map_luutiendongtang1)
 	self:New(map_banghuyetdong)
 	self:New(map_acbadiadao)
-	self:New(map_hientamthaptang1)
-	self:New(map_hientamthaptang2)
+	self:New(map_thientamthaptang1)
+	self:New(map_thientamthaptang2)
 	self:New(map_nghietlongdong)
 	self:New(map_ngochoadong)
 	self:New(map_thanhdongtang1)
