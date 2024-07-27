@@ -4,8 +4,16 @@
 
 **Chú ý:** Game 1ClickVMFull (xem [post của hội quán](https://www.facebook.com/groups/volamquan/permalink/1389335278442327/) hoặc [Hướng Dẫn - Võ Lâm 1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)) đã có sẵn SimCity 5.0, không phải cài theo hướng dẫn của tài liệu này. Nhưng nên liên tục update qua app để có phiên bản Simcity mới nhất, xem mục E và F của tài liệu này để biết cách cập nhật phiên bản.
 
-Phiên bản hiện tại: **5.1**
+Phiên bản hiện tại: **5.2**
 
+### Nhà phát triển
+
+ * Dev chính: [Vinh TTN](https://www.facebook.com/groups/800085930700601/user/1576281122) 
+ * Tọa độ 116 maps: [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/) 
+ * Tọa độ Biện Kinh, Phượng Tường, Đại Lý: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/)
+ * Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/)
+
+   
 ## A. Giới thiệu tính năng
 
 Có thể sử dụng trên cả 2 bản server Linux 6 và 8
@@ -115,14 +123,7 @@ Xong, khởi động lại game server.
 | **4.0**                  | 10/2023    | (Mới) **Thay đổi toàn bộ hệ thống code** để tiện đường thêm thắt sau này (gọi là plugin). Gọp kéo xe thành 1 plugin nhỏ của SimCity thay vì 2 mod khác nhau.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | **5.0 RC1**              | 12/11/2023 | (Mới) **nhân sĩ võ lâm có hình người chơi**, bao gồm vũ khí hoàng kim và chỉ sử dụng skill người chơi<br>(Sửa) danh sách tên lạ võ lâm<br>(Sửa) danh sách đối thoại võ lâm<br>(Sửa) chia cấp độ nhân sĩ theo máu cho chính xác (sơ cấp máu vẫn còn quá nhiều)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | **5.1**              | 20/07/2024 | (Mới) Thêm chức năng tạo bãi luyện công trong kéo xe. <br>(Sửa) Lỗi thanh máu khi chơi Tống Kim                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **5.2**              | 28/07/2024 | (Mới) Thêm 116 map từ bạn [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/) <br> (Mới) Tự động load NPC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **?**                    | ?          | (Mới) thêm công thành trong Thất Thành Đại Chiến<br>(Sửa) máu lại cho hợp lý vì không phải ai cũng xài đồ siêu nhân =))<br>(Sửa) thêm người chơi vào danh sách Bảng Xếp Hạng trong Tống Kim                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 
-### Tác giả / Đóng góp
-
-Tác giả: vinh-ttn
-
-Đóng góp:
- 
- * Tọa độ Biện Kinh, Phượng Tường, Đại Lý: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/?__cft__\[0]=AZV_RO8NdTMsDVO11CipaZsHNtjqKQQsQJebqI3krEgYfekv-O3hYkpBHZRvMGotp0F36toUiCvyWK-zKBZgXLRNWp2TxuffMYJiIinfpCuSZemoGktyHngQc9mm-ATN2i9PHp5BCOw8JbQZpIOk_huce_tfE_AYsEECbgtGCdZE3JuZIH-U7QkJA_p_Os8k06j7vUapty9Q3UE48J5HjouV&__tn__=R]-R)
- * Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/?__cft__\[0]=AZV_RO8NdTMsDVO11CipaZsHNtjqKQQsQJebqI3krEgYfekv-O3hYkpBHZRvMGotp0F36toUiCvyWK-zKBZgXLRNWp2TxuffMYJiIinfpCuSZemoGktyHngQc9mm-ATN2i9PHp5BCOw8JbQZpIOk_huce_tfE_AYsEECbgtGCdZE3JuZIH-U7QkJA_p_Os8k06j7vUapty9Q3UE48J5HjouV&__tn__=R]-R) 
