@@ -2,9 +2,8 @@
 
 —vinhsmoke—
 
-**Chú ý:** Game 1ClickVMFull (xem [post của hội quán](https://www.facebook.com/groups/volamquan/permalink/1389335278442327/) hoặc [Hướng Dẫn - Võ Lâm 1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)) đã có sẵn SimCity 5.0, không phải cài theo hướng dẫn của tài liệu này. Nhưng nên liên tục update qua app để có phiên bản Simcity mới nhất, xem mục E và F của tài liệu này để biết cách cập nhật phiên bản.
-
 Phiên bản hiện tại: **5.2**
+Download: [Simcity 5.2](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) 
 
 ### Nhà phát triển
 
