@@ -44,7 +44,7 @@ function SimcityManager:onPlayerEnterMap()
 
 		if (worldInfo.name ~= "") then
 			SimCityMainThanhThi:createNpcSet(750,250,1)
-			SimCityMainThanhThi:showFightingArea(0)
+			SimCityWorld:Update(nW, "showFightingArea", 0)
 		end
 	end
 
