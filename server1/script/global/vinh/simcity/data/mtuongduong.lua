@@ -622,7 +622,7 @@ tuongduong_tong2 = {
 
 map_tuongduong = {
 	worldId = 78, 
-	name = "Tùùng Dùùng", 
+	name = "T≠¨ng D≠¨ng", 
 	walkAreas = {
 		tuongduong_full, 
 		tuongduong_trongthanh, 

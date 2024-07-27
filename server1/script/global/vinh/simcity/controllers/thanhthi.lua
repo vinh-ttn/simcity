@@ -32,7 +32,7 @@ function SimCityMainThanhThi:_createSingle(id, Map, bt)
 		ngoaitrang = bt or 0,
 		noRevive = 0,
 		hardsetName = hardsetName,
-
+		thanhthi = 1,
 		lastHP = 50000
 
 	})

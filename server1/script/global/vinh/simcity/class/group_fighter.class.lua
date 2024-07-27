@@ -889,7 +889,7 @@ function GroupFighter:New(tbNpc)
 		local walkIndex = random(1,getn(walkAreas))
 		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
 
-		if random(1,2) < 2 then
+		if tbNpc.thanhthi ~= nil and tbNpc.thanhthi == 1 and random(1,2) < 2 then
 			tbNpc.tbPos = arrFlip(tbNpc.tbPos)			
 		end
 
