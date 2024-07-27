@@ -3,7 +3,8 @@
 —vinhsmoke—
 
 Phiên bản hiện tại: **5.2**
-Download: [Simcity 5.2](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) 
+
+Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) 
 
 ### Nhà phát triển
 
