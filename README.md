@@ -6,7 +6,7 @@ Phiên bản hiện tại: **5.2**
 
 Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) 
 
-### Nhà phát triển
+### Đóng góp
 
  * Dev chính: [Vinh TTN](https://www.facebook.com/groups/800085930700601/user/1576281122) 
  * Tọa độ 116 maps: [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/) 
