@@ -45,10 +45,9 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau)
 		attackPlayerChance = 1,	-- co hoi tan cong nguoi choi neu di ngang qua
 		attackNpcChance = 1,	-- co hoi bat chien dau khi thay NPC khac phe
 		joinFightChance = 1,	-- co hoi tang cong NPC neu di ngang qua NPC danh nhau
-		leaveFightChance = 1000000,
 		fightPlayerRadius = 15,	-- scan for player around and randomly attack
-		attackNpcRadius = 15,	-- scan for NPC around and start randomly attack,
-		fightScanRadius = 15,	-- scan for fight around and join/leave fight it
+		attackNpcRadius = 10,	-- scan for NPC around and start randomly attack,
+		fightScanRadius = 10,	-- scan for fight around and join/leave fight it
 
 		noBackward = 1,			-- do not walk backward
 		kind = 0,				-- quai mode
@@ -63,7 +62,7 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau)
 		children = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil,   -- force distance check for child
 
-		playerID = PlayerIndex
+		playerID = GetName()
 
 	});
   

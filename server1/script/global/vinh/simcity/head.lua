@@ -40,6 +40,7 @@ Include("\\script\\global\\vinh\\simcity\\data\\index.lua")
 -- Now main class
 Include("\\script\\global\\vinh\\simcity\\class\\group_fighter.class.lua")
 
+
 -- Kick start all plugins if needed
 SimCityNgoaiTrang:init()
 SimCityNPCInfo:init()

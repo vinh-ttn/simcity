@@ -853,7 +853,7 @@ bienkinh_kim3={
 
 map_bienkinh = {
 	worldId = 37, 
-	name = "BiÃ–n Kinh", 
+	name = "BiÖn Kinh", 
 	walkAreas = {
 		bienkinh1, 
 		bienkinh2, 

@@ -148,7 +148,6 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 		attackPlayerChance = 1,	-- co hoi tan cong nguoi choi neu di ngang qua
 		attackNpcChance = 1,	-- co hoi bat chien dau khi thay NPC khac phe
 		joinFightChance = 1,	-- co hoi tang cong NPC neu di ngang qua NPC danh nhau
-		leaveFightChance = 1000000,
 		fightPlayerRadius = 15,	-- scan for player around and randomly attack
 		attackNpcRadius = 15,	-- scan for NPC around and start randomly attack,
 		fightScanRadius = 15,	-- scan for fight around and join/leave fight it
@@ -195,7 +194,7 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 	if children5 then
 		children = {}
 		for i=1,getn(children5) do
-			children = spawnN(children, children5[i][1], children5[i][2], name)
+			children = spawnN(children, children5[i][1], children5[i][2], {szName = name})
 		end
 	end
  
@@ -224,7 +223,7 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 		attackPlayerChance = 1,	-- co hoi tan cong nguoi choi neu di ngang qua
 		attackNpcChance = 1,	-- co hoi bat chien dau khi thay NPC khac phe
 		joinFightChance = 1,	-- co hoi tang cong NPC neu di ngang qua NPC danh nhau
-		leaveFightChance = 1000000,
+
 		fightPlayerRadius = 15,	-- scan for player around and randomly attack
 		attackNpcRadius = 15,	-- scan for NPC around and start randomly attack,
 		fightScanRadius = 15,	-- scan for fight around and join/leave fight it

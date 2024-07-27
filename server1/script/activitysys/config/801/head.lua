@@ -13,6 +13,8 @@ pActivity.nVersion = 5
  
 
 function pActivity:InitAddNpc()
-    auto_add_npc_vinh()
+    simcity_addNpcs()
 end
  
+
+

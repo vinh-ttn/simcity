@@ -31,7 +31,9 @@ function SimCityMainThanhThi:_createSingle(id, Map, bt)
 		joinFightChance = joinFightChance,	-- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		ngoaitrang = bt or 0,
 		noRevive = 0,
-		hardsetName = hardsetName
+		hardsetName = hardsetName,
+		thanhthi = 1,
+		lastHP = 50000
 
 	})
 
