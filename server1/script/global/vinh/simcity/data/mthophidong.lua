@@ -67,7 +67,7 @@ thophidong ={
 
 map_thophidong = {
 	worldId = 170, 
-	name = "ThÃ¦ PhÃ˜ Â§Ã©ng", 
+	name = "Thæ PhØ §éng", 
 	walkAreas = {
 		thophidong
 	}, 

@@ -888,6 +888,11 @@ function GroupFighter:New(tbNpc)
 	if SearchPlayer(tbNpc.playerID) == 0 then
 		local walkIndex = random(1,getn(walkAreas))
 		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
+
+		if random(1,2) < 2 then
+			tbNpc.tbPos = arrFlip(tbNpc.tbPos)			
+		end
+
 		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
 			tbNpc.tbPos = self:_makeDiagonal(tbNpc.tbPos)
 		end

@@ -201,7 +201,7 @@ manbacthaonguyen_3 ={
 
 map_manbacthaonguyen = {
 	worldId = 341, 
-	name = "MÂ¹n BÂ¾c ThÂ¶o NguyÂªn", 
+	name = "M¹n B¾c Th¶o Nguyªn", 
 	walkAreas = {
 		manbacthaonguyen_1,
 		manbacthaonguyen_2,

@@ -46,7 +46,7 @@ hoasondinh ={
 
 map_hoasondinh = {
 	worldId = 2, 
-	name = "Hoa SÂ¬n", 
+	name = "Hoa S¬n", 
 	walkAreas = {
 		hoasondinh
 	}, 

@@ -125,7 +125,7 @@ thachcotran_tay = {
 
 map_thachcotran = {
 	worldId = 153, 
-	name = "Th¬πch C√¶ Tr√än", 
+	name = "Thπch CÊ Tr n", 
 	walkAreas = {
 		thachcotran_bac,
 		thachcotran_tay

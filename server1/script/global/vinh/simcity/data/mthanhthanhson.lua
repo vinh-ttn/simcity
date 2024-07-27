@@ -174,7 +174,7 @@ thanhthanhson_3 = {
 
 map_thanhthanhson = {
 	worldId = 21, 
-	name = "Thanh ThÂµnh SÂ¬n", 
+	name = "Thanh Thµnh S¬n", 
 	walkAreas = {
 		thanhthanhson_1,
 		thanhthanhson_2,

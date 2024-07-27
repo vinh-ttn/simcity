@@ -193,7 +193,7 @@ balanghuyen_bac = {
 
 map_balanghuyen = {
 	worldId = 53, 
-	name = "Ba LÂ¨ng HuyÃ–n", 
+	name = "Ba L¨ng HuyÖn", 
 	walkAreas = {
 		balanghuyen_bac,
 		balanghuyen_nam,

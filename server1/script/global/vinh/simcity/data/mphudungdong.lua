@@ -135,7 +135,7 @@ phudungdong_2 = {
 
 map_phudungdong = {
 	worldId = 202, 
-	name = "PhÃ¯ Dung Â§Ã©ng", 
+	name = "Phï Dung §éng", 
 	walkAreas = {
 		phudungdong_1,
 		phudungdong_2

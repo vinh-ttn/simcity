@@ -67,7 +67,7 @@ tiencucdong ={
 
 map_tiencucdong = {
 	worldId = 93, 
-	name = "TiÃ•n CÃ³c Â§Ã©ng", 
+	name = "TiÕn Cóc §éng", 
 	walkAreas = {
 		tiencucdong
 	}, 

@@ -362,7 +362,7 @@ channuitruongbach_6 = {
 
 map_channuitruongbach = {
 	worldId = 320, 
-	name = "ChÂ©n NÃ³i TrÂ­Ãªng BÂ¹ch", 
+	name = "Ch©n Nói Tr­êng B¹ch", 
 	walkAreas = {
 		channuitruongbach_1,
 		channuitruongbach_2,

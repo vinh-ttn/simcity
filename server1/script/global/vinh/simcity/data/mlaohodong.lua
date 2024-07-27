@@ -42,7 +42,7 @@ laohodong ={
 
 map_laohodong = {
 	worldId = 123, 
-	name = "LÂ·o HÃ¦ Â§Ã©ng", 
+	name = "L·o Hæ §éng", 
 	walkAreas = {
 		laohodong
 	}, 

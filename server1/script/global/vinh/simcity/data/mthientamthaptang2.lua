@@ -40,7 +40,7 @@ thientamthaptang2 ={
 
 map_thientamthaptang2 = {
 	worldId = 165, 
-	name = "ThiÂªn TÃ‡m ThÂ¸p TÃ‡ng 2", 
+	name = "Thiªn TÇm Th¸p TÇng 2", 
 	walkAreas = {
 		thientamthaptang2
 	}, 

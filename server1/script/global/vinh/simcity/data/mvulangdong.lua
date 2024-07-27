@@ -121,7 +121,7 @@ vulangdong_2 = {
 
 map_vulangdong = {
 	worldId = 199, 
-	name = "VÃ² LÂ¨ng Â§Ã©ng", 
+	name = "Vò L¨ng §éng", 
 	walkAreas = {
 		vulangdong_1,
 		vulangdong_2

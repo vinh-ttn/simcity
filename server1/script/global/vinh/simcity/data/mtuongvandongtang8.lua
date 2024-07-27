@@ -40,7 +40,7 @@ tuongvandongtang8 ={
 
 map_tuongvandongtang8 = {
 	worldId = 120, 
-	name = "TÂ­Ãªng VÂ©n Â§Ã©ng TÃ‡ng 8", 
+	name = "T­êng V©n §éng TÇng 8", 
 	walkAreas = {
 		tuongvandongtang8
 	}, 

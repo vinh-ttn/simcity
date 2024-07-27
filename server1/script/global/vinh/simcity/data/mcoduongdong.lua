@@ -113,7 +113,7 @@ coduongdong_2 = {
 
 map_coduongdong = {
 	worldId = 200, 
-	name = "CÃ¦ DÂ­Â¬ng Â§Ã©ng", 
+	name = "Cæ D­¬ng §éng", 
 	walkAreas = {
 		coduongdong_1,
 		coduongdong_2

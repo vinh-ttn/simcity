@@ -86,7 +86,7 @@ thantiendong_2 = {
 
 map_thantiendong = {
 	worldId = 23, 
-	name = "ThÃ‡n TiÂªn Â§Ã©ng", 
+	name = "ThÇn Tiªn §éng", 
 	walkAreas = {
 		thantiendong_1,
 		thantiendong_2

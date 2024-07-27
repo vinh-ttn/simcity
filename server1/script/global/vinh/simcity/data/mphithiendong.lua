@@ -134,7 +134,7 @@ phithiendong_2 = {
 
 map_phithiendong = {
 	worldId = 204, 
-	name = "Phi ThiÂªn Â§Ã©ng", 
+	name = "Phi Thiªn §éng", 
 	walkAreas = {
 		phithiendong_1,
 		phithiendong_2

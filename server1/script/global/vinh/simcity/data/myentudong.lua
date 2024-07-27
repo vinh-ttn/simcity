@@ -75,7 +75,7 @@ yentudong_2 = {
 
 map_yentudong = {
 	worldId = 77, 
-	name = "YÃ•n TÃ¶ Â§Ã©ng", 
+	name = "YÕn Tö §éng", 
 	walkAreas = {
 		yentudong_1,
 		yentudong_2

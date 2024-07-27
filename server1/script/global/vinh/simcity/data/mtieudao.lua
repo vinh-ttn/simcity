@@ -60,7 +60,7 @@ tieudao ={
 
 map_tieudao = {
 	worldId = 1046, 
-	name = "TiÂªu Dao", 
+	name = "Tiªu Dao", 
 	walkAreas = {
 		tieudao
 	}, 

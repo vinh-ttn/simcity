@@ -126,7 +126,7 @@ banghadong_2 = {
 
 map_banghadong = {
 	worldId = 201, 
-	name = "BÂ¨ng HÂµ Â§Ã©ng", 
+	name = "B¨ng Hµ §éng", 
 	walkAreas = {
 		banghadong_1,
 		banghadong_2

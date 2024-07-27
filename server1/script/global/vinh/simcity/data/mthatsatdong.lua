@@ -50,7 +50,7 @@ thatsatdong ={
 
 map_thatsatdong = {
 	worldId = 50, 
-	name = "ThÃŠt SÂ¸t Â§Ã©ng", 
+	name = "ThÊt S¸t §éng", 
 	walkAreas = {
 		thatsatdong
 	}, 

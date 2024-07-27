@@ -201,7 +201,7 @@ mecungnhapmon_tay = {
 
 map_mecungnhapmon = {
 	worldId = 190, 
-	name = "MÂª Cung NhÃ‹p MÂ«n", 
+	name = "Mª Cung NhËp M«n", 
 	walkAreas = {
 		mecungnhapmon_dong,
 		mecungnhapmon_trungtam,

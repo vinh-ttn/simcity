@@ -48,7 +48,7 @@ hoanghanguyendau ={
 
 map_hoanghanguyendau = {
 	worldId = 122, 
-	name = "HoÂµng HÂµ Nguyen Â§Ã‡u", 
+	name = "Hoµng Hµ Nguyen §Çu", 
 	walkAreas = {
 		hoanghanguyendau
 	}, 

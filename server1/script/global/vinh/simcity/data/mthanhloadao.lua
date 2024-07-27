@@ -37,7 +37,7 @@ thanhloadao ={
 
 map_thanhloadao = {
 	worldId = 68, 
-	name = "Thanh Loa Â§Â¶o", 
+	name = "Thanh Loa §¶o", 
 	walkAreas = {
 		thanhloadao
 	}, 

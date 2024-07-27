@@ -183,7 +183,7 @@ vinhlactran_dong = {
 
 map_vinhlactran = {
 	worldId = 99, 
-	name = "VÃœnh LÂ¹c TrÃŠn", 
+	name = "VÜnh L¹c TrÊn", 
 	walkAreas = {
 		vinhlactran_bac,
 		vinhlactran_tay,

@@ -78,7 +78,7 @@ nghietlongdong_2 = {
 
 map_nghietlongdong = {
 	worldId = 182, 
-	name = "NghiÃ–t Long Â§Ã©ng", 
+	name = "NghiÖt Long §éng", 
 	walkAreas = {
 		nghietlongdong_1,
 		nghietlongdong_2

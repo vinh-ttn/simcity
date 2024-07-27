@@ -88,7 +88,7 @@ phucluudong_bac = {
 
 map_phucluudong = {
 	worldId = 73, 
-	name = "PhÃ´c LÂ­u Â§Ã©ng", 
+	name = "Phôc L­u §éng", 
 	walkAreas = {
 		phucluudong_nam,
 		phucluudong_bac

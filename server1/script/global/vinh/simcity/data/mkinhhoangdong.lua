@@ -78,7 +78,7 @@ kinhhoangdong_2 = {
 
 map_kinhhoangdong = {
 	worldId = 5, 
-	name = "Kinh HoÂµng Â§Ã©ng", 
+	name = "Kinh Hoµng §éng", 
 	walkAreas = {
 		kinhhoangdong_1,
 		kinhhoangdong_2

@@ -219,7 +219,7 @@ lamduquan_4 = {
 
 map_lamduquan = {
 	worldId = 319, 
-	name = "LÂ©m Du Quan", 
+	name = "L©m Du Quan", 
 	walkAreas = {
 		lamduquan_1,
 		lamduquan_2,

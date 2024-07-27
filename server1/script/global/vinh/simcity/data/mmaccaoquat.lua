@@ -269,7 +269,7 @@ maccaoquat_4 ={
 
 map_maccaoquat = {
 	worldId = 340, 
-	name = "MÂ¹c Cao QuÃ‹t", 
+	name = "M¹c Cao QuËt", 
 	walkAreas = {
 		maccaoquat_1,
 		maccaoquat_2,

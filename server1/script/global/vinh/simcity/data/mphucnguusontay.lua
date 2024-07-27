@@ -58,7 +58,7 @@ phucnguusontay ={
 
 map_phucnguusontay = {
 	worldId = 41, 
-	name = "PhÃ´c NgÂ­u SÂ¬n TÂ©y", 
+	name = "Phôc Ng­u S¬n T©y", 
 	walkAreas = {
 		phucnguusontay
 	}, 

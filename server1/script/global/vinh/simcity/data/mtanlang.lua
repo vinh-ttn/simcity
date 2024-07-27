@@ -55,7 +55,7 @@ tanlang ={
 
 map_tanlang = {
 	worldId = 7, 
-	name = "TÃ‡n LÂ¨ng", 
+	name = "TÇn L¨ng", 
 	walkAreas = {
 		tanlang
 	}, 

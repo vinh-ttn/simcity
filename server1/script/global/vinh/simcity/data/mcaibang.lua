@@ -135,7 +135,7 @@ caibang_bac = {
 
 map_caibang = {
 	worldId = 115, 
-	name = "CÂ¸i Bang", 
+	name = "C¸i Bang", 
 	walkAreas = {
 		caibang_nam,
 		caibang_bac

@@ -67,7 +67,7 @@ mecungdaygieng ={
 
 map_mecungdaygieng = {
 	worldId = 82, 
-	name = "MÂª Cung Â§Â¸y GiÃ•ng", 
+	name = "Mª Cung §¸y GiÕng", 
 	walkAreas = {
 		mecungdaygieng
 	}, 

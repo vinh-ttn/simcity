@@ -150,7 +150,7 @@ vodang_tay = {
 
 map_vodang = {
 	worldId = 81, 
-	name = "VÃ¢ Â§ang", 
+	name = "Vâ §ang", 
 	walkAreas = {
 		vodang_bac,
 		vodang_nam,

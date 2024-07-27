@@ -95,7 +95,7 @@ vodanhdong_2 = {
 
 map_vodanhdong = {
 	worldId = 203, 
-	name = "VÂ« Danh Â§Ã©ng", 
+	name = "V« Danh §éng", 
 	walkAreas = {
 		vodanhdong_1,
 		vodanhdong_2

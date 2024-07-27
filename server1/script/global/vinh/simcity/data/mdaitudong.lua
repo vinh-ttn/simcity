@@ -44,7 +44,7 @@ daitudong ={
 
 map_daitudong = {
 	worldId = 72, 
-	name = "Â§Â¹i TÃ¯ Â§Ã©ng", 
+	name = "§¹i Tï §éng", 
 	walkAreas = {
 		daitudong
 	}, 

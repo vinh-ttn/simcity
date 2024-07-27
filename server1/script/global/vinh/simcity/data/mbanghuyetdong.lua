@@ -49,7 +49,7 @@ banghuyetdong ={
 
 map_banghuyetdong = {
 	worldId = 132, 
-	name = "BÂ¨ng HuyÃ–t Â§Ã©ng", 
+	name = "B¨ng HuyÖt §éng", 
 	walkAreas = {
 		banghuyetdong
 	}, 

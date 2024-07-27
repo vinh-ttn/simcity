@@ -61,7 +61,7 @@ thanhkedong ={
 
 map_thanhkedong = {
 	worldId = 198, 
-	name = "Thanh KÂª Â§Ã©ng", 
+	name = "Thanh Kª §éng", 
 	walkAreas = {
 		thanhkedong
 	}, 

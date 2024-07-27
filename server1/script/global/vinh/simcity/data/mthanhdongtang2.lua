@@ -49,7 +49,7 @@ thanhdongtang2 ={
 
 map_thanhdongtang2 = {
 	worldId = 52, 
-	name = "ThÂ¸nh Â§Ã©ng TÃ‡ng 2", 
+	name = "Th¸nh §éng TÇng 2", 
 	walkAreas = {
 		thanhdongtang2
 	}, 

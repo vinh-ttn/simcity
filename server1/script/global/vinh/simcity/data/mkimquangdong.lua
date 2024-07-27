@@ -66,7 +66,7 @@ kimquangdong ={
 
 map_kimquangdong = {
 	worldId = 4, 
-	name = "Kim Quang Â§Ã©ng", 
+	name = "Kim Quang §éng", 
 	walkAreas = {
 		kimquangdong
 	}, 

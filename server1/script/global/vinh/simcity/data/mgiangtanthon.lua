@@ -124,7 +124,7 @@ giangtanthon_trungtam = {
 
 map_giangtanthon = {
 	worldId = 20, 
-	name = "Giang TÂ©n ThÂ«n", 
+	name = "Giang T©n Th«n", 
 	walkAreas = {
 		giangtanthon_dong,
 		giangtanthon_trungtam

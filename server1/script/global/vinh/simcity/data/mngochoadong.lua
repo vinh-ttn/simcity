@@ -134,7 +134,7 @@ ngochoadong_2 = {
 
 map_ngochoadong = {
 	worldId = 194, 
-	name = "NgÃ¤c Hoa Â§Ã©ng", 
+	name = "Ngäc Hoa §éng", 
 	walkAreas = {
 		ngochoadong_1,
 		ngochoadong_2

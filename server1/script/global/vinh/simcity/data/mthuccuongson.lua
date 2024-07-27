@@ -106,7 +106,7 @@ thuccuongson_2 = {
 
 map_thuccuongson = {
 	worldId = 92, 
-	name = "ThÃ´c CÂ­Â¬ng SÂ¬n", 
+	name = "Thôc C­¬ng S¬n", 
 	walkAreas = {
 		thuccuongson_1,
 		thuccuongson_2

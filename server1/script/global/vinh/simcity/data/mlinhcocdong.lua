@@ -49,7 +49,7 @@ linhcocdong ={
 
 map_linhcocdong = {
 	worldId = 94, 
-	name = "Linh CÃ¨c Â§Ã©ng", 
+	name = "Linh Cèc §éng", 
 	walkAreas = {
 		linhcocdong
 	}, 

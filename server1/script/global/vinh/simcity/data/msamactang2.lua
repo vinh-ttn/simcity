@@ -67,7 +67,7 @@ samactang2 ={
 
 map_samactang2 = {
 	worldId = 226, 
-	name = "Sa MÂ¹c TÃ‡ng 2", 
+	name = "Sa M¹c TÇng 2", 
 	walkAreas = {
 		samactang2
 	}, 

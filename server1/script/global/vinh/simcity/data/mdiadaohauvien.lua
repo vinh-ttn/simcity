@@ -46,7 +46,7 @@ diadaohauvien ={
 
 map_diadaohauvien = {
 	worldId = 12, 
-	name = "Â§Ãža Â§Â¹o HÃ‹u ViÃ–n", 
+	name = "§Þa §¹o HËu ViÖn", 
 	walkAreas = {
 		diadaohauvien
 	}, 

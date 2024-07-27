@@ -55,7 +55,7 @@ canviendong ={
 
 map_canviendong = {
 	worldId = 124, 
-	name = "CÂ¸n ViÂªn Â§Ã©ng", 
+	name = "C¸n Viªn §éng", 
 	walkAreas = {
 		canviendong
 	}, 

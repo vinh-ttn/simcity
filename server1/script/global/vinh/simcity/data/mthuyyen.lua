@@ -181,7 +181,7 @@ thuyyen_nam = {
 
 map_thuyyen = {
 	worldId = 154, 
-	name = "ThÃ³y YÂªn", 
+	name = "Thóy Yªn", 
 	walkAreas = {
 		thuyyen_tay,
 		thuyyen_bac,

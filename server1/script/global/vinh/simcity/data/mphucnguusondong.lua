@@ -67,7 +67,7 @@ phucnguusondong ={
 
 map_phucnguusondong = {
 	worldId = 90, 
-	name = "PhÃ´c NgÂ­u SÂ¬n Â§Â«ng", 
+	name = "Phôc Ng­u S¬n §«ng", 
 	walkAreas = {
 		phucnguusondong
 	}, 

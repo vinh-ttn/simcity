@@ -65,7 +65,7 @@ nhanthachdong ={
 
 map_nhanthachdong = {
 	worldId = 10, 
-	name = "LÂ©m An", 
+	name = "L©m An", 
 	walkAreas = {
 		nhanthachdong
 	}, 

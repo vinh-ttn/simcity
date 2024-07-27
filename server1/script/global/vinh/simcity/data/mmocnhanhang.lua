@@ -54,7 +54,7 @@ mocnhanhang ={
 
 map_mocnhanhang = {
 	worldId = 111, 
-	name = "MÃ©c NhÃ‹n HÂ¹ng", 
+	name = "Méc NhËn H¹ng", 
 	walkAreas = {
 		mocnhanhang
 	}, 

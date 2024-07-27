@@ -64,7 +64,7 @@ duocvuongcoc ={
 
 map_duocvuongcoc = {
 	worldId = 140, 
-	name = "DÂ­Ã®c VÂ­Â¬ng CÃ¨c", 
+	name = "D­îc V­¬ng Cèc", 
 	walkAreas = {
 		duocvuongcoc
 	}, 

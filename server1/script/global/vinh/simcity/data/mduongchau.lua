@@ -295,7 +295,7 @@ duongchau_trungtam ={
 
 map_duongchau = {
 	worldId = 80, 
-	name = "DÂ­Â¬ng ChÂ©u", 
+	name = "D­¬ng Ch©u", 
 	walkAreas = {
 		duongchau_bac, 
 		duongchau_nam1, 

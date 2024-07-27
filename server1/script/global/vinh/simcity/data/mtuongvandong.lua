@@ -55,7 +55,7 @@ tuongvandong ={
 
 map_tuongvandong = {
 	worldId = 116, 
-	name = "TÂ­Ãªng VÂ©n Â§Ã©ng", 
+	name = "T­êng V©n §éng", 
 	walkAreas = {
 		tuongvandong
 	}, 

@@ -39,7 +39,7 @@ luutiendongtang5 ={
 
 map_luutiendongtang5 = {
 	worldId = 129, 
-	name = "LÂ­u TiÂªn Â§Ã©ng TÃ‡ng 5", 
+	name = "L­u Tiªn §éng TÇng 5", 
 	walkAreas = {
 		luutiendongtang5
 	}, 

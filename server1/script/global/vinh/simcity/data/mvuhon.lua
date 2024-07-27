@@ -96,7 +96,7 @@ vuhon_bac = {
 
 map_vuhon = {
 	worldId = 1042, 
-	name = "VÃ² HÃ¥n", 
+	name = "Vò Hån", 
 	walkAreas = {
 		vuhon_nam,
 		vuhon_bac

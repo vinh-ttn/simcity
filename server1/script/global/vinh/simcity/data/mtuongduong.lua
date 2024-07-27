@@ -472,7 +472,7 @@ tuongduong_nhacua = {
 {1924,1579,3235},
 
 -- Trang tri
-{1501,1567,3245, "ßÃn"},
+{1501,1567,3245, "ùùn"},
 {1575,1556,3231},
 {1859,1536,3259},
 {1879,1568,3282},
@@ -622,7 +622,7 @@ tuongduong_tong2 = {
 
 map_tuongduong = {
 	worldId = 78, 
-	name = "T≠¨ng D≠¨ng", 
+	name = "Tùùng Dùùng", 
 	walkAreas = {
 		tuongduong_full, 
 		tuongduong_trongthanh, 

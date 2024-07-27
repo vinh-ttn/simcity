@@ -65,7 +65,7 @@ truonggiangnguyendau_2 = {
 
 map_truonggiangnguyendau = {
 	worldId = 9, 
-	name = "TrÂ­Ãªng Giang NguyÂªn Â§Ã‡u", 
+	name = "Tr­êng Giang Nguyªn §Çu", 
 	walkAreas = {
 		truonggiangnguyendau_1,
 		truonggiangnguyendau_2

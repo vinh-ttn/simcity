@@ -134,7 +134,7 @@ diemthuongson_2 = {
 
 map_diemthuongson = {
 	worldId = 167, 
-	name = "Â§iÃ“m ThÂ­Â¬ng SÂ¬n", 
+	name = "§iÓm Th­¬ng S¬n", 
 	walkAreas = {
 		diemthuongson_1,
 		diemthuongson_2

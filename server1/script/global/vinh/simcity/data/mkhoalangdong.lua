@@ -67,7 +67,7 @@ khoalangdong ={
 
 map_khoalangdong = {
 	worldId = 75, 
-	name = "KhÃ¡a Lang Â§Ã©ng", 
+	name = "Kháa Lang §éng", 
 	walkAreas = {
 		khoalangdong
 	}, 

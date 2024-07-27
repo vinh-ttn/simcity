@@ -37,7 +37,7 @@ luutiendongtang1 ={
 
 map_luutiendongtang1 = {
 	worldId = 125, 
-	name = "LÂ­u TiÂªn Â§Ã©ng TÃ‡ng 1", 
+	name = "L­u Tiªn §éng TÇng 1", 
 	walkAreas = {
 		luutiendongtang1
 	}, 

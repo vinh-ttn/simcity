@@ -51,7 +51,7 @@ longcungdong ={
 
 map_longcungdong = {
 	worldId = 180, 
-	name = "Long Cung Â§Ã©ng", 
+	name = "Long Cung §éng", 
 	walkAreas = {
 		longcungdong
 	}, 

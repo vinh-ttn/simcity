@@ -47,7 +47,7 @@ thanhloadaosondong ={
 
 map_thanhloadaosondong = {
 	worldId = 69, 
-	name = "Thanh Loa Â§Â¶o SÂ¬n Â§Ã©ng", 
+	name = "Thanh Loa §¶o S¬n §éng", 
 	walkAreas = {
 		thanhloadaosondong
 	}, 

@@ -57,7 +57,7 @@ matthatthieulam ={
 
 map_matthatthieulam = {
 	worldId = 113, 
-	name = "M√ãt Th√ät Thi√ïu L¬©m", 
+	name = "MÀt Th t Thi’u L©m", 
 	walkAreas = {
 		matthatthieulam
 	}, 

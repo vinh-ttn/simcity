@@ -178,7 +178,7 @@ duongmon_nam = {
 
 map_duongmon = {
 	worldId = 25, 
-	name = "Â§Â­Ãªng MÂ«n", 
+	name = "§­êng M«n", 
 	walkAreas = {
 		duongmon_bac1,
 		duongmon_bac2,

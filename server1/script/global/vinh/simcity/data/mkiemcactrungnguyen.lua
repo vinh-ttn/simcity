@@ -67,7 +67,7 @@ kiemcactrungnguyen ={
 
 map_kiemcactrungnguyen = {
 	worldId = 43, 
-	name = "KiÃ•m CÂ¸c Trung NguyÂªn", 
+	name = "KiÕm C¸c Trung Nguyªn", 
 	walkAreas = {
 		kiemcactrungnguyen
 	}, 

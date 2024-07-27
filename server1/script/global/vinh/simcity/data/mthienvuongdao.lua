@@ -63,7 +63,7 @@ thienvuongdao ={
 
 map_thienvuongdao = {
 	worldId = 65, 
-	name = "ThiÂªn VÂ­Â¬ng Â§Â¶o", 
+	name = "Thiªn V­¬ng §¶o", 
 	walkAreas = {
 		thienvuongdao
 	}, 

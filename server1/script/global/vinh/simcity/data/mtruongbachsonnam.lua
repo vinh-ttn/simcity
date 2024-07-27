@@ -536,7 +536,7 @@ truongbachsonnam_8 ={
 
 map_truongbachsonnam = {
 	worldId = 321, 
-	name = "TrÂ­Ãªng BÂ¹ch SÂ¬n Nam", 
+	name = "Tr­êng B¹ch S¬n Nam", 
 	walkAreas = {
 		truongbachsonnam_1,
 		truongbachsonnam_2,
