@@ -16,7 +16,7 @@ Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/m
    
 ## A. Giới thiệu tính năng
 
-Có thể sử dụng trên cả 2 bản server Linux 6 và 8
+Chạy trên JX Server 8
 
 **1) Thành thị:** thành thị sẽ trở nên nhộn nhịp với các gian hàng và các nhân sĩ võ lâm đi lại. Các nhân sĩ có thể đánh nhau bất cứ lúc nào. Ngoài ra bạn có thể gọi thêm quan binh tuần tra (nhưng cũng vô ích) hoặc các quái khách trên cõi giang hồ.
 
