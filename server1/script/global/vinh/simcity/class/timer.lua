@@ -9,15 +9,7 @@ function OnTimer(nNpcIndex, nTimeOut)
 		if continue == 1 then
 			SetNpcTimer(nNpcIndex, %GroupFighter.ATICK_TIME)
 		end
-	end
-
-
-	if npcType == 3 or npcType == 4 then
-		continue = %XeTieu:ATick(nNpcIndex) 
-		if continue == 1 then
-			SetNpcTimer(nNpcIndex, %XeTieu.ATICK_TIME)
-		end
-	end
+	end 
 end
 
 function OnDeath(nNpcIndex)
@@ -25,9 +17,5 @@ function OnDeath(nNpcIndex)
 
 	if npcType == 1 or npcType == 2 then
 		%GroupFighter:OnNpcDeath(nNpcIndex, PlayerIndex or 0)	
-	end
-
-	if npcType == 3 or npcType == 4 then
-		%XeTieu:OnNpcDeath(nNpcIndex, PlayerIndex or 0)	
-	end
+	end 
 end

@@ -1,6 +1,10 @@
+Include("\\script\\misc\\eventsys\\type\\player.lua")
+Include("\\script\\misc\\eventsys\\type\\map.lua")
+
 IncludeLib("NPCINFO")
 GroupFighter = {}
 GroupFighter.tbNpcList = {}
+GroupFighter.ownerID2List = {}
 GroupFighter.counter = 1
 GroupFighter.PARAM_LIST_ID = 1
 GroupFighter.PARAM_CHILD_ID = 2
@@ -19,6 +23,96 @@ GroupFighter.player_distance = 12 -- chay theo nguoi choi neu cach xa
 GroupFighter.player_fight_distance = 8 -- neu gan nguoi choi khoang cach 12 thi chuyen sang chien dau
 GroupFighter.player_distance_respawn = 30 -- neu qua xa nguoi choi vi chay nhanh thi phai bien hinh theo
 GroupFighter.player_vision = 15 -- qua 15 = phai respawn vi no se quay ve cho cu
+
+function GroupFighter:New(tbNpc)
+
+	local result = {}
+	local nW = tbNpc.nMapId
+	local id = tbNpc.nNpcId
+	tbNpc.playerID = tbNpc.playerID or ""
+	tbNpc.ownerID = tbNpc.ownerID or ""
+
+	--Not a valid char ?
+	if self:_isValid(id) == 0 then
+		return 0
+	end
+
+	-- Not having valid children char?
+	if tbNpc.children then
+		local validChildren = {}
+		for i=1,getn(tbNpc.children) do
+			local child = tbNpc.children[i]
+			if self:_isValid(child.nNpcId) == 1 then
+				child.rank = 1
+				child.rebel = 0
+				tinsert(validChildren, child)
+			end
+		end
+		tbNpc.children = validChildren
+	end
+
+	if tbNpc.children and getn(tbNpc.children) == 0 then
+		tbNpc.children = nil
+	end	
+
+
+	-- Init stats
+	tbNpc.playerID  = tbNpc.playerID or "simcityplayerhaha"
+	tbNpc.isFighting = 0
+	tbNpc.tick = 0
+	tbNpc.canSwitchTick = 0
+	tbNpc.series = tbNpc.series or random(0,4)
+	tbNpc.camp = tbNpc.camp or random(1,3)
+	tbNpc.walkMode = tbNpc.walkMode or 1
+	tbNpc.isSpinning = 0
+	tbNpc.lastOffSetAngle = 0
+	tbNpc.noRevive = tbNpc.noRevive or 0
+	tbNpc.fightingScore = 0
+	tbNpc.rank = 1
+	local randomPos = 1
+	if tbNpc.tbPos ~= nil then
+		randomPos = getn(tbNpc.tbPos)
+	end
+	tbNpc.hardsetPos = tbNpc.hardsetPos or random(1, randomPos)
+	tbNpc.rebelActivated = tbNpc.rebelActivated or 0
+
+	-- Setup walk paths	 
+	if self:HardResetPos(tbNpc) == 0 then
+		return 1
+	end
+
+	-- Name for thanhthi
+	if tbNpc.mode == nil or tbNpc.mode == "thanhthi" then
+		local worldInfo = SimCityWorld:Get(tbNpc.nMapId)
+
+		if worldInfo.showName == 1 then
+			if (not tbNpc.szName) or tbNpc.szName == "" then
+				tbNpc.szName = SimCityNPCInfo:getName(id)
+			end
+		else
+			tbNpc.szName = " "
+		end
+	end
+
+	-- Setup attacked position (vantieu) 
+	if tbNpc.underAttack and tbNpc.underAttack.types then 
+		local attackLocations = {}
+		local attackTypes = tbNpc.underAttack.types 
+		for i=1,getn(attackTypes) do
+			local nPoint = random(1, getn(tbNpc.tbPos))
+			attackLocations["n"..nPoint] = attackTypes[i]
+			print(nPoint .. " -> " .. attackTypes[i])
+		end
+
+		-- DEV 
+		tbNpc.underAttack.locations = {} --{n2 = 1, n5 = 1}
+	end
+
+	-- Add to store and create everyone on screen 
+	local npcIndex = self:_addNpcGo(tbNpc, 1) 
+	return npcIndex
+
+end
 
 function GroupFighter:_randomNgoaiTrang(tbNpc, nNpcIndex)
 
@@ -130,6 +224,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 	end
 
 	local nMapIndex = SubWorldID2Idx(tbNpc.nMapId)
+	
 	if nMapIndex >= 0 then
 		local nNpcIndex
 		
@@ -137,7 +232,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 		local tX = tbNpc.walkPath[nPosId][1]
 		local tY = tbNpc.walkPath[nPosId][2]
 
-		if goX and goY then		
+		if goX and goY and goX > 0 and goY > 0 then
 			tX = goX
 			tY = goY
 		end
@@ -161,7 +256,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 		if (tbNpc.hardsetName) then
 			name = tbNpc.hardsetName
 		end
-
+		
 		nNpcIndex = AddNpcEx(tbNpc.nNpcId, 95, tbNpc.series, nMapIndex,tX * 32, tY * 32, 1, name , 0)
 
 
@@ -191,7 +286,8 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 
 
 				self.tbNpcList["n"..tbNpc.nNpcListIndex] = tbNpc
-			
+				self.ownerID2List[tbNpc.ownerID] = nNpcListIndex
+
 				-- Otherwise choose side
 				SetNpcCurCamp(nNpcIndex, tbNpc.camp)
 
@@ -215,7 +311,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 				end
 				
 
-				self:_addNpcGo_chilren(nNpcListIndex, tbNpc.nMapId)
+				self:_addNpcGo_chilren(nNpcListIndex)
 
 
 				-- Disable fighting?
@@ -249,7 +345,9 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 end
 
 
-function GroupFighter:_respawnChild(nListId, childID, reason)
+function GroupFighter:_respawnChild(nListId, childID, code, reason)
+	-- code: 0: qua xa parent, 2: them quai chien dau
+
 	local tbNpc = self.tbNpcList["n"..nListId] 
 	if not tbNpc then
 		return 0
@@ -269,16 +367,7 @@ function GroupFighter:_respawnChild(nListId, childID, reason)
 	 	end
 
 		if child.isDead ~= 1 then 
-			if child.walkPath ~= nil then 
-				local targetPos = child.walkPath[tbNpc.nPosId]
-				local cX = targetPos[1]
-				local cY = targetPos[2]
-				child.lastPos = {
-					nX32 = cX*32,
-					nY32 = cY*32
-				}
-			else
-
+			if code == 0 or code == 2 or child.walkPath == nil then
 				local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
 
 				-- Do calculation
@@ -287,6 +376,14 @@ function GroupFighter:_respawnChild(nListId, childID, reason)
 				child.lastPos = {
 					nX32 = (nX + random(-2,2))*32,
 					nY32 = (nY + random(-2,2))*32
+				}
+			elseif child.walkPath ~= nil then 
+				local targetPos = child.walkPath[tbNpc.nPosId]
+				local cX = targetPos[1]
+				local cY = targetPos[2]
+				child.lastPos = {
+					nX32 = cX*32,
+					nY32 = cY*32
 				}
 			end
 
@@ -297,13 +394,14 @@ end
 
 
 
-function GroupFighter:_respawn(nListId, isAllDead, reason)
+function GroupFighter:_respawn(nListId, code, reason)
+	-- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau
 
 	--CallPlayerFunction(1, Msg2Player, "Respawn: "..reason)
 
 	local tbNpc = self.tbNpcList["n"..nListId] 
 
-	isAllDead = isAllDead or 0
+	isAllDead = code == 1 and 1 or 0
 
 	local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
 
@@ -359,10 +457,9 @@ function GroupFighter:_respawn(nListId, isAllDead, reason)
 				child.lastHP = nil
 			end
 			
-			if (isAllDead == 1 and ((tbNpc.resetPosWhenRevive and tbNpc.resetPosWhenRevive >= 1) or (SearchPlayer(tbNpc.playerID) > 0))) then
+			if ((isAllDead == 1 and ((tbNpc.resetPosWhenRevive and tbNpc.resetPosWhenRevive >= 1) or (SearchPlayer(tbNpc.playerID) > 0))) or (isAllDead == 2)) then
 				child.lastPos = nil
-
-				-- Children bi lag
+			-- Children bi lag
 			elseif isAllDead == 3 then
 				if child.isDead ~= 1 then 
 
@@ -403,7 +500,15 @@ function GroupFighter:_respawn(nListId, isAllDead, reason)
 
 	self.tbNpcList["n"..nListId] = tbNpc
 	self:DelNpcSafe_children(nListId)
-	self:_addNpcGo(tbNpc, 0, nX, nY)
+
+	-- Children bi lag
+	if isAllDead == 3 then
+		tbNpc.lastPos = nil
+		self:_addNpcGo(tbNpc, 0)
+	-- Binh thuong
+	else
+		self:_addNpcGo(tbNpc, 0, nX, nY)
+	end
 
 end
 
@@ -426,7 +531,7 @@ function GroupFighter:_getNpcAroundNpcList(nNpcIndex, radius)
 
 		-- Get info for npc in this world
 		for key, tbNpc in self.tbNpcList do
-			if tbNpc.isDead == 0 and tbNpc.nMapId == nW then
+			if tbNpc.isDead == 0 and tbNpc.nMapId == nW and tbNpc.nNpcListIndex ~= myListId then
 				local oX32, oY32 = GetNpcPos(tbNpc.finalIndex)
 				local oX = oX32/32
 				local oY = oY32/32
@@ -494,7 +599,10 @@ function GroupFighter:_isPlayerEnemyAround(nListId, nNpcIndex)
 	if GetNpcAroundPlayerList then 
 		local allNpcs, nCount = GetNpcAroundPlayerList(nNpcIndex, tbNpc.fightPlayerRadius or fightPlayerRadius)
 	    for i = 1, nCount do
-			if (CallPlayerFunction(allNpcs[i], GetFightState) == 1 and CallPlayerFunction(allNpcs[i], GetCurCamp) ~= tbNpc.camp) and tbNpc.camp ~= 0 then
+			if ( (tbNpc.ownerID == nil or allNpcs[i] ~= SearchPlayer(tbNpc.ownerID)) 
+				and CallPlayerFunction(allNpcs[i], GetFightState) == 1 
+				and CallPlayerFunction(allNpcs[i], GetCurCamp) ~= tbNpc.camp) 
+				and tbNpc.camp ~= 0 then
 				return 1
 			end
 	    end  
@@ -505,7 +613,10 @@ function GroupFighter:_isPlayerEnemyAround(nListId, nNpcIndex)
 	    		if (tbNpc.children[j] and tbNpc.children[j].finalIndex and tbNpc.children[j].finalIndex > 0 and tbNpc.children[j].isDead == 0) then
 					local allNpcs, nCount = GetNpcAroundPlayerList(tbNpc.children[j].finalIndex, tbNpc.fightPlayerRadius or fightPlayerRadius)
 					for i = 1, nCount do
-						if (CallPlayerFunction(allNpcs[i], GetFightState) == 1 and CallPlayerFunction(allNpcs[i], GetCurCamp) ~= tbNpc.camp) and tbNpc.camp ~= 0 then
+						if ((tbNpc.ownerID == nil or allNpcs[i] ~= SearchPlayer(tbNpc.ownerID)) 
+								and CallPlayerFunction(allNpcs[i], GetFightState) == 1 
+								and CallPlayerFunction(allNpcs[i], GetCurCamp) ~= tbNpc.camp) 
+								and tbNpc.camp ~= 0 then
 							return 1
 						end
 				    end  
@@ -552,7 +663,7 @@ function GroupFighter:_joinFight(nListId, reason)
 		W = currW
 	}
 	
-	self:_respawn(nListId, 0, "_joinFight ".. reason)
+	self:_respawn(nListId, 3, "_joinFight ".. reason)
 
 	return 1
 end
@@ -590,10 +701,16 @@ function GroupFighter:_joinFightPlayerCheck(nListId, nNpcIndex)
 			local nW = tbNpc.nMapId
 			if SearchPlayer(tbNpc.playerID) == 0 then
 				local worldInfo = SimCityWorld:Get(nW)
-				if worldInfo.showFightingArea == 1 then 
+				if tbNpc.mode == "vantieu" or 
+					worldInfo.showFightingArea == 1 then 
 					local name = GetNpcName(nNpcIndex)
 					local lastPos = tbNpc.tbPos[tbNpc.nPosId]
-					Msg2Map(tbNpc.nMapId, "<color=white>"..name.."<color> ®¸nh ng­êi t¹i "..worldInfo.name.." "..floor(lastPos[1]/8).." "..floor(lastPos[2]/16).."")
+
+					if tbNpc.mode == "vantieu" then
+						Msg2Map(tbNpc.nMapId, "<color=white>"..name.."<color> bÞ tÊn c«ng t¹i "..worldInfo.name.." "..floor(lastPos[1]/8).." "..floor(lastPos[2]/16).."")
+					else
+						Msg2Map(tbNpc.nMapId, "<color=white>"..name.."<color> ®¸nh ng­êi t¹i "..worldInfo.name.." "..floor(lastPos[1]/8).." "..floor(lastPos[2]/16).."")
+					end
 				end
 			end
 			return self:_joinFight(nListId, "player around")
@@ -666,14 +783,19 @@ function GroupFighter:_generateWalkPath(tbNpc, hasJustBeenFlipped)
 	local WalkSize = getn(tbNpc.tbPos)	
 	tbNpc.walkPath = {}
 	
-	local childrenSize = 0
+	local aliveChildren = {}
 	if tbNpc.children then
-		childrenSize = getn(tbNpc.children)
+		for j=1,getn(tbNpc.children) do
+			if tbNpc.children[j].isDead ~= 1 then 
+				tinsert(aliveChildren, j)
+			end
+		end
 	end
 
+	local childrenSize = getn(aliveChildren)
 	if childrenSize > 0 then
 		for j=1,childrenSize do
-			tbNpc.children[j].walkPath = {}
+			tbNpc.children[aliveChildren[j]].walkPath = {}
 		end
 	end
 
@@ -695,9 +817,9 @@ function GroupFighter:_generateWalkPath(tbNpc, hasJustBeenFlipped)
 				for j=1,childrenSize do
 
 					if hasJustBeenFlipped == 0 then
-						tinsert(tbNpc.children[j].walkPath, randomRange(point, tbNpc.walkVar or 2))
+						tinsert(tbNpc.children[aliveChildren[j]].walkPath, randomRange(point, tbNpc.walkVar or 2))
 					else
-						tinsert(tbNpc.children[j].walkPath, randomRange(point, 0))
+						tinsert(tbNpc.children[aliveChildren[j]].walkPath, randomRange(point, 0))
 					end
 				end
 
@@ -708,7 +830,7 @@ function GroupFighter:_generateWalkPath(tbNpc, hasJustBeenFlipped)
 				-- For children				
 				local formation = self:_genCoords_squareshape(tbNpc, childrenSize, i)				
 				for j=1,childrenSize do
-					tinsert(tbNpc.children[j].walkPath, formation[j])
+					tinsert(tbNpc.children[aliveChildren[j]].walkPath, formation[j])
 				end
 
 				-- For myself
@@ -757,118 +879,6 @@ function GroupFighter:_isValid(id)
 	return 1
 end
 
-function GroupFighter:New(tbNpc)
-
-	local result = {}
-	local nW = tbNpc.nMapId
-	local worldInfo = {}
-	
-	local walkAreas = {}
-
-	local id = tbNpc.nNpcId
-	tbNpc.playerID = tbNpc.playerID or ""
-
-	if SearchPlayer(tbNpc.playerID) > 0 then
-		local pW, pX, pY = CallPlayerFunction(SearchPlayer(tbNpc.playerID), GetWorldPos)
-		worldInfo.showName = 1
-		tbNpc.tbPos = {
-			{pX, pY}
-		}
-		tbNpc.nPosId = 1
-		walkAreas =  {{
-			{pX, pY}
-		}}
-	else
-		worldInfo = SimCityWorld:Get(nW)
-		walkAreas = worldInfo.walkAreas		
-	end
-	
-
-	if walkAreas == nil then
-		return 0
-	end
-
-	-- No path to walk?
-	if getn(walkAreas) < 1 then 
-		return 0
-	end
-
-	--Not a valid char ?
-	if self:_isValid(id) == 0 then
-		return 0
-	end
-
-	-- Not having valid children char?
-	if tbNpc.children then
-		local validChildren = {}
-		for i=1,getn(tbNpc.children) do
-			local child = tbNpc.children[i]
-			if self:_isValid(child.nNpcId) == 1 then
-				child.rank = 1
-				tinsert(validChildren, child)
-			end
-		end
-		tbNpc.children = validChildren
-	end
-
-	if tbNpc.children and getn(tbNpc.children) == 0 then
-		tbNpc.children = nil
-	end	
-
-
-	-- Init stats
-	tbNpc.isFighting = 0
-	tbNpc.tick = 0
-	tbNpc.canSwitchTick = 0
-	tbNpc.series = tbNpc.series or random(0,4)
-	tbNpc.camp = tbNpc.camp or random(1,3)
-	tbNpc.walkMode = tbNpc.walkMode or 1
-	tbNpc.isSpinning = 0
-	tbNpc.lastOffSetAngle = 0
-	tbNpc.noRevive = tbNpc.noRevive or 0
-	tbNpc.fightingScore = 0
-	tbNpc.rank = 1
-
-	--if (tbNpc.camp ==3) then
-	--	tbNpc.camp = 5
-	--end
-
-	-- Setup walk paths
-	if SearchPlayer(tbNpc.playerID) == 0 then
-		local walkIndex = random(1,getn(walkAreas))
-		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
-
-		if tbNpc.thanhthi ~= nil and tbNpc.thanhthi == 1 and random(1,2) < 2 then
-			tbNpc.tbPos = arrFlip(tbNpc.tbPos)			
-		end
-
-		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
-			tbNpc.tbPos = createDiagonalFormPath(tbNpc.tbPos)
-		end
-	else
-		
-	end
-
-	-- Startup position
-	tbNpc.hardsetPos = tbNpc.hardsetPos or random(1, getn(tbNpc.tbPos))
-
-	-- Name for it?
-
-	if worldInfo.showName == 1 then
-		if (not tbNpc.szName) or tbNpc.szName == "" then
-			tbNpc.szName = SimCityNPCInfo:getName(id)
-		end
-	else
-		tbNpc.szName = " "
-	end
-
-	-- Calculate walk path for main + children
-	self:_generateWalkPath(tbNpc, 0)
-
-	-- Add to store and create everyone on screen 
-	return self:_addNpcGo(tbNpc, 1)
-
-end
 
 function GroupFighter:HardResetPos(tbNpc)
 
@@ -877,59 +887,88 @@ function GroupFighter:HardResetPos(tbNpc)
 	local worldInfo = {}
 	
 	local walkAreas = {}
-
 	local id = tbNpc.nNpcId
 
-	if SearchPlayer(tbNpc.playerID) > 0 then
-		local pW, pX, pY = CallPlayerFunction(SearchPlayer(tbNpc.playerID), GetWorldPos)
-		worldInfo.showName = 1
-		tbNpc.tbPos = {
-			{pX, pY}
-		}
-		tbNpc.nPosId = 1
-		walkAreas =  {{
-			{pX, pY}
-		}}
+	-- Co duong di bao gom map
+	if tbNpc.mapData then
+		local mapData = tbNpc.mapData
+		for i=1,getn(mapData) do
+			local dataPoint = mapData[i]
+			if (dataPoint[1] == nW) then
+				if dataPoint[4] ~= nil then
+					tbNpc.mapName = dataPoint[4]
+				end
+				tinsert(walkAreas, {dataPoint[2], dataPoint[3]})
+			end
+		end
+		tbNpc.tbPos = arrCopy(walkAreas)
+		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
+			tbNpc.tbPos = createDiagonalFormPath(tbNpc.tbPos)
+		end
+
+		-- No path to walk?
+		if getn(tbNpc.tbPos) < 1 then 
+			return 0
+		end 
+
+	-- Di tu do
 	else
-		worldInfo = SimCityWorld:Get(nW)
-		walkAreas = worldInfo.walkAreas		
-	end
+		-- Dang theo sau thi lay dia diem cua nguoi choi
+		if SearchPlayer(tbNpc.playerID) > 0 then
+			local pW, pX, pY = CallPlayerFunction(SearchPlayer(tbNpc.playerID), GetWorldPos)
+			worldInfo.showName = 1
+			tbNpc.tbPos = {
+				{pX, pY}
+			}
+			tbNpc.nPosId = 1
+			walkAreas =  {{
+				{pX, pY}
+			}}
+		-- hoac la sim thanh thi di tum lum
+		else
+
+			if not tbNpc.tbPos then
+				worldInfo = SimCityWorld:Get(nW)
+				walkAreas = worldInfo.walkAreas		
+			
+				local walkIndex = random(1,getn(walkAreas))
+				tbNpc.tbPos = arrCopy(walkAreas[walkIndex])
+				
+
+				-- Trong thanh thi co the random di nguoc chieu
+				if tbNpc.mode == "thanhthi" and random(1,2) < 2 then
+					tbNpc.tbPos = arrFlip(tbNpc.tbPos)			
+				end
+
+
+				-- Neu di theo doi quan ma ko phai random
+				if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
+					tbNpc.tbPos = createDiagonalFormPath(tbNpc.tbPos)
+				end
+
+				tbNpc.hardsetPos = random(1, getn(tbNpc.tbPos))
+
+			end
+		end
+
+		if walkAreas == nil then
+			return 0
+		end
 	
-
-	if walkAreas == nil then
-		return 0
+		-- No path to walk?
+		if getn(walkAreas) < 1 then 
+			return 0
+		end 
+	
 	end
-
-	-- No path to walk?
-	if getn(walkAreas) < 1 then 
-		return 0
-	end
-
-	--Not a valid char ?
-	if self:_isValid(id) == 0 then
-		return 0
-	end
- 
 
 
 	-- Init stats 
 	tbNpc.isSpinning = 0
 	tbNpc.lastOffSetAngle = 0  
 
-	-- Setup walk paths
-	if SearchPlayer(tbNpc.playerID) == 0 then
-		local walkIndex = random(1,getn(walkAreas))
-		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
-		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
-			tbNpc.tbPos = createDiagonalFormPath(tbNpc.tbPos)
-		end
-	else
-		
-	end
-
 	-- Startup position
 	tbNpc.hardsetPos = tbNpc.hardsetPos or random(1, getn(tbNpc.tbPos))
- 
 
 	-- Calculate walk path for main + children
 	self:_generateWalkPath(tbNpc, 0)
@@ -1073,7 +1112,9 @@ function GroupFighter:Remove(nListId)
 	if tbNpc then
 		DelNpcSafe(tbNpc.finalIndex)
 		self:DelNpcSafe_children(nListId)
+		self:OwnerFarAway(nListId, "Remove")
 		self.tbNpcList["n"..nListId] = nil
+		
 	end
 end
 
@@ -1100,8 +1141,6 @@ function GroupFighter:_createChild(nListId, childID)
 	local tbNpc = self.tbNpcList["n"..nListId]
 	local worldInfo = {}
 	local nW = tbNpc.nMapId
-
-	local nMapIndex = SubWorldID2Idx(nW)
 
 	if not tbNpc.children then 
 		return
@@ -1139,13 +1178,13 @@ function GroupFighter:_createChild(nListId, childID)
 			local distance = GetDistanceRadius(lastPos[1], lastPos[2], pX, pY)
 
 			-- Within 10 radius to parent or not fighting, ok can respawn to last known location
-			if tbNpc.isFighting == 0 or distance < 10 then
+			if tbNpc.isFighting == 0 or distance < 20 then
 				targetPos = lastPos
 			end
 		end
 
 
-		nNpcIndex = AddNpcEx(child.nNpcId, 95, child.series or random(0,4), nMapIndex, targetPos[1] * 32, targetPos[2] * 32, 1, child.szName, 0)
+		nNpcIndex = AddNpcEx(child.nNpcId, 95, child.series or random(0,4), pW, targetPos[1] * 32, targetPos[2] * 32, 1, child.szName, 0)
 
 		if nNpcIndex > 0 then
 			local kind = GetNpcKind(nNpcIndex)
@@ -1159,17 +1198,8 @@ function GroupFighter:_createChild(nListId, childID)
 				end
 
 				-- Choose side
-				SetNpcCurCamp(nNpcIndex, tbNpc.camp)
+				SetNpcCurCamp(nNpcIndex, child.camp or tbNpc.camp)
 				SetNpcActiveRegion(nNpcIndex, 1)
-
-
-				-- Set param to link to parent
-				SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nListId)
-				SetNpcParam(nNpcIndex, self.PARAM_CHILD_ID, childID)
-				SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, SearchPlayer(tbNpc.playerID))
-				SetNpcParam(nNpcIndex, self.PARAM_NPC_TYPE, 2)
-				SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\timer.lua")
-				SetNpcTimer(nNpcIndex, self.ATICK_TIME)
 				
 				-- Ngoai trang?
 				if (tbNpc.ngoaitrang and tbNpc.ngoaitrang == 1) then
@@ -1194,7 +1224,21 @@ function GroupFighter:_createChild(nListId, childID)
 				child.tick = tbNpc.tick
 				child.canSwitchTick = tbNpc.canSwitchTick
 				child.isFighting = tbNpc.isFighting
-				tbNpc.children[childID] = child				
+				
+				if child.rebel == 2 and tbNpc.rebelActivated == 2 then
+					tbNpc.rebelActivated = 0
+					SetNpcCurCamp(nNpcIndex, 5)
+					child.isDead = 1
+				else
+					-- Set param to link to parent
+					SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nListId)
+					SetNpcParam(nNpcIndex, self.PARAM_CHILD_ID, childID)
+					SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, SearchPlayer(tbNpc.playerID))
+					SetNpcParam(nNpcIndex, self.PARAM_NPC_TYPE, 2)
+					SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\timer.lua")
+					SetNpcTimer(nNpcIndex, self.ATICK_TIME)
+				end
+
 			end
 		end
 	end  
@@ -1261,7 +1305,7 @@ function GroupFighter:_arrived_children(tbNpc)
 
 				-- Qua thoi gian cho doi, keu con den ben canh 
 				if tbNpc.arriveTick < tbNpc.tick and tbNpc.isFighting ~= 1 then
-					self:_respawnChild(tbNpc.nNpcListIndex, i, "Too far for 15 seconds")
+					self:_respawnChild(tbNpc.nNpcListIndex, i, 0, "Too far for 15 seconds")
 					return 0
 				end
 
@@ -1470,7 +1514,7 @@ function GroupFighter:ParentDead(nNpcIndex, playerAttacker)
 		if tbNpc.children then		
 			for i=1,getn(tbNpc.children) do
 				local child = tbNpc.children[i]
-				if child.isDead ~= 1 then
+				if child.isDead ~= 1 and child.rebel == 0 then
 					foundAlive = i
 					break
 				end
@@ -1478,20 +1522,29 @@ function GroupFighter:ParentDead(nNpcIndex, playerAttacker)
 		end
 
 		-- No revive and found children alive? That child become parent
-		if tbNpc.noRevive == 1 then
-			if foundAlive > 0 then
-				local child = tbNpc.children[foundAlive]
-				tbNpc.finalIndex = child.finalIndex
-				tbNpc.szName = child.szName
-				tbNpc.nNpcId = child.nNpcId
-				tbNpc.series = child.series
-				tbNpc.children[foundAlive].isDead =	1 
-				SetNpcParam(tbNpc.finalIndex, self.PARAM_NPC_TYPE, 1)
-				return 1
-			else
-				tbNpc.isDead = 1
-				tbNpc.finalIndex = nil 
-			end
+		if foundAlive > 0 then
+			local child = tbNpc.children[foundAlive]
+			local tmp = {
+				finalIndex = tbNpc.finalIndex,
+				szName = tbNpc.szName,
+				nNpcId = tbNpc.nNpcId,
+				series = tbNpc.series
+			}
+
+			tbNpc.finalIndex = child.finalIndex
+			tbNpc.szName = child.szName
+			tbNpc.nNpcId = child.nNpcId
+			tbNpc.series = child.series
+			
+			child.isDead =	tmp.isDead
+			child.finalIndex =	tmp.finalIndex
+			child.szName =	tmp.szName 
+			child.series =	tmp.series 
+
+			SetNpcParam(tbNpc.finalIndex, self.PARAM_NPC_TYPE, 1)
+			SetNpcParam(tbNpc.finalIndex, self.PARAM_CHILD_ID, nil)
+			print("Doi chu pt sang nv "..tbNpc.szName)
+			return 1
 		else
 			tbNpc.isDead = 1
 			tbNpc.finalIndex = nil 
@@ -1500,6 +1553,12 @@ function GroupFighter:ParentDead(nNpcIndex, playerAttacker)
 		self:_check_full_death(nListId)
 	end
 end
+
+function GroupFighter:FINISH(tbNpc, code, reason)
+	-- code 0:failed 1:success
+	tbNpc.finished = 1
+	tbNpc.finishedReason = code
+ end
 
 function GroupFighter:_check_full_death(nListId)
 
@@ -1527,7 +1586,7 @@ function GroupFighter:_check_full_death(nListId)
 					if child.tick > child.canSwitchTick then
 						doRespawn = 1
 					else
-						if child.isFighting == 1 and child.finalIndex and child.isDead ~= 1 then
+						if child.isFighting == 1 and child.finalIndex and child.isDead ~= 1 and child.rebel == 0 then
 							allChildrenDead = 0
 							alive = alive + 1
 						end
@@ -1544,9 +1603,12 @@ function GroupFighter:_check_full_death(nListId)
 		local nW = tbNpc.nMapId	
 		local lastPos = tbNpc.tbPos[tbNpc.nPosId]
 		
+		self:FINISH(tbNpc, 0, "allDead")
 
-
-		if SearchPlayer(tbNpc.playerID) == 0 then
+		if tbNpc.mode == "vantieu" then
+			Msg2Map(nW, "<color=white>"..tbNpc.szName.."<color> hoµn toµn bÞ c­íp t¹i <color=green>"..tbNpc.mapName.." <color=yellow>"..floor(lastPos[1]/8).." "..floor(lastPos[2]/16).."<color>")
+		
+		elseif SearchPlayer(tbNpc.playerID) == 0 then
 			local worldInfo = SimCityWorld:Get(nW)
 			if tbNpc.children and worldInfo.showFightingArea == 1 then
 				Msg2Map(nW, "<color=white>"..tbNpc.szName.."<color> toµn ®oµn b¹i trËn <color=yellow>"..floor(lastPos[1]/8).." "..floor(lastPos[2]/16).."<color>")
@@ -1555,10 +1617,9 @@ function GroupFighter:_check_full_death(nListId)
 
 		-- No revive? Do nothing
 		if tbNpc.noRevive == 1 then
+			self:Remove(nListId)
 			return
 		end
-
-
     
     	tbNpc.fightingScore = ceil(tbNpc.fightingScore*0.7)
     	self:_checkRank(tbNpc)
@@ -1572,7 +1633,7 @@ end
 
 
 function GroupFighter:ATick(nNpcIndex)
-	local npcType = GetNpcParam(nNpcIndex, self.PARAM_NPC_TYPE)	
+ 	local npcType = GetNpcParam(nNpcIndex, self.PARAM_NPC_TYPE)	
 	-- Parent
 	if (npcType == 1) then
 		return self:ParentTick(nNpcIndex)
@@ -1582,8 +1643,7 @@ function GroupFighter:ATick(nNpcIndex)
 end
 
 function GroupFighter:ChildrenTick(childrenIndex)
-
-	if childrenIndex > 0 then
+ 	if childrenIndex > 0 then
 
 		local nListId = GetNpcParam(childrenIndex, self.PARAM_LIST_ID)
 		local childID = GetNpcParam(childrenIndex, self.PARAM_CHILD_ID)
@@ -1592,6 +1652,11 @@ function GroupFighter:ChildrenTick(childrenIndex)
 		if not tbNpc then
 			return 1
 		end
+
+		if (tbNpc.finished == 1) then
+			return 0
+		end
+
 		local child = tbNpc.children[childID]
 
 
@@ -1614,10 +1679,10 @@ function GroupFighter:ChildrenTick(childrenIndex)
 					-- Too far from each other
 					if GetDistanceRadius(nX32/32,nY32/32, pX32/32, pY32/32) > 30 then
 						if (not tbNpc.tooFarStick) then
-							tbNpc.tooFarStick = tbNpc.tick + 5
+							tbNpc.tooFarStick = tbNpc.tick + 10
 						elseif tbNpc.tooFarStick < tbNpc.tick then
 							tbNpc.tooFarStick = nil
-							self:_respawnChild(nListId, childID, "Too far for 10 seconds")
+							self:_respawnChild(nListId, childID, 0, "Too far for 10 seconds")
 						end
 						return 0
 					end
@@ -1652,12 +1717,16 @@ function GroupFighter:ParentTick(nNpcIndex)
 		if tbNpc.isFighting == 1 then
 			tbNpc.fightingScore = tbNpc.fightingScore + 10
 		end
-		self.tbNpcList["n"..nListId] = tbNpc
-		self:_doParentTick(nListId)
 
 		if tbNpc.isDead == 1 then
 			return 0
 		end
+
+		self:moveParent(nListId)
+		if tbNpc.mode == "vantieu" then
+			self:CheckOwnerPos(nListId)
+		end
+
 		return 1
 	end
 	return 1
@@ -1665,8 +1734,84 @@ end
 
 
  
+function GroupFighter:CheckOwnerPos(nListId)
+	local tbNpc = self.tbNpcList["n"..nListId]
 
-function GroupFighter:_doParentTick(nListId)
+	local nOwnerIndex = SearchPlayer(tbNpc.ownerID)
+	if not (nOwnerIndex > 0) then
+		return not self:OwnerFarAway(nListId, "CheckOwnerPos1")
+	end
+	
+	local nOwnerX32, nOwnerY32, nOwnerMapIndex = CallPlayerFunction(nOwnerIndex, GetPos)
+	if not nOwnerX32 then
+		return not self:OwnerFarAway(nListId, "CheckOwnerPos2")
+	end
+	
+	local nSelfX32, nSelfY32, nSelfMapIndex = GetNpcPos(tbNpc.finalIndex)
+	local nDis = ((nOwnerX32 - nSelfX32)^2) + ((nOwnerY32 - nSelfY32)^2)
+	if nOwnerMapIndex ~= nSelfMapIndex or nDis >= 750*750 then
+		return not self:OwnerFarAway(nListId, "CheckOwnerPos3")
+	end
+	
+	self:OwnerNear(nListId, nOwnerIndex, nOwnerX32/32, nOwnerY32/32)
+end
+
+function GroupFighter:OwnerNear(nListId, nOwnerIndex, nX, nY)
+	local tbNpc = self.tbNpcList["n"..nListId]
+	local nOwnerIndex = SearchPlayer(tbNpc.ownerID)
+	CallPlayerFunction(nOwnerIndex, SetFightState, 1)
+	if not tbNpc.bOwnerHere then
+ 		self:OnOwnerEnter(nListId)
+		tbNpc.bOwnerHere = 1
+	end
+end
+
+
+function GroupFighter:OnOwnerEnter(nListId)
+
+	local tbNpc = self.tbNpcList["n"..nListId]
+	local nOwnerIndex = SearchPlayer(tbNpc.ownerID)
+
+	-- Save current state then lock 
+	tbNpc.nState_town = CallPlayerFunction(nOwnerIndex, IsDisabledUseTownP)
+	KhoaTHP(nOwnerIndex, 1)
+
+end
+
+
+function GroupFighter:OwnerFarAway(nListId, reason)
+	local tbNpc = self.tbNpcList["n"..nListId]
+	if not tbNpc then
+		return 1
+	end
+	if tbNpc.bOwnerHere then
+		tbNpc.bOwnerHere = nil
+		self:OnOwnerLeave(nListId)
+	--else
+		--if GetCurServerTime() - tbNpc.nPlayerLeaveTime >= 5 * 60 then
+		--	local _, _, nMapIndex = GetNpcPos(self.nNpcIndex)
+		--	-- do someting when owner leave for 5 minutes here
+		--	return 1
+		--end
+	end
+end
+
+function GroupFighter:OnOwnerLeave(nListId)
+	local tbNpc = self.tbNpcList["n"..nListId]
+	local nOwnerIndex = SearchPlayer(tbNpc.ownerID)
+
+	local nCurTime = GetCurServerTime()
+	tbNpc.nPlayerLeaveTime = nCurTime
+	if nOwnerIndex > 0 then 
+		if tbNpc.nState_town ~= nil then
+			KhoaTHP(nOwnerIndex, tbNpc.nState_town)
+			tbNpc.nState_town = nil
+		end
+	end
+end
+
+
+function GroupFighter:moveParent(nListId)
 	local tbNpc = self.tbNpcList["n"..nListId]
 
 	local nNpcIndex = tbNpc.finalIndex
@@ -1688,9 +1833,14 @@ function GroupFighter:_doParentTick(nListId)
 
 	local cachNguoiChoi = 0	
 
+	-- Waiting for parent action
+	if tbNpc.underAttack and tbNpc.underAttack.isConfirmation > 0 then
+		return 1
+	end
 
+	-- CHAT FEATRUE - Khong dang theo sau ai het
+	local worldInfo = SimCityWorld:Get(nW)
 	if SearchPlayer(tbNpc.playerID) == 0 then
-		worldInfo = SimCityWorld:Get(nW)
 
 		-- Otherwise just Random chat
 		if worldInfo.allowChat == 1 then
@@ -1717,7 +1867,6 @@ function GroupFighter:_doParentTick(nListId)
 		cachNguoiChoi = GetDistanceRadius(myPosX,myPosY, pX, pY)
 	end
 
-	
 	-- Is fighting? Do nothing except leave fight if possible
 	if tbNpc.isFighting == 1 then
 
@@ -1750,9 +1899,20 @@ function GroupFighter:_doParentTick(nListId)
 	end
 
 	if ((SearchPlayer(tbNpc.playerID) > 0 and cachNguoiChoi <= self.player_fight_distance) or SearchPlayer(tbNpc.playerID) == 0) 
-		and (worldInfo.allowFighting == 1) and (tbNpc.isFighting == 0 and tbNpc.canSwitchTick < tbNpc.tick) 
+		and (worldInfo.allowFighting == 1 or tbNpc.mode == "vantieu") and (tbNpc.isFighting == 0 and tbNpc.canSwitchTick < tbNpc.tick) 
 	then
 
+		-- Case 1: someone around is fighting, we join		
+		if (tbNpc.underAttack and tbNpc.rebelActivated == 1 and random(0, tbNpc.underAttack.rebelChance) <= 2) then -- 1% bi tan cong moi giay
+			tbNpc.rebelActivated = 2
+
+			if tbNpc.bOwnerHere == 1 then
+				CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Talk, 1, "", "...!!! Ph¸t hiÖn ®¹o tÆc trµ trén!")
+			end
+			self:_joinFight(nListId, "fight rebel")
+			return 1
+		end
+		
 		-- Case 1: someone around is fighting, we join		
 		if (tbNpc.joinFightChance and random(0, tbNpc.joinFightChance) <= 2) then			
 			if self:_joinFightCheck(nListId, nNpcIndex) == 1 then
@@ -1776,10 +1936,9 @@ function GroupFighter:_doParentTick(nListId)
 			local countFighting = 0
 
 			for key, tbNpc2 in self.tbNpcList do
-				if tbNpc2.nNpcListIndex ~= nListId and tbNpc2.nMapId == tbNpc.nMapId then
-					if (tbNpc2.isFighting == 0 and tbNpc2.camp ~= tbNpc.camp) then
-
-						if (not tbNpc.targetCamp) or tbNpc.targetCamp == tbNpc2.camp then
+				if tbNpc2.nNpcListIndex ~= nListId and tbNpc2.nMapId == tbNpc.nMapId 
+					and (tbNpc2.isFighting == 0 and tbNpc2.camp ~= tbNpc.camp) 
+					and (not tbNpc.targetCamp) or tbNpc.targetCamp == tbNpc2.camp then
 							local otherPosX, otherPosY, otherPosW = GetNpcPos(tbNpc2.finalIndex)
 							otherPosX = floor(otherPosX / 32)
 							otherPosY = floor(otherPosY / 32)
@@ -1793,9 +1952,6 @@ function GroupFighter:_doParentTick(nListId)
 								end
 								self:_joinFight(tbNpc2.nNpcListIndex, "caused by others "..distance.." ("..otherPosX.." "..otherPosY..") ("..myPosX.." "..myPosY..")")
 							end
-						end
-					end
-
 				end
 			end
 
@@ -1810,7 +1966,7 @@ function GroupFighter:_doParentTick(nListId)
 			end
 
 
-			if SearchPlayer(tbNpc.playerID) == 0 and countFighting > 0 and worldInfo.showFightingArea == 1 then 
+			if SearchPlayer(tbNpc.playerID) == 0 and countFighting > 0 and (worldInfo.showFightingArea == 1 or tbNpc.mode == "vantieu") then 
 				Msg2Map(nW, "Cã "..countFighting.." nh©n sÜ ®ang ®¸nh nhau t¹i "..worldInfo.name.." <color=yellow>"..floor(myPosX/8).." "..floor(myPosY/16).."<color>")
 			end
 
@@ -1822,13 +1978,12 @@ function GroupFighter:_doParentTick(nListId)
 
 	end
 	
-
+	local arriveRes = self:_arrived(nNpcIndex, tbNpc)
 	-- Otherwise just walk peacefully
 	if SearchPlayer(tbNpc.playerID) == 0 then
-
 		-- Mode 1: random
 		if tbNpc.walkMode == "random" or tbNpc.walkMode == "keoxe" or (not tbNpc.children) then
-			if self:_arrived(nNpcIndex, tbNpc) == 1 then
+			if arriveRes == 1 then
 				-- Keep walking no stop
 				if (tbNpc.noStop == 1 or random(1,100)<90) then
 					nNextPosId = nNextPosId + 1
@@ -1836,6 +1991,7 @@ function GroupFighter:_doParentTick(nListId)
 					-- End of the array
 					if nNextPosId > WalkSize then
 						if tbNpc.noBackward == 1 then
+							self:NextMap(tbNpc)
 							return 1
 						end
 
@@ -1858,8 +2014,7 @@ function GroupFighter:_doParentTick(nListId)
 
 		-- Mode 2: formation
 		else
-			local arrivedRes = self:_arrived(nNpcIndex, tbNpc)
-			if arrivedRes == 1 then
+			if arriveRes == 1 then
 				if tbNpc.isSpinning == 0 then
 					-- Keep walking no stop
 					if (tbNpc.noStop == 1 or random(1,100)<90) then
@@ -1869,6 +2024,7 @@ function GroupFighter:_doParentTick(nListId)
 						-- End of the array
 						if nNextPosId > WalkSize then
 							if tbNpc.noBackward == 1 then
+								self:NextMap(tbNpc)
 								return 1
 							end
 							local newFlipArr = {}
@@ -1922,7 +2078,14 @@ function GroupFighter:_doParentTick(nListId)
 			nY = targetPos[4]
 		end
 
+		self:spawnAttack(tbNpc, nNextPosId)
+
 		NpcWalk(nNpcIndex, nX, nY)	
+
+		if tbNpc.mode == "vantieu" and mod(tbNpc.tick, 10) == 0 then
+			CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Msg2Player, "Täa ®é hiÖn t¹i cña xe tiªu lµ <color=green>"..tbNpc.mapName.." <color=yellow>"..floor(nX/8)..","..floor(nY/16))
+		end
+
 
 		self:_walk_children(tbNpc, nNextPosId)
 
@@ -1950,13 +2113,18 @@ function GroupFighter:_doParentTick(nListId)
 			}
 			tbNpc.nPosId = 1
 			self:_generateWalkPath(tbNpc, 0)
-			self:_respawn(tbNpc.nNpcListIndex, 1, "keo xe qua map khac")
+			self:_respawn(tbNpc.nNpcListIndex, 2, "keo xe qua map khac")
 			return 1
 		end
 		
+		self:spawnAttack(tbNpc, nNextPosId)
 
 		-- Otherwise walk toward parent
 		NpcWalk(nNpcIndex, pX+random(-2,2), pY+random(-2,2))
+
+		if tbNpc.mode == "vantieu" and mod(tbNpc.tick, 10) == 0 then
+			CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Msg2Player, "Täa ®é hiÖn t¹i cña xe tiªu lµ <color=green>"..tbNpc.mapName.." <color=yellow>"..floor(nX/8)..","..floor(nY/16))
+		end
 
 		-- Walk children as 
 		if tbNpc.children then 
@@ -1976,6 +2144,140 @@ end
 
 
 
+
+function GroupFighter:spawnAttack(tbNpc, nNextPosId)
+	-- By locations
+	if tbNpc.underAttack and tbNpc.underAttack.locations and tbNpc.underAttack.locations["n"..nNextPosId] then
+		self:triggerUnderAttack(tbNpc, tbNpc.underAttack.locations["n"..nNextPosId])
+		tbNpc.underAttack.locations["n"..nNextPosId] = nil
+	end
+end
+
+function GroupFighter:triggerUnderAttack(tbNpc, attackType)
+	tbNpc.underAttack.isConfirmation = attackType
+
+	-- 0: theo sau choi 1: theo sau va cuop 2: cuop truc tiep
+	local tbSay = {}
+	if attackType == 0 or attackType == 1 then
+		tinsert(tbSay, "(Nhãm ng­êi l¹)\n\n\nCòng lµ bÌo n­íc gÆp nhau n¬i nguy hiÓm nµy. ¢u còng lµ duyªn phËn, xin cho chóng ta cïng theo c¸c h¹!")
+		CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Msg2Player, "Cã 1 vµi nh©n vËt kh¶ nghi ®ang ®i theo chóng ta")
+	end
+
+	if attackType == 2 then
+		tinsert(tbSay, "(Nhãm ng­êi l¹)\n\n\n§­êng nµy do ta më! Ai cho c¸c ng­¬i vµo?")
+	end
+
+	if attackType == 3 then
+		tinsert(tbSay, "...\n\n\nXung quanh ®©y thËt kh¶ nghi...")
+	end
+	
+	tinsert(tbSay, "KÕt thóc ®èi tho¹i/#GroupFighter:confirmAttack("..tbNpc.nNpcListIndex ..")") 
+
+	if tbNpc.bOwnerHere == 1 then
+		CallPlayerFunction(SearchPlayer(tbNpc.ownerID), CreateTaskSay, tbSay)
+	end
+end
+
+function GroupFighter:confirmAttack(nListId)
+	local tbNpc = self.tbNpcList["n"..nListId] 
+
+	if not tbNpc then
+		return 1
+	end
+
+	local attackType = tbNpc.underAttack.isConfirmation
+	tbNpc.underAttack.isConfirmation = 0
+
+	-- Add attackers?
+	if attackType == 0 or attackType == 1 or attackType == 2 then
+		local attackers = {}
+		local totalN = random(1,6)
+		local pool = tbNpc.underAttack.attackerIds
+		local current = getn(tbNpc.children)
+		local tobeCreated = {}
+		for i=1,totalN do
+			local attacker = {}
+			attacker.szName = SimCityPlayerName:getName()
+			attacker.rebel = attackType + 1
+			if attackType == 0 then
+				attacker.nNpcId = 682
+			else
+				attacker.nNpcId = pool[random(1,getn(pool))]
+			end
+			attacker.ngoaitrang = 1
+			tinsert(tbNpc.children, attacker)
+			current = current + 1
+			tinsert(tobeCreated, current)			
+		end
+
+		-- Has attacker enabled
+		if attackType == 1 then
+			tbNpc.rebelActivated = 1 -- fight randomly
+		end
+		if attackType == 2 then
+			tbNpc.rebelActivated = 2 -- fight instantly			
+		end
+
+		-- Reset pos
+		self:HardResetPos(tbNpc)
+		--tbNpc.nPosId = tbNpc.nPosId - 1
+
+		-- Create new char
+		for i=1,getn(tobeCreated) do
+			self:_respawnChild(nListId, tobeCreated[i], 2, "them nhan vat theo sau")
+		end
+	end
+  
+	print("TRIGGER ATTACK: "..attackType)
+end
+
+function GroupFighter:NextMap(tbNpc)
+
+	local pW = 0
+	local found = 0
+	local mapData = tbNpc.mapData
+	for i=1,getn(mapData) do
+		local dataPoint = mapData[i]
+		if (dataPoint[1] == tbNpc.nMapId) then
+			found = 1
+		end
+		if (found == 1 and pW == 0 and dataPoint[1] ~= tbNpc.nMapId) then
+			pW = dataPoint[1]
+		end
+	end
+
+	if pW == 0 then
+	 	self:FINISH(tbNpc, 1, "success")
+		CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Msg2Player, "Tiªu xa ®· ®Õn ®Ých")
+		return 1
+	end
+
+	-- Player has gone different map? Do respawn
+	local needRespawn = 1
+ 
+
+	
+	tbNpc.nMapId = pW
+	tbNpc.isFighting = 0
+	tbNpc.canSwitchTick = tbNpc.tick
+ 	CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Msg2Player, "Tiªu xa ®· chuyÓn qua map")
+	self:_respawn(tbNpc.nNpcListIndex, 2, "keo xe qua map khac")
+	return 1
+	
+
+	
+end
+
+function GroupFighter:OnPlayerLeaveMap()
+	local szName = GetName()
+	if not szName then
+		return
+	end
+	local nNpcListIndex = self.ownerID2List[szName]
+	if nNpcListIndex > 0 then
+		self:OwnerFarAway(nNpcListIndex, "onPlayerLeaveMap")
+	end
+end
 
 
 function _sortByScore(tb1, tb2)
@@ -2060,3 +2362,6 @@ function GroupFighter:ThongBaoBXH(nW)
 
 end
 
+
+EventSys:GetType("LeaveMap"):Reg("ALL", GroupFighter.OnPlayerLeaveMap, GroupFighter)
+--EventSys:GetType("EnterMap"):Reg("ALL", GroupFighter.OnPlayerEnterMap, GroupFighter)

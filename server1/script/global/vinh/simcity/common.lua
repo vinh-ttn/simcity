@@ -104,7 +104,6 @@ function DelNpcSafe(nNpcIndex)
     if (PIdx > 0) then
         return
     end
-
     DelNpc(nNpcIndex)
 end
 

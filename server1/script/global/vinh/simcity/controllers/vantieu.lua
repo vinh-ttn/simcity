@@ -26,19 +26,19 @@ function SimCityMainVanTieu:tao1xe()
 	-- [1] = {nId=2146, nLevel=95}, 
 	-- [2] = {nId=2147, nLevel=95}, 
 	-- [3] = {nId=2148, nLevel=95}, 
-	local npcXeTieu = 681 
+	local npcXeTieu = 682 
  	local mapID = nW
  	local children5 = {		
-		{43, 2, {szName = "Heo n¸i"}},
-		{43, 2, {szName = "Heo näc"}},
-		{42, 2, {szName = "H­u sao"}},
-		{13, 2, {szName = "Voi b¶n ®«n"}},
+		{43, 3, {szName = "Heo n¸i"}},
+		{43, 3, {szName = "Heo näc"}},
+		--{42, 2, {szName = "H­u sao"}},
+		--{13, 2, {szName = "Voi b¶n ®«n"}},
 
-		{2146, 1, {szName = "Xe l­¬ng thùc"}},
-		{2147, 1, {szName = "Xe quÇn ¸o"}},
+		--{2146, 1, {szName = "Xe l­¬ng thùc"}},
+		--{2147, 1, {szName = "Xe quÇn ¸o"}},
 		{2148, 1, {szName = "Xe cña c¶i"}},
 		
-		{682,  4, {szName = "Gia nh©n"}}
+		--{682,  4, {szName = "Gia nh©n"}}
 	}
 	local mapData = VT_ROUTES[nW]
 
@@ -64,7 +64,8 @@ function SimCityMainVanTieu:tao1xe()
 	end
 	
 
-	local nListId = XeTieu:New({
+	local nListId = GroupFighter:New({
+		mode = "vantieu",
 		szName = name,
 
 		nNpcId = npcXeTieu,						-- required, main char ID
@@ -126,7 +127,7 @@ function SimCityMainVanTieu:getTieuXa()
 	if nListId == 0 then
 		return nil
 	end
-	return XeTieu:Get(nListId)
+	return GroupFighter:Get(nListId)
 
 end
 
@@ -156,7 +157,7 @@ function SimCityMainVanTieu:hoanthanhTieuXa(force)
 		Talk(1, "", "NhiÖm vô thÊt b¹i")
 	end
 
-	XeTieu:Remove(tbNpc.nNpcListIndex)
+	GroupFighter:Remove(tbNpc.nNpcListIndex)
 	self.player2TieuXa[GetName()] = 0
 end
 
