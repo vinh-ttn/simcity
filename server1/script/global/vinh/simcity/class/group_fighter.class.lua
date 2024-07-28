@@ -35,86 +35,6 @@ function GroupFighter:_randomNgoaiTrang(tbNpc, nNpcIndex)
 
 end
 
-function GroupFighter:_makeDiagonal(points)
-    local n = getn(points)
-
-    if n < 3 then
-        -- Not enough points to form a line
-        return points
-    end
-
-    local results = {points[1]}
-
-    -- Iterate through the points starting from the second point
-    for i = 2, n - 1 do
-        local A = points[i - 1]
-        local B = points[i]
-        local C = points[i + 1]
-
-        -- Calculate the angles between line segments AB and BC
-        local angleAB = atan2(B[2] - A[2], B[1] - A[1])
-        local angleBC = atan2(C[2] - B[2], C[1] - B[1])
-
-        -- Calculate the difference in angles
-        local angleDiff = abs(angleBC - angleAB)
-
-
-        if (B[3] and B[3] == 1) or angleDiff >= 20 then
-        	tinsert(results, B)
-
-        else
-
-    		local distance = GetDistanceRadius(A[1], A[2], C[1], C[2])
-
-    		-- Too close, we get rid of point B
-    		if distance < 10 then
-    			i = i + 1	-- jump
-			else
-				-- Adjust the position of point B to make the angle closer to 180 degrees
-	            --B[1] = (A[1] + C[1]) / 2
-	            --B[2] = (A[2] + C[2]) / 2
-	            tinsert(results, B)
-            end
-    	end
-
-
-    end
-
-    tinsert(results, points[getn(points)])
-
-    -- Return the corrected points
-    return results
-end
-  
-
-function GroupFighter:_genFormation(N)
-    local bestX = 1
-	local bestY = N
-
-	local stop = 0
-	local closestDifference = 1000
-
-    for x = 1, N do
-    	if stop == 0 then
-	        local y = N / x
-	        if mod(N,x) == 0 and mod(N,y) == 0 and y <= x and y ~= 1 then
-	            bestX = x
-	            bestY = y
-	            stop = 1
-            elseif (y < x) and (x - y < closestDifference) then
-            	bestX = x
-	            bestY = ceil(y)
-	            closestDifference = x - y
-	        end
-        end
-    end
-
-    return {bestX, bestY}
-end
- 
-
-
-
 function GroupFighter:_arrived(nNpcIndex, tbNpc)
 
 	
@@ -767,17 +687,17 @@ function GroupFighter:_generateWalkPath(tbNpc, hasJustBeenFlipped)
 			if tbNpc.walkMode == "random" or tbNpc.walkMode == "keoxe" then
 
 				if hasJustBeenFlipped == 0 then
-					tinsert(tbNpc.walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+					tinsert(tbNpc.walkPath, randomRange(point, tbNpc.walkVar or 2))
 					
 				else
-					tinsert(tbNpc.walkPath, self:_randomRange(point, 0))
+					tinsert(tbNpc.walkPath, randomRange(point, 0))
 				end
 				for j=1,childrenSize do
 
 					if hasJustBeenFlipped == 0 then
-						tinsert(tbNpc.children[j].walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+						tinsert(tbNpc.children[j].walkPath, randomRange(point, tbNpc.walkVar or 2))
 					else
-						tinsert(tbNpc.children[j].walkPath, self:_randomRange(point, 0))
+						tinsert(tbNpc.children[j].walkPath, randomRange(point, 0))
 					end
 				end
 
@@ -810,9 +730,9 @@ function GroupFighter:_generateWalkPath(tbNpc, hasJustBeenFlipped)
 		-- No children = random path for myself
 		else
 			if hasJustBeenFlipped == 0 then
-				tinsert(tbNpc.walkPath, self:_randomRange(point, tbNpc.walkVar or 2))
+				tinsert(tbNpc.walkPath, randomRange(point, tbNpc.walkVar or 2))
 			else
-				tinsert(tbNpc.walkPath, self:_randomRange(point, 0))
+				tinsert(tbNpc.walkPath, randomRange(point, 0))
 			end
 		end
 
@@ -923,7 +843,7 @@ function GroupFighter:New(tbNpc)
 		end
 
 		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
-			tbNpc.tbPos = self:_makeDiagonal(tbNpc.tbPos)
+			tbNpc.tbPos = createDiagonalFormPath(tbNpc.tbPos)
 		end
 	else
 		
@@ -1001,7 +921,7 @@ function GroupFighter:HardResetPos(tbNpc)
 		local walkIndex = random(1,getn(walkAreas))
 		tbNpc.tbPos = tbNpc.tbPos or arrCopy(walkAreas[walkIndex])
 		if tbNpc.walkMode ~= "random" and tbNpc.walkMode ~= "keoxe" and tbNpc.children then
-			tbNpc.tbPos = self:_makeDiagonal(tbNpc.tbPos)
+			tbNpc.tbPos = createDiagonalFormPath(tbNpc.tbPos)
 		end
 	else
 		
@@ -1019,16 +939,8 @@ function GroupFighter:HardResetPos(tbNpc)
 
 end
  
-function GroupFighter:_randomRange(point, walkVar)
-	if walkVar == 0 then
-		return {point[1], point[2]}
-	end
-	return {point[1] +random(-walkVar,walkVar), point[2] +random(-walkVar,walkVar)}
-end
-
- 
 function GroupFighter:_genCoords_squareshape(tbNpc, N, targetPointer) 
-    local f = self:_genFormation(N)
+    local f = createFormation(N)
     local rows = f[1] > f[2] and f[1] or f[2]
     local cols = f[1] > f[2] and f[2] or f[1]
     local spacing = tbNpc.char_spacing or self.CHAR_SPACING 
