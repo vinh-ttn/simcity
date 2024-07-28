@@ -72,6 +72,9 @@ function GroupFighter:New(tbNpc)
 	local randomPos = 1
 	if tbNpc.tbPos ~= nil then
 		randomPos = getn(tbNpc.tbPos)
+		if randomPos < 1 then 
+			randomPos = 1
+		end
 	end
 	tbNpc.hardsetPos = tbNpc.hardsetPos or random(1, randomPos)
 	tbNpc.rebelActivated = tbNpc.rebelActivated or 0
@@ -101,7 +104,7 @@ function GroupFighter:New(tbNpc)
 		for i=1,getn(attackTypes) do
 			local nPoint = random(1, getn(tbNpc.tbPos))
 			attackLocations["n"..nPoint] = attackTypes[i]
-			----print(nPoint .. " -> " .. attackTypes[i])
+			------print(nPoint .. " -> " .. attackTypes[i])
 		end
 
 		-- DEV 
@@ -392,7 +395,7 @@ end
 
 function GroupFighter:_respawn(nListId, code, reason)
 	-- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau
-	----print("RESPAWN "..code.." "..reason)
+	--print("RESPAWN "..code.." "..reason)
 	--CallPlayerFunction(1, Msg2Player, "Respawn: "..reason)
 
 	local tbNpc = self.tbNpcList["n"..nListId] 
@@ -406,7 +409,7 @@ function GroupFighter:_respawn(nListId, code, reason)
 	nY = nY/32
 
 	-- 2 = qua map khac?
-	if (isAllDead == 2) then
+	if (code == 2) then
 		nX = 0
 		nY = 0
 		tbNpc.nPosId = 1
@@ -945,6 +948,7 @@ function GroupFighter:HardResetPos(tbNpc)
 			walkAreas =  {{
 				{pX, pY}
 			}}
+			--print("DONE "..pX.." "..pY)
 		-- hoac la sim thanh thi di tum lum
 		else
 
@@ -1559,7 +1563,7 @@ function GroupFighter:ParentDead(nNpcIndex, playerAttacker)
 
 			SetNpcParam(tbNpc.finalIndex, self.PARAM_NPC_TYPE, 1)
 			SetNpcParam(tbNpc.finalIndex, self.PARAM_CHILD_ID, nil)
-			----print("Doi chu pt sang nv "..tbNpc.szName)
+			------print("Doi chu pt sang nv "..tbNpc.szName)
 			return 1
 		else
 			tbNpc.isDead = 1
@@ -1995,7 +1999,7 @@ function GroupFighter:moveParent(nListId)
 	end
 	
 	local arriveRes = self:_arrived(nNpcIndex, tbNpc)
-	--print(arriveRes.." "..nNextPosId)
+	----print(arriveRes.." "..nNextPosId)
 	-- Otherwise just walk peacefully
 	if SearchPlayer(tbNpc.playerID) == 0 then
 		-- Mode 1: random
@@ -2100,7 +2104,7 @@ function GroupFighter:moveParent(nListId)
 		NpcWalk(nNpcIndex, nX, nY)	
 		local worldInfo = SimCityWorld:Get(nW)
 
-		--print(floor(nX/8)..","..floor(nY/16))
+		----print(floor(nX/8)..","..floor(nY/16))
 
 		if tbNpc.mode == "vantieu" and mod(tbNpc.tick, 10) == 0 and worldInfo.name  then
 			CallPlayerFunction(SearchPlayer(tbNpc.ownerID), Msg2Player, "Täa ®é hiÖn t¹i cña xe tiªu lµ <color=green>"..worldInfo.name.." <color=yellow>"..floor(nX/8)..","..floor(nY/16))
@@ -2249,7 +2253,7 @@ function GroupFighter:confirmAttack(nListId)
 		end
 	end
   
-	--print("TRIGGER ATTACK: "..attackType)
+	----print("TRIGGER ATTACK: "..attackType)
 end
 
 function GroupFighter:NextMap(tbNpc)
@@ -2296,7 +2300,7 @@ function GroupFighter:OnPlayerLeaveMap()
 		return
 	end
 	local nNpcListIndex = self.ownerID2List[szName]
-	if nNpcListIndex > 0 then
+	if nNpcListIndex ~= nil and nNpcListIndex > 0 then
 		self:OwnerFarAway(nNpcListIndex, "onPlayerLeaveMap")
 	end
 end
