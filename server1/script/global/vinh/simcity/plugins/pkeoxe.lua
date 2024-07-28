@@ -112,13 +112,8 @@ end
 
 function SimCityKeoXe:removeAll()
 	for key, tbNpc in GroupFighter.tbNpcList do
-		if tbNpc.playerID == PlayerIndex then
-			DelNpcSafe(tbNpc.finalIndex)
-			GroupFighter:DelNpcSafe_children(tbNpc.nNpcListIndex)
-			GroupFighter.tbNpcList[key] = nil
-			if (GroupFighter.npcByWorld["w"..tbNpc.nMapId]) then
-				GroupFighter.npcByWorld["w"..tbNpc.nMapId][key] = nil
-			end
+		if tbNpc.playerID == GetName() then
+			GroupFighter:Remove(tbNpc.nNpcListIndex)
 		end
 	end
 end

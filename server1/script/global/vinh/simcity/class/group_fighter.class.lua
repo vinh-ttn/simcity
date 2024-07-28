@@ -1,6 +1,5 @@
 IncludeLib("NPCINFO")
 GroupFighter = {}
-GroupFighter.npcByWorld = {}
 GroupFighter.tbNpcList = {}
 GroupFighter.counter = 1
 GroupFighter.PARAM_LIST_ID = 1
@@ -272,14 +271,7 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 
 
 				self.tbNpcList["n"..tbNpc.nNpcListIndex] = tbNpc
-
-
-				if (not self.npcByWorld["w"..tbNpc.nMapId]) then
-					self.npcByWorld["w"..tbNpc.nMapId] = {}
-				end
-				self.npcByWorld["w"..tbNpc.nMapId]["n"..tbNpc.nNpcListIndex] = tbNpc.nNpcListIndex
-				
-				
+			
 				-- Otherwise choose side
 				SetNpcCurCamp(nNpcIndex, tbNpc.camp)
 
@@ -513,25 +505,17 @@ function GroupFighter:_getNpcAroundNpcList(nNpcIndex, radius)
 		local nW = SubWorldIdx2ID(nW32)
 
 		-- Get info for npc in this world
-		if self.npcByWorld["w"..nW] then
-			for key, nListId in self.npcByWorld["w"..nW] do
-				if nListId ~= myListId then 
-		    		local tbNpc = self.tbNpcList["n"..nListId]
-					if tbNpc then
-						if (tbNpc.isDead == 0) then
-							local oX32, oY32 = GetNpcPos(tbNpc.finalIndex)
-							local oX = oX32/32
-							local oY = oY32/32
-							if GetDistanceRadius(oX,oY,areaX,areaY) < radius then
-								tinsert(allNpcs, tbNpc.finalIndex)
-								nCount = nCount + 1
-							end
-						end
-					end
+		for key, tbNpc in self.tbNpcList do
+			if tbNpc.isDead == 0 and tbNpc.nMapId == nW then
+				local oX32, oY32 = GetNpcPos(tbNpc.finalIndex)
+				local oX = oX32/32
+				local oY = oY32/32
+				if GetDistanceRadius(oX,oY,areaX,areaY) < radius then
+					tinsert(allNpcs, tbNpc.finalIndex)
+					nCount = nCount + 1
 				end
 			end
 		end
-
 	end
 	
 	return allNpcs, nCount
@@ -684,8 +668,6 @@ function GroupFighter:_joinFightPlayerCheck(nListId, nNpcIndex)
 		if self:_isPlayerEnemyAround(nListId, nNpcIndex) == 1 then
 
 			local nW = tbNpc.nMapId
-
-
 			if SearchPlayer(tbNpc.playerID) == 0 then
 				local worldInfo = SimCityWorld:Get(nW)
 				if worldInfo.showFightingArea == 1 then 
@@ -1163,19 +1145,23 @@ end
 
  
 function GroupFighter:ClearMap(nW, targetListId)
-	if (self.npcByWorld["w"..nW]) then
-		for key, nListId in self.npcByWorld["w"..nW] do		
-
-			if (not targetListId) or (targetListId == nListId) then
-				local tbNpc = self.tbNpcList["n"..nListId]
-				if tbNpc then
-					DelNpcSafe(tbNpc.finalIndex)
-					self:DelNpcSafe_children(nListId)
-					self.tbNpcList["n"..nListId] = nil
-					self.npcByWorld["w"..nW][key] = nil
-				end
+	-- Get info for npc in this world
+	for key, tbNpc in self.tbNpcList do
+		if tbNpc.nMapId == nW then
+			if (not targetListId) or (targetListId == tbNpc.nNpcListIndex) then
+				self:Remove(tbNpc.nNpcListIndex)
 			end
 		end
+	end
+end
+
+
+function GroupFighter:Remove(nListId)	
+	local tbNpc = self.tbNpcList["n"..nListId]
+	if tbNpc then
+		DelNpcSafe(tbNpc.finalIndex)
+		self:DelNpcSafe_children(nListId)
+		self.tbNpcList["n"..nListId] = nil
 	end
 end
 
@@ -1876,33 +1862,28 @@ function GroupFighter:_doParentTick(nListId)
 			-- CHo nhung dua chung quanh 
 			
 			local countFighting = 0
-			if self.npcByWorld["w"..tbNpc.nMapId] then 
-				for key, nListId2 in self.npcByWorld["w"..tbNpc.nMapId] do
 
-					-- Myself = I start 
-					if nListId2 ~= nListId then
+			for key, tbNpc2 in self.tbNpcList do
+				if tbNpc2.nNpcListIndex ~= nListId and tbNpc2.nMapId == tbNpc.nMapId then
+					if (tbNpc2.isFighting == 0 and tbNpc2.camp ~= tbNpc.camp) then
 
-						local tbNpc2 = self.tbNpcList["n"..nListId2]
-						
-						if (tbNpc2.isFighting == 0 and tbNpc2.camp ~= tbNpc.camp) then
+						if (not tbNpc.targetCamp) or tbNpc.targetCamp == tbNpc2.camp then
+							local otherPosX, otherPosY, otherPosW = GetNpcPos(tbNpc2.finalIndex)
+							otherPosX = floor(otherPosX / 32)
+							otherPosY = floor(otherPosY / 32)
 
-							if (not tbNpc.targetCamp) or tbNpc.targetCamp == tbNpc2.camp then
-								local otherPosX, otherPosY, otherPosW = GetNpcPos(tbNpc2.finalIndex)
-								otherPosX = floor(otherPosX / 32)
-								otherPosY = floor(otherPosY / 32)
-
-								local distance = floor(GetDistanceRadius(otherPosX,otherPosY,myPosX,myPosY))
-								local checkDistance = tbNpc.attackNpcRadius or attackNpcRadius
-								if distance < checkDistance then
-									countFighting = countFighting + 1
-									if (tbNpc2.children) then
-										countFighting = countFighting + getn(tbNpc2.children)
-									end
-									self:_joinFight(nListId2, "caused by others "..distance.." ("..otherPosX.." "..otherPosY..") ("..myPosX.." "..myPosY..")")
+							local distance = floor(GetDistanceRadius(otherPosX,otherPosY,myPosX,myPosY))
+							local checkDistance = tbNpc.attackNpcRadius or attackNpcRadius
+							if distance < checkDistance then
+								countFighting = countFighting + 1
+								if (tbNpc2.children) then
+									countFighting = countFighting + getn(tbNpc2.children)
 								end
+								self:_joinFight(tbNpc2.nNpcListIndex, "caused by others "..distance.." ("..otherPosX.." "..otherPosY..") ("..myPosX.." "..myPosY..")")
 							end
 						end
 					end
+
 				end
 			end
 
@@ -2041,12 +2022,6 @@ function GroupFighter:_doParentTick(nListId)
 		local needRespawn = 0
 		if tbNpc.nMapId ~= pW then
 			needRespawn = 1
-
-			-- Remove the list from this world
-			if (self.npcByWorld["w"..tbNpc.nMapId]) then
-				self.npcByWorld["w"..tbNpc.nMapId]["n"..tbNpc.nNpcListIndex] = nil
-			end
-
 		else
 
 			if cachNguoiChoi > self.player_distance_respawn then
