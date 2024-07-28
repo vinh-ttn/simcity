@@ -68,7 +68,7 @@ function GroupFighter:_makeDiagonal(points)
     		local distance = GetDistanceRadius(A[1], A[2], C[1], C[2])
 
     		-- Too close, we get rid of point B
-    		if distance < 20 then
+    		if distance < 10 then
     			i = i + 1	-- jump
 			else
 				-- Adjust the position of point B to make the angle closer to 180 degrees
@@ -161,9 +161,10 @@ function GroupFighter:_arrived(nNpcIndex, tbNpc)
 
 		-- Qua thoi gian cho doi 
 		if tbNpc.arriveTick < tbNpc.tick and tbNpc.isFighting ~= 1 then
-			return 2
+			return 0
 		end
 	end
+	return 0
 end
 
  
@@ -335,6 +336,52 @@ function GroupFighter:_addNpcGo(tbNpc, isNew, goX, goY)
 
 end
 
+
+function GroupFighter:_respawnChild(nListId, childID, reason)
+	local tbNpc = self.tbNpcList["n"..nListId] 
+	if not tbNpc then
+		return 0
+	end
+	
+	if tbNpc.children then		
+	
+		local child = tbNpc.children[childID]
+		
+		if child.isDead ~= 1 and child.finalIndex ~= nil then
+			child.lastHP = NPCINFO_GetNpcCurrentLife(child.finalIndex)
+		end
+
+
+		if child.finalIndex ~= nil then
+		 	DelNpcSafe(child.finalIndex)
+	 	end
+
+		if child.isDead ~= 1 then 
+			if child.walkPath ~= nil then 
+				local targetPos = child.walkPath[tbNpc.nPosId]
+				local cX = targetPos[1]
+				local cY = targetPos[2]
+				child.lastPos = {
+					nX32 = cX*32,
+					nY32 = cY*32
+				}
+			else
+
+				local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
+
+				-- Do calculation
+				nX = nX/32
+				nY = nY/32
+				child.lastPos = {
+					nX32 = (nX + random(-2,2))*32,
+					nY32 = (nY + random(-2,2))*32
+				}
+			end
+
+		 	self:_createChild(nListId, childID)
+		end
+	end
+end
 
 
 
@@ -1136,12 +1183,25 @@ end
 
 
  
+function GroupFighter:_addNpcGo_chilren(nListId)	
+	local tbNpc = self.tbNpcList["n"..nListId]
+
+	if not tbNpc.children then 
+		return
+	end
+ 
+	local N = getn(tbNpc.children)
+	for i=1,N do
+		self:_createChild(nListId, i)		
+	end
+ 
+end
 
 
-function GroupFighter:_addNpcGo_chilren(nListId, nW)	
+function GroupFighter:_createChild(nListId, childID)	
 	local tbNpc = self.tbNpcList["n"..nListId]
 	local worldInfo = {}
-
+	local nW = tbNpc.nMapId
 
 	local nMapIndex = SubWorldID2Idx(nW)
 
@@ -1149,8 +1209,6 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 		return
 	end
  
-	local N = getn(tbNpc.children)
-
 	local pX, pY, pW = GetNpcPos(tbNpc.finalIndex)
 	pX = pX/32
 	pY = pY/32
@@ -1161,91 +1219,87 @@ function GroupFighter:_addNpcGo_chilren(nListId, nW)
 	else
 		worldInfo.showName = 1
 	end	
- 
-	for i=1,N do
+  
+	local child = tbNpc.children[childID]
+	local targetPos = child.walkPath[tbNpc.nPosId]
+	local nNpcIndex
 
-		local child = tbNpc.children[i]
-		local targetPos = child.walkPath[tbNpc.nPosId]
-		local nNpcIndex
+	if not (child.isDead == 1 and tbNpc.noRevive == 1) then
 
-		if not (child.isDead == 1 and tbNpc.noRevive == 1) then
-
-			if not child.szName then
-				local id = child.nNpcId
-				if worldInfo.showName == 1 then
-					child.szName = SimCityNPCInfo:getName(id)
-				else
-					child.szName = " "
-				end
-			end
-
-			-- Are we closed to parent?
-			if child.lastPos ~= nil then
-				local lastPos = {child.lastPos.nX32/32, child.lastPos.nY32/32}
-				local distance = GetDistanceRadius(lastPos[1], lastPos[2], pX, pY)
-
-				-- Within 10 radius to parent or not fighting, ok can respawn to last known location
-				if tbNpc.isFighting == 0 or distance < 10 then
-					targetPos = lastPos
-				end
-			end
-
-
-			nNpcIndex = AddNpcEx(child.nNpcId, 95, child.series or random(0,4), nMapIndex, targetPos[1] * 32, targetPos[2] * 32, 1, child.szName, 0)
-
-			if nNpcIndex > 0 then
-				local kind = GetNpcKind(nNpcIndex)
-				if kind ~= 0 then 
-					DelNpcSafe(nNpcIndex)
-				else
-
-					-- Do magic on this NPC
-					if (tbNpc.isFighting == 0) then
-						SetNpcKind(nNpcIndex, tbNpc.kind or 4)
-					end
-
-					-- Choose side
-					SetNpcCurCamp(nNpcIndex, tbNpc.camp)
-					SetNpcActiveRegion(nNpcIndex, 1)
-
-
-					-- Set param to link to parent
-					SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nListId)
-					SetNpcParam(nNpcIndex, self.PARAM_CHILD_ID, i)
-					SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, SearchPlayer(tbNpc.playerID))
-					SetNpcParam(nNpcIndex, self.PARAM_NPC_TYPE, 2)
-					SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\timer.lua")
-					SetNpcTimer(nNpcIndex, self.ATICK_TIME)
-					
-					-- Ngoai trang?
-					if (tbNpc.ngoaitrang and tbNpc.ngoaitrang == 1) then
-						self:_randomNgoaiTrang(child, nNpcIndex)
-					end
-
-					if tbNpc.cap and tbNpc.cap < 2 and NPCINFO_SetNpcCurrentLife then
-						local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
-						NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
-						NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP) 
-					end
-
-					-- Life?
-					if (child.lastHP ~= nil) then
-						NPCINFO_SetNpcCurrentLife(nNpcIndex, child.lastHP) 
-						child.lastHP = nil
-					end
-
-					-- Store it
-					child.finalIndex = nNpcIndex
-					child.isDead = 0
-					child.tick = tbNpc.tick
-					child.canSwitchTick = tbNpc.canSwitchTick
-					child.isFighting = tbNpc.isFighting
-					tbNpc.children[i] = child				
-				end
+		if not child.szName then
+			local id = child.nNpcId
+			if worldInfo.showName == 1 then
+				child.szName = SimCityNPCInfo:getName(id)
+			else
+				child.szName = " "
 			end
 		end
-	end
-	self.tbNpcList["n"..nListId] = tbNpc
+
+		-- Are we closed to parent?
+		if child.lastPos ~= nil then
+			local lastPos = {child.lastPos.nX32/32, child.lastPos.nY32/32}
+			local distance = GetDistanceRadius(lastPos[1], lastPos[2], pX, pY)
+
+			-- Within 10 radius to parent or not fighting, ok can respawn to last known location
+			if tbNpc.isFighting == 0 or distance < 10 then
+				targetPos = lastPos
+			end
+		end
+
+
+		nNpcIndex = AddNpcEx(child.nNpcId, 95, child.series or random(0,4), nMapIndex, targetPos[1] * 32, targetPos[2] * 32, 1, child.szName, 0)
+
+		if nNpcIndex > 0 then
+			local kind = GetNpcKind(nNpcIndex)
+			if kind ~= 0 then 
+				DelNpcSafe(nNpcIndex)
+			else
+
+				-- Do magic on this NPC
+				if (tbNpc.isFighting == 0) then
+					SetNpcKind(nNpcIndex, tbNpc.kind or 4)
+				end
+
+				-- Choose side
+				SetNpcCurCamp(nNpcIndex, tbNpc.camp)
+				SetNpcActiveRegion(nNpcIndex, 1)
+
+
+				-- Set param to link to parent
+				SetNpcParam(nNpcIndex, self.PARAM_LIST_ID, nListId)
+				SetNpcParam(nNpcIndex, self.PARAM_CHILD_ID, childID)
+				SetNpcParam(nNpcIndex, self.PARAM_PLAYER_ID, SearchPlayer(tbNpc.playerID))
+				SetNpcParam(nNpcIndex, self.PARAM_NPC_TYPE, 2)
+				SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\timer.lua")
+				SetNpcTimer(nNpcIndex, self.ATICK_TIME)
+				
+				-- Ngoai trang?
+				if (tbNpc.ngoaitrang and tbNpc.ngoaitrang == 1) then
+					self:_randomNgoaiTrang(child, nNpcIndex)
+				end
+
+				if tbNpc.cap and tbNpc.cap < 2 and NPCINFO_SetNpcCurrentLife then
+					local maxHP = SimCityNPCInfo:getHPByCap(tbNpc.cap)
+					NPCINFO_SetNpcCurrentMaxLife(nNpcIndex, maxHP)
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, maxHP) 
+				end
+
+				-- Life?
+				if (child.lastHP ~= nil) then
+					NPCINFO_SetNpcCurrentLife(nNpcIndex, child.lastHP) 
+					child.lastHP = nil
+				end
+
+				-- Store it
+				child.finalIndex = nNpcIndex
+				child.isDead = 0
+				child.tick = tbNpc.tick
+				child.canSwitchTick = tbNpc.canSwitchTick
+				child.isFighting = tbNpc.isFighting
+				tbNpc.children[childID] = child				
+			end
+		end
+	end  
  
 end
 
@@ -1304,7 +1358,15 @@ function GroupFighter:_arrived_children(tbNpc)
 
 			local distance = GetDistanceRadius(nX,nY,oX,oY)
 
+			-- Con qua xa
 			if distance > checkDistance then
+
+				-- Qua thoi gian cho doi, keu con den ben canh 
+				if tbNpc.arriveTick < tbNpc.tick and tbNpc.isFighting ~= 1 then
+					self:_respawnChild(tbNpc.nNpcListIndex, i, "Too far for 15 seconds")
+					return 0
+				end
+
 				return 0
 			end
 
@@ -1527,7 +1589,7 @@ function GroupFighter:ParentDead(nNpcIndex, playerAttacker)
 				tbNpc.series = child.series
 				tbNpc.children[foundAlive].isDead =	1 
 				SetNpcParam(tbNpc.finalIndex, self.PARAM_NPC_TYPE, 1)
-				return self:_respawn(nListId, 0, "parent death")
+				return 1
 			else
 				tbNpc.isDead = 1
 				tbNpc.finalIndex = nil 
@@ -1657,7 +1719,7 @@ function GroupFighter:ChildrenTick(childrenIndex)
 							tbNpc.tooFarStick = tbNpc.tick + 5
 						elseif tbNpc.tooFarStick < tbNpc.tick then
 							tbNpc.tooFarStick = nil
-							self:_respawn(nListId, 1, "Too far for 5 seconds")
+							self:_respawnChild(nListId, childID, "Too far for 10 seconds")
 						end
 						return 0
 					end
@@ -1873,7 +1935,7 @@ function GroupFighter:_doParentTick(nListId)
 
 		-- Mode 1: random
 		if tbNpc.walkMode == "random" or tbNpc.walkMode == "keoxe" or (not tbNpc.children) then
-			if self:_arrived(nNpcIndex, tbNpc) then
+			if self:_arrived(nNpcIndex, tbNpc) == 1 then
 				-- Keep walking no stop
 				if (tbNpc.noStop == 1 or random(1,100)<90) then
 					nNextPosId = nNextPosId + 1
@@ -1955,9 +2017,6 @@ function GroupFighter:_doParentTick(nListId)
 					tbNpc.arriveTick = nil
 					
 				end
-			-- Bi lag roi, respawn
-			elseif arriveRes == 2 then
-				return self:_respawn(tbNpc.nNpcListIndex, 3, "con cai bi ket lai")
 			end
 		end
 
