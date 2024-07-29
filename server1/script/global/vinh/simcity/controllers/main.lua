@@ -6,9 +6,3 @@ function main()
 	SimCityMainThanhThi:mainMenu()
 	return 1
 end
-
--- Helper: add NPCs
-
-function add_simcity_npc(enable)
-	SimCityMainThanhThi:addNpcs()
-end

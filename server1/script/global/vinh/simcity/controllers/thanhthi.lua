@@ -1,7 +1,9 @@
 --Include("\\script\\global\\vinh\\simcity\\head.lua")
 Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")
 SimCityMainThanhThi = {
-	_dataStorage = {}
+	_dataStorage = {},
+	worldStatus = {},
+	autoAddThanhThi = STARTUP_AUTOADD_THANHTHI
 }
 
 SimCityWorld:initThanhThi()
@@ -249,10 +251,12 @@ function SimCityMainThanhThi:goiAnhHungThiepNgoaiTrang()
 
 
 	local tbSay = { worldInfo.name .. " Vâ L©m §¹i Héi" }
+	tinsert(tbSay, "S¬ cÊp/#SimCityMainThanhThi:createNpcSoCap()")
+	tinsert(tbSay, "Trung cÊp/#SimCityMainThanhThi:createNpcSet(500,500,1)")
 	tinsert(tbSay, "Cao cÊp 1/#SimCityMainThanhThi:createNpcSet(1000,500,1)")
 	tinsert(tbSay, "Cao cÊp 2/#SimCityMainThanhThi:createNpcSet(1500,500,1)")
 	tinsert(tbSay, "Cao cÊp 3/#SimCityMainThanhThi:createNpcSet(2000,500,1)")
-	tinsert(tbSay, "Trung cÊp/#SimCityMainThanhThi:createNpcSet(500,500,1)")
+	
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbSay)
 	return 1
@@ -310,6 +314,12 @@ function SimCityMainThanhThi:mainMenu()
 	else
 		local tbSay = { worldInfo.name .. " Vâ L©m §¹i Héi" }
 
+		if self.autoAddThanhThi == 1 then
+			tinsert(tbSay, "Thªm anh hïng trªn tÊt c¶ b¶n ®å [cã]/#SimCityMainThanhThi:autoThanhThi(0)")
+		else
+			tinsert(tbSay, "Thªm anh hïng trªn tÊt c¶ b¶n ®å [kh«ng]/#SimCityMainThanhThi:autoThanhThi(1)")
+		end
+
 		tinsert(tbSay, "Thµnh thÞ/#SimCityMainThanhThi:thanhthiMenu()")
 		tinsert(tbSay, "ChiÕn lo¹n/#SimCityChienTranh:mainMenu()")
 		tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
@@ -332,4 +342,76 @@ end
 
 function main()
 	return SimCityMainThanhThi:mainMenu()
+end
+
+function SimCityMainThanhThi:autoThanhThi(inp)
+	self.autoAddThanhThi = inp
+	if (inp == 0) then
+		for k,v in self.worldStatus do
+			self.worldStatus["w" .. v.world] = nil
+			self:_clearMap(v.world)
+		end
+	else
+		self:onPlayerEnterMap()
+	end
+	self:mainMenu()
+end
+
+function SimCityMainThanhThi:onPlayerEnterMap()
+	if self.autoAddThanhThi ~= 1 then
+		return 1
+	end
+	local nW, _, _ = GetWorldPos()
+	if not self.worldStatus["w" .. nW] then
+		self.worldStatus["w" .. nW] = {
+			count = 1,
+			enabled = 0,
+			world = nW
+		}
+	else
+		self.worldStatus["w" .. nW].count = self.worldStatus["w" .. nW].count + 1
+	end
+
+	-- If not enabled, create it
+	if self.worldStatus["w" .. nW].enabled == 0 then
+		self.worldStatus["w" .. nW].enabled = 1
+		local worldInfo = SimCityWorld:Get(nW)
+		if (worldInfo.name ~= "") then
+			self:createNpcSoCap()
+			SimCityWorld:Update(nW, "showFightingArea", 0)
+		end
+	end
+end
+
+function SimCityMainThanhThi:onPlayerExitMap()
+	if self.autoAddThanhThi ~= 1 then
+		return 1
+	end
+
+	local nW, _, _ = GetWorldPos()
+	if not self.worldStatus["w" .. nW] then
+		return 1
+	end
+
+	self.worldStatus["w" .. nW].count = self.worldStatus["w" .. nW].count - 1
+
+	-- If enabled but no one left, clean it
+	if self.worldStatus["w" .. nW].count == 0 and self.worldStatus["w" .. nW].enabled == 1 then
+		self.worldStatus["w" .. nW] = nil
+		self:removeAll()
+	end
+end
+
+
+function SimCityMainThanhThi:createNpcSoCap()
+	local nW, _, _ = GetWorldPos()
+
+	local worldInfo = SimCityWorld:Get(nW)
+	if (worldInfo.name ~= "") then
+		local perPage = 100
+		for i = 0, perPage do
+			local id = random(1786, 1795)
+			self:_createSingle(id, nW, 1)
+		end
+	end
 end

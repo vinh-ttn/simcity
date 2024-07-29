@@ -699,7 +699,9 @@ function GroupFighter:HardResetPos(group)
             if not group.tbPos then
                 worldInfo = SimCityWorld:Get(nW)
                 walkAreas = worldInfo.walkAreas
-
+                if not walkAreas then 
+                    return 0
+                end
                 local walkIndex = random(1, getn(walkAreas))
                 group.tbPos = arrCopy(walkAreas[walkIndex])
 
