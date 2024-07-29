@@ -117,15 +117,16 @@ SimCityChat.chatCollectionFight = {
 	"§øa nµo d¸m qua ®©y kiÕm ¨n!",
 	"Anh em ®©u x«ng lªn !",
 	"Hèt nã!"
-}	
+}
 
 
 
 
 -- General Helpers
 function SimCityChat:getChat()
-    return self.chatCollection[random(1, getn(self.chatCollection))]
+	return self.chatCollection[random(1, getn(self.chatCollection))]
 end
+
 function SimCityChat:getChatFight()
-    return self.chatCollectionFight[random(1, getn(self.chatCollectionFight))]
+	return self.chatCollectionFight[random(1, getn(self.chatCollectionFight))]
 end

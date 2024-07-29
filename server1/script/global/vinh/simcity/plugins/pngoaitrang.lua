@@ -1,30 +1,29 @@
-
 SimCityNgoaiTrang = {}
 
-SimCityNgoaiTrang.ALLTRANGBI_DATA={
-	ao={
-		nam={},
-		nam_count=0,
-		nu={},
-		nu_count=0,
-	}, 
-	non={
-		nam={},
-		nam_count=0,
-		nu={},
-		nu_count=0,
-	}, 
-	vukhi={
-		nam={},
-		nam_count=0,
-		nu={},
-		nu_count=0,
-	}, 
-	ngua={
-		nam={},
-		nam_count=0,
-		nu={},
-		nu_count=0,
+SimCityNgoaiTrang.ALLTRANGBI_DATA = {
+	ao = {
+		nam = {},
+		nam_count = 0,
+		nu = {},
+		nu_count = 0,
+	},
+	non = {
+		nam = {},
+		nam_count = 0,
+		nu = {},
+		nu_count = 0,
+	},
+	vukhi = {
+		nam = {},
+		nam_count = 0,
+		nu = {},
+		nu_count = 0,
+	},
+	ngua = {
+		nam = {},
+		nam_count = 0,
+		nu = {},
+		nu_count = 0,
 	}
 }
 
@@ -33,9 +32,7 @@ SimCityNgoaiTrang.found = 0
 
 
 function SimCityNgoaiTrang:init()
-
 	if TabFile_Load and GetTabFileData and self.found == 0 then
-
 		local toLoadData = {
 			{
 				"\\settings\\npcres_simple\\ÄÐÖ÷½ÇÇûÌå.txt",
@@ -81,39 +78,39 @@ function SimCityNgoaiTrang:init()
 			}
 		}
 
-		for j=1,getn(toLoadData) do
+		for j = 1, getn(toLoadData) do
 			local info = toLoadData[j]
 
-			local tbData, nCount = GetTabFileData(info[1], "temp"..j, 2, 4)
-			for i=1,nCount do
+			local tbData, nCount = GetTabFileData(info[1], "temp" .. j, 2, 4)
+			for i = 1, nCount do
 				local name = tbData[i][2]
 				if info[4] or (name and name ~= "") then
 					tinsert(info[2], i)
-				end			
+				end
 			end
 
 			info[3] = getn(info[2])
 		end
-	 
-	 	self.found = 1
+
+		self.found = 1
 	end
 end
+
 SimCityNgoaiTrang.used = {}
 
+function SimCityNgoaiTrang:makeup(config, nNpcIndex)
+	config.nSettingsIdx = config.nSettingsIdx or random(-2, -1) -- nam hay nu
+	config.nNewHelmType = config.nNewHelmType or self:getData(config.nSettingsIdx, "non") or random(1, 50)
+	config.nNewArmorType = config.nNewArmorType or self:getData(config.nSettingsIdx, "ao") or random(1, 53)
+	config.nNewWeaponType = config.nNewWeaponType or self:getData(config.nSettingsIdx, "vukhi") or random(1, 50)
+	config.nNewHorseType = config.nNewHorseType or self:getData(config.nSettingsIdx, "ngua") or random(1, 20)
 
-function SimCityNgoaiTrang:doRandom() 
-	local tbNpc = {}
-	tbNpc.nSettingsIdx = random(-2, -1)
-	tbNpc.nNewHelmType = self:getData(tbNpc.nSettingsIdx, "non") or random(1,50)
-	tbNpc.nNewArmorType = self:getData(tbNpc.nSettingsIdx, "ao") or random(1,53)
-	tbNpc.nNewWeaponType =self:getData(tbNpc.nSettingsIdx, "vukhi") or random(1,50)
-	tbNpc.nNewHorseType = self:getData(tbNpc.nSettingsIdx, "ngua") or random(1,20)	 
-	return tbNpc
+	ChangeNpcFeature(nNpcIndex, 0, 0, config.nSettingsIdx, config.nNewHelmType, config.nNewArmorType,
+		config.nNewWeaponType,
+		config.nNewHorseType)
 end
 
-
 function SimCityNgoaiTrang:getData(charType, objectName)
-
 	local target = {}
 	if objectName == "non" then
 		target = self.ALLTRANGBI_DATA.non
@@ -140,8 +137,7 @@ function SimCityNgoaiTrang:getData(charType, objectName)
 
 	local N = getn(collection)
 	if N > 0 then
-		return collection[random(1,N)]
+		return collection[random(1, N)]
 	end
 	return nil
 end
- 

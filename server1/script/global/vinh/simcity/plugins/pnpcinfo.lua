@@ -1,5 +1,5 @@
 SimCityNPCInfo = {
-	npc_blacklist = {
+	npc_blacklist      = {
 		0,
 		1,
 		2,
@@ -209,41 +209,41 @@ SimCityNPCInfo = {
 		2384
 	},
 
-	blacklistNPC = {},
-	ALLNPCs_INFO  = {},
+	blacklistNPC       = {},
+	ALLNPCs_INFO       = {},
 	ALLNPCs_INFO_COUNT = 2200,
 
 
 	nhanvat = {
 		socap = {
 
-			
-			{1786, 1795}, -- 100k
-			
+
+			{ 1786, 1795 }, -- 100k
+
 		},
 		trungcap = {
-			{1480, 1488},-- 4tr6
-			{1765, 1774},-- 5tr
-			
+			{ 1480, 1488 }, -- 4tr6
+			{ 1765, 1774 }, -- 5tr
+
 
 
 		},
 		caocap = {
 
-			{1193, 1202}, --12tr
-			{1239, 1248}, --12tr
-			{1465, 1475}, --10tr
-			{1674, 1683}, --12tr
+			{ 1193, 1202 }, --12tr
+			{ 1239, 1248 }, --12tr
+			{ 1465, 1475 }, --10tr
+			{ 1674, 1683 }, --12tr
 
 		},
 		sieunhan = {
-			
-			{1355, 1368}, --20tr
-			{739, 748}, --16tr
-			{1775, 1779}, --25tr
-			{1849, 1852},
-			{1869, 1875},
-			{1750, 1754}, -- 99tr
+
+			{ 1355, 1368 }, --20tr
+			{ 739,  748 }, --16tr
+			{ 1775, 1779 }, --25tr
+			{ 1849, 1852 },
+			{ 1869, 1875 },
+			{ 1750, 1754 }, -- 99tr
 		}
 	}
 }
@@ -251,42 +251,41 @@ SimCityNPCInfo = {
 
 function SimCityNPCInfo:init()
 	-- Produce blacklist NPCs
-	for i=1, getn(self.npc_blacklist) do
-		self.blacklistNPC["z"..self.npc_blacklist[i]] = 1
+	for i = 1, getn(self.npc_blacklist) do
+		self.blacklistNPC["z" .. self.npc_blacklist[i]] = 1
 	end
 
-	self.nvSoCap={}
-	self.nvTrungCap={}
-	self.nvCaoCap={}
-	self.nvSieuNhan={}
+	self.nvSoCap = {}
+	self.nvTrungCap = {}
+	self.nvCaoCap = {}
+	self.nvSieuNhan = {}
 
-	for i=1, getn(self.nhanvat.socap) do
-		for j=self.nhanvat.socap[i][1],self.nhanvat.socap[i][2] do
+	for i = 1, getn(self.nhanvat.socap) do
+		for j = self.nhanvat.socap[i][1], self.nhanvat.socap[i][2] do
 			tinsert(self.nvSoCap, j)
 		end
 	end
 
-	for i=1, getn(self.nhanvat.trungcap) do
-		for j=self.nhanvat.trungcap[i][1],self.nhanvat.trungcap[i][2] do
+	for i = 1, getn(self.nhanvat.trungcap) do
+		for j = self.nhanvat.trungcap[i][1], self.nhanvat.trungcap[i][2] do
 			tinsert(self.nvTrungCap, j)
 		end
 	end
-	for i=1, getn(self.nhanvat.caocap) do
-		for j=self.nhanvat.caocap[i][1],self.nhanvat.caocap[i][2] do
+	for i = 1, getn(self.nhanvat.caocap) do
+		for j = self.nhanvat.caocap[i][1], self.nhanvat.caocap[i][2] do
 			tinsert(self.nvCaoCap, j)
 		end
 	end
-	for i=1, getn(self.nhanvat.sieunhan) do
-		for j=self.nhanvat.sieunhan[i][1],self.nhanvat.sieunhan[i][2] do
+	for i = 1, getn(self.nhanvat.sieunhan) do
+		for j = self.nhanvat.sieunhan[i][1], self.nhanvat.sieunhan[i][2] do
 			tinsert(self.nvSieuNhan, j)
 		end
 	end
 
 	-- Try reading NPCS info
 	if TabFile_Load and getn(self.ALLNPCs_INFO) == 0 then
-		local tbData, nCount = GetTabFileData("\\settings\\npcs.txt", "all_npcs",1,60)
-		for i=1,nCount do
-
+		local tbData, nCount = GetTabFileData("\\settings\\npcs.txt", "all_npcs", 1, 60)
+		for i = 1, nCount do
 			local lifeParame = tonumber(tbData[i][38])
 			local lifeParame1 = tonumber(tbData[i][39])
 			local lifeParame2 = tonumber(tbData[i][40])
@@ -309,7 +308,7 @@ function SimCityNPCInfo:init()
 
 
 
-			self.ALLNPCs_INFO["n"..(i-2)] = {
+			self.ALLNPCs_INFO["n" .. (i - 2)] = {
 				name = fixName(tbData[i][1]),
 				kind = tonumber(tbData[i][2]),
 				camp = tonumber(tbData[i][3]),
@@ -325,18 +324,18 @@ function SimCityNPCInfo:init()
 	end
 end
 
-
 function SimCityNPCInfo:isBlacklisted(id)
-	return self.blacklistNPC["z"..id]	
+	return self.blacklistNPC["z" .. id]
 end
 
 function SimCityNPCInfo:notFightingChar(id)
-	if self.ALLNPCs_INFO["n"..id] and (self.ALLNPCs_INFO["n"..id].kind ~= 0) then
+	if self.ALLNPCs_INFO["n" .. id] and (self.ALLNPCs_INFO["n" .. id].kind ~= 0) then
 		return 1
 	end
 
 	return 0
 end
+
 function SimCityNPCInfo:notValidChar(id)
 	if id > self.ALLNPCs_INFO_COUNT then
 		return 1
@@ -345,29 +344,25 @@ function SimCityNPCInfo:notValidChar(id)
 end
 
 function SimCityNPCInfo:getName(id)
-
-	if self.ALLNPCs_INFO["n"..id] and self.ALLNPCs_INFO["n"..id].name then
-		return self.ALLNPCs_INFO["n"..id].name
+	if self.ALLNPCs_INFO["n" .. id] and self.ALLNPCs_INFO["n" .. id].name then
+		return self.ALLNPCs_INFO["n" .. id].name
 	end
 	return ""
 end
 
-
 function SimCityNPCInfo:getSpeed(id)
-
-	if self.ALLNPCs_INFO["n"..id] and self.ALLNPCs_INFO["n"..id].name then
-		return self.ALLNPCs_INFO["n"..id].runspeed
+	if self.ALLNPCs_INFO["n" .. id] and self.ALLNPCs_INFO["n" .. id].name then
+		return self.ALLNPCs_INFO["n" .. id].runspeed
 	end
 	return 0
 end
 
 function SimCityNPCInfo:getHPByCap(cap)
-
 	if cap == 0 then
-		return random(50000,200000)
+		return random(50000, 200000)
 	end
 	if cap == 1 then
-		return random(200000,1000000)
+		return random(200000, 1000000)
 	end
-	return random(1000000,2000000)
+	return random(1000000, 2000000)
 end

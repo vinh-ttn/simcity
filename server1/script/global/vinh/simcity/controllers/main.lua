@@ -12,5 +12,3 @@ end
 function add_simcity_npc(enable)
 	SimCityMainThanhThi:addNpcs()
 end
-
- 

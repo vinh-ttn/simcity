@@ -2,18 +2,17 @@
 
 —vinhsmoke—
 
-Phiên bản hiện tại: **5.2.2**
+Phiên bản hiện tại: **5.2.3**
 
-Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) 
+Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
 
 ### Đóng góp
 
- * Dev chính: [Vinh TTN](https://www.facebook.com/groups/800085930700601/user/1576281122) 
- * Tọa độ 116 maps: [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/) 
- * Tọa độ Biện Kinh, Phượng Tường, Đại Lý: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/)
- * Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/)
+-   Dev chính: [Vinh TTN](https://www.facebook.com/groups/800085930700601/user/1576281122)
+-   Tọa độ 116 maps: [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/)
+-   Tọa độ Biện Kinh, Phượng Tường, Đại Lý: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/)
+-   Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/)
 
-   
 ## A. Giới thiệu tính năng
 
 Chạy trên JX Server 8
@@ -37,13 +36,12 @@ Chạy trên JX Server 8
 ## B. Hướng dẫn cài đặt thủ công Thành Thị, Chiến Loạn và Kéo Xe
 
 1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
- 
+
 2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
 
-     \* gặp Triệu Mẫn để sử dụng simcity
+\* gặp Triệu Mẫn để sử dụng simcity
 
-     \* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
-
+\* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
 
 ## C. Hướng dẫn cài đặt thủ công Tống Kim (Bảo vệ nguyên soái)
 
@@ -70,7 +68,7 @@ ngay sau dòng đó, thêm vào dòng
 4\) Khởi động lại server, vào Tống Kim sẽ có sẵn NPC đang đánh nhau và Triệu Mẫn/Vô Kỵ để điều khiển
 
 5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
-Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/> 
+Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/>
 
 ## D. Hướng dẫn cập nhật lên phiên bản mới nhất Simcity (thủ công)
 
@@ -78,13 +76,11 @@ Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh
 
 2\) Khởi động lại game server, xong.
 
-
 ## E. Hướng dẫn cập nhật lên phiên bản mới nhất Simcity qua app QuanLyServer
 
 ![](https://lh7-us.googleusercontent.com/docsz/AD_4nXfzRs-q7b6SOaPKLVJfFH6GbqrqRl8GZfSapN0Zx0BtKFPh4psNJ279Hz3VPTPvjD3AuzrzkR4_ncltV160VXbEVPMIQk_IZtQsJGyH9eBM5ViZIyEm03KzNSRCZPyg0mF1xn2mR9S9OneDy4IRwiiM3iQj?key=69JrhYHE20yyd5Bd1uKvkw)
 
-
-Yêu cầu game server của bạn phải có kết nối internet 
+Yêu cầu game server của bạn phải có kết nối internet
 
 1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
 
@@ -98,32 +94,27 @@ Xong, khởi động lại game server.
 
 ### Kéo xe NPC
 
-    1) Nếu muốn tạo lệnh bài gọi xe nhanh đem theo bên mình (thay vì NPC Vô Kỵ) thì vào <https://jxoffline.github.io/jxtools/shopbuilder.d/>  để tạo thêm 1 vật phẩm với đường link tới file script
+1) Nếu muốn tạo lệnh bài gọi xe nhanh đem theo bên mình (thay vì NPC Vô Kỵ) thì vào <https://jxoffline.github.io/jxtools/shopbuilder.d/>  để tạo thêm 1 vật phẩm với đường link tới file script
 
-        `\script\global\vinh\simcity\controllers\main.lua`   
+`\script\global\vinh\simcity\controllers\main.lua`
 
-    2) Nếu muốn thay đổi danh sách theo sau (hoặc tạo riêng cho mình) thì sửa file
+2) Nếu muốn thay đổi danh sách theo sau (hoặc tạo riêng cho mình) thì sửa file
 
-        `\script\global\vinh\simcity\plugins\pkeoxe.lua`
-
+`\script\global\vinh\simcity\plugins\pkeoxe.lua`
 
 ### NPC quá mạnh 
 
-****![](https://lh7-us.googleusercontent.com/docsz/AD_4nXctDkLIw67xDMciom4lw9DzdbTlcLTFPF0s57aM2Y4_AsVgtZUKGvjm68E4HK9dka3f3LTKdGHumHDsom9GgLVrWVQoaXZGlLCftrT9FNMKJEgl_0WBaUnjFO5fb4__zu2iQ83PfpFS7MEYFA-AESd1RuNg?key=my0UP0YCEuAhRT8eOcMeRw)****&#x20;
-
-
+\***\*![](https://lh7-us.googleusercontent.com/docsz/AD_4nXctDkLIw67xDMciom4lw9DzdbTlcLTFPF0s57aM2Y4_AsVgtZUKGvjm68E4HK9dka3f3LTKdGHumHDsom9GgLVrWVQoaXZGlLCftrT9FNMKJEgl_0WBaUnjFO5fb4__zu2iQ83PfpFS7MEYFA-AESd1RuNg?key=my0UP0YCEuAhRT8eOcMeRw)\*\***&#x20;
 
 ### Thay đổi giữa các phiên bản
 
-|                          | Ngày       | Thay đổi                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1.0 SimCity & Kéo Xe** | 09/2023    | (Mới) Mở **gian hàng và dân chúng đi lại** ở Tương Dương. <br>(Thêm) KéoXe                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **2.0 Chiến Loạn**       | 10/2023    | (Mới) **Chiến loạn** - tấn công thành thị Biện Kinh (trong ra) và Tương Dương (ngoài vô)<br>(Mới) Quan binh tuần tra theo hàng ngũ<br>(Mới) Tình trạng kéo xe xuất hiện<br>(Sửa) Thêm vào các thành khác: Biện Kinh, Phượng Tường, Đại Lý, Lâm An |
-| **3.0 Tống Kim**         | 10/2023    | (Mới) **Tống Kim**: <br>* thêm map bảo vệ nguyên soái <br>* tính điểm và thông báo bảng xếp hạng <br>* thêm Vô Kỵ phe Tống, Triệu Mẫn phe Kim<br>(Sửa) Thêm vào các thành khác: Thành Đô, Dương Châu<br>Chỉnh sửa các thành hiện tại để tối ưu đường đi                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| **4.0**                  | 10/2023    | (Mới) **Thay đổi toàn bộ hệ thống code** để tiện đường thêm thắt sau này (gọi là plugin). Gọp kéo xe thành 1 plugin nhỏ của SimCity thay vì 2 mod khác nhau.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| **5.0 RC1**              | 12/11/2023 | (Mới) **nhân sĩ võ lâm có hình người chơi**, bao gồm vũ khí hoàng kim và chỉ sử dụng skill người chơi<br>(Sửa) danh sách tên lạ võ lâm<br>(Sửa) danh sách đối thoại võ lâm<br>(Sửa) chia cấp độ nhân sĩ theo máu cho chính xác (sơ cấp máu vẫn còn quá nhiều)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| **5.1**              | 20/07/2024 | (Mới) Thêm chức năng tạo bãi luyện công trong kéo xe. <br>(Sửa) Lỗi thanh máu khi chơi Tống Kim                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| **5.2**              | 28/07/2024 | (Mới) Thêm 116 map từ bạn [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/) <br> (Mới) Tự động load NPC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **?**                    | ?          | (Mới) thêm công thành trong Thất Thành Đại Chiến<br>(Sửa) máu lại cho hợp lý vì không phải ai cũng xài đồ siêu nhân =))<br>(Sửa) thêm người chơi vào danh sách Bảng Xếp Hạng trong Tống Kim                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-
-
+|                          | Ngày       | Thay đổi                                                                                                                                                                                                                                                      |
+| ------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1.0 SimCity & Kéo Xe** | 09/2023    | (Mới) Mở **gian hàng và dân chúng đi lại** ở Tương Dương. <br>(Thêm) KéoXe                                                                                                                                                                                    |
+| **2.0 Chiến Loạn**       | 10/2023    | (Mới) **Chiến loạn** - tấn công thành thị Biện Kinh (trong ra) và Tương Dương (ngoài vô)<br>(Mới) Quan binh tuần tra theo hàng ngũ<br>(Mới) Tình trạng kéo xe xuất hiện<br>(Sửa) Thêm vào các thành khác: Biện Kinh, Phượng Tường, Đại Lý, Lâm An             |
+| **3.0 Tống Kim**         | 10/2023    | (Mới) **Tống Kim**: <br>_ thêm map bảo vệ nguyên soái <br>_ tính điểm và thông báo bảng xếp hạng <br>\* thêm Vô Kỵ phe Tống, Triệu Mẫn phe Kim<br>(Sửa) Thêm vào các thành khác: Thành Đô, Dương Châu<br>Chỉnh sửa các thành hiện tại để tối ưu đường đi      |
+| **4.0**                  | 10/2023    | (Mới) **Thay đổi toàn bộ hệ thống code** để tiện đường thêm thắt sau này (gọi là plugin). Gọp kéo xe thành 1 plugin nhỏ của SimCity thay vì 2 mod khác nhau.                                                                                                  |
+| **5.0 RC1**              | 12/11/2023 | (Mới) **nhân sĩ võ lâm có hình người chơi**, bao gồm vũ khí hoàng kim và chỉ sử dụng skill người chơi<br>(Sửa) danh sách tên lạ võ lâm<br>(Sửa) danh sách đối thoại võ lâm<br>(Sửa) chia cấp độ nhân sĩ theo máu cho chính xác (sơ cấp máu vẫn còn quá nhiều) |
+| **5.1**                  | 20/07/2024 | (Mới) Thêm chức năng tạo bãi luyện công trong kéo xe. <br>(Sửa) Lỗi thanh máu khi chơi Tống Kim                                                                                                                                                               |
+| **5.2**                  | 28/07/2024 | (Mới) Thêm 116 map từ bạn [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/) <br> (Mới) Tự động load NPC                                                                                                                     |
+| **?**                    | ?          | (Mới) thêm công thành trong Thất Thành Đại Chiến<br>(Sửa) máu lại cho hợp lý vì không phải ai cũng xài đồ siêu nhân =))<br>(Sửa) thêm người chơi vào danh sách Bảng Xếp Hạng trong Tống Kim                                                                   |

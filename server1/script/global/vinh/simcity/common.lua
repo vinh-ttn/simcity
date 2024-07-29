@@ -1,9 +1,9 @@
 IncludeLib("NPCINFO")
 
 -- Helpers
-function GetTabFileData( path, tab_name, start_row, max_col ) -- Doc file txt
+function GetTabFileData(path, tab_name, start_row, max_col) -- Doc file txt
     if TabFile_Load(path, tab_name) ~= 1 then
-		return {}, 0
+        return {}, 0
     end
     if not start_row or start_row < 1 then start_row = 1 end
     if not max_col or max_col < 1 then max_col = 1 end
@@ -28,29 +28,27 @@ end
 --»ÆÉ«Ä¾ÃÞ»¨
 --ÉÙÁÖ±äÉí
 
-isChinese = {"<",">","ª¹","³","newboss","²","´","åâ","£¨","¼ý","ýË","¼þ","¼þ","£","º","±", "¡", "»", "ÙÁ","±", "··", "ÈË"}
+isChinese = { "<", ">", "ª¹", "³", "newboss", "²", "´", "åâ", "£¨", "¼ý", "ýË", "¼þ", "¼þ", "£", "º", "±", "¡", "»", "ÙÁ",
+    "±", "··", "ÈË" }
 function fixName(inp)
-	local found = false 
-	for i=1,getn(isChinese) do 
-		if strfind(inp,isChinese[i]) ~= nil then
-			return "Qu¸i kh¸ch"
-		end
-	end 
-	return inp
+    local found = false
+    for i = 1, getn(isChinese) do
+        if strfind(inp, isChinese[i]) ~= nil then
+            return "Qu¸i kh¸ch"
+        end
+    end
+    return inp
 end
 
-
-
-function GetDistanceRadius(nX,nY,oX,oY)
-	return sqrt((nX-oX)*(nX-oX) + (nY - oY)*(nY - oY))		
+function GetDistanceRadius(nX, nY, oX, oY)
+    return sqrt((nX - oX) * (nX - oX) + (nY - oY) * (nY - oY))
 end
-
 
 function arrFlip(arr)
     local newFlipArr = {}
     local N = getn(arr)
-    for i=1,N do         
-        tinsert(newFlipArr, arr[N-i+1])
+    for i = 1, N do
+        tinsert(newFlipArr, arr[N - i + 1])
     end
     return newFlipArr
 end
@@ -58,7 +56,7 @@ end
 function arrCopy(arr)
     local newFlipArr = {}
     local N = getn(arr)
-    for i=1,N do         
+    for i = 1, N do
         if type(arr[i]) == 'table' then
             tinsert(newFlipArr, arrCopy(arr[i]))
         else
@@ -70,34 +68,32 @@ end
 
 function arrJoin(arr)
     local output = {}
-    for i=1,getn(arr) do
-        for j=1,getn(arr[i]) do
+    for i = 1, getn(arr) do
+        for j = 1, getn(arr[i]) do
             tinsert(output, arr[i][j])
         end
     end
     return output
 end
 
-function spawnN(arr, linh, N, config) 
+function spawnN(arr, linh, N, config)
     N = N or 16
-    for i=1,N do
+    for i = 1, N do
         local child = {}
         if config ~= nil then
-            for k,v in config do
+            for k, v in config do
                 child[k] = v
             end
         end
         child.nNpcId = linh
         tinsert(arr, child)
-    end 
+    end
     return arr
 end
 
-
 function DelNpcSafe(nNpcIndex)
-
-    if (not nNpcIndex) or (nNpcIndex <= 0 )  then
-            return
+    if (not nNpcIndex) or (nNpcIndex <= 0) then
+        return
     end
 
     PIdx = NpcIdx2PIdx(nNpcIndex)
@@ -107,22 +103,21 @@ function DelNpcSafe(nNpcIndex)
     DelNpc(nNpcIndex)
 end
 
+function IsAttackableCamp(camp1, camp2)
+    if (camp1 ~= camp2) then
+        if camp1 == 0 and camp2 == 5 then
+            return 1
+        end
 
-function IsNpcAttackable(id, includeCamp, excludeCamp)
-    local tbNpc2Kind = GetNpcKind(id)
-    local tbNpc2Camp = GetNpcCurCamp(id)
-    local tbNpc2Level = NPCINFO_GetLevel(id)
-    if (tbNpc2Kind == 0 and tbNpc2Level >= 20          
-        and (includeCamp == nil or includeCamp == tbNpc2Camp)
-        and (excludeCamp == nil or tbNpc2Camp ~= excludeCamp)
-        ) then         
-        return 1
+        if camp2 == 0 and camp1 == 5 then
+            return 1
+        end
+        if camp1 ~= 0 and camp2 ~= 0 then
+            return 1
+        end
     end
     return 0
 end
-
-
-
 
 function createDiagonalFormPath(points)
     local n = getn(points)
@@ -132,7 +127,7 @@ function createDiagonalFormPath(points)
         return points
     end
 
-    local results = {points[1]}
+    local results = { points[1] }
 
     -- Iterate through the points starting from the second point
     for i = 2, n - 1 do
@@ -150,14 +145,12 @@ function createDiagonalFormPath(points)
 
         if (B[3] and B[3] == 1) or angleDiff >= 20 then
             tinsert(results, B)
-
         else
-
             local distance = GetDistanceRadius(A[1], A[2], C[1], C[2])
 
             -- Too close, we get rid of point B
             if distance < 20 then
-                i = i + 1   -- jump
+                i = i + 1 -- jump
             else
                 -- Adjust the position of point B to make the angle closer to 180 degrees
                 --B[1] = (A[1] + C[1]) / 2
@@ -165,8 +158,6 @@ function createDiagonalFormPath(points)
                 tinsert(results, B)
             end
         end
-
-
     end
 
     tinsert(results, points[getn(points)])
@@ -174,9 +165,6 @@ function createDiagonalFormPath(points)
     -- Return the corrected points
     return results
 end
-
-
-
 
 function createFormation(N)
     local bestX = 1
@@ -188,7 +176,7 @@ function createFormation(N)
     for x = 1, N do
         if stop == 0 then
             local y = N / x
-            if mod(N,x) == 0 and mod(N,y) == 0 and y <= x and y ~= 1 then
+            if mod(N, x) == 0 and mod(N, y) == 0 and y <= x and y ~= 1 then
                 bestX = x
                 bestY = y
                 stop = 1
@@ -200,33 +188,32 @@ function createFormation(N)
         end
     end
 
-    return {bestX, bestY}
+    return { bestX, bestY }
 end
- 
+
 function randomRange(point, walkVar)
     if walkVar == 0 then
-        return {point[1], point[2]}
+        return { point[1], point[2] }
     end
-    return {point[1] +random(-walkVar,walkVar), point[2] +random(-walkVar,walkVar)}
+    return { point[1] + random(-walkVar, walkVar), point[2] + random(-walkVar, walkVar) }
 end
 
 function transformRhombus(point, centrePoint, fromPos, toPos)
-    
     local deltaX = toPos[1] - fromPos[1]
     local deltaY = toPos[2] - fromPos[2]
 
     local offsetAngle = atan2(deltaY, deltaX) + 45
 
 
-    offsetAngle = floor(offsetAngle/45 + 0.5) * 45
+    offsetAngle = floor(offsetAngle / 45 + 0.5) * 45
 
     -- Input coordinates
-    local x = centrePoint[1]  -- x-coordinate of point O
-    local y = centrePoint[2]  -- y-coordinate of point O
-    local x1 = point[1] -- x-coordinate of point A
-    local y1 = point[2] -- y-coordinate of point A
-    local xF = fromPos[1] -- x-coordinate of point A
-    local yF = fromPos[2] -- y-coordinate of point A
+    local x = centrePoint[1] -- x-coordinate of point O
+    local y = centrePoint[2] -- y-coordinate of point O
+    local x1 = point[1]      -- x-coordinate of point A
+    local y1 = point[2]      -- y-coordinate of point A
+    local xF = fromPos[1]    -- x-coordinate of point A
+    local yF = fromPos[2]    -- y-coordinate of point A
 
     -- Calculate the angle OA makes with the x-axis
     local angle_OA = atan2(y1 - y, x1 - x)
@@ -235,7 +222,7 @@ function transformRhombus(point, centrePoint, fromPos, toPos)
     local angle_OA_prime = angle_OA + offsetAngle
 
     -- Calculate the distance from O to A'
-    local distance_OA_prime = sqrt((x1 - x)^2 + (y1 - y)^2)
+    local distance_OA_prime = sqrt((x1 - x) ^ 2 + (y1 - y) ^ 2)
 
     -- Calculate the new coordinates for A'
     local x_prime = x + distance_OA_prime * cos(angle_OA_prime)
@@ -245,14 +232,8 @@ function transformRhombus(point, centrePoint, fromPos, toPos)
     local yF_prime = yF + distance_OA_prime * sin(angle_OA_prime)
 
     -- New toPos and fromPos
-    return {x_prime, y_prime, xF_prime, yF_prime}
-
-
+    return { x_prime, y_prime, xF_prime, yF_prime }
 end
- 
-
-
-
 
 function KhoaTHP(nOwnerIndex, flag)
     if nOwnerIndex > 0 then
@@ -260,4 +241,3 @@ function KhoaTHP(nOwnerIndex, flag)
         CallPlayerFunction(nOwnerIndex, DisabledUseHeart, flag)
     end
 end
-
