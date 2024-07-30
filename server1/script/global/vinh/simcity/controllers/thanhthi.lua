@@ -424,9 +424,15 @@ function SimCityMainThanhThi:createNpcSoCap(forceIds, level)
 end
 
 function SimCityMainThanhThi:createNpcSoCapByMap()
-	local groupList = GetAroundNpcList(60)
 	local pW, pX, pY = GetWorldPos()
 
+	-- bienkinh,tuongduong,laman,daily,duongchau,phuongtuong	
+	if nW == 37 or pW == 78 or pW == 176 or pW == 162 or pW == 80 or pW == 1 then
+		return self:createNpcSoCap()
+	end
+
+	-- Get level around
+	local groupList = GetAroundNpcList(60)
 	local tmpFound = {}
 	local nNpcIdx
 	local level
@@ -436,7 +442,7 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
 		level = NPCINFO_GetLevel(nNpcIdx)
 		local kind = GetNpcKind(nNpcIdx)
-		if level >= 20 and level <= 90 and nSettingIdx > 0 and kind == 0 and not mapping[nSettingIdx] then
+		if level <= 90 and nSettingIdx > 0 and kind == 0 and not mapping[nSettingIdx] then
 			tinsert(tmpFound, nSettingIdx)
 			mapping[nSettingIdx] = 1
 		end
