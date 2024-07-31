@@ -157,7 +157,7 @@ function SimCityTongKim:OnDeath(nNpcIndex, currank)
 		launrankname ..
 		" " .. LaunName .. " h¹ träng th­¬ng " .. DeathName .. ", tæng PK lµ " .. BT_GetData(PL_KILLPLAYER);
 
-	Msg2Player("<color=pink> Chóc mõng! B¹n ®· h¹ ®­îc: " .. DeathName .. ", Tæng PK lµ " .. BT_GetData(PL_KILLPLAYER))
+	Msg2Player("<color=cyan> Chóc mõng! B¹n ®· h¹ ®­îc: " .. DeathName .. ", Tæng PK lµ " .. BT_GetData(PL_KILLPLAYER))
 	Msg2MSAll(MISSIONID, str);
 
 
@@ -195,4 +195,102 @@ end
 
 function SimCityTongKim:announceRank(nW, name, newRank)
 	Msg2Map(nW, "<color=white>" .. name .. "<color> th¨ng cÊp <color=yellow>" .. self.RANKS[newRank] .. "<color>")
+end
+
+function SimCityTongKim:updateRank(fighter)
+	local newRank = 1
+	if fighter.fightingScore > 2000 then
+		newRank = 2
+	end
+	if fighter.fightingScore > 5000 then
+		newRank = 3
+	end
+	if fighter.fightingScore > 10000 then
+		newRank = 4
+	end
+	if fighter.fightingScore > 15000 then
+		newRank = 5
+	end
+	if fighter.fightingScore > 20000 then
+		newRank = 6
+	end
+
+	if (fighter.rank ~= newRank) then
+		if newRank > fighter.rank and SearchPlayer(fighter.playerID) == 0 then
+			local worldInfo = SimCityWorld:Get(fighter.nMapId)
+			if worldInfo.showThangCap == 1 then
+				self:announceRank(fighter.nMapId, fighter.hardsetName or SimCityNPCInfo:getName(fighter.nNpcId),
+					newRank)
+			end
+		end
+		fighter.rank = newRank
+	end
+end
+
+function SimCityTongKim:ThongBaoBXH(nW)
+	-- Collect all data
+	local allPlayers = {}
+	for i, fighter in self.fighterList do
+		if fighter.nMapId == nW then
+			tinsert(allPlayers, { i, fighter.fightingScore, "npc" })
+		end
+	end
+
+	if (SimCityTongKim.playerInTK and SimCityTongKim.playerInTK[nW]) then
+		for pId, data in SimCityTongKim.playerInTK[nW] do
+			tinsert(allPlayers, { pId, data.score, "player" })
+		end
+	end
+
+	if getn(allPlayers) > 1 then
+		local maxIndex = getn(allPlayers)
+		if maxIndex > 10 then
+			maxIndex = 10
+		end
+
+		sort(allPlayers, _sortByScore)
+
+		Msg2Map(nW, "<color=yellow>========= B¶NG XÕP H¹NG =========<color>")
+		Msg2Map(nW, "<color=yellow>=================================<color>")
+
+		for j = 1, maxIndex do
+			local info = allPlayers[j]
+
+			if info[3] == "npc" then
+				local fighter = self.fighterList[info[1]]
+				if fighter then
+					local phe = ""
+
+					if (fighter.tongkim == 1) then
+						if (fighter.tongkim_name) then
+							phe = fighter.tongkim_name
+						else
+							phe = "Kim"
+							if fighter.camp == 1 then
+								phe = "Tèng"
+							end
+						end
+					end
+
+					if phe == "Kim" then
+						phe = "K"
+					else
+						phe = "T"
+					end
+
+					local msg = "<color=white>" .. j .. " <color=yellow>[" .. phe .. "] " ..
+						SimCityTongKim.RANKS[fighter.rank] .. " <color>" ..
+						(fighter.hardsetName or SimCityNPCInfo:getName(fighter.nNpcId)) .. "<color=white> (" ..
+						allPlayers[j][2] .. ")<color>"
+					Msg2Map(nW, msg)
+				end
+			else
+				local tbPlayer = SimCityTongKim.playerInTK[nW][info[1]]
+				local msg = "<color=white>" .. j .. " <color=red>[" .. (tbPlayer.phe) .. "] " .. (tbPlayer.rank) ..
+					" <color>" .. (tbPlayer.name) .. "<color=white> (" .. (tbPlayer.score) .. ")<color>"
+				Msg2Map(nW, msg)
+			end
+		end
+		Msg2Map(nW, "<color=yellow>=================================<color>")
+	end
 end

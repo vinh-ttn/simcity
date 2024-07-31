@@ -38,7 +38,7 @@ Include("\\script\\global\\vinh\\simcity\\plugins\\index.lua")
 Include("\\script\\global\\vinh\\simcity\\data\\index.lua")
 
 -- Now main class
-Include("\\script\\global\\vinh\\simcity\\class\\group_fighter.class.lua")
+Include("\\script\\global\\vinh\\simcity\\class\\fighter_manager.class.lua")
 
 
 -- Kick start all plugins if needed

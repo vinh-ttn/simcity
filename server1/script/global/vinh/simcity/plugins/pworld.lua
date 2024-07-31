@@ -44,18 +44,18 @@ end
 
 function SimCityWorld:ShowTrangTri(nW, show)
 	local info = self:Get(nW)
-	local group = self.trangtri["w" .. nW]
+	local fighter = self.trangtri["w" .. nW]
 	-- Establish data
-	if not group then
+	if not fighter then
 		self.trangtri["w" .. nW] = {
 			result = {},
 			isShowing = 0
 		}
-		group = self.trangtri["w" .. nW]
+		fighter = self.trangtri["w" .. nW]
 	end
 
 	-- Show but not showing? Create it
-	if show == 1 and group.isShowing == 0 then
+	if show == 1 and fighter.isShowing == 0 then
 		for i = 1, getn(info.decoration) do
 			local item = info.decoration[i]
 			local id = item[1]
@@ -66,20 +66,20 @@ function SimCityWorld:ShowTrangTri(nW, show)
 				name = " "
 			end
 			local index = AddNpcEx(id, 1, 5, SubWorldID2Idx(nW), nX * 32, nY * 32, 1, name, 0)
-			tinsert(group.result, index)
+			tinsert(fighter.result, index)
 
 			SetNpcAI(index, 0)
 		end
-		group.isShowing = 1
+		fighter.isShowing = 1
 		info.showDecoration = 1
 
 		-- Dont want to show but showing? Delete it
-	elseif show == 0 and group.isShowing == 1 then
-		for i = 1, getn(group.result) do
-			DelNpc(group.result[i])
+	elseif show == 0 and fighter.isShowing == 1 then
+		for i = 1, getn(fighter.result) do
+			DelNpc(fighter.result[i])
 		end
-		group.result = {}
-		group.isShowing = 0
+		fighter.result = {}
+		fighter.isShowing = 0
 		info.showDecoration = 0
 	end
 end
@@ -211,7 +211,7 @@ function SimCityWorld:initThanhThi()
 end
 
 function SimCityWorld:doShowBXH(mapID)
-	GroupFighter:ThongBaoBXH(mapID)
+	FighterManager:ThongBaoBXH(mapID)
 end
 
 function SimCityWorld:OnTime()

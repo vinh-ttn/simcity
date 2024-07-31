@@ -65,7 +65,7 @@ function SimCityMainVanTieu:tao1xe()
 	end
 
 
-	local nListId = GroupFighter:New({
+	local nListId = FighterManager:Add({
 		mode = "vantieu",
 		szName = name,
 
@@ -77,7 +77,7 @@ function SimCityMainVanTieu:tao1xe()
 
 
 		walkMode = 1, -- optional: random or 1 for formation
-		tbPos = {},
+		originalWalkPath = {},
 		mapData = mapData,
 		walkPath = {},
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
@@ -126,12 +126,12 @@ function SimCityMainVanTieu:getTieuXa()
 	if nListId == 0 then
 		return nil
 	end
-	return GroupFighter:Get(nListId)
+	return FighterManager:Get(nListId)
 end
 
 function SimCityMainVanTieu:gotoTieuXa()
-	local group = self:getTieuXa()
-	local nX32, nY32, nW32 = GetNpcPos(group.finalIndex)
+	local fighter = self:getTieuXa()
+	local nX32, nY32, nW32 = GetNpcPos(fighter.finalIndex)
 	local areaX = nX32 / 32
 	local areaY = nY32 / 32
 	local nW = SubWorldIdx2ID(nW32)
@@ -140,13 +140,13 @@ function SimCityMainVanTieu:gotoTieuXa()
 end
 
 function SimCityMainVanTieu:hoanthanhTieuXa(force)
-	local group = self:getTieuXa()
+	local fighter = self:getTieuXa()
 
-	if force == 0 and group.finished == nil then
+	if force == 0 and fighter.finished == nil then
 		return Talk(1, "", "Tiªu xa vÉn ®ang trªn ®­êng di chuyÓn")
 	end
 
-	if group.finishedReason == 1 then
+	if fighter.finishedReason == 1 then
 		Talk(2, "", "Hoµn thµnh nhiÖm vô", "Xin h·y nhËn phÇn th­ëng, h·y cè g¾ng lªn!")
 		Earn(100000)
 		AddSkillState(509, 1, 0, 180);
@@ -154,7 +154,7 @@ function SimCityMainVanTieu:hoanthanhTieuXa(force)
 		Talk(1, "", "NhiÖm vô thÊt b¹i")
 	end
 
-	GroupFighter:Remove(group.groupID)
+	FighterManager:Remove(fighter.id)
 	self.player2TieuXa[GetName()] = 0
 end
 
@@ -164,9 +164,9 @@ function SimCityMainVanTieu:mainMenu()
 	SetFightState(0)
 
 	local tbSay = { "NhiÖm vô hé tèng" }
-	local group = self:getTieuXa()
+	local fighter = self:getTieuXa()
 
-	if group == nil then
+	if fighter == nil then
 		tinsert(tbSay, "B¶o vÖ b¸ t¸nh/#SimCityMainVanTieu:tao1xe()")
 	else
 		tinsert(tbSay, "Di chuyÓn tíi vÞ trÝ tiªu xa/#SimCityMainVanTieu:gotoTieuXa()")

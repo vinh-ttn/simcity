@@ -20,7 +20,7 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau)
 	local name = GetName()
 	local rank = 1
 
-	local nListId = GroupFighter:New({
+	local nListId = FighterManager:Add({
 
 		szName = name or "",
 
@@ -30,7 +30,7 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau)
 
 		walkMode = "random", -- optional: random, keoxe, or 1 for formation
 		walkVar = 2,   -- random walk of radius of 4*2
-		tbPos = map,
+		originalWalkPath = map,
 
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 5, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
@@ -67,18 +67,7 @@ end
 function SimCityKeoXe:nv_tudo_xe(cap)
 	local forCamp = GetCurCamp()
 	local pW, pX, pY = GetWorldPos()
-
-
-	local pool = SimCityNPCInfo.nvSoCap
-	if cap == 1 then
-		pool = SimCityNPCInfo.nvTrungCap
-	end
-	if cap == 2 then
-		pool = SimCityNPCInfo.nvCaoCap
-	end
-	if cap == 3 then
-		pool = SimCityNPCInfo.nvSieuNhan
-	end
+	local pool = SimCityNPCInfo:getPoolByCap(cap)
 
 	-- 10 con theo sau
 	for i = 1, 10 do
@@ -95,9 +84,9 @@ function SimCityKeoXe:nv_tudo_xe(cap)
 end
 
 function SimCityKeoXe:removeAll()
-	for key, group in GroupFighter.groupList do
-		if group.playerID == GetName() then
-			GroupFighter:Remove(group.groupID)
+	for key, fighter in FighterManager.fighterList do
+		if fighter.playerID == GetName() then
+			FighterManager:Remove(fighter.id)
 		end
 	end
 end
@@ -195,13 +184,13 @@ function SimCityKeoXe:luyencong()
 end
 
 function SimCityKeoXe:XoaBai()
-	local groupList = GetAroundNpcList(30)
+	local fighterList = GetAroundNpcList(30)
 	local pW, pX, pY = GetWorldPos()
 
 	local tmpFound = {}
 	local nNpcIdx
-	for i = 1, getn(groupList) do
-		nNpcIdx = groupList[i]
+	for i = 1, getn(fighterList) do
+		nNpcIdx = fighterList[i]
 		local kind = GetNpcKind(nNpcIdx)
 		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
 		if nSettingIdx > 0 and kind == 0 then
@@ -217,13 +206,13 @@ function SimCityKeoXe:TaoBai(forceLevel)
 		SimCityKeoXe:removeAll()
 	end
 
-	local groupList = GetAroundNpcList(60)
+	local fighterList = GetAroundNpcList(60)
 	local pW, pX, pY = GetWorldPos()
 
 	local tmpFound = {}
 	local nNpcIdx
-	for i = 1, getn(groupList) do
-		nNpcIdx = groupList[i]
+	for i = 1, getn(fighterList) do
+		nNpcIdx = fighterList[i]
 		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
 		local name = GetNpcName(nNpcIdx)
 		local level = NPCINFO_GetLevel(nNpcIdx)

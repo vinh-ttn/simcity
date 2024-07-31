@@ -119,7 +119,7 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 
 
 
-	local nListId = GroupFighter:New({
+	local nListId = FighterManager:Add({
 
 		szName = name or "",
 
@@ -129,7 +129,7 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 
 		walkMode = (theosau and "keoxe") or "random", -- optional: random, keoxe, or 1 for formation
 		walkVar = (theosau and 2) or 4,         -- random walk of radius of 4*2
-		tbPos = map,
+		originalWalkPath = map,
 
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 5, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
@@ -192,7 +192,7 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 	end
 
 
-	groupID = GroupFighter:New({
+	id = FighterManager:Add({
 		szName = name or "",
 
 		nNpcId = thonglinh, -- required, main char ID
@@ -200,7 +200,7 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 		camp = realCamp, -- optional, camp
 		children = children, -- optional, children
 		walkMode = 1,  -- optional: random or 1 for formation
-		tbPos = map,
+		originalWalkPath = map,
 
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 5, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
@@ -363,16 +363,7 @@ end
 function SimCityChienTranh:nv_tudo(cap)
 	local forCamp = 1
 
-	local pool = SimCityNPCInfo.nvSoCap
-	if cap == 1 then
-		pool = SimCityNPCInfo.nvTrungCap
-	end
-	if cap == 2 then
-		pool = SimCityNPCInfo.nvCaoCap
-	end
-	if cap == 3 then
-		pool = SimCityNPCInfo.nvSieuNhan
-	end
+	local pool = SimCityNPCInfo:getPoolByCap(cap)
 
 	local total = 0
 	while total < 100 do
@@ -393,18 +384,7 @@ end
 
 function SimCityChienTranh:nv_tudo_xe(cap)
 	local forCamp = 1
-
-
-	local pool = SimCityNPCInfo.nvSoCap
-	if cap == 1 then
-		pool = SimCityNPCInfo.nvTrungCap
-	end
-	if cap == 2 then
-		pool = SimCityNPCInfo.nvCaoCap
-	end
-	if cap == 3 then
-		pool = SimCityNPCInfo.nvSieuNhan
-	end
+	local pool = SimCityNPCInfo:getPoolByCap(cap)
 
 	for i = 1, 10 do
 		local pid = pool[random(1, getn(pool))]
@@ -456,7 +436,7 @@ function SimCityChienTranh:phe_quanbinh()
 end
 
 function SimCityChienTranh:removeAll()
-	GroupFighter:ClearMap(self.nW)
+	FighterManager:ClearMap(self.nW)
 end
 
 function SimCityChienTranh:goiAnhHungThiepNgoaiTrang()
@@ -466,17 +446,17 @@ function SimCityChienTranh:goiAnhHungThiepNgoaiTrang()
 
 
 	tinsert(tbSay, "S¬ cÊp/#SimCityChienTranh:nv_tudo(0)")
-	tinsert(tbSay, "S¬ cÊp (5 xe)/#SimCityChienTranh:nv_tudo_xe(0)")
+	--tinsert(tbSay, "S¬ cÊp (5 xe)/#SimCityChienTranh:nv_tudo_xe(0)")
 
 	tinsert(tbSay, "Trung cÊp/#SimCityChienTranh:nv_tudo(1)")
-	tinsert(tbSay, "Trung cÊp (5 xe)/#SimCityChienTranh:nv_tudo_xe(1)")
+	--tinsert(tbSay, "Trung cÊp (5 xe)/#SimCityChienTranh:nv_tudo_xe(1)")
 
 
 	tinsert(tbSay, "Cao cÊp/#SimCityChienTranh:nv_tudo(2)")
-	tinsert(tbSay, "Cao cÊp 1 (5 xe)/#SimCityChienTranh:nv_tudo_xe(2)")
+	--tinsert(tbSay, "Cao cÊp 1 (5 xe)/#SimCityChienTranh:nv_tudo_xe(2)")
 
 	tinsert(tbSay, "Siªu cÊp/#SimCityChienTranh:nv_tudo(3)")
-	tinsert(tbSay, "Siªu cÊp (5 xe)/#SimCityChienTranh:nv_tudo_xe(3)")
+	--tinsert(tbSay, "Siªu cÊp (5 xe)/#SimCityChienTranh:nv_tudo_xe(3)")
 
 
 	tinsert(tbSay, "Quay l¹i./#SimCityChienTranh:mainMenu()")
@@ -492,18 +472,18 @@ function SimCityChienTranh:goiAnhHungThiep()
 
 
 	tinsert(tbSay, "Cao cÊp 1/#SimCityChienTranh:phe_tudo(1000,500,0)")
-	tinsert(tbSay, "Cao cÊp 1 (5 xe)/#SimCityChienTranh:phe_tudo_xe(1000,500,0)")
+	--tinsert(tbSay, "Cao cÊp 1 (5 xe)/#SimCityChienTranh:phe_tudo_xe(1000,500,0)")
 
 	tinsert(tbSay, "Cao cÊp 2/#SimCityChienTranh:phe_tudo(1500,500,0)")
-	tinsert(tbSay, "Cao cÊp 2 (5 xe)/#SimCityChienTranh:phe_tudo_xe(1500,500,0)")
+	--tinsert(tbSay, "Cao cÊp 2 (5 xe)/#SimCityChienTranh:phe_tudo_xe(1500,500,0)")
 
 	tinsert(tbSay, "Cao cÊp 3/#SimCityChienTranh:phe_tudo(2000,500,0)")
-	tinsert(tbSay, "Cao cÊp 3 (5 xe)/#SimCityChienTranh:phe_tudo_xe(2000,500,0)")
+	--tinsert(tbSay, "Cao cÊp 3 (5 xe)/#SimCityChienTranh:phe_tudo_xe(2000,500,0)")
 
 
 
 	tinsert(tbSay, "Trung cÊp/#SimCityChienTranh:phe_tudo(500,500,1)")
-	tinsert(tbSay, "Trung cÊp (5 xe)/#SimCityChienTranh:phe_tudo_xe(500,500,0)")
+	--tinsert(tbSay, "Trung cÊp (5 xe)/#SimCityChienTranh:phe_tudo_xe(500,500,0)")
 
 	tinsert(tbSay, "Quay l¹i./#SimCityChienTranh:mainMenu()")
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
@@ -573,7 +553,7 @@ function SimCityChienTranh:mainMenu()
 	tinsert(tbSay, "Mêi anh hïng thiªn h¹/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "Thªm qu¸i nh©n/#SimCityChienTranh:goiAnhHungThiep()")
 	tinsert(tbSay, "Thªm quan binh/#SimCityChienTranh:phe_quanbinh()")
-	tinsert(tbSay, "Xem b¶ng xÕp h¹ng/#GroupFighter:ThongBaoBXH(" .. (self.nW) .. ")")
+	tinsert(tbSay, "Xem b¶ng xÕp h¹ng/#FighterManager:ThongBaoBXH(" .. (self.nW) .. ")")
 	tinsert(tbSay, "ThiÕt lËp/#SimCityChienTranh:caidat()")
 	tinsert(tbSay, "Gi¶i t¸n/#SimCityChienTranh:removeAll()")
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")

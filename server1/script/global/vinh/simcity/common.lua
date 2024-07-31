@@ -241,3 +241,36 @@ function KhoaTHP(nOwnerIndex, flag)
         CallPlayerFunction(nOwnerIndex, DisabledUseHeart, flag)
     end
 end
+
+function Simcity_GetNpcAroundNpcList(nNpcIndex, radius)
+    local allNpcs = {}
+    local nCount = 0
+
+    -- 8.0: has GetNpcAroundNpcList function
+    if GetNpcAroundNpcList then
+        return GetNpcAroundNpcList(nNpcIndex, radius)
+
+        -- 6.0: do the long route
+    else
+        local myListId = GetNpcParam(nNpcIndex, PARAM_LIST_ID)
+        local nX32, nY32, nW32 = GetNpcPos(nNpcIndex)
+        local areaX = nX32 / 32
+        local areaY = nY32 / 32
+        local nW = SubWorldIdx2ID(nW32)
+
+        -- Get info for npc in this world
+        for key, fighter in FighterManager.fighterList do
+            if fighter.isDead == 0 and fighter.nMapId == nW and fighter.id ~= myListId then
+                local oX32, oY32 = GetNpcPos(fighter.finalIndex)
+                local oX = oX32 / 32
+                local oY = oY32 / 32
+                if GetDistanceRadius(oX, oY, areaX, areaY) < radius then
+                    tinsert(allNpcs, fighter.finalIndex)
+                    nCount = nCount + 1
+                end
+            end
+        end
+    end
+
+    return allNpcs, nCount
+end

@@ -362,7 +362,24 @@ function SimCityNPCInfo:getHPByCap(cap)
 		return random(50000, 200000)
 	end
 	if cap == 1 then
-		return random(200000, 1000000)
+		return random(200000, 500000)
+	end
+	if cap == 2 then
+		return random(500000, 1000000)
 	end
 	return random(1000000, 2000000)
+end
+
+function SimCityNPCInfo:getPoolByCap(cap)
+	local pool = self.nvSoCap
+	if cap == 1 then
+		pool = self.nvTrungCap
+	end
+	if cap == 2 then
+		pool = self.nvCaoCap
+	end
+	if cap == 3 then
+		pool = self.nvSieuNhan
+	end
+	return pool
 end
