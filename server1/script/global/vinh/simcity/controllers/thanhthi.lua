@@ -405,7 +405,7 @@ function SimCityMainThanhThi:createNpcSoCap(forceIds, level)
 	local nW, _, _ = GetWorldPos()
 	local worldInfo = SimCityWorld:Get(nW)
 	if (worldInfo.name ~= "") then
-		local perPage = 100
+		local perPage = 200
 		local totalForceIds = 0
 		if forceIds ~= nil then
 			totalForceIds = getn(forceIds)
