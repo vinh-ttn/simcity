@@ -33,7 +33,22 @@ Chạy trên JX Server 8
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/keoxe.gif)
 
-## B. Hướng dẫn cài đặt thủ công Thành Thị, Chiến Loạn và Kéo Xe
+## B. Cách cài đặt/cập nhật phiên bản mới nhất Simcity trong [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
+
+![](https://github.com/vinh-ttn/materials/blob/main/simcity/caidat_capnhat_simcity.gif)
+
+
+Yêu cầu game server của bạn phải có kết nối internet
+
+1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
+
+2\) Cửa sổ xác nhận sẽ hiện ra, gõ **co** và enter khi gặp câu hỏi xác nhận
+
+3\) Sau đó điền vào **vinh-ttn/simcity** và enter để cập nhật từ github này
+
+Xong, khởi động lại game server.
+
+## C. Cách cài đặt/cập nhật thủ công Thành Thị, Chiến Loạn và Kéo Xe
 
 1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
 
@@ -43,7 +58,7 @@ Chạy trên JX Server 8
 
 \* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
 
-## C. Hướng dẫn cài đặt thủ công Tống Kim (Bảo vệ nguyên soái)
+## D. Cách cài đặt/cập nhật thủ công Tống Kim (Bảo vệ nguyên soái)
 
 1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
 
@@ -70,27 +85,8 @@ ngay sau dòng đó, thêm vào dòng
 5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
 Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/>
 
-## D. Hướng dẫn cập nhật lên phiên bản mới nhất Simcity (thủ công)
 
-1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
-
-2\) Khởi động lại game server, xong.
-
-## E. Hướng dẫn cập nhật lên phiên bản mới nhất Simcity qua app QuanLyServer
-
-![](https://lh7-us.googleusercontent.com/docsz/AD_4nXfzRs-q7b6SOaPKLVJfFH6GbqrqRl8GZfSapN0Zx0BtKFPh4psNJ279Hz3VPTPvjD3AuzrzkR4_ncltV160VXbEVPMIQk_IZtQsJGyH9eBM5ViZIyEm03KzNSRCZPyg0mF1xn2mR9S9OneDy4IRwiiM3iQj?key=69JrhYHE20yyd5Bd1uKvkw)
-
-Yêu cầu game server của bạn phải có kết nối internet
-
-1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
-
-2\) Cửa sổ xác nhận sẽ hiện ra, gõ **co** và enter khi gặp câu hỏi xác nhận
-
-3\) Sau đó điền vào **vinh-ttn/simcity** và enter để cập nhật từ github này
-
-Xong, khởi động lại game server.
-
-## F. Thông tin thêm
+## E. Thông tin thêm
 
 ### Kéo xe NPC
 
