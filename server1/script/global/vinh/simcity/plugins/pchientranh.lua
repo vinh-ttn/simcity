@@ -160,7 +160,7 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 		ngoaitrang = nt or 0,
 		hardsetName = hardsetName,
 
-		cap = cap or nil,
+		cap = cap,
 
 		children = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil -- force distance check for child
@@ -445,17 +445,17 @@ function SimCityChienTranh:goiAnhHungThiepNgoaiTrang()
 	local tbSay = { worldInfo.name .. " Chi’n Loπn" }
 
 
-	tinsert(tbSay, "S¨ c p/#SimCityChienTranh:nv_tudo(0)")
+	tinsert(tbSay, "S¨ c p/#SimCityChienTranh:nv_tudo(1)")
 	--tinsert(tbSay, "S¨ c p (5 xe)/#SimCityChienTranh:nv_tudo_xe(0)")
 
-	tinsert(tbSay, "Trung c p/#SimCityChienTranh:nv_tudo(1)")
+	tinsert(tbSay, "Trung c p/#SimCityChienTranh:nv_tudo(2)")
 	--tinsert(tbSay, "Trung c p (5 xe)/#SimCityChienTranh:nv_tudo_xe(1)")
 
 
-	tinsert(tbSay, "Cao c p/#SimCityChienTranh:nv_tudo(2)")
+	tinsert(tbSay, "Cao c p/#SimCityChienTranh:nv_tudo(3)")
 	--tinsert(tbSay, "Cao c p 1 (5 xe)/#SimCityChienTranh:nv_tudo_xe(2)")
 
-	tinsert(tbSay, "Si™u c p/#SimCityChienTranh:nv_tudo(3)")
+	tinsert(tbSay, "Si™u c p/#SimCityChienTranh:nv_tudo(4)")
 	--tinsert(tbSay, "Si™u c p (5 xe)/#SimCityChienTranh:nv_tudo_xe(3)")
 
 

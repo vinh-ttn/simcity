@@ -16,7 +16,7 @@ function SimCityKeoXe:genWalkPath(forCamp)
 	return {}
 end
 
-function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau)
+function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, cap)
 	local name = GetName()
 	local rank = 1
 
@@ -57,7 +57,8 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau)
 		children = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil, -- force distance check for child
 
-		playerID = GetName()
+		playerID = GetName(),
+		cap = cap
 
 	});
 
@@ -79,7 +80,7 @@ function SimCityKeoXe:nv_tudo_xe(cap)
 		end
 
 		local children = {}
-		self:taoNV(pid, forCamp, pW, myPath, 1, children)
+		self:taoNV(pid, forCamp, pW, myPath, 1, children, cap)
 	end
 end
 
@@ -95,10 +96,10 @@ function SimCityKeoXe:goiAnhHungThiepNgoaiTrang()
 	local tbSay = { "K–o Xe" }
 
 
-	tinsert(tbSay, "S¨ c p/#SimCityKeoXe:nv_tudo_xe(0)")
-	tinsert(tbSay, "Trung c p/#SimCityKeoXe:nv_tudo_xe(1)")
-	tinsert(tbSay, "Cao c p/#SimCityKeoXe:nv_tudo_xe(2)")
-	tinsert(tbSay, "Si™u c p/#SimCityKeoXe:nv_tudo_xe(3)")
+	tinsert(tbSay, "S¨ c p/#SimCityKeoXe:nv_tudo_xe(1)")
+	tinsert(tbSay, "Trung c p/#SimCityKeoXe:nv_tudo_xe(2)")
+	tinsert(tbSay, "Cao c p/#SimCityKeoXe:nv_tudo_xe(3)")
+	tinsert(tbSay, "Si™u c p/#SimCityKeoXe:nv_tudo_xe(4)")
 
 	tinsert(tbSay, "Quay lπi./#SimCityKeoXe:mainMenu()")
 	tinsert(tbSay, "K’t thÛc ÆËi thoπi./no")
@@ -144,7 +145,7 @@ function SimCityKeoXe:tao1xe(data)
 		local pid = data[i]
 		local myPath = self:genWalkPath(forCamp)
 		local children = {}
-		self:taoNV(pid, forCamp, pW, myPath, 0, children)
+		self:taoNV(pid, forCamp, pW, myPath, 0, children, 0)
 	end
 end
 

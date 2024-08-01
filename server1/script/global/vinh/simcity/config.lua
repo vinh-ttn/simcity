@@ -22,7 +22,7 @@ TIME_RESTING = { -- nghi ngoi, khong danh nhau lai trong vong thoi gian nay
 }
 
 
-TONGKIM_AUTOCREATE = 0             -- if 1, auto add NPC to tongkim
+TONGKIM_AUTOCREATE = 1             -- if 1, auto add NPC to tongkim
 
 PARAM_LIST_ID = 1                  -- param to store fighter id
 PARAM_CHILD_ID = 2                 -- param to store child id

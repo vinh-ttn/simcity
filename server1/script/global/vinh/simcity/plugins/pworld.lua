@@ -214,6 +214,13 @@ function SimCityWorld:doShowBXH(mapID)
 	FighterManager:ThongBaoBXH(mapID)
 end
 
+function SimCityWorld:IsTongKimMap(nW)
+	if nW == 380 or nW == 378 or nW == 379 then
+		return 1
+	end
+	return 0
+end
+
 function SimCityWorld:OnTime()
 	for wId, worldInfo in self.data do
 		worldInfo.tick = worldInfo.tick + 1

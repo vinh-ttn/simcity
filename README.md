@@ -33,12 +33,14 @@ Chạy trên JX Server 8
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/keoxe.gif)
 
-## B. Cách cài đặt/cập nhật phiên bản mới nhất Simcity trong [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
+## B. Cách cài đặt/cập nhật Simcity 
+
+
+### 1. Tự động qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
+
+Yêu cầu game server của bạn phải có kết nối internet (nếu không có hãy xem cách 2 thủ công)
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/caidat_capnhat_simcity.gif)
-
-
-Yêu cầu game server của bạn phải có kết nối internet
 
 1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
 
@@ -48,9 +50,9 @@ Yêu cầu game server của bạn phải có kết nối internet
 
 Xong, khởi động lại game server.
 
-## C. Cách cài đặt/cập nhật thủ công Thành Thị, Chiến Loạn và Kéo Xe
+### 2. Thủ công
 
-1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
+1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ server1 vào server1 trên server
 
 2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
 
@@ -58,35 +60,13 @@ Xong, khởi động lại game server.
 
 \* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
 
-## D. Cách cài đặt/cập nhật thủ công Tống Kim (Bảo vệ nguyên soái)
 
-1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
+## C. Thông tin thêm
 
-`\script\battles\marshal\mission.lua`
+### Tống Kim (Bảo vệ nguyên soái)
 
-2\) Tìm đến dòng (thứ 4-5 gì đó từ trên đếm xuống):
-
-`Include("\\script\\battles\\marshal\\head.lua")`
-
-và thêm vào dòng ngay sau đó
-
-`Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")`
-
-3\) Tìm đế hàm dòng (173) của hàm function InitMission():
-
-`BT_SetMissionName("Phương Thức Bảo Vệ Nguyên Soái”)`
-
-ngay sau dòng đó, thêm vào dòng
-
-`SimCityMainTongKim:addTongKimNpc()`
-
-4\) Khởi động lại server, vào Tống Kim sẽ có sẵn NPC đang đánh nhau và Triệu Mẫn/Vô Kỵ để điều khiển
-
-5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
+(Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
 Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/>
-
-
-## E. Thông tin thêm
 
 ### Kéo xe NPC
 

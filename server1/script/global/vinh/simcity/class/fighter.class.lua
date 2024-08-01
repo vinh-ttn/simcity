@@ -15,11 +15,6 @@ function NpcFighter:New(fighter)
         return nil
     end
 
-    -- Set NPC life
-    if self.cap and self.cap < 2 and not self.lastHP then
-        self.maxHP = SimCityNPCInfo:getHPByCap(self.cap)
-    end
-
     -- Create the character on screen
     fighter:Show(1)
     return fighter
@@ -411,7 +406,7 @@ function NpcFighter:GenWalkPath(hasJustBeenFlipped)
         if hasJustBeenFlipped == 0 then
             tinsert(self.walkPath, randomRange(point, self.walkVar or 2))
         else
-            tinsert(self.walkPath, randomRange(point, 0))
+            tinsert(self.walkPath, randomRange(point, self.walkVar or 2))
         end
     end
 end
@@ -516,7 +511,7 @@ function NpcFighter:Breath()
         -- Show my ID
         if (worldInfo.showingId == 1) then
             local dbMsg = self.debugMsg or ""
-            NpcChat(self.finalIndex, self.nNpcId)
+            NpcChat(self.finalIndex, self.id .. " " .. self.nNpcId)
         end
     else
         worldInfo.allowFighting = 1

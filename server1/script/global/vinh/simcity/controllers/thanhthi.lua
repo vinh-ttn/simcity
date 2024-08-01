@@ -17,9 +17,7 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 	local hardsetName = (config.ngoaitrang and config.ngoaitrang == 1 and SimCityPlayerName:getName()) or
 		SimCityNPCInfo:getName(id)
 
-	local nListId = FighterManager:Add({
-
-
+	local npcConfig = {
 		nNpcId = id, -- required, main char ID
 		nMapId = Map, -- required, map
 		walkMode = "random",
@@ -28,15 +26,17 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 		CHANCE_ATTACK_PLAYER = CHANCE_ATTACK_PLAYER, -- co hoi tan cong nguoi choi neu di ngang qua
 		attackNpcChance = CHANCE_AUTO_ATTACK,  -- co hoi bat chien dau
 		CHANCE_ATTACK_NPC = CHANCE_ATTACK_NPC, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
-		ngoaitrang = config.ngoaitrang or 0,
 		noRevive = 0,
 		hardsetName = hardsetName,
 		mode = "thanhthi",
-
-		cap = config.cap,
 		level = config.level or 95
+	}
 
-	})
+	for k, v in config do
+		npcConfig[k] = v
+	end
+
+	local nListId = FighterManager:Add(npcConfig)
 
 	if nListId > 0 then
 		if (not self._dataStorage["n" .. nW]) then
@@ -254,10 +254,10 @@ function SimCityMainThanhThi:goiAnhHungThiepNgoaiTrang()
 
 
 	local tbSay = { worldInfo.name .. " V‚ L©m ßπi HÈi" }
-	tinsert(tbSay, "S¨ c p/#SimCityMainThanhThi:createAnhHung(0,200,1)")
-	tinsert(tbSay, "Trung c p/#SimCityMainThanhThi:createAnhHung(1,200,1)")
-	tinsert(tbSay, "Cao c p/#SimCityMainThanhThi:createAnhHung(2,200,1)")
-	tinsert(tbSay, "Si™u c p/#SimCityMainThanhThi:createAnhHung(3,200,1)")
+	tinsert(tbSay, "S¨ c p/#SimCityMainThanhThi:createAnhHung(1,200,1)")
+	tinsert(tbSay, "Trung c p/#SimCityMainThanhThi:createAnhHung(2,200,1)")
+	tinsert(tbSay, "Cao c p/#SimCityMainThanhThi:createAnhHung(3,200,1)")
+	tinsert(tbSay, "Si™u c p/#SimCityMainThanhThi:createAnhHung(4,200,1)")
 
 	tinsert(tbSay, "K’t thÛc ÆËi thoπi./no")
 	CreateTaskSay(tbSay)
@@ -309,13 +309,14 @@ end
 
 function SimCityMainThanhThi:mainMenu()
 	local nW, nX, nY = GetWorldPos()
+
+	if SimCityWorld:IsTongKimMap(nW) == 1 then
+		return SimCityMainTongKim:mainMenu()
+	end
+
 	local worldInfo = SimCityWorld:Get(nW)
 	SimCityChienTranh:modeTongKim(0, 0)
 	SimCityChienTranh.nW = nW
-
-	if nW == 380 or nW == 378 or nW == 379 then
-		return SimCityMainTongKim:mainMenu()
-	end
 
 	if not worldInfo.name then
 		Say(
@@ -371,6 +372,7 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 		return 1
 	end
 	local nW, _, _ = GetWorldPos()
+
 	if not self.worldStatus["w" .. nW] then
 		self.worldStatus["w" .. nW] = {
 			count = 1,
@@ -384,6 +386,12 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 	-- If not enabled, create it
 	if self.worldStatus["w" .. nW].enabled == 0 then
 		self.worldStatus["w" .. nW].enabled = 1
+
+		if SimCityWorld:IsTongKimMap(nW) == 1 then
+			SimCityMainTongKim:createNPCs()
+			return 1
+		end
+
 		local worldInfo = SimCityWorld:Get(nW)
 		if (worldInfo.name ~= "") then
 			self:createNpcSoCapByMap()
@@ -425,7 +433,7 @@ function SimCityMainThanhThi:createNpcSoCap(forceIds, level)
 
 			if totalForceIds == 0 then
 				id = random(1786, 1795)
-				self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95, cap = 0 })
+				self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95, cap = 1 })
 			else
 				id = forceIds[random(1, totalForceIds)]
 				self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95 })

@@ -36,6 +36,10 @@ function FighterManager:initCharConfig(config)
     end
     config.hardsetPos = config.hardsetPos or random(1, randomPos)
     config.rebelActivated = config.rebelActivated or 0
+    config.ngoaitrang = config.ngoaitrang or 0
+    config.cap = config.cap or 1
+
+    config.maxHP = SimCityNPCInfo:getHPByCap(config.cap)
 end
 
 function FighterManager:isValidChar(id)

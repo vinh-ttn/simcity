@@ -358,16 +358,14 @@ function SimCityNPCInfo:getSpeed(id)
 end
 
 function SimCityNPCInfo:getHPByCap(cap)
-	if cap == 0 then
+	if cap == 1 then
 		return random(50000, 200000)
 	end
-	if cap == 1 then
+	if cap == 2 then
 		return random(200000, 500000)
 	end
-	if cap == 2 then
-		return random(500000, 1000000)
-	end
-	return random(1000000, 2000000)
+
+	return random(500000, 1000000)
 end
 
 function SimCityNPCInfo:getPoolByCap(cap)
