@@ -13,7 +13,35 @@ Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/m
 -   Tọa độ Biện Kinh, Phượng Tường, Đại Lý: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/)
 -   Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/)
 
-## A. Giới thiệu tính năng
+## A. Cách cài đặt/cập nhật Simcity 
+
+### 1. Thủ công
+
+1\) Download file [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép đè toàn bộ **server1** vào **server1** trên server
+
+2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương (hoặc Tống Kim Bảo Vệ Nguyên Soái):
+
+- gặp Triệu Mẫn để sử dụng simcity
+
+- gặp Vô Kỵ để điều khiển kéo xe
+
+
+### 2. Tự động qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing) 
+
+Yêu cầu game server của bạn phải có kết nối internet 
+
+1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
+
+2\) Cửa sổ xác nhận sẽ hiện ra, gõ **co** và enter khi gặp câu hỏi xác nhận
+
+3\) Sau đó điền vào **vinh-ttn/simcity** và enter để cập nhật từ github này
+
+Xong, khởi động lại game server.
+
+![](https://github.com/vinh-ttn/materials/blob/main/simcity/caidat_capnhat_simcity.gif)
+
+
+## B. Tính năng
 
 Chạy trên JX Server 8
 
@@ -33,32 +61,6 @@ Chạy trên JX Server 8
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/keoxe.gif)
 
-## B. Cách cài đặt/cập nhật Simcity 
-
-
-### 1. Tự động qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
-
-Yêu cầu game server của bạn phải có kết nối internet (nếu không có hãy xem cách 2 thủ công)
-
-![](https://github.com/vinh-ttn/materials/blob/main/simcity/caidat_capnhat_simcity.gif)
-
-1\) Trong app QuanLyServer, hãy chắc chắn đúng phiên bản server đang sử dụng, sau đó nhấn nút **Up** màu đỏ
-
-2\) Cửa sổ xác nhận sẽ hiện ra, gõ **co** và enter khi gặp câu hỏi xác nhận
-
-3\) Sau đó điền vào **vinh-ttn/simcity** và enter để cập nhật từ github này
-
-Xong, khởi động lại game server.
-
-### 2. Thủ công
-
-1\) Download file [Simcity](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ server1 vào server1 trên server
-
-2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
-
-\* gặp Triệu Mẫn để sử dụng simcity
-
-\* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
 
 
 ## C. Thông tin thêm
