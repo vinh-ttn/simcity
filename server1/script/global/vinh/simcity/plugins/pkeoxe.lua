@@ -1,3 +1,5 @@
+Include("\\script\\lib\\timerlist.lua")
+
 SimCityKeoXe = {
 	ALLXE = {
 
@@ -7,13 +9,18 @@ SimCityKeoXe = {
 		{ 1194, 1193, 1195, 1196, 1197, 1198, 1199, 1200, 1201, 1202, 1231, },
 		{ 1875, 1874, 1873, },
 		{ 1466, 1437, 1479, 1438, },
-	}
+	},
+
+	collections = {},
+	collections_knownPoint = {}
 
 }
 
-
-function SimCityKeoXe:genWalkPath(forCamp)
-	return {}
+function SimCityKeoXe:init()
+	if self.m_TimerId then
+		TimerList:DelTimer(self.m_TimerId)
+	end
+	self.m_TimerId = TimerList:AddTimer(self, 18)
 end
 
 function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, cap)
@@ -57,10 +64,18 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, cap)
 		children = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil, -- force distance check for child
 
-		playerID = GetName(),
+		playerID = name,
 		cap = cap
 
 	});
+
+	if not self.collections[name] then
+		self.collections[name] = {}
+	end
+
+	if nListId > 0 then
+		tinsert(self.collections[name], nListId)
+	end
 
 	return nListId
 end
@@ -73,21 +88,25 @@ function SimCityKeoXe:nv_tudo_xe(cap)
 	-- 10 con theo sau
 	for i = 1, 10 do
 		local pid = pool[random(1, getn(pool))]
-		local myPath = self:genWalkPath(forCamp)
+
 
 		while SimCityNPCInfo:notFightingChar(pid) == 1 do
 			pid = pool[random(1, getn(pool))]
 		end
 
 		local children = {}
-		self:taoNV(pid, forCamp, pW, myPath, 1, children, cap)
+		self:taoNV(pid, forCamp, pW, {}, 1, children, cap)
 	end
+
+	self:init()
 end
 
 function SimCityKeoXe:removeAll()
 	for key, fighter in FighterManager.fighterList do
-		if fighter.playerID == GetName() then
+		local name = GetName()
+		if fighter.playerID == name then
 			FighterManager:Remove(fighter.id)
+			self.collections[name] = nil
 		end
 	end
 end
@@ -143,9 +162,8 @@ function SimCityKeoXe:tao1xe(data)
 	-- 10 con theo sau
 	for i = 1, getn(data) do
 		local pid = data[i]
-		local myPath = self:genWalkPath(forCamp)
 		local children = {}
-		self:taoNV(pid, forCamp, pW, myPath, 0, children, 0)
+		self:taoNV(pid, forCamp, pW, {}, 0, children, 0)
 	end
 end
 
@@ -245,4 +263,29 @@ function SimCityKeoXe:TaoBai(forceLevel)
 		end
 	end
 	return 0
+end
+
+function SimCityKeoXe:OnTime()
+	-- Get info for npc in this world
+	for name, children in self.collections do
+		local parentID = SearchPlayer(name)
+
+		if parentID > 0 then
+			local pW, pX, pY = CallPlayerFunction(parentID, GetWorldPos)
+			local newLoc = "" .. pW .. pY .. pX
+			if not self.collections_knownPoint[name] or self.collections_knownPoint[name] ~= newLoc then
+				self.collections_knownPoint[name] = newLoc
+				local size = getn(children)
+				local centerCharId = getCenteredCell(createFormation(size))
+				local fighter = FighterManager:Get(children[centerCharId])
+				local nX, nY, nMapIndex = GetNpcPos(fighter.finalIndex)
+				local newPath = genCoords_squareshape({ nX / 32, nY / 32 }, { pX, pY }, size)
+				for i = 1, size do
+					FighterManager:Get(children[i]).parentAppointPos = newPath[i]
+				end
+			end
+		end
+	end
+
+	self.m_TimerId = TimerList:AddTimer(self, 18)
 end

@@ -217,7 +217,7 @@ SimCityNPCInfo = {
 	nhanvat = {
 		socap = {
 
-
+			{ 511,  523 },
 			{ 1786, 1795 }, -- 100k
 
 		},
@@ -370,13 +370,18 @@ end
 
 function SimCityNPCInfo:getPoolByCap(cap)
 	local pool = self.nvSoCap
-	if cap == 1 then
+
+	if not cap then
+		return pool
+	end
+
+	if cap == 2 then
 		pool = self.nvTrungCap
 	end
-	if cap == 2 then
+	if cap == 3 then
 		pool = self.nvCaoCap
 	end
-	if cap == 3 then
+	if cap == 4 then
 		pool = self.nvSieuNhan
 	end
 	return pool

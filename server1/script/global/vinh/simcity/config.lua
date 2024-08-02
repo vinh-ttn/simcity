@@ -26,8 +26,6 @@ TONGKIM_AUTOCREATE = 1             -- if 1, auto add NPC to tongkim
 
 PARAM_LIST_ID = 1                  -- param to store fighter id
 PARAM_CHILD_ID = 2                 -- param to store child id
-PARAM_PLAYER_ID = 3                -- param to store player to follow
-PARAM_NPC_TYPE = 4                 -- param to store type of npc (parent/child/tieuxa v.v.)
 REFRESH_RATE = 9                   -- refresh rate
 
 DISTANCE_CAN_CONTINUE = 5          -- start next position if within 3 points from destination

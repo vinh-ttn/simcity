@@ -221,6 +221,13 @@ function SimCityWorld:IsTongKimMap(nW)
 	return 0
 end
 
+function SimCityWorld:IsThanhThiMap(pW)
+	if pW == 37 or pW == 78 or pW == 176 or pW == 162 or pW == 80 or pW == 1 then
+		return 1
+	end
+	return 0
+end
+
 function SimCityWorld:OnTime()
 	for wId, worldInfo in self.data do
 		worldInfo.tick = worldInfo.tick + 1

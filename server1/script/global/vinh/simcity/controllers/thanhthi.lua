@@ -388,7 +388,6 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 		self.worldStatus["w" .. nW].enabled = 1
 
 		if SimCityWorld:IsTongKimMap(nW) == 1 then
-			SimCityMainTongKim:createNPCs()
 			return 1
 		end
 
@@ -419,58 +418,47 @@ function SimCityMainThanhThi:onPlayerExitMap()
 	end
 end
 
-function SimCityMainThanhThi:createNpcSoCap(forceIds, level)
+function SimCityMainThanhThi:createNpcSoCapByMap()
 	local nW, _, _ = GetWorldPos()
+
 	local worldInfo = SimCityWorld:Get(nW)
 	if (worldInfo.name ~= "") then
-		local perPage = 200
-		local totalForceIds = 0
-		if forceIds ~= nil then
-			totalForceIds = getn(forceIds)
-		end
-		for i = 0, perPage do
-			local id
+		local tmpFound = {}
+		local level
+		local total = 100
+		local capHP = "auto"
 
-			if totalForceIds == 0 then
-				id = random(1786, 1795)
-				self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95, cap = 1 })
-			else
-				id = forceIds[random(1, totalForceIds)]
-				self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95 })
+		-- Get level around
+		local fighterList = GetAroundNpcList(60)
+		local nNpcIdx
+		local mapping = {}
+		for i = 1, getn(fighterList) do
+			nNpcIdx = fighterList[i]
+			local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
+			level = NPCINFO_GetLevel(nNpcIdx)
+			local kind = GetNpcKind(nNpcIdx)
+			if level <= 90 and nSettingIdx > 0 and kind == 0 and not mapping[nSettingIdx] then
+				tinsert(tmpFound, nSettingIdx)
+				mapping[nSettingIdx] = 1
 			end
 		end
-	end
-end
 
-function SimCityMainThanhThi:createNpcSoCapByMap()
-	local pW, pX, pY = GetWorldPos()
-
-	-- bienkinh,tuongduong,laman,daily,duongchau,phuongtuong
-	if nW == 37 or pW == 78 or pW == 176 or pW == 162 or pW == 80 or pW == 1 then
-		return self:createNpcSoCap()
-	end
-
-	-- Get level around
-	local fighterList = GetAroundNpcList(60)
-	local tmpFound = {}
-	local nNpcIdx
-	local level
-	local mapping = {}
-	for i = 1, getn(fighterList) do
-		nNpcIdx = fighterList[i]
-		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
-		level = NPCINFO_GetLevel(nNpcIdx)
-		local kind = GetNpcKind(nNpcIdx)
-		if level <= 90 and nSettingIdx > 0 and kind == 0 and not mapping[nSettingIdx] then
-			tinsert(tmpFound, nSettingIdx)
-			mapping[nSettingIdx] = 1
+		-- Them 9x vao Thanh Thi
+		if SimCityWorld:IsThanhThiMap(nW) == 1 or getn(tmpFound) == 0 then
+			tmpFound = arrJoin({ tmpFound, SimCityNPCInfo:getPoolByCap(1) })
+			level = 95
+			capHP = 1
 		end
-	end
-	local total = getn(tmpFound)
 
-	if total == 0 then
-		self:createNpcSoCap()
-	else
-		self:createNpcSoCap(tmpFound, level)
+		if SimCityWorld:IsThanhThiMap(nW) == 1 then
+			total = 200
+		end
+
+
+		local N = getn(tmpFound)
+		for i = 1, total do
+			local id = tmpFound[random(1, N)]
+			self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95, cap = capHP })
+		end
 	end
 end

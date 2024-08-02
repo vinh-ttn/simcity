@@ -119,7 +119,7 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 
 
 
-	local nListId = FighterManager:Add({
+	return FighterManager:Add({
 
 		szName = name or "",
 
@@ -165,9 +165,7 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 		children = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil -- force distance check for child
 
-	});
-
-	return nListId
+	})
 end
 
 function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
@@ -192,7 +190,7 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 	end
 
 
-	id = FighterManager:Add({
+	return FighterManager:Add({
 		szName = name or "",
 
 		nNpcId = thonglinh, -- required, main char ID

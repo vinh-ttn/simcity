@@ -29,7 +29,8 @@ Include("\\script\\lib\\string.lua")
 
 -- Common Helpers
 Include("\\script\\global\\vinh\\simcity\\config.lua")
-Include("\\script\\global\\vinh\\simcity\\common.lua")
+Include("\\script\\global\\vinh\\simcity\\libs\\common.lua")
+Include("\\script\\global\\vinh\\simcity\\libs\\walk.lua")
 
 -- Plugins first
 Include("\\script\\global\\vinh\\simcity\\plugins\\index.lua")

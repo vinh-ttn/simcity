@@ -6,9 +6,8 @@ IncludeLib("NPCINFO")
 FighterManager = {
     fighterList = {},
     ownerID2List = {},
-    counter = 0,
+    counter = 0
 }
-
 function FighterManager:initCharConfig(config)
     config.playerID = config.playerID or "" -- dang theo sau ai do
     config.ownerID = config.ownerID or ""   -- dang van tieu cua ai d
@@ -17,8 +16,8 @@ function FighterManager:initCharConfig(config)
     -- Init stats
     config.playerID = config.playerID or "simcityplayerhaha"
     config.isFighting = 0
-    config.tick = 0
-    config.canSwitchTick = 0
+    config.tick_breath = 0
+    config.tick_canswitch = 0
     config.series = config.series or random(0, 4)
     config.camp = config.camp or random(1, 3)
     config.walkMode = config.walkMode or 1
@@ -39,7 +38,9 @@ function FighterManager:initCharConfig(config)
     config.ngoaitrang = config.ngoaitrang or 0
     config.cap = config.cap or 1
 
-    config.maxHP = SimCityNPCInfo:getHPByCap(config.cap)
+    if config.cap and config.cap ~= "auto" then
+        config.maxHP = SimCityNPCInfo:getHPByCap(config.cap)
+    end
 end
 
 function FighterManager:isValidChar(id)

@@ -66,10 +66,7 @@ function main()
 end
 
 function SimCityMainTongKim:addTongKimNpc()
-end
-
-function SimCityMainTongKim:createNPCs()
-	self:updateCampPosition()
+	SimCityMainTongKim:updateCampPosition()
 
 	local vokyTienTuyen = { 1343 * 32, 3410 * 32 }
 	local vokyHauPhuong = { 1241 * 32, 3549 * 32 }
@@ -154,10 +151,11 @@ function SimCityMainTongKim:createNPCs()
 
 
 	if TONGKIM_AUTOCREATE and TONGKIM_AUTOCREATE == 1 then
-		self:updateCampPosition()
+		SimCityMainTongKim:updateCampPosition()
 		SimCityChienTranh:modeTongKim(1, self.camp2TopRight)
-
 		nW = SubWorldIdx2ID(nW)
+		SimCityTongKim.playerInTK[nW] = {}
+
 		SimCityChienTranh.nW = nW
 		SimCityChienTranh:removeAll()
 		local worldInfo = SimCityWorld:Get(nW)

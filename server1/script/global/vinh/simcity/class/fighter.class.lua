@@ -89,9 +89,7 @@ function NpcFighter:Show(isNew, goX, goY)
                 end
                 if nPosCount >= 1 or self.nSkillId then
                     SetNpcParam(nNpcIndex, PARAM_LIST_ID, self.id)
-                    SetNpcParam(nNpcIndex, PARAM_PLAYER_ID, SearchPlayer(self.playerID))
-                    SetNpcParam(nNpcIndex, PARAM_NPC_TYPE, 1)
-                    SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\timer.lua")
+                    SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\fighter.timer.lua")
                     SetNpcTimer(nNpcIndex, REFRESH_RATE)
                 end
 
@@ -128,7 +126,7 @@ function NpcFighter:Show(isNew, goX, goY)
 end
 
 function NpcFighter:Respawn(code, reason)
-    -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau
+    -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau 4: bi lag dung 1 cho nay gio ko di duoc
     --print("RESPAWN " .. code .. " " .. reason)
     -- CallPlayerFunction(1, Msg2Player, "Respawn: "..reason)
 
@@ -141,8 +139,15 @@ function NpcFighter:Respawn(code, reason)
     nX = nX / 32
     nY = nY / 32
 
-    -- 2 = qua map khac?
-    if (code == 2) then
+    -- 3 = bi lag? tim cho khac hien len nao
+    if code == 4 then
+        nX = 0
+        nY = 0
+        self.nPosId = random(1, getn(self.originalWalkPath))
+        self:HardResetPos()
+
+        -- 2 = qua map khac?
+    elseif code == 2 then
         nX = 0
         nY = 0
         self.nPosId = 1
@@ -171,7 +176,7 @@ function NpcFighter:Respawn(code, reason)
     end
 
     self.hardsetPos = self.nPosId
-    self.arriveTick = nil
+    self.tick_checklag = nil
     self.lastHP = NPCINFO_GetNpcCurrentLife(self.finalIndex)
     if (isAllDead == 1) then
         self.lastHP = nil
@@ -232,7 +237,7 @@ end
 
 function NpcFighter:JoinFight(reason)
     self.isFighting = 1
-    self.canSwitchTick = self.tick +
+    self.tick_canswitch = self.tick_breath +
         random(self.TIME_FIGHTING_minTs or TIME_FIGHTING.minTs,
             self.TIME_FIGHTING_maxTs or TIME_FIGHTING.maxTs) -- trong trang thai pk 1 toi 2ph
 
@@ -269,7 +274,7 @@ function NpcFighter:LeaveFight(isAllDead, reason)
     isAllDead = isAllDead or 0
 
     self.isFighting = 0
-    self.canSwitchTick = self.tick +
+    self.tick_canswitch = self.tick_breath +
         random(self.TIME_RESTING_minTs or TIME_RESTING.minTs,
             self.TIME_RESTING_maxTs or TIME_RESTING.maxTs) -- trong trang thai di bo 30s-1ph
     reason = reason or "no reason"
@@ -292,10 +297,10 @@ function NpcFighter:CanLeaveFight()
     if (self:IsNpcEnemyAround() == 0 and
             self:IsPlayerEnemyAround() == 0) then
         if (self.leaveFightWhenNoEnemy and self.leaveFightWhenNoEnemy > 0) then
-            local targetTick = self.tick + self.leaveFightWhenNoEnemy - 1
+            local realCanSwitchTick = self.tick_breath + self.leaveFightWhenNoEnemy - 1
 
-            if self.canSwitchTick > targetTick then
-                self.canSwitchTick = targetTick
+            if self.tick_canswitch > realCanSwitchTick then
+                self.tick_canswitch = realCanSwitchTick
             end
         end
 
@@ -523,7 +528,7 @@ function NpcFighter:Breath()
     -- Is fighting? Do nothing except leave fight if possible
     if self.isFighting == 1 then
         -- Case 1: toi gio chuyen doi
-        if self.canSwitchTick < self.tick then
+        if self.tick_canswitch < self.tick_breath then
             return self:LeaveFight(0, "toi gio thay doi trang thai")
         end
 
@@ -535,7 +540,7 @@ function NpcFighter:Breath()
 
         -- Case 3: qua xa nguoi choi phai chay theo ngay
         if (SearchPlayer(self.playerID) > 0 and cachNguoiChoi > DISTANCE_FOLLOW_PLAYER) then
-            self.canSwitchTick = self.tick - 1
+            self.tick_canswitch = self.tick_breath - 1
             self:LeaveFight(0, "chay theo nguoi choi")
         else
             return 1
@@ -552,7 +557,7 @@ function NpcFighter:Breath()
 
     if ((SearchPlayer(self.playerID) > 0 and cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) or
             SearchPlayer(self.playerID) == 0) and (worldInfo.allowFighting == 1 or self.mode == "vantieu") and
-        (self.isFighting == 0 and self.canSwitchTick < self.tick) then
+        (self.isFighting == 0 and self.tick_canswitch < self.tick_breath) then
         -- Case 1: someone around is fighting, we join
         if (self.CHANCE_ATTACK_NPC and random(0, self.CHANCE_ATTACK_NPC) <= 2) then
             if self:TriggerFightWithNPC() == 1 then
@@ -610,10 +615,15 @@ function NpcFighter:Breath()
         end
     end
 
-
+    -- Khong phai dang keo xe
     if SearchPlayer(self.playerID) == 0 then
-        -- Mode 1: randomwork
+        -- Children da bi lag????
+        if self.tick_checklag and self.tick_breath > self.tick_checklag then
+            self:Respawn(4, "dang bi lag roi")
+            return 1
+        end
 
+        -- Mode 1: randomwork
         if self:HasArrived() == 1 then
             -- Keep walking no stop
             if (self.noStop == 1 or random(1, 100) < 90) then
@@ -634,10 +644,16 @@ function NpcFighter:Breath()
                 else
                     self.nPosId = nNextPosId
                 end
-
-                self.arriveTick = nil
             else
                 return 1
+            end
+
+
+            self.tick_checklag = nil
+        else
+            if not self.tick_checklag then
+                self.tick_checklag = self.tick_breath +
+                    20 -- check again in 20s, if still at same position, respawn because this is stuck
             end
         end
 
@@ -665,7 +681,7 @@ function NpcFighter:Breath()
         if needRespawn == 1 then
             self.nMapId = pW
             self.isFighting = 0
-            self.canSwitchTick = self.tick
+            self.tick_canswitch = self.tick_breath
             self.originalWalkPath = { { pX, pY } }
             self.nPosId = 1
             self:GenWalkPath(0)
@@ -675,13 +691,20 @@ function NpcFighter:Breath()
 
 
         -- Otherwise walk toward parent
-        NpcWalk(self.finalIndex, pX + random(-2, 2), pY + random(-2, 2))
+        if self.parentAppointPos then
+            NpcWalk(self.finalIndex, self.parentAppointPos[1], self.parentAppointPos[2])
+        else
+            NpcWalk(self.finalIndex, pX + random(-2, 2), pY + random(-2, 2))
+        end
     end
     return 1
 end
 
 function NpcFighter:OnTimer()
-    self.tick = self.tick + REFRESH_RATE / 18
+    if self.killTimer == 1 then
+        return 0
+    end
+    self.tick_breath = self.tick_breath + REFRESH_RATE / 18
     if self.isFighting == 1 then
         self.fightingScore = self.fightingScore + 10
     end
@@ -701,7 +724,7 @@ function NpcFighter:OnDeath()
 
     local doRespawn = 0
 
-    if self.isFighting == 1 and self.tick > self.canSwitchTick then
+    if self.isFighting == 1 and self.tick_breath > self.tick_canswitch then
         doRespawn = 1
     end
 
@@ -733,4 +756,8 @@ function NpcFighter:OnDeath()
         -- Do revive? Reset and leave fight
         self:LeaveFight(1, "die toan bo")
     end
+end
+
+function NpcFighter:KillTimer()
+    self.killTimer = 1
 end
