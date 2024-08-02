@@ -217,7 +217,6 @@ SimCityNPCInfo = {
 	nhanvat = {
 		socap = {
 
-			{ 511,  523 },
 			{ 1786, 1795 }, -- 100k
 
 		},

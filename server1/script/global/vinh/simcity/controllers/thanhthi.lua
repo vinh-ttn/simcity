@@ -473,6 +473,10 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 		-- Them 9x vao Thanh Thi
 		if SimCityWorld:IsThanhThiMap(nW) == 1 or getn(tmpFound) == 0 then
 			tmpFound = arrJoin({ tmpFound, SimCityNPCInfo:getPoolByCap(1) })
+			for j = 511, 523 do
+				tinsert(tmpFound, j)
+			end
+
 			level = 95
 			capHP = 1
 		end
