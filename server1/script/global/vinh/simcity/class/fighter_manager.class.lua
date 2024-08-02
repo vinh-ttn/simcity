@@ -5,16 +5,13 @@ Include("\\script\\global\\vinh\\simcity\\class\\fighter.class.lua")
 IncludeLib("NPCINFO")
 FighterManager = {
     fighterList = {},
-    ownerID2List = {},
     counter = 0
 }
 function FighterManager:initCharConfig(config)
     config.playerID = config.playerID or "" -- dang theo sau ai do
-    config.ownerID = config.ownerID or ""   -- dang van tieu cua ai d
 
 
     -- Init stats
-    config.playerID = config.playerID or "simcityplayerhaha"
     config.isFighting = 0
     config.tick_breath = 0
     config.tick_canswitch = 0
@@ -37,6 +34,7 @@ function FighterManager:initCharConfig(config)
     config.rebelActivated = config.rebelActivated or 0
     config.ngoaitrang = config.ngoaitrang or 0
     config.cap = config.cap or 1
+    config.role = config.role or "citizen"
 
     if config.cap and config.cap ~= "auto" then
         config.maxHP = SimCityNPCInfo:getHPByCap(config.cap)
@@ -83,7 +81,6 @@ function FighterManager:Add(config)
 
     if newFighter then
         self.fighterList["n" .. newFighter.id] = newFighter
-        self.ownerID2List[newFighter.ownerID] = id
         return id
     else
         return 0

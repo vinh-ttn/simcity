@@ -76,15 +76,20 @@ function arrJoin(arr)
     return output
 end
 
+function objCopy(obj)
+    local output = {}
+    if obj then
+        for k, v in obj do
+            output[k] = v
+        end
+    end
+    return output
+end
+
 function spawnN(arr, linh, N, config)
     N = N or 16
     for i = 1, N do
-        local child = {}
-        if config ~= nil then
-            for k, v in config do
-                child[k] = v
-            end
-        end
+        local child = objCopy(config)
         child.nNpcId = linh
         tinsert(arr, child)
     end

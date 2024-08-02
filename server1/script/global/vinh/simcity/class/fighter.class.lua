@@ -154,7 +154,7 @@ function NpcFighter:Respawn(code, reason)
         self:HardResetPos()
 
         -- otherwise reset
-    elseif isAllDead == 1 and SearchPlayer(self.playerID) > 0 then
+    elseif isAllDead == 1 and (self.role == "keoxe" or self.role == "child") then
         nX = self.walkPath[1][1]
         nY = self.walkPath[1][2]
         self.nPosId = 1
@@ -194,8 +194,8 @@ function NpcFighter:IsNpcEnemyAround()
     local nCount = 0
     local radius = self.RADIUS_FIGHT_SCAN or RADIUS_FIGHT_SCAN
     -- Keo xe?
-    if SearchPlayer(self.playerID) > 0 then
-        allNpcs, nCount = CallPlayerFunction(SearchPlayer(self.playerID), GetAroundNpcList, radius)
+    if self.role == "keoxe" then
+        allNpcs, nCount = CallPlayerFunction(self:GetPlayer(), GetAroundNpcList, radius)
         for i = 1, nCount do
             local fighter2Kind = GetNpcKind(allNpcs[i])
             local fighter2Camp = GetNpcCurCamp(allNpcs[i])
@@ -224,8 +224,7 @@ function NpcFighter:IsPlayerEnemyAround()
     if GetNpcAroundPlayerList then
         local allNpcs, nCount = GetNpcAroundPlayerList(self.finalIndex, self.RADIUS_FIGHT_PLAYER or RADIUS_FIGHT_PLAYER)
         for i = 1, nCount do
-            if ((self.ownerID == nil or allNpcs[i] ~= SearchPlayer(self.ownerID)) and
-                    CallPlayerFunction(allNpcs[i], GetFightState) == 1 and
+            if (CallPlayerFunction(allNpcs[i], GetFightState) == 1 and
                     IsAttackableCamp(CallPlayerFunction(allNpcs[i], GetCurCamp), self.camp) == 1 and
                     self.camp ~= 0) then
                 return 1
@@ -325,7 +324,7 @@ function NpcFighter:TriggerFightWithPlayer()
     if GetNpcAroundPlayerList then
         if self:IsPlayerEnemyAround() == 1 then
             local nW = self.nMapId
-            if SearchPlayer(self.playerID) == 0 then
+            if self.role == "citizen" then
                 local worldInfo = SimCityWorld:Get(nW)
                 if worldInfo.showFightingArea == 1 then
                     local name = GetNpcName(self.finalIndex)
@@ -432,14 +431,23 @@ function NpcFighter:HardResetPos()
         end
         self.originalWalkPath = arrCopy(walkAreas)
     else
-        -- Dang theo sau thi lay dia diem cua nguoi choi
-        if SearchPlayer(self.playerID) > 0 then
-            local pW, pX, pY = CallPlayerFunction(SearchPlayer(self.playerID), GetWorldPos)
+        -- Dang di theo sau npc khac
+        if self.role == "child" then
+            local pW, pX, pY = self:GetParentPos()
+            self.originalWalkPath = { { pX, pY } }
+            self.nPosId = 1
+            walkAreas = { { { pX, pY } } }
+
+            -- Dang theo sau thi lay dia diem cua nguoi choi
+        elseif self.role == "keoxe" then
+            local pW, pX, pY = CallPlayerFunction(self:GetPlayer(), GetWorldPos)
             worldInfo.showName = 1
             self.originalWalkPath = { { pX, pY } }
             self.nPosId = 1
             walkAreas = { { { pX, pY } } }
             -- --print("DONE "..pX.." "..pY)
+
+
             -- hoac la sim thanh thi di tum lum
         else
             if not self.originalWalkPath then
@@ -499,7 +507,9 @@ function NpcFighter:Breath()
 
     -- CHAT FEATRUE - Khong dang theo sau ai het
     worldInfo = SimCityWorld:Get(nW)
-    if SearchPlayer(self.playerID) == 0 then
+
+    -- Di 1 minh
+    if self.role == "citizen" then
         -- Otherwise just Random chat
         if worldInfo.allowChat == 1 then
             if self.isFighting == 1 then
@@ -518,10 +528,13 @@ function NpcFighter:Breath()
             local dbMsg = self.debugMsg or ""
             NpcChat(self.finalIndex, self.id .. " " .. self.nNpcId)
         end
-    else
+    elseif self.role == "child" then
+        pW, pX, pY = self:GetParentPos()
+        cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
+    elseif self.role == "keoxe" then
         worldInfo.allowFighting = 1
         worldInfo.showFightingArea = 0
-        pW, pX, pY = CallPlayerFunction(SearchPlayer(self.playerID), GetWorldPos)
+        pW, pX, pY = CallPlayerFunction(self:GetPlayer(), GetWorldPos)
         cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
     end
 
@@ -539,9 +552,12 @@ function NpcFighter:Breath()
         end
 
         -- Case 3: qua xa nguoi choi phai chay theo ngay
-        if (SearchPlayer(self.playerID) > 0 and cachNguoiChoi > DISTANCE_FOLLOW_PLAYER) then
+        if (self.role == "keoxe" and cachNguoiChoi > DISTANCE_FOLLOW_PLAYER) then
             self.tick_canswitch = self.tick_breath - 1
             self:LeaveFight(0, "chay theo nguoi choi")
+        elseif (self.role == "child" and cachNguoiChoi > DISTANCE_FOLLOW_PLAYER) then
+            self.tick_canswitch = self.tick_breath - 1
+            self:LeaveFight(0, "chay theo parent")
         else
             return 1
         end
@@ -551,29 +567,35 @@ function NpcFighter:Breath()
     local nNextPosId = self.nPosId
     local originalWalkPath = self.originalWalkPath
     local WalkSize = getn(originalWalkPath)
-    if SearchPlayer(self.playerID) == 0 and (nNextPosId == 0 or WalkSize < 2) then
+    if self.role == "citizen" and (nNextPosId == 0 or WalkSize < 2) then
         return 0
     end
 
-    if ((SearchPlayer(self.playerID) > 0 and cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) or
-            SearchPlayer(self.playerID) == 0) and (worldInfo.allowFighting == 1 or self.mode == "vantieu") and
+    if ((self.role == "keoxe" and cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) or
+            (self.role == "child" and cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) or
+            self.role == "citizen") and worldInfo.allowFighting == 1 and
         (self.isFighting == 0 and self.tick_canswitch < self.tick_breath) then
-        -- Case 1: someone around is fighting, we join
-        if (self.CHANCE_ATTACK_NPC and random(0, self.CHANCE_ATTACK_NPC) <= 2) then
-            if self:TriggerFightWithNPC() == 1 then
-                return 1
+        if self.role == "citizen" or self.role == "keoxe" then
+            -- Case 1: someone around is fighting, we join
+            if (self.CHANCE_ATTACK_NPC and random(0, self.CHANCE_ATTACK_NPC) <= 2) then
+                if self:TriggerFightWithNPC() == 1 then
+                    return 1
+                end
+            end
+
+            -- Case 2: some player around is fighting and different camp, we join
+            if (self.CHANCE_ATTACK_PLAYER and random(0, self.CHANCE_ATTACK_PLAYER) <= 2) then
+                if self:TriggerFightWithPlayer() == 1 then
+                    return 1
+                end
             end
         end
-
-        -- Case 2: some player around is fighting and different camp, we join
-        if (self.CHANCE_ATTACK_PLAYER and random(0, self.CHANCE_ATTACK_PLAYER) <= 2) then
-            if self:TriggerFightWithPlayer() == 1 then
-                return 1
-            end
+        if self.role == "child" and self:IsParentFighting() == 1 then
+            return self:JoinFight("parent is fighting")
         end
 
         -- Case 3: I auto switch to fight  mode
-        if (SearchPlayer(self.playerID) == 0 and self.attackNpcChance and random(1, self.attackNpcChance) <= 2) then
+        if (self.role == "citizen" and self.attackNpcChance and random(1, self.attackNpcChance) <= 2) then
             -- CHo nhung dua chung quanh
 
             local countFighting = 0
@@ -602,8 +624,7 @@ function NpcFighter:Breath()
                 self:JoinFight("I start a fight")
             end
 
-            if SearchPlayer(self.playerID) == 0 and countFighting > 0 and
-                (worldInfo.showFightingArea == 1 or self.mode == "vantieu") then
+            if countFighting > 0 and worldInfo.showFightingArea == 1 then
                 Msg2Map(nW,
                     "C„ " .. countFighting .. " nh©n s‹ Æang Æ∏nh nhau tπi " .. worldInfo.name ..
                     " <color=yellow>" .. floor(myPosX / 8) .. " " .. floor(myPosY / 16) .. "<color>")
@@ -616,8 +637,7 @@ function NpcFighter:Breath()
     end
 
     -- Khong phai dang keo xe
-    if SearchPlayer(self.playerID) == 0 then
-        -- Children da bi lag????
+    if self.role == "citizen" then
         if self.tick_checklag and self.tick_breath > self.tick_checklag then
             self:Respawn(4, "dang bi lag roi")
             return 1
@@ -666,8 +686,39 @@ function NpcFighter:Breath()
         end
 
         NpcWalk(self.finalIndex, nX, nY)
-    else
-        -- Mode 2: follow parent player
+        self:CalculateChildrenPosition(nX, nY)
+    elseif self.role == "child" then
+        -- Mode 2: follow parent NPC
+        -- Player has gone different map? Do respawn
+        local needRespawn = 0
+        if self.nMapId ~= pW then
+            needRespawn = 1
+        else
+            if cachNguoiChoi > DISTANCE_FOLLOW_PLAYER_TOOFAR then
+                needRespawn = 1
+            end
+        end
+
+        if needRespawn == 1 then
+            self.nMapId = pW
+            self.isFighting = 0
+            self.tick_canswitch = self.tick_breath
+            self.originalWalkPath = { { pX, pY } }
+            self.nPosId = 1
+            self:GenWalkPath(0)
+            self:Respawn(2, "keo xe qua map khac")
+            return 1
+        end
+
+
+        -- Otherwise walk toward parent
+        if self.parentAppointPos then
+            NpcWalk(self.finalIndex, self.parentAppointPos[1], self.parentAppointPos[2])
+        else
+            NpcWalk(self.finalIndex, pX + random(-2, 2), pY + random(-2, 2))
+        end
+    elseif self.role == "keoxe" then
+        -- Mode 3: follow parent player
         -- Player has gone different map? Do respawn
         local needRespawn = 0
         if self.nMapId ~= pW then
@@ -719,6 +770,41 @@ function NpcFighter:OnTimer()
 end
 
 function NpcFighter:OnDeath()
+    if self.role == "citizen" and self.children then
+        local child
+
+        for i = 1, getn(self.children) do
+            local each = FighterManager:Get(self.children[i])
+            if each and each.isDead ~= 1 and each.rebel == 0 then
+                child = each
+                break
+            end
+        end
+
+        -- No revive and found children alive? That child become parent
+        if child then
+            local tmp = {
+                finalIndex = self.finalIndex,
+                szName = self.szName,
+                nNpcId = self.nNpcId,
+                series = self.series
+            }
+
+            self.finalIndex = child.finalIndex
+            self.szName = child.szName
+            self.nNpcId = child.nNpcId
+            self.series = child.series
+
+            child.isDead = tmp.isDead
+            child.finalIndex = tmp.finalIndex
+            child.szName = tmp.szName
+            child.series = tmp.series
+            FighterManager:Remove(child.id)
+            print("Doi chu pt sang nv " .. self.szName)
+            return 1
+        end
+    end
+
     self.isDead = 1
     self.finalIndex = nil
 
@@ -730,19 +816,6 @@ function NpcFighter:OnDeath()
 
     -- Is every one dead?
     if (doRespawn == 1 or self.isDead == 1) then
-        local nW = self.nMapId
-        local lastPos = self.originalWalkPath[self.nPosId]
-
-        local worldInfo = SimCityWorld:Get(nW)
-
-        if self.mode == "vantieu" and worldInfo.name then
-            Msg2Map(nW,
-                "<color=white>" ..
-                self.szName .. "<color> hoµn toµn bﬁ c≠Ìp tπi <color=green>" .. worldInfo.name ..
-                " <color=yellow>" .. floor(lastPos[1] / 8) .. " " .. floor(lastPos[2] / 16) .. "<color>")
-        end
-
-
         self.fightingScore = ceil(self.fightingScore * 0.7)
         SimCityTongKim:updateRank(self)
 
@@ -760,4 +833,62 @@ end
 
 function NpcFighter:KillTimer()
     self.killTimer = 1
+end
+
+-- For keo xe
+function NpcFighter:GetPlayer()
+    if self.playerID == "" then
+        return 0
+    end
+    return SearchPlayer(self.playerID)
+end
+
+-- For parent
+function NpcFighter:CalculateChildrenPosition(X, Y)
+    if not (self.children) then
+        return 1
+    end
+    local size = getn(self.children)
+    local centerCharId = getCenteredCell(createFormation(size))
+    local fighter = FighterManager:Get(self.children[centerCharId])
+
+    if fighter and fighter.isDead == 1 then
+        for i = 1, size do
+            fighter = FighterManager:Get(self.children[i])
+            if fighter and fighter.isDead ~= 1 then
+                break
+            end
+        end
+    end
+
+    if fighter and fighter.isDead ~= 1 then
+        local nX, nY, nMapIndex = GetNpcPos(fighter.finalIndex)
+        local newPath = genCoords_squareshape({ nX / 32, nY / 32 }, { X, Y }, size)
+        for i = 1, size do
+            local childFighter = FighterManager:Get(self.children[i])
+            if childFighter then
+                childFighter.parentAppointPos = newPath[i]
+            end
+        end
+    end
+end
+
+-- For child
+function NpcFighter:GetParentPos()
+    local foundParent = FighterManager:Get(self.parentID)
+    if foundParent then
+        local nX32, nY32, nW32 = GetNpcPos(foundParent.finalIndex)
+        local nW = SubWorldIdx2ID(nW32)
+        return nW, nX32 / 32, nY32 / 32
+    end
+
+    return 0, 0, 0
+end
+
+function NpcFighter:IsParentFighting()
+    local foundParent = FighterManager:Get(self.parentID)
+    if foundParent and foundParent.isFighting == 1 then
+        return 1
+    end
+    return 0
 end

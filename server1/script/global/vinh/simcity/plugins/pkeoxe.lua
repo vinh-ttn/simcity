@@ -20,7 +20,9 @@ function SimCityKeoXe:init()
 	if self.m_TimerId then
 		TimerList:DelTimer(self.m_TimerId)
 	end
-	self.m_TimerId = TimerList:AddTimer(self, 18)
+
+	-- Bo dong sau day neu muon di theo doi hinh
+	--self.m_TimerId = TimerList:AddTimer(self, 18)
 end
 
 function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, cap)
@@ -65,7 +67,9 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, cap)
 		childrenCheckDistance = (theosau and 8) or nil, -- force distance check for child
 
 		playerID = name,
-		cap = cap
+		cap = cap,
+
+		role = "keoxe"
 
 	});
 

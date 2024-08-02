@@ -2,6 +2,558 @@ SimCityChat = {}
 
 SimCityChat.chatCollection = {
 
+	"Chµ, ®«ng qu¸ nhØ!",
+
+	"ThÌm ¨n kÑo hå l« qu¸ :L",
+
+	"§õng chäc tao",
+
+	"Mî nã, hÕt tiÒn råi",
+
+	"Hey, cho em İt vµng",
+
+	"¦íc g× m×nh cã con ChiÕu D¹",
+
+	"£ mµi, g¸i k×a",
+
+	"Tui ®Ñp qu¸ mµ",
+
+	"Chót xİu ®i s¨n boss HK ko?",
+
+	"N­íc s«i! N­íc s«i",
+
+	"§Ñp trai cã g× sai",
+
+	"¦íc g× m×nh cã bå nhØ",
+
+	"Th»ng An thiÕu tiÒn ch­a tr¶",
+
+	"Kú nµy kĞo héi ®¸nh nã míi ®­îc",
+
+	"Th»ng kia cã tiÒn ®Êy",
+
+	"Trèn ®»ng nµo víi «ng",
+
+	"H«m nay trêi m¸t nhØ",
+
+	"Qu¸n ch¸o lßng ngon qu¸ :)",
+
+	"Th»ng nµo ®¸nh lĞn tao :@",
+
+	"ks = ds",
+
+	"Dang ra! Dang ra!",
+
+	"Kh«ng biÕt quan binh ë ®©u",
+
+	"C« n­¬ng kia xinh thËt",
+
+	"ña g× d¹",
+
+	"Hñ tiÕu ngon nhØ",
+
+	"T­¬ng D­¬ng nµy cã g× vui?",
+
+	"§õng ®Ó tao gÆp :@",
+
+	"T«i bŞ mãc tói råi :L",
+
+	"HÕt tiÒn råi sao giê?",
+
+	"§­êng xa mÖt qu¸",
+
+	"TiÖm vò khİ ë ®©u nhØ ?",
+
+	"Lµm sao luyÖn skill ta?",
+
+	"Nghe nãi D­¬ng Ch©u ®ang m­a",
+
+	"M×nh bŞ bÖnh råi",
+
+	"Thµnh §« L©m An §¹i Lı ta t×m nµng",
+
+	"T×m em gi÷a D­¬ng Ch©u chiÒu m­a",
+
+	"§i ®u ®­a ®i",
+
+	"Con Siªu Quang kia ®Ñp qu¸",
+
+	"Bé HKMP kia vip nhØ",
+
+	"Ğp 6 dßng mµ xŞt hoµi :L",
+
+	"§¸nh hoµi kh«ng th¾ng næi",
+
+	"Mua vâ l©m mËt tŞch ®©y!!!!",
+
+	"Ai b¸n bk NMC ko?",
+
+	"B¸n Thñy Tinh ®©y!!!",
+
+	"ThÌm n­íc mİa qu¸!!!",
+
+	"Nguy hiÓm! Ch¹y lÑ!",
+
+	"T«i kh«ng thÓ h¸t live!",
+
+	"Buån lµm chi em ¬i !",
+
+	"Ai ve chai dĞp ®øt thao nh«m b¸n h«n ?",
+
+	"Xin ®õng h«n t«i",
+
+	"Tao ghim nã n·y giê",
+
+	"Hay lµ m×nh giËt tiÒn nã nhØ",
+
+	"Mïa ®µo n¨m nay ®Ñp thËt",
+
+	"L¹i hÕt tiÒn råi",
+
+	"Nha m«n th¸ng nµy ch­a ph¸t l­¬ng",
+
+	"Qu¸n trµ ¤ Long thËt nh¹t nhÏo",
+
+	"§­êng h«m nay v¾ng c¸c c« n­¬ng nhØ",
+
+	"Nghe nãi LiÔu Thanh Thanh ®ang ë gÇn ®©y",
+
+	"H×nh nh­ HuyÒn Gi¸c §¹i S­ míi võa ®i qua",
+
+	"Cã nªn c­íp nha m«n kh«ng nhØ ?",
+
+	"T×nh h×nh Tèng Kim cã vÎ c¨ng ®©y",
+
+	"Giang hå ®ån r»ng cã kÎ thµnh lËp ¸c Nh©n Cèc",
+
+	"ThÌm b¸nh bao qu¸",
+
+	"§au bông qu¸",
+
+	"§µo cña nhá kia bù ghª mµi",
+
+	"C« n­¬ng µ, cho sê c¸i Êy ®­îc khum?",
+
+	"M×nh thiÖt lµ biÕn th¸i mµ, hİ hİ hİ",
+
+	"¡n dĞp kh«ng?",
+
+	"§å khã ­a",
+
+	"TiÓu nhŞ, tİnh tiÒn!",
+
+	"§Ëu xanh rau muèng nã",
+
+	"Yªu em lµ anh sai",
+
+	"MÑ ¬i, con muèn lÊy nhá kia",
+
+	"D¹o nµy nghÌo qu¸",
+
+	"Con g¸i s¸ng n¾ng, chiÒu m­a",
+
+	"T×nh lµ bôi, phñi lµ bay",
+
+	"D©n ch¬i th× sî mÌo g× m­a r¬i",
+
+	"Yªu véi lµ ngu vl",
+
+	"M¸ dÆn cßn nhá kh«ng cho yªu",
+
+	"Bít cµ khŞa ®i nha",
+
+	"Nhan s¾c cã h¹n, thñ ®o¹n th× cã thõa",
+
+	"TiÒn kh«ng ph¶i lµ tÊt c¶ nha",
+
+	"Sai th× söa, mµ chöa th× ®Î...",
+
+	"Muèn thµnh cao thñ, nhÊt ®Şnh ph¶i cµy ®ªm",
+
+	"Mua kİch HSL >5% ®©yyyy",
+
+	"Ai b¸n phi phong pmmmmm",
+
+	"ChiÒu ®i c©u c¸ kh«ng mµi",
+
+	"TuyÓn ng­êi vµo bang",
+
+	"Cßn tiÒn kh«ng? Cho tau vay İt ®i",
+
+	"Tèi nay nhËu nha!",
+
+	"§au bao tö qu¸, lµm sao giê",
+
+	"§«i khi muèn giÕt th»ng ®Ñp trai nhÊt thÕ giíi",
+
+	"M¾c ãi ghª!",
+
+	"B¸nh bao ®i c« b¸c ¬i",
+
+	"Hihihi!",
+
+	"Tao cßn cã 5Kv µ",
+
+	"Míi bŞ bå t¸t vµo mÆt, huhuhu",
+
+	"Tui khæ qu¸ mµ",
+
+	"§ang thÊt t×nh",
+
+	"Tèi nay ¨n c¬m víi c¸",
+
+	"Tèi nay ¨n c¬m víi trøng",
+
+	"Lµm 1 xŞ kh«ng mµi",
+
+	"HÕ l«!",
+
+	"H¸t mét bµi nghe ch¬i ®i!",
+
+	"ó lµ la",
+
+	"Nghe nãi T­¬ng D­¬ng cã héi chî",
+
+	"TiÒn ®©u mµ n¹p ®©y",
+
+	"Trêi l¹nh qu¸",
+
+	"B©y giê ph¶i lµm sao, haizz",
+
+	"Haizzzz!!!",
+
+	"Tau ®i b¸o quan",
+
+	"§ãi bông ghª",
+
+	"Tr¸nh ra, ng­êi yªu kiu tau vÒ gÊp",
+
+	"Lµm nh¸y ®i mµ",
+
+	"Kh«ng sî chã",
+
+	"Loa loa loa, mÊt hÕt c¸i loa",
+
+	"M¸u cña tau İt qu¸, sèc dame",
+
+	"Ngon th× ra Nam BiÖn Kinh móc nhau nÌ",
+
+	"Mua nhÉn hÖ méc kh¸ng cao, ai cã pm",
+
+	"C« ®¬n qu¸",
+
+	"C«n L«n cã g¸i ®Ñp!",
+
+	"Pty em víiiiii",
+
+	"§au bông qu¸",
+
+	"§­êng nµo ®i L©m Du Quan vËy?",
+
+	"Tau ®i s¨n boss s¸t thñ råi",
+
+	"B¸n d©y chuyÒn KTC 18, ai quan t©m pm",
+
+	"B¸n giµy tèc ®é 40 - hÖ thæ, 1k2v!!!",
+
+	"Mua bİ kİp C¸i Bang Rång, ai cã hó em c¸iiii",
+
+	"Mua ¤ V©n §¹p TuyÕt!",
+
+	"Mua §­êng NghÖ Gi¸p ngon, hÖ Thæ",
+
+	"Mua bao tay nam hÖ Háa, PTVL > 15%",
+
+	"Hång nhan häa thñy",
+
+	"Nî nÇng chång chÊt, huhuhu",
+
+	"Tèng Kim k×a!",
+
+	"Mua tiÒn vµng SLL, ai b¸n hó em",
+
+	"T×nh yªu kh«ng cã lçi, lçi do tau xÊu",
+
+	"D· TÈu kh¾m vl",
+
+	"VÒ Thµnh §« T©y giao dŞch!",
+
+	"B¸c sÜ b¶o c­íi",
+
+	"Lªn M¹c Cao QuËt train ®i",
+
+	"Sa M¹c 3 ®ång ng­êi qu¸, ®æi chç kh¸c",
+
+	"Con TVB kia nã qu¸nh em",
+
+	"§óng råi",
+
+	"Tèi ®i ¨n èc kh«ng?",
+
+	"Tau hÕt tiÒn råi",
+
+	"Lµ l¸ la",
+
+	"§å con ng­êi ¸c ®éc",
+
+	"§å m¸u l¹nh",
+
+	"Tau ®i b¸o quan",
+
+	"HÕt thæ ®Şa phï råi",
+
+	"ChÕt cha, quªn mua Thæ §Şa Phï",
+
+	"Anh ¬i, cho em İt tiÒn ®i xa phu víi",
+
+	"T×m s­ phô, høa sÏ ngoan",
+
+	"T×m ng­êi yªu",
+
+	"Chót n÷a b¸o danh bªn Tèng nha",
+
+	"Tau ®i bªn Kim",
+
+	"Nhí em!",
+
+	"Nhí anh!",
+
+	"Cuéc ®êi sÏ l¹c tr«i vÒ ®©u?",
+
+	"Tr¸nh ®­êng cho quan",
+
+	"C­êi xÊu vl",
+
+	"Trêi ¬i lµ trêi",
+
+	"Xu cµ na råi",
+
+	"NghÌo cßn h¬n con mÌo n÷a, hic",
+
+	"¦íc g× anh ë ®©y giê nµy",
+
+	"§Õn khuya råi vÉn cßn ®Õm sao",
+
+	"H«m nay vÒ sím cóng mïng 1",
+
+	"Míi bŞ vî chöi",
+
+	"BŞ th»ng kia lõa hÕt 1kv",
+
+	"Bang tuyÓn mem c«ng thµnh",
+
+	"¤ cª con dª",
+
+	"MÌ nheo vl",
+
+	"Chóc b¹n may m¾n lÇn sau",
+
+	"Em muèn c¾t ®«i nçi sÇu",
+
+	"Ng­êi Êy yªu t«i chØ v× tiÒn",
+
+	"ChØ cã c¸i miÖng lµ giái",
+
+	"B¸n ®å D· TÈu, quÑo lùaaaaa",
+
+	"Mua vò khİ LSNC gi¸ cao",
+
+	"§­êng nµo ®i Kháa Lang §éng?",
+
+	"Míi qu¸nh rít bİ kİp NMK nÌ!",
+
+	"MÑ c¸i con C«n L«n Bïa",
+
+	"Mua bæng BS >30, ai cã pm!",
+
+	"Mai l¹i ph¶i ®i lµm, mÖt ghª",
+
+	"Nhí bå cò qu¸",
+
+	"Råi mµi sÏ gÆp qu¶ b¸o th«i con ¹",
+
+	"LiÒu ¨n nhiÒu",
+
+	"ChiÒu nay ch¾c lµm con l«",
+
+	"TuyÓn Nga Mi VIP ®i v­ît ¶i, team ngon!",
+
+	"Cßn 1 slot s¨n boss s¸t thñ",
+
+	"Xin 1 slot s¨n boss s¸t thñ",
+
+	"Mua ®ao cÊp 10, hÖ kim HNL",
+
+	"Mua KNB ®©y",
+
+	"VÒ T­¬ng D­¬ng coi mua l©n ®i",
+
+	"Tau ®ang qua Tr­êng B¹ch l­îm ve chai",
+
+	"Míi n»m m¬ thÊy rít ®­îc c¸i nhÉn V« Danh",
+
+	"Trêi l¹nh ghª!",
+
+	"Mai ch¾c nghØ ë nhµ",
+
+	"S¾p bÖnh råi",
+
+	"Th«i ®i vÒ ngñ",
+
+	"Ta l¹c tr«i gi÷a trêi",
+
+	"§«ng sang anh nhí em",
+
+	"Kh«ng say kh«ng d×a",
+
+	"Say ®Õn ®iªn d¹i, say hÕt kiÕp ng­êi",
+
+	"Th¸ng n¨m th¨ng trÇm, dßng ®êi ng¶ nghiªng",
+
+	"M×nh ch¼ng cïng víi nhau, ®i hÕt qu·ng ®­êng",
+
+	"Ngµy x­a t«i còng yªu ng­êi t«i yªu ®Ñp xinh",
+
+	"T¹i sao giê chóng ta l¹i l×a ®«i",
+
+	"Lµ do ai v« t©m?",
+
+	"§· rÊt l©u kh«ng cã ai bªn c¹nh",
+
+	"Muèn ®­îc ai ®ã «m",
+
+	"Ngµy x­a Êy ®«i ta bªn nhau kh«ng rêi",
+
+	"Ta muèn lµm Vâ L©m Minh Chñ",
+
+	"§õng khãc, ®õng buån nha em",
+
+	"Tµn ®ªm nay lµ m×nh chia tay",
+
+	"T×nh ®«i ta h«m nao, bao thiÕt tha mÆn nång",
+
+	"Ch­a yªu lÇn nµo biÕt ra lµm sao",
+
+	"Lì yªu ng­êi ta gieo tr¸i ngang",
+
+	"Bao n¨m qua råi cßn gèi chiÕc",
+
+	"Em sÏ lµ ng­êi ra ®i",
+
+	"H«m nay cã m­a, m­a r¬i rÊt nhiÒu",
+
+	"Mong ¸nh sao trêi kia ngõng m·i n¬i ®©y",
+
+	"Cho xin 2 v¹n anh ¬i",
+
+	"Míi bŞ trém ghĞ nhµ",
+
+	"Míi bŞ ba qu¸nh",
+
+	"Gia tr­ëng míi lo ®­îc cho em",
+
+	"Kh¸t n­íc ghª",
+
+	"Cã c«ng mµi s¾t cã ngµy nªn kim",
+
+	"§­êng m«n qu¸nh kinh vl",
+
+	"L­¬ng t©m c¾n røt qu¸",
+
+	"CÇn vay tiÒn",
+
+	"Em nghÌo qu¸, huhu",
+
+	"huhuhu",
+
+	"Kh«ng thÓ chÊp nhËn sù thËt nµy",
+
+	"ThÊy tËn m¾t, b¾t tËn tay",
+
+	"hahaha",
+
+	"CÇn t×m ®Ö tö",
+
+	"Nghe nãi muån lËp bang ph¶i cã Nh¹c V­¬ng KiÕm",
+
+	"35 tuæi mµ cßn Õ nÌ",
+
+	"Buån lµm chi lÖ hoen bê mi",
+
+	"TiÒn l­¬ng kh«ng ®ñ tr¶ tiÒn nhµ. hic",
+
+	"Xin lçi. Con bÊt hiÕu",
+
+	"Coi chõng bŞ c¾n lĞn",
+
+	"QuÇn Èu míi lµ v­¬ng ®¹o",
+
+	"So¸i hay kh«ng so¸i?",
+
+	"§õng solo gièng nh­ Vâ Dang KiÕm, nÕu kh«ng tù tin",
+
+	"Coi chõng bŞ hÊp",
+
+	"C« ®¬n gi÷a chèn ao hå",
+
+	"MĞo hiÓu g× c¶",
+
+	"LuyÖn skill l©u v·i lä",
+
+	"CÇn mua Tiªn Th¶o Lé",
+
+	"CÇn b¸n QuÕ Hoa Töu",
+
+	"B¸n Lôc Thñy Tinh ®©y",
+
+	"B¸n 5 Tinh Hå B¶o Th¹ch, xin c¸i gi¸",
+
+	"500 anh em ®Õn D­¬ng Ch©u xem ®¸nh nhau nÌ",
+
+	"Shop ®å max Kh¸ng më t¹i HiÖu Thuèc Thµnh §«",
+
+	"H«m nay ®Ñp trêi, thİch hîp ®Ó nãi chia tay",
+
+	"Ai b¸n phóc Duyªn kh«ng?",
+
+	"Ğp c©y vò khİ bŞ xŞt mÊt tiªu",
+
+	"Nh×n mÆt ta thÊy cã tiÒn h¶?",
+
+	"HÑn gÆp l¹i",
+
+	"Ch¹y lÑ",
+
+	"TrÔ giê råi",
+
+	"§ang c¶m thÊy kh«ng ®­îc kháe",
+
+	"Cã c¸i mïi g× ®ã lµ l¹, ngé ngé",
+
+	"H¾c x× h¬i",
+
+	"TiÒn ®©u mµ mua g¹o ®©y",
+
+	"ån µo qu¸",
+
+	"Oan uèng qu¸, bao §¹i Nh©n",
+
+	"Cãc ghÎ mµ ®ßi ¨n thŞt thiªn nga",
+
+	"30 n¨m hµ ®«ng, 30 n¨m hµ t©y",
+
+	"Ng­êi ta sinh ra ë v¹ch ®İch",
+
+	"§­êng vµo tim sao b¨ng gi¸",
+
+	"Xin ®õng yªu t«i",
+
+	"Cã chuyÖn g× th× tõ tõ nãi, b×nh tÜnh",
+
+	"Yªu hay kh«ng yªu?",
+
+	"Hay lµ m×nh cø bÊt chÊp yªu nhau ®i",
+
 	"B¾t con kiÕn bá trong quÇn",
 	"TiÓu ®Ö ®Ö cña ta thËt hïng tr¸ng a",
 	"§o xem cña ai to h¬n kh«ng",
@@ -1014,13 +1566,486 @@ SimCityChat.chatCollection = {
 	"Cã thÓ chóng ta ch­a tõng gÆp mÆt",
 	"TuyÖt ®èi lµ trÎ tuæi nhÊt cao thñ",
 	"Ng­¬i c¸i nµy b¶n lÜnh kh«ng thÕ nµo tèt",
-
+	"??i ca! Ta theo ng­¬i",
+	"T? t?! Ta theo ng­¬i",
+	"Cha! Ta theo ng­¬i",
+	"N­¬ng! Ta theo ng­¬i",
+	"Tû phu! Ta theo ng­¬i",
+	"S­ ®Ö! Ta theo ng­¬i",
+	"S­ mÉu! Ta theo ng­¬i",
+	"Muéi! Ta theo ng­¬i",
+	"S­ muéi! Ta theo ng­¬i",
+	"Bang Chñ! Ta theo ng­¬i",
+	"S­ huynh! Ta theo ng­¬i",
+	"Huynh ®Ö! Ta theo ng­¬i",
+	"B¸ b¸! Ta theo ng­¬i",
+	"A Di! Ta theo ng­¬i",
+	"Mong ®­îc mäi ng­êi gióp ®ì",
+	"Chµo anh em, ai lµm nhiÖm vô chung kh«ng?",
+	"Chµo bang héi, h«m nay mäi ng­êi thÕ nµo?",
+	"NhiÖm vô nµy lµm sao ®Ó hoµn thµnh nhanh nhÊt?",
+	"M×nh bŞ kÑt ë nhiÖm vô nµy, ai gióp víi",
+	"Anh em tËp trung, chuÈn bŞ ®i s¨n boss",
+	"CÇn thªm ng­êi ®Ó ®i phã b¶n",
+	"Mäi ng­êi tËp trung ®Ó b¶o vÖ l·nh thæ",
+	"Ai b¸n ®å nµy kh«ng? M×nh cÇn gÊp",
+	"M×nh cã d­ ®å nµy, ai cÇn th× liªn hÖ",
+	"§æi ®å, ai cã trang bŞ nµy th× m×nh muèn ®æi",
+	"H«m nay ®«ng vui qu¸ mäi ng­êi nhØ",
+	"Ai cã mÑo g× th× chia sÎ",
+	"M×nh nghÜ nªn tËp trung n©ng kü n¨ng nµy tr­íc",
+	"H«m nay cã kÕ ho¹ch g× kh«ng?",
+	"CÇn ph©n chia nhiÖm vô râ rµng h¬n",
+	"Mäi ng­êi tËp trung ë l·nh ®Şa bang nhĞ",
+	"Ng­êi si nãi méng",
+	"Cã viÖc quan träng, Bang Chñ nãi tËp trung",
+	"Ph¶i cã ng­êi gi÷ cöa, ai t×nh nguyÖn?",
+	"CÈn thËn, cã mai phôc!",
+	"KÎ ®Şch ®ang ®Õn gÇn, chuÈn bŞ s½n sµng!",
+	"M×nh bŞ kÑt ë ®©y, ai gióp m×nh víi",
+	"Ta võa häc ®­îc chiªu míi, ai muèn thö kh«ng?",
+	"Cã ai tham gia sù kiÖn nµy kh«ng?",
+	"LËp nhãm ®i!",
+	"Nªn tËp trung vµo kü n¨ng phßng thñ tr­íc",
+	"Kinh nghiÖm cña ng­¬i thËt phong phó",
+	"Ch¬i ph¸i nµy cÇn chó ı g×?",
+	"Ai cã kinh nghiÖm chia sÎ víi",
+	"Ai cã chuyÖn g× vui kÓ nghe ch¬i",
+	"H«m nay cã g× míi kh«ng?",
+	"Ai solo kh«ng?",
+	"Th¸ch ®Êu 1vs1, ai tù tin th× b­íc lªn",
+	"Ta ®Õn tõ bang héi kh¸c",
+	"Muèn giao l­u kÕt b¹n",
+	"Ta s½n sµng chia sÎ",
+	"Ai cã thÓ b¶o vÖ ta kh«ng?",
+	"BŞ b¾t cãc, cÇn cøu gióp",
+	"Lµm sao ®Ó th¾ng ®©y?",
+	"C¶m ¬n v× ®· gióp ®ì",
+	"Ta sÏ nhí ¬n ng­¬i",
+	"Ng­¬i rÊt giái",
+	"H·y cè g¾ng",
+	"Chóng ta sÏ v­ît qua thö th¸ch",
+	"Ai còng cã thÓ lµm ®­îc",
+	"H·y tin vµo b¶n th©n",
+	"Håi hép  qu¸",
+	"Håi hép ghª",
+	"S¾p tíi l­ît ta råi",
+	"Ng­¬i ®ang chê ®iÒu g×?",
+	"C¶m gi¸c thËt th¨ng hoa",
+	"A! Lªn cÊp råi",
+	"Võa míi bŞ ®¸nh",
+	"Mäi ng­êi cïng nhau chia vui",
+	"Chia buån nha",
+	"Ai cã thuèc håi m¸u kh«ng",
+	"CÇn tËp trung vµo ®iÓm yÕu cña boss",
+	"CÇn lµm chËm nã",
+	"CÇn lµm cho¸ng nã",
+	"CÇn ®èt nã",
+	"Ta sÏ ®i dß ®­êng tr­íc",
+	"Mäi ng­êi theo sau hç trî",
+	"Ng­¬i b¶o vÖ, ta tÊn c«ng",
+	"NhiÖm vô nµy khã qu¸",
+	"CÇn gióp ®ì",
+	"Chóng ta lµm tèt l¾m",
+	"H·y chuÈn bŞ cho nhiÖm vô tiÕp theo",
+	"KiÓm tra kü nhĞ",
+	"KiÓm tra trang bŞ vµ ®an ®­îc tr­íc khi chiÕn ®Êu",
+	"Chóng ta ®· th¾ng!",
+	"Mäi ng­êi thËt tuyÖt vêi",
+	"Sù kiÖn sÏ diÔn ra vµo tèi nay",
+	"Th­ gi·n ®i",
+	"Sù kiÖn sÏ cã phÇn th­ëng, ®õng bá lì",
+	"§õng tõ bá",
+	"Ta cÇn mua kiÕm cao cÊp",
+	"Ta cÇn mua ®ao cao cÊp",
+	"Ta cÇn mua Th­¬ng cao cÊp",
+	"Ta cÇn mua C«n cao cÊp",
+	"Ta cÇn mua ®µn cao cÊp",
+	"Ta cÇn mua ¸o cao cÊp",
+	"Ta cÇn mua hé uyÓn cao cÊp",
+	"Ta cÇn mua ngäc béi cao cÊp",
+	"Ta cÇn mua d©y chuyÒn cao cÊp",
+	"Ta cÇn mua giµy cao cÊp",
+	"Ta cÇn mua nhÉn cao cÊp",
+	"Ta cÇn mua phi phong cao cÊp",
+	"Ta cÇn mua ngùa cao cÊp",
+	"Ai cã ®å thõa cho ta víi",
+	"Ta cÇn t×m mét sè vËt phÈm nhiÖm vô",
+	"Ai cã thÓ cho ta m­în İt vµng kh«ng",
+	"Ta nªn lµm g×",
+	"Cã g× ®Æc biÖt kh«ng?",
+	"TrËn ®Êu rÊt gay cÊn",
+	"Chóng ta ®ang dÉn ®Çu, mäi ng­êi cè lªn",
+	"Chóng ta ®ang cã lîi thÕ",
+	"Ai cßn ch­a nép tµi nguyªn bang héi?",
+	"Ai cÇn hç trî vÒ trang bŞ th× nãi ta",
+	"NÕu cÇn gióp ®ì g× th× cø hái nhĞ",
+	"Chóng ta ®· chiÕm ®­îc cæng chİnh",
+	"TiÕp tôc tiÕn lªn",
+	"Ai biÕt chç nµo t×m ®­îc c¸i nµy kh«ng?",
+	"Míi t×m ®­îc kho b¸u",
+	"Ai ®i t×m kho b¸u chung kh«ng?",
+	"Ai cÇn g×, ta cã thÓ chia sÎ",
+	"TËp trung, ®õng ®Ó bŞ ph©n t¸n",
+	"CÈn thËn cã c¹m bÉy",
+	"Mäi ng­êi tËp hîp t¹i ®Êu tr­êng",
+	"ChuÈn bŞ vµo trËn",
+	"Ta sÏ tÊn c«ng tõ bªn tr¸i",
+	"Mäi ng­êi theo s¸t nhĞ!",
+	"Ai d¸m tham gia thö th¸ch cïng nhau kh«ng?",
+	"Ngµy mai gÆp l¹i",
+	"Ta ph¶i ®i råi, ë l¹i vui vÎ",
+	"§õng buån khi thua ta",
+	"TrËn nµy sÏ thó vŞ h¬n",
+	"§Õn ®©y mµ thö søc",
+	"TrËn chiÕn h¹ng nÆng, ai d¸m?",
+	"Ta ®· häc hái rÊt nhiÒu tõ ng­¬i",
+	"C¶m gi¸c thËt tuyÖt vêi",
+	"Ta cÇn mua mét mãn ®å ®Æc biÖt",
+	"Ai cã b¸n kh«ng?",
+	"§æi ®å kh«ng?",
+	"Cho ta tr¶ l¹i ®å",
+	"Ta kh«ng thÓ hoµn thµnh nhiÖm vô",
+	"CÇn ng­êi lµm chung nhiÖm vô",
+	"Ai b¸n Tiªn Th¶o Lé kh«ng?",
+	"Ai b¸n QuÕ Hoa Töu kh«ng?",
+	"Ai b¸n N÷ Nhi Hång kh«ng?",
+	"Ai b¸n Thiªn S¬n TuyÕt Liªn kh«ng?",
+	"Ai b¸n Chïy HSL kh«ng?",
+	"Ai b¸n §ao HNL kh«ng?",
+	"Ai b¸n Th­¬ng HSL kh«ng?",
+	"Ai b¸n KiÕm HNL kh«ng?",
+	"Ai b¸n KiÕm HSL kh«ng?",
+	"Ai b¸n vò khİ tèc ®é xuÊt chiªu kh«ng?",
+	"Ai b¸n ngùa ChiÕu D¹ kh«ng?",
+	"Gi¸ bİ kİp ThiÕu L©m §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp ThiÕu L©m QuyÒn bao nhiªu vËy?",
+	"Gi¸ bİ kİp ThiÕu L©m Bæng bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thiªn V­¬ng Th­¬ng bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thiªn V­¬ng Chïy bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thiªn V­¬ng §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp Ngò §éc Ch­ëng bao nhiªu vËy?",
+	"Gi¸ bİ kİp Ngò §éc §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thóy Yªn Song §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thóy Yªn §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp §­êng M«n BÉy bao nhiªu vËy?",
+	"Gi¸ bİ kİp §­êng M«n Phi Tiªu bao nhiªu vËy?",
+	"Gi¸ bİ kİp §­êng M«n Phi §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp C¸i Bang Bæng bao nhiªu vËy?",
+	"Gi¸ bİ kİp C¸i Bang Ch­ëng bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thiªn NhÉn §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp Thiªn NhÉn Th­¬ng bao nhiªu vËy?",
+	"Gi¸ bİ kİp Vò Hån §ao bao nhiªu vËy?",
+	"Gi¸ bİ kİp Vò Hån ThuÉn bao nhiªu vËy?",
+	"Gi¸ bİ kİp Tiªu Dao KiÕm bao nhiªu vËy?",
+	"Gi¸ bİ kİp Tiªu Dao Ch­ëng bao nhiªu vËy?",
+	"Gi¸ bİ kİp Hoa S¬n KiÕm bao nhiªu vËy?",
+	"Gi¸ bİ kİp Hoa S¬n Ch­ëng bao nhiªu vËy?",
+	"Gi¸ nµy h¬i cao, cã thÓ gi¶m ®­îc kh«ng?",
+	"§ao nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"KiÕm nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Th­¬ng nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Bæng nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Phi ®ao nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Phi tiªu nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"CÇm nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"ThuÉn nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"¸o nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Ngùa nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Phi Phong nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Nãn nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"D©y chuyÒn nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Hé UyÓn nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"NhÉn nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Ngäc béi nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Th¾t l­ng nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Giµy nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"Vò khİ nµy cã thuéc tİnh g× ®Æc biÖt?",
+	"§ao nµy ®· n©ng cÊp ch­a?",
+	"KiÕm nµy ®· n©ng cÊp ch­a?",
+	"Th­¬ng nµy ®· n©ng cÊp ch­a?",
+	"Bæng nµy ®· n©ng cÊp ch­a?",
+	"Phi ®ao nµy ®· n©ng cÊp ch­a?",
+	"Phi tiªu nµy ®· n©ng cÊp ch­a?",
+	"CÇm nµy ®· n©ng cÊp ch­a?",
+	"ThuÉn nµy ®· n©ng cÊp ch­a?",
+	"¸o nµy ®· n©ng cÊp ch­a?",
+	"Ngùa nµy ®· n©ng cÊp ch­a?",
+	"Phi Phong nµy ®· n©ng cÊp ch­a?",
+	"Nãn nµy ®· n©ng cÊp ch­a?",
+	"D©y chuyÒn nµy ®· n©ng cÊp ch­a?",
+	"Hé UyÓn nµy ®· n©ng cÊp ch­a?",
+	"NhÉn nµy ®· n©ng cÊp ch­a?",
+	"Ngäc béi nµy ®· n©ng cÊp ch­a?",
+	"Th¾t l­ng nµy ®· n©ng cÊp ch­a?",
+	"Giµy nµy ®· n©ng cÊp ch­a?",
+	"Vò khİ nµy ®· n©ng cÊp ch­a?",
+	"§ång ı mua, chóng ta giao dŞch ë Thµnh §« nha",
+	"§ång ı mua, chóng ta giao dŞch ë BiÖn Kinh nha",
+	"§ång ı mua, chóng ta giao dŞch ë D­¬ng Ch©u nha",
+	"§ång ı mua, chóng ta giao dŞch ë T­¬ng D­¬ng nha",
+	"§ång ı mua, chóng ta giao dŞch ë §Şa Lı nha",
+	"§ång ı mua, chóng ta giao dŞch ë Ph­îng T­êng nha",
+	"§ång ı mua, chóng ta giao dŞch ë L©m An nha",
+	"ChuyÓn tiÒn råi, kiÓm tra vµ göi ®å gióp m×nh",
+	"Chóng ta gÆp nhau ë Thµnh §« nha",
+	"Chóng ta gÆp nhau ë BiÖn Kinh nha",
+	"Chóng ta gÆp nhau ëD­¬ng Ch©u nha",
+	"Chóng ta gÆp nhau ë T­¬ng D­¬ng nha",
+	"Chóng ta gÆp nhau ë §Şa Lı nha",
+	"Chóng ta gÆp nhau ë Ph­îng T­êng nha",
+	"Chóng ta gÆp nhau ë L©m An nha",
+	"VËt phÈm nµy kiÕm ë ®©u vËy?",
+	"§ao nµy kiÕm ë ®©u vËy?",
+	"KiÕm nµy kiÕm ë ®©u vËy?",
+	"Th­¬ng nµy kiÕm ë ®©u vËy?",
+	"Bæng nµy kiÕm ë ®©u vËy?",
+	"Phi ®ao nµy kiÕm ë ®©u vËy?",
+	"Phi tiªu nµy kiÕm ë ®©u vËy?",
+	"Bæng nµy kiÕm ë ®©u vËy?",
+	"CÇm nµy kiÕm ë ®©u vËy?",
+	"ThuÉn nµy kiÕm ë ®©u vËy?",
+	"¸o nµy kiÕm ë ®©u vËy?",
+	"Ngùa nµy kiÕm ë ®©u vËy?",
+	"Phi Phong nµy kiÕm ë ®©u vËy?",
+	"Nãn nµy kiÕm ë ®©u vËy?",
+	"D©y chuyÒn kiÕm ë ®©u vËy?",
+	"Hé UyÓn kiÕm ë ®©u vËy?",
+	"NhÉn nµy kiÕm ë ®©u vËy?",
+	"Ngäc béi nkiÕm ë ®©u vËy?",
+	"Th¾t l­ng nµy kiÕm ë ®©u vËy?",
+	"Giµy nµy kiÕm ë ®©u vËy?",
+	"Vò khİ nµy kiÕm ë ®©u vËy?",
+	"Cã ai lµm trung gian giao dŞch kh«ng?",
+	"Ta cÇn mua 1 c©y vò khİ cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 c©y ®ao cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 c©y th­¬ng cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 c©y bæng cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 c©y phi ®ao cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 c©y phi tiªu cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 ¸o gi¸p cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 nãn cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 hé uyÓn cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 nhÉn cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 ngäc béi cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 ®ai l­ng cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 giµy cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 ngùa cÊp 10, ai b¸n kh«ng?",
+	"Ta cÇn mua 1 phi phong cÊp 10, ai b¸n kh«ng?",
+	"Ai b¸n thuèc håi m¸u lo¹i m¹nh kh«ng?",
+	"Ai b¸n thuèc håi néi lùc lo¹i m¹nh kh«ng?",
+	"Ai b¸n thuèc håi thÓ lùc lo¹i m¹nh kh«ng?",
+	"Ai b¸n thuèc gi¶i ®éc lo¹i m¹nh kh«ng?",
+	"§ang cã vµi Tinh Hång B¶o Th¹ch cÇn b¸n, ai mua?",
+	"§ang cã vµi Tiªn Th¶o Lé cÇn b¸n, ai mua?",
+	"§ang cã vµi Thñy Tinh cÇn b¸n, ai mua?",
+	"§ang cã vµi Bİ Kİp Vâ C«ng cÇn b¸n, ai mua?",
+	"§ang cã vµi ThiÕt La H¸n cÇn b¸n, ai mua?",
+	"§ang cã vµi B¸t Nh· Kinh cÇn b¸n, ai mua?",
+	"§ang cã vµi Tµng B¶o §å cÇn b¸n, ai mua?",
+	"§ang cã vµi Vâ L©m MËt TŞch cÇn b¸n, ai mua?",
+	"§ang cã vµi vò khİ xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi nhÉn xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi ¸o xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi mò xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi d©y chuyÒn xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi hé uyÓn xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi ngäc béi xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi ®ai l­ng xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi giµy cÇn b¸n, ai mua?",
+	"§ang cã vµi ngùa xŞn cÇn b¸n, ai mua?",
+	"§ang cã vµi phi phong xŞn cÇn b¸n, ai mua?",
+	"Ta muèn mua bİ kİp nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua tr©n b¶o nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua b¹ch cÇu hoµn nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua kiÕm nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua ®ao nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua th­¬ng nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua bæng nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua phi ®ao nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua phi tiªu nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua cÇm nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua thuÉn nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua ¸o nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua mò nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua d©y chuyÒn nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua hé uyÓn nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua nhÉn nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua ngäc béi nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua giµy nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua ngùa nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua phi phong nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua thñy tinh nµy, nh­ng gi¸ h¬i cao",
+	"Ta muèn mua tinh hång b¶o th¹ch nµy, nh­ng gi¸ h¬i cao",
+	"Bİ kİp nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Tr©n b¶o nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"B¹ch cÇu hoµn nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"KiÕm nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"§ao nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Th­¬ng nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Bæng nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Phi ®ao nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Phi tiªu nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"CÇm nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"ThuÉn nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"¸o nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Mò nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"D©y chuyÒn nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Hé uyÓn nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"NhÉn nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Ngäc béi nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Giµy nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Ngùa nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Phi phong nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Thñy tinh nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Tinh hång b¶o th¹ch nµy, cã thÓ th­¬ng l­îng ®­îc kh«ng?",
+	"Bİ kİp nµy, ®· qua sö dông ch­a?",
+	"Tr©n b¶o nµy, ®· qua sö dông ch­a?",
+	"B¹ch cÇu hoµn nµy, ®· qua sö dông ch­a?",
+	"KiÕm nµy, ®· qua sö dông ch­a?",
+	"§ao nµy, ®· qua sö dông ch­a?",
+	"Th­¬ng nµy, ®· qua sö dông ch­a?",
+	"Bæng nµy, ®· qua sö dông ch­a?",
+	"Phi ®ao nµy, ®· qua sö dông ch­a?",
+	"Phi tiªu nµy, ®· qua sö dông ch­a?",
+	"CÇm nµy, ®· qua sö dông ch­a?",
+	"ThuÉn nµy, ®· qua sö dông ch­a?",
+	"¸o nµy, ®· qua sö dông ch­a?",
+	"Mò nµy, ®· qua sö dông ch­a?",
+	"D©y chuyÒn nµy, ®· qua sö dông ch­a?",
+	"Hé uyÓn nµy, ®· qua sö dông ch­a?",
+	"NhÉn nµy, ®· qua sö dông ch­a?",
+	"Ngäc béi nµy, ®· qua sö dông ch­a?",
+	"Giµy nµy, ®· qua sö dông ch­a?",
+	"Ngùa nµy, ®· qua sö dông ch­a?",
+	"Phi phong nµy, ®· qua sö dông ch­a?",
+	"Thñy tinh nµy, ®· qua sö dông ch­a?",
+	"Tinh hång b¶o th¹ch nµy, ®· qua sö dông ch­a?",
+	"Ta ®· chuÈn bŞ ®ñ tiÒn!",
+	"Cã thÓ giao dŞch ch­a?",
+	"Ng­¬i cã biÕt ®©y lµ g×?",
+	"Ng­¬i b¸n bİ kİp nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n tr©n b¶o nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n b¹ch cÇu hoµn nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n kiÕm nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n ®ao nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n th­¬ng nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n bæng nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n phi ®ao nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n phi tiªu nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n cÇm nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n thuÉn nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n ¸o nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n mò nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n d©y chuyÒn nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n hé uyÓn nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n nhÉn nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n ngäc béi nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n giµy nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n ngùa nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n phi phong nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n thñy tinh nµy, gi¸ bao nhiªu vËy?",
+	"Ng­¬i b¸n tinh hång b¶o th¹ch nµy, gi¸ bao nhiªu vËy?",
+	"Ai muèn ®æi bİ kİp nµy kh«ng?",
+	"Ai muèn ®æi tr©n b¶o nµy kh«ng?",
+	"Ai muèn ®æi b¹ch cÇu hoµn nµy kh«ng?",
+	"Ai muèn ®æi kiÕm nµy kh«ng?",
+	"Ai muèn ®æi ®ao nµy kh«ng?",
+	"Ai muèn ®æi th­¬ng nµy kh«ng?",
+	"Ai muèn ®æi bæng nµy kh«ng?",
+	"Ai muèn ®æi phi ®ao nµy kh«ng?",
+	"Ai muèn ®æi phi tiªu nµy kh«ng?",
+	"Ai muèn ®æi cÇm nµy kh«ng?",
+	"Ai muèn ®æi thuÉn nµy kh«ng?",
+	"Ai muèn ®æi ¸o nµy kh«ng?",
+	"Ai muèn ®æi mò nµy kh«ng?",
+	"Ai muèn ®æi d©y chuyÒn nµy kh«ng?",
+	"Ai muèn ®æi hé uyÓn nµy kh«ng?",
+	"Ai muèn ®æi nhÉn nµy kh«ng?",
+	"Ai muèn ®æi ngäc béi nµy kh«ng?",
+	"Ai muèn ®æi giµy nµy kh«ng?",
+	"Ai muèn ®æi ngùa nµy kh«ng?",
+	"Ai muèn ®æi phi phong nµy kh«ng?",
+	"Ai muèn ®æi thñy tinh nµy kh«ng?",
+	"Ai muèn ®æi tinh hång b¶o th¹ch nµy kh«ng?",
 
 
 }
 
 SimCityChat.chatCollectionFight = {
+	"Ngon nhµo v«!",
+	"§­êng nµy do ta më!",
+	"Mau ®ãng tiÒn b¶o kª!",
+	"Cho xin tİ b¸nh m×!",
+	"A th»ng nµy l¸o!",
+	"Th»ng nµo d¸m ®¸nh tao!",
+	"§øa nµo c¾n lĞn «ng!",
+	"Nguy hiÓm! Ch¹y lÑ!",
+	"Mµy h¶ nhãc!",
+	"§øa nµo d¸m qua ®©y kiÕm ¨n!",
+	"Anh em ®©u x«ng lªn !",
+	"Hèt nã!",
+	"Trªn ®êi nµy kh«ng cã thuèc hèi hËn!",
+	"Qu¸nh chÕt cô mµi",
+	"Cmm",
+	"§İt t nÌ, c¾n ®i",
+	"Anh ¬i, nã qu¸nh em",
+	"Móc!",
+	"Th»ng nµy l¸o",
+	"ChÕt mµi víi anh",
+	"CóT",
+	"Kh«ng cÇn nãi nhiÒu!",
+	"D¸m mãc lèp tau h¶",
+	"Tau thİch, mµi lµm g× tau?",
+	"Ngon th× kĞo c¶ bang mµi ®Õn ®©y",
+	"Mµi th¾ng ®­îc anh sao?",
+	"İ da! Sî qu¸ c¬!",
+	"Tr©u vl",
+	"HÊp nã",
+	"§¹i ca, tha em",
+	"Tha m¹ng",
+	"Ch¾c tau sî",
+	"Bè chÊp c¶ hä nhµ mµi",
+	"D¸m giµnh g¸i víi bè",
+	"ChÕt nÌ",
+	"Xem chiªu!",
+	"BiÕt bè mµi lµ ai kh«ng",
+	"Xuèng ®Şa ngôc ®i",
+	"Nµy thi c¾n",
+	"Bá tËt nghe ch­a",
+	"Thİch th× cø nhİch",
+	"Thİch th× chiÒu",
+	"KS = ®å cmn s¸t",
+	"Th»ng nµy l¸o",
+	"Ngu mµ cßn nguy hiÓm",
+	"Qu¸nh tao h¶ m¹i",
+	"Bít nghe ch­a",
+	"L¸o nha l¸o nh¸o",
+	"Nhí mÆt tao nghe ch­a",
+	"Lµm g× nhau?",
+	"ThiÕn nã!",
+	"§­êng nµy lµ do ta më",
+	"Mét lêi kh«ng hîp, khai lµm",
+	"Bµy ®Æt nµy nä",
+	"Sèng cho tö tÕ vµo",
+	"M×nh anh chÊp hÕt",
+	"Gµ!",
+	"§Ëp vµo mÆt",
+	"§õng cã chäc tao",
+	"§Şnh mÖnh",
+	"§å s¸t!",
+	"Coi chõng tao µ",
+	"§õng Ğp ta",
+	"§õng cã giìn mÆt",
+	"YÕu mµ cßn ra giã",
+	"Ta kh«ng vµo ®Şa ngôc, ai d¸m vµo?",
+	"Anh mµi thİch",
+	"Råi sao?",
+	"Nµy th× qu¸nh em tao",
+	"§õng nãi n÷a",
+	"ChÊp 10 th»ng nh­ mµi",
 	"SÏ dïng m¹ng cña m×nh ®æi m¹ng cña h¾n",
+	"§¸nh phñ ®Çu, kh«ng cho ®Şch kŞp ph¶n øng",
 	"ThËp tö v« sinh",
 	"Cßn kĞm rÊt xa",
 	"Ng­¬i lµ rôt ®Çu « quy",
@@ -1875,10 +2900,7 @@ SimCityChat.chatCollectionFight = {
 	"Tøc chÕt ta",
 	"Xin h·y bu«ng tha ta",
 	"CÇu xin ng­¬i",
-	"H·y ®Ó ta yªn",
-
-
-
+	"H·y ®Ó ta yªn"
 }
 
 

@@ -103,7 +103,6 @@ function SimCityMainVanTieu:tao1xe()
 
 		resetPosWhenRevive = 0,
 
-		ownerID = GetName(),
 
 		underAttack = {
 			types          = attackTypes,

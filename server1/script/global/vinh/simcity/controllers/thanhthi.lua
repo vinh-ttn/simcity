@@ -29,20 +29,47 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 		noRevive = 0,
 		hardsetName = hardsetName,
 		mode = "thanhthi",
-		level = config.level or 95
+		level = config.level or 95,
+		resetPosWhenRevive = random(0, 3)
 	}
 
 	for k, v in config do
 		npcConfig[k] = v
 	end
 
-	local nListId = FighterManager:Add(npcConfig)
-
+	-- Create parent
+	local nListId = FighterManager:Add(objCopy(npcConfig))
 	if nListId > 0 then
 		if (not self._dataStorage["n" .. nW]) then
 			self._dataStorage["n" .. nW] = {}
 		end
 		tinsert(self._dataStorage["n" .. nW], nListId)
+
+
+		--local runSpeed = SimCityNPCInfo:getSpeed(id) or 0
+
+		-- Create children
+		--if runSpeed < 18 then
+		--	local parent = FighterManager:Get(nListId)
+		-- 	parent.children = {}
+		-- 	local N = random(2, 6) -- create 2 toi 9 children
+		-- 	local createdChildren = {}
+		-- 	for i = 1, N do
+		-- 		local childConfig = objCopy(npcConfig)
+		-- 		childConfig.parentID = nListId
+		-- 		childConfig.childID = i
+		-- 		childConfig.noRevive = 1
+		-- 		childConfig.role = "child"
+		-- 		childConfig.hardsetName = (config.ngoaitrang and config.ngoaitrang == 1 and SimCityPlayerName:getName()) or
+		-- 			SimCityNPCInfo:getName(id)
+
+		-- 		local childId = FighterManager:Add(childConfig)
+		-- 		tinsert(self._dataStorage["n" .. nW], childId)
+		-- 		tinsert(createdChildren, childId)
+		-- 	end
+
+		-- 	parent.children = createdChildren
+		-- end
 	end
 end
 
