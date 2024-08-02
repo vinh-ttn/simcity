@@ -5,6 +5,7 @@ NpcFighter = {}
 
 
 function NpcFighter:New(fighter)
+    fighter.children = nil
     -- Copy over the method to be used
     for k, v in self do
         fighter[k] = v
