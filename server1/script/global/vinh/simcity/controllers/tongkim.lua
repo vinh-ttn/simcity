@@ -176,8 +176,5 @@ function SimCityMainTongKim:addTongKimNpc()
 		end
 
 		SimCityChienTranh:nv_tudo(1)
-		--SimCityChienTranh:nv_tudo(1)
-		--SimCityChienTranh:phe_tudo(1500,500,1)
-		--SimCityChienTranh:phe_tudo_xe(1500,500,1)
 	end
 end

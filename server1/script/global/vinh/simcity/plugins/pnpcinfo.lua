@@ -335,6 +335,14 @@ function SimCityNPCInfo:notFightingChar(id)
 	return 0
 end
 
+function SimCityNPCInfo:GetSeries(id)
+	--if self.ALLNPCs_INFO["n" .. id] then
+	--	return self.ALLNPCs_INFO["n" .. id].series
+	--end
+
+	return random(0, 4)
+end
+
 function SimCityNPCInfo:notValidChar(id)
 	if id > self.ALLNPCs_INFO_COUNT then
 		return 1

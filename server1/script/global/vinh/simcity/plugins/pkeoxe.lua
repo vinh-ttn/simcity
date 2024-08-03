@@ -63,7 +63,7 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, cap)
 
 		ngoaitrang = nt or 0,
 
-		children = theosau or nil,
+		childrenSetup = theosau or nil,
 		childrenCheckDistance = (theosau and 8) or nil, -- force distance check for child
 
 		playerID = name,

@@ -5,7 +5,8 @@ Include("\\script\\global\\vinh\\simcity\\class\\fighter.class.lua")
 IncludeLib("NPCINFO")
 FighterManager = {
     fighterList = {},
-    counter = 0
+    counter = 0,
+
 }
 function FighterManager:initCharConfig(config)
     config.playerID = config.playerID or "" -- dang theo sau ai do
@@ -15,11 +16,8 @@ function FighterManager:initCharConfig(config)
     config.isFighting = 0
     config.tick_breath = 0
     config.tick_canswitch = 0
-    config.series = config.series or random(0, 4)
     config.camp = config.camp or random(1, 3)
-    config.walkMode = config.walkMode or 1
-    config.isSpinning = 0
-    config.lastOffSetAngle = 0
+    config.walkMode = config.walkMode or "random"
     config.noRevive = config.noRevive or 0
     config.fightingScore = 0
     config.rank = 1
@@ -31,10 +29,10 @@ function FighterManager:initCharConfig(config)
         end
     end
     config.hardsetPos = config.hardsetPos or random(1, randomPos)
-    config.rebelActivated = config.rebelActivated or 0
     config.ngoaitrang = config.ngoaitrang or 0
     config.cap = config.cap or 1
     config.role = config.role or "citizen"
+    config.level = config.level or 95
 
     if config.cap and config.cap ~= "auto" then
         config.maxHP = SimCityNPCInfo:getHPByCap(config.cap)
@@ -56,9 +54,10 @@ function FighterManager:Add(config)
         return 0
     end
 
+    local worldInfo = SimCityWorld:Get(config.nMapId)
+
     -- All good generate name for Thanh Thi
     if config.mode == nil or config.mode == "thanhthi" then
-        local worldInfo = SimCityWorld:Get(config.nMapId)
         if worldInfo.showName == 1 then
             if (not config.szName) or config.szName == "" then
                 config.szName = SimCityNPCInfo:getName(config.nNpcId)
@@ -76,11 +75,9 @@ function FighterManager:Add(config)
     local id = self.counter
     config.id = id
 
-
     local newFighter = NpcFighter:New(config)
-
     if newFighter then
-        self.fighterList["n" .. newFighter.id] = newFighter
+        self.fighterList["n" .. id] = newFighter
         return id
     else
         return 0
@@ -93,6 +90,15 @@ end
 
 function FighterManager:Remove(nListId)
     local fighter = self.fighterList["n" .. nListId]
+    if fighter.children then
+        for i = 1, getn(fighter.children) do
+            local child = self:Get(fighter.children[i])
+            if child then
+                self.fighterList["n" .. child.id] = nil
+                child:Remove()
+            end
+        end
+    end
     fighter:Remove()
     self.fighterList["n" .. nListId] = nil
 end

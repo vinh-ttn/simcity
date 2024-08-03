@@ -76,7 +76,7 @@ function SimCityMainVanTieu:tao1xe()
 		childrenCheckDistance = 8, -- force distance check for child
 
 
-		walkMode = 1, -- optional: random or 1 for formation
+		walkMode = "formation", -- optional: random or 1 for formation
 		originalWalkPath = {},
 		mapData = mapData,
 		walkPath = {},

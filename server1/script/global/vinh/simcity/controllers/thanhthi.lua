@@ -1,7 +1,6 @@
 --Include("\\script\\global\\vinh\\simcity\\head.lua")
 Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")
 SimCityMainThanhThi = {
-	_dataStorage = {},
 	worldStatus = {},
 	autoAddThanhThi = STARTUP_AUTOADD_THANHTHI
 }
@@ -38,39 +37,7 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 	end
 
 	-- Create parent
-	local nListId = FighterManager:Add(objCopy(npcConfig))
-	if nListId > 0 then
-		if (not self._dataStorage["n" .. nW]) then
-			self._dataStorage["n" .. nW] = {}
-		end
-		tinsert(self._dataStorage["n" .. nW], nListId)
-
-
-		--local runSpeed = SimCityNPCInfo:getSpeed(id) or 0
-
-		-- Create children
-		--if runSpeed < 18 then
-		--	local parent = FighterManager:Get(nListId)
-		-- 	parent.children = {}
-		-- 	local N = random(2, 6) -- create 2 toi 9 children
-		-- 	local createdChildren = {}
-		-- 	for i = 1, N do
-		-- 		local childConfig = objCopy(npcConfig)
-		-- 		childConfig.parentID = nListId
-		-- 		childConfig.childID = i
-		-- 		childConfig.noRevive = 1
-		-- 		childConfig.role = "child"
-		-- 		childConfig.hardsetName = (config.ngoaitrang and config.ngoaitrang == 1 and SimCityPlayerName:getName()) or
-		-- 			SimCityNPCInfo:getName(id)
-
-		-- 		local childId = FighterManager:Add(childConfig)
-		-- 		tinsert(self._dataStorage["n" .. nW], childId)
-		-- 		tinsert(createdChildren, childId)
-		-- 	end
-
-		-- 	parent.children = createdChildren
-		-- end
-	end
+	FighterManager:Add(objCopy(npcConfig))
 end
 
 function SimCityMainThanhThi:_createTeamPatrol(nW, thonglinh, linh, N, path)
@@ -81,12 +48,12 @@ function SimCityMainThanhThi:_createTeamPatrol(nW, thonglinh, linh, N, path)
 	end
 
 
-	local nListId = FighterManager:Add({
+	FighterManager:Add({
 		nNpcId = thonglinh,   -- required, main char ID
 		nMapId = nW,          -- required, map
 		camp = 0,             -- optional, camp
-		children = children5, -- optional, children
-		walkMode = 1,         -- optional: random or 1 for formation
+		childrenSetup = children5, -- optional, children
+		walkMode = "formation", -- optional: random or 1 for formation
 		originalWalkPath = path,
 		noStop = 1,           -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 0, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
@@ -97,13 +64,6 @@ function SimCityMainThanhThi:_createTeamPatrol(nW, thonglinh, linh, N, path)
 		kind = 4
 
 	})
-
-	if nListId > 0 then
-		if (not self._dataStorage["n" .. nW]) then
-			self._dataStorage["n" .. nW] = {}
-		end
-		tinsert(self._dataStorage["n" .. nW], nListId)
-	end
 end
 
 function SimCityMainThanhThi:CreatePatrol(nW)
@@ -139,16 +99,6 @@ function SimCityMainThanhThi:CreatePatrol(nW)
 	end
 end
 
-function SimCityMainThanhThi:_clearMap(nW)
-	if (not self._dataStorage["n" .. nW]) then
-		self._dataStorage["n" .. nW] = {}
-	end
-	local tbl = self._dataStorage["n" .. nW]
-	for i = 1, getn(tbl) do
-		FighterManager:ClearMap(nW, tbl[i])
-	end
-end
-
 function SimCityMainThanhThi:createAnhHung(cap, perPage, ngoaitrang)
 	local pool = SimCityNPCInfo:getPoolByCap(cap)
 
@@ -170,7 +120,7 @@ end
 
 function SimCityMainThanhThi:removeAll()
 	local nW, nX, nY = GetWorldPos()
-	self:_clearMap(nW)
+	FighterManager:ClearMap(nW)
 end
 
 -- MAIN DIALOG FUNCTIONS
@@ -349,7 +299,13 @@ function SimCityMainThanhThi:mainMenu()
 		Say(
 			"TriÖu MÉn: b¶n ®å nµy ch­a ®­îc më.<enter><enter>C¸c h¹ cã thÓ ®ãng gãp <color=yellow>b¶n ®å ®­îc ®­êng ®i<color> ®Õn t¸c gi¶ trªn fb héi qu¸n kh«ng?")
 	else
-		local tbSay = { "§¹i Héi Vâ L©m" }
+		local counter = 0
+		for k, v in FighterManager.fighterList do
+			if v.nMapId and v.nMapId == nW then
+				counter = counter + 1
+			end
+		end
+		local tbSay = { "§¹i Héi Vâ L©m <enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter }
 
 		tinsert(tbSay, "Thµnh thÞ/#SimCityMainThanhThi:thanhthiMenu()")
 		tinsert(tbSay, "ChiÕn lo¹n/#SimCityChienTranh:mainMenu()")
@@ -386,7 +342,7 @@ function SimCityMainThanhThi:autoThanhThi(inp)
 	if (inp == 0) then
 		for k, v in self.worldStatus do
 			self.worldStatus["w" .. v.world] = nil
-			self:_clearMap(v.world)
+			FighterManager:ClearMap(v.world)
 		end
 	else
 		self:onPlayerEnterMap()

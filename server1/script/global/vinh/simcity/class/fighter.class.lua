@@ -6,6 +6,9 @@ NpcFighter = {}
 
 function NpcFighter:New(fighter)
     fighter.children = nil
+    fighter.originalConfig = objCopy(fighter)
+
+
     -- Copy over the method to be used
     for k, v in self do
         fighter[k] = v
@@ -16,8 +19,15 @@ function NpcFighter:New(fighter)
         return nil
     end
 
+    -- Bugfix series
+    fighter.series = SimCityNPCInfo:GetSeries(fighter.nNpcId)
+
     -- Create the character on screen
-    fighter:Show(1)
+    fighter:Show(1, fighter.goX, fighter.goY)
+
+
+    -- What about childrenSetup?
+    fighter:SetupChildren()
     return fighter
 end
 
@@ -40,6 +50,12 @@ function NpcFighter:Show(isNew, goX, goY)
 
         local tX = self.walkPath[nPosId][1]
         local tY = self.walkPath[nPosId][2]
+
+        if self.role == "child" then
+            local pW, pX, pY = self:GetParentPos()
+            tX = pX
+            tY = pY
+        end
 
         if goX and goY and goX > 0 and goY > 0 then
             tX = goX
@@ -64,7 +80,7 @@ function NpcFighter:Show(isNew, goX, goY)
             name = self.hardsetName
         end
 
-        nNpcIndex = AddNpcEx(self.nNpcId, 95, self.series, nMapIndex, tX * 32, tY * 32, 1, name, 0)
+        nNpcIndex = AddNpcEx(self.nNpcId, self.level, self.series, nMapIndex, tX * 32, tY * 32, 1, name, 0)
 
         if nNpcIndex > 0 then
             local kind = GetNpcKind(nNpcIndex)
@@ -87,8 +103,6 @@ function NpcFighter:Show(isNew, goX, goY)
                 if nPosCount >= 1 then
                     SetNpcActiveRegion(nNpcIndex, 1)
                     self.nPosId = nPosId
-                end
-                if nPosCount >= 1 or self.nSkillId then
                     SetNpcParam(nNpcIndex, PARAM_LIST_ID, self.id)
                     SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\class\\fighter.timer.lua")
                     SetNpcTimer(nNpcIndex, REFRESH_RATE)
@@ -128,8 +142,7 @@ end
 
 function NpcFighter:Respawn(code, reason)
     -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau 4: bi lag dung 1 cho nay gio ko di duoc
-    --print("RESPAWN " .. code .. " " .. reason)
-    -- CallPlayerFunction(1, Msg2Player, "Respawn: "..reason)
+    -- print(self.role .. ": respawn " .. code .. " " .. reason)
 
 
     local isAllDead = code == 1 and 1 or 0
@@ -187,6 +200,7 @@ function NpcFighter:Respawn(code, reason)
     -- Normal respawn ? Can del NPC
     DelNpcSafe(self.finalIndex)
 
+
     self:Show(0, nX, nY)
 end
 
@@ -236,6 +250,7 @@ function NpcFighter:IsPlayerEnemyAround()
 end
 
 function NpcFighter:JoinFight(reason)
+    self:ChildrenJoinFight(reason)
     self.isFighting = 1
     self.tick_canswitch = self.tick_breath +
         random(self.TIME_FIGHTING_minTs or TIME_FIGHTING.minTs,
@@ -266,11 +281,12 @@ function NpcFighter:JoinFight(reason)
     }
 
     self:Respawn(3, "JoinFight " .. reason)
-
     return 1
 end
 
 function NpcFighter:LeaveFight(isAllDead, reason)
+    self:ChildrenLeaveFight(isAllDead, reason)
+
     isAllDead = isAllDead or 0
 
     self.isFighting = 0
@@ -345,34 +361,38 @@ function NpcFighter:TriggerFightWithPlayer()
 end
 
 function NpcFighter:HasArrived()
-    local posIndex = self.nPosId
-    local parentPos = self.walkPath[posIndex]
-
     local nX32, nY32 = GetNpcPos(self.finalIndex)
     local oX = nX32 / 32;
     local oY = nY32 / 32;
 
-    local isExact = self.originalWalkPath[posIndex][3]
-    local nX = parentPos[1]
-    local nY = parentPos[2]
-
+    local nX
+    local nY
     local checkDistance = DISTANCE_CAN_CONTINUE
 
-    if self.isSpinning == 1 then
-        nX = parentPos[3]
-        nY = parentPos[4]
-        checkDistance = DISTANCE_CAN_SPIN
-    end
+    if self.role == "child" then
+        nX = self.parentAppointPos and self.parentAppointPos[1] or 0
+        nY = self.parentAppointPos and self.parentAppointPos[2] or 0
 
-    if isExact == 1 then
-        nX = self.originalWalkPath[posIndex][1]
-        nY = self.originalWalkPath[posIndex][2]
+        if not nX or not nY or nX == 0 or nY == 0 then
+            return 0
+        end
+    else
+        local posIndex = self.nPosId
+        local parentPos = self.walkPath[posIndex]
+
+        local isExact = self.originalWalkPath[posIndex][3]
+        nX = parentPos[1]
+        nY = parentPos[2]
+        if isExact == 1 then
+            nX = self.originalWalkPath[posIndex][1]
+            nY = self.originalWalkPath[posIndex][2]
+        end
     end
 
     local distance = GetDistanceRadius(nX, nY, oX, oY)
 
     if distance < checkDistance then
-        return 1
+        return self:ChildrenArrived()
     end
     return 0
 end
@@ -446,8 +466,6 @@ function NpcFighter:HardResetPos()
             self.originalWalkPath = { { pX, pY } }
             self.nPosId = 1
             walkAreas = { { { pX, pY } } }
-            -- --print("DONE "..pX.." "..pY)
-
 
             -- hoac la sim thanh thi di tum lum
         else
@@ -476,9 +494,6 @@ function NpcFighter:HardResetPos()
         return 0
     end
 
-    -- Init stats
-    self.isSpinning = 0
-    self.lastOffSetAngle = 0
 
     -- Startup position
     self.hardsetPos = self.hardsetPos or random(1, getn(self.originalWalkPath))
@@ -532,6 +547,9 @@ function NpcFighter:Breath()
     elseif self.role == "child" then
         pW, pX, pY = self:GetParentPos()
         cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
+        if self:IsParentFighting() == 1 and self.isFighting == 0 then
+            return self:JoinFight("parent dang danh nhau")
+        end
     elseif self.role == "keoxe" then
         worldInfo.allowFighting = 1
         worldInfo.showFightingArea = 0
@@ -557,8 +575,9 @@ function NpcFighter:Breath()
             self.tick_canswitch = self.tick_breath - 1
             self:LeaveFight(0, "chay theo nguoi choi")
         elseif (self.role == "child" and cachNguoiChoi > DISTANCE_FOLLOW_PLAYER) then
-            self.tick_canswitch = self.tick_breath - 1
-            self:LeaveFight(0, "chay theo parent")
+            --self.tick_canswitch = self.tick_breath - 1
+            --self:LeaveFight(0, "chay theo parent")
+            return 1
         else
             return 1
         end
@@ -590,9 +609,6 @@ function NpcFighter:Breath()
                     return 1
                 end
             end
-        end
-        if self.role == "child" and self:IsParentFighting() == 1 then
-            return self:JoinFight("parent is fighting")
         end
 
         -- Case 3: I auto switch to fight  mode
@@ -681,10 +697,6 @@ function NpcFighter:Breath()
         local targetPos = self.walkPath[nNextPosId]
         local nX = targetPos[1]
         local nY = targetPos[2]
-        if self.isSpinning == 1 then
-            nX = targetPos[3]
-            nY = targetPos[4]
-        end
 
         NpcWalk(self.finalIndex, nX, nY)
         self:CalculateChildrenPosition(nX, nY)
@@ -692,31 +704,47 @@ function NpcFighter:Breath()
         -- Mode 2: follow parent NPC
         -- Player has gone different map? Do respawn
         local needRespawn = 0
-        if self.nMapId ~= pW then
-            needRespawn = 1
-        else
-            if cachNguoiChoi > DISTANCE_FOLLOW_PLAYER_TOOFAR then
-                needRespawn = 1
-            end
-        end
+        pW, pX, pY = self:GetParentPos()
 
-        if needRespawn == 1 then
-            self.nMapId = pW
-            self.isFighting = 0
-            self.tick_canswitch = self.tick_breath
-            self.originalWalkPath = { { pX, pY } }
-            self.nPosId = 1
-            self:GenWalkPath(0)
-            self:Respawn(2, "keo xe qua map khac")
+        -- Parent pos available?
+        if pW > 0 and pX > 0 and pY > 0 then
+            if self.nMapId ~= pW then
+                needRespawn = 1
+            else
+                if cachNguoiChoi > DISTANCE_FOLLOW_PLAYER_TOOFAR then
+                    needRespawn = 1
+                end
+            end
+
+            if needRespawn == 1 then
+                self.nMapId = pW
+                self.isFighting = 0
+                self.tick_canswitch = self.tick_breath
+                self.originalWalkPath = { { pX, pY } }
+                self.nPosId = 1
+                self:GenWalkPath(0)
+                self:Respawn(2, "qua xa parent")
+                return 1
+            end
+        else
             return 1
         end
 
 
         -- Otherwise walk toward parent
-        if self.parentAppointPos then
-            NpcWalk(self.finalIndex, self.parentAppointPos[1], self.parentAppointPos[2])
+        local targetW, targetX, targetY = self:GetMyPosFromParent()
+
+        -- Parent gave info?
+        if targetW > 0 and targetX > 0 and targetY > 0 then
+            self.parentAppointPos = { targetX, targetY }
+            NpcWalk(self.finalIndex, targetX, targetY)
+
+            -- No info we would work by ourself
         else
-            NpcWalk(self.finalIndex, pX + random(-2, 2), pY + random(-2, 2))
+            local targetPos = self.walkPath[nNextPosId]
+            local nX = targetPos[1]
+            local nY = targetPos[2]
+            NpcWalk(self.finalIndex, nX, nY)
         end
     elseif self.role == "keoxe" then
         -- Mode 3: follow parent player
@@ -737,7 +765,7 @@ function NpcFighter:Breath()
             self.originalWalkPath = { { pX, pY } }
             self.nPosId = 1
             self:GenWalkPath(0)
-            self:Respawn(2, "keo xe qua map khac")
+            self:Respawn(2, "qua xa nguoi choi")
             return 1
         end
 
@@ -776,44 +804,57 @@ function NpcFighter:OnDeath()
 
         for i = 1, getn(self.children) do
             local each = FighterManager:Get(self.children[i])
-            if each and each.isDead ~= 1 and each.rebel == 0 then
+            if each and each.isDead ~= 1 then
                 child = each
-                break
+
+                local tmp = {
+                    finalIndex = self.finalIndex,
+                    szName = self.szName,
+                    nNpcId = self.nNpcId,
+                    series = self.series,
+                    lastHP = self.lastHP,
+                    isFighting = self.isFighting,
+                }
+
+                self.finalIndex = child.finalIndex
+                self.szName = child.szName
+                self.nNpcId = child.nNpcId
+                self.series = child.series
+                self.lastHP = child.lastHP
+                self.isFighting = child.isFighting
+
+
+                child.finalIndex = tmp.finalIndex
+                child.szName = tmp.szName
+                child.series = tmp.series
+                child.lastHP = tmp.lastHP
+                child.isFighting = tmp.isFighting
+
+                SetNpcParam(self.finalIndex, PARAM_LIST_ID, self.id)
+                SetNpcParam(child.finalIndex, PARAM_LIST_ID, child.id)
+
+                child.isDead = 1
+
+                --print("Doi chu PT sang nv " .. self.szName)
+                return 1
             end
-        end
-
-        -- No revive and found children alive? That child become parent
-        if child then
-            local tmp = {
-                finalIndex = self.finalIndex,
-                szName = self.szName,
-                nNpcId = self.nNpcId,
-                series = self.series
-            }
-
-            self.finalIndex = child.finalIndex
-            self.szName = child.szName
-            self.nNpcId = child.nNpcId
-            self.series = child.series
-
-            child.isDead = tmp.isDead
-            child.finalIndex = tmp.finalIndex
-            child.szName = tmp.szName
-            child.series = tmp.series
-            FighterManager:Remove(child.id)
-            print("Doi chu pt sang nv " .. self.szName)
-            return 1
         end
     end
 
     self.isDead = 1
     self.finalIndex = nil
 
+    -- If child dead do nothing, let parent do it
+    if self.role == "child" then
+        return 1
+    end
+
     local doRespawn = 0
 
     if self.isFighting == 1 and self.tick_breath > self.tick_canswitch then
         doRespawn = 1
     end
+
 
     -- Is every one dead?
     if (doRespawn == 1 or self.isDead == 1) then
@@ -823,10 +864,11 @@ function NpcFighter:OnDeath()
 
         -- No revive? Do removal
         if self.noRevive == 1 then
-            FighterManager:Remove(self.id)
-            return
+            if self.role == "citizen" then
+                FighterManager:Remove(self.id)
+            end
+            return 1
         end
-
         -- Do revive? Reset and leave fight
         self:LeaveFight(1, "die toan bo")
     end
@@ -845,33 +887,130 @@ function NpcFighter:GetPlayer()
 end
 
 -- For parent
+function NpcFighter:SetupChildren()
+    if self.childrenSetup and getn(self.childrenSetup) > 0 then
+        local createdChildren = {}
+
+        local nX32, nY32, nW32 = GetNpcPos(self.finalIndex)
+        local nW = SubWorldIdx2ID(nW32)
+        local nX = nX32 / 32
+        local nY = nY32 / 32
+
+        -- Create children
+        for i = 1, getn(self.childrenSetup) do
+            local childConfig = objCopy(self.originalConfig)
+            childConfig.parentID = self.id
+            childConfig.childID = i
+            childConfig.role = "child"
+            childConfig.hardsetName = nil
+            childConfig.childrenSetup = nil
+            for k, v in self.childrenSetup[i] do
+                childConfig[k] = v
+            end
+            childConfig.goX = nX
+            childConfig.goY = nY
+            local childId = FighterManager:Add(childConfig)
+            tinsert(createdChildren, childId)
+        end
+
+        self.children = createdChildren
+    end
+end
+
+function NpcFighter:GiveChildPos(i)
+    if self.childrenPath and getn(self.childrenPath) >= i then
+        return self.nMapId, self.childrenPath[i][1], self.childrenPath[i][2]
+    end
+    return 0, 0, 0
+end
+
 function NpcFighter:CalculateChildrenPosition(X, Y)
-    if not (self.children) then
+    if not self.children then
         return 1
     end
     local size = getn(self.children)
-    local centerCharId = getCenteredCell(createFormation(size))
-    local fighter = FighterManager:Get(self.children[centerCharId])
-
-    if fighter and fighter.isDead == 1 then
-        for i = 1, size do
-            fighter = FighterManager:Get(self.children[i])
-            if fighter and fighter.isDead ~= 1 then
-                break
-            end
-        end
+    if size == 0 then
+        return 1
     end
 
-    if fighter and fighter.isDead ~= 1 then
-        local nX, nY, nMapIndex = GetNpcPos(fighter.finalIndex)
-        local newPath = genCoords_squareshape({ nX / 32, nY / 32 }, { X, Y }, size)
-        for i = 1, size do
-            local childFighter = FighterManager:Get(self.children[i])
-            if childFighter then
-                childFighter.parentAppointPos = newPath[i]
+    if self.walkMode and self.walkMode == "formation" then
+        local centerCharId = getCenteredCell(createFormation(size))
+        local fighter = FighterManager:Get(self.children[centerCharId])
+
+        if fighter and fighter.isDead == 1 then
+            for i = 1, size do
+                fighter = FighterManager:Get(self.children[i])
+                if fighter and fighter.isDead ~= 1 then
+                    break
+                end
             end
         end
+
+        if fighter and fighter.isDead ~= 1 then
+            local nX, nY, nMapIndex = GetNpcPos(fighter.finalIndex)
+            self.childrenPath = genCoords_squareshape({ nX / 32, nY / 32 }, { X, Y }, size)
+        end
+    else
+        local childrenPath = {}
+        for i = 1, size do
+            tinsert(childrenPath, { X + random(-2, 2), Y + random(-2, 2) })
+        end
+        self.childrenPath = childrenPath
     end
+end
+
+function NpcFighter:ChildrenArrived()
+    if not self.children then
+        return 1
+    end
+    local size = getn(self.children)
+    if size == 0 then
+        return 1
+    end
+
+    for i = 1, size do
+        local child = FighterManager:Get(self.children[i])
+        if child and child.isDead ~= 1 and child:HasArrived() == 0 then
+            return 0
+        end
+    end
+    return 1
+end
+
+function NpcFighter:ChildrenJoinFight(code)
+    if not self.children then
+        return 1
+    end
+    local size = getn(self.children)
+    if size == 0 then
+        return 1
+    end
+
+    for i = 1, size do
+        local child = FighterManager:Get(self.children[i])
+        if child then
+            child:JoinFight(code)
+        end
+    end
+    return 1
+end
+
+function NpcFighter:ChildrenLeaveFight(code, reason)
+    if not self.children then
+        return 1
+    end
+    local size = getn(self.children)
+    if size == 0 then
+        return 1
+    end
+
+    for i = 1, size do
+        local child = FighterManager:Get(self.children[i])
+        if child then
+            child:LeaveFight(code, reason)
+        end
+    end
+    return 1
 end
 
 -- For child
@@ -881,6 +1020,15 @@ function NpcFighter:GetParentPos()
         local nX32, nY32, nW32 = GetNpcPos(foundParent.finalIndex)
         local nW = SubWorldIdx2ID(nW32)
         return nW, nX32 / 32, nY32 / 32
+    end
+
+    return 0, 0, 0
+end
+
+function NpcFighter:GetMyPosFromParent()
+    local foundParent = FighterManager:Get(self.parentID)
+    if foundParent then
+        return foundParent:GiveChildPos(self.childID)
     end
 
     return 0, 0, 0

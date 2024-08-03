@@ -6,7 +6,6 @@ SimCityWorld = {
 
 function SimCityWorld:New(data)
 	if not data then
-		--print("NOT FOUND SIMCITY MAP")
 		return 1
 	end
 	if self.data["w" .. data.worldId] == nil then
