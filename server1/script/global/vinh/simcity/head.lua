@@ -29,8 +29,7 @@ Include("\\script\\lib\\string.lua")
 
 -- Common Helpers
 Include("\\script\\global\\vinh\\simcity\\config.lua")
-Include("\\script\\global\\vinh\\simcity\\libs\\common.lua")
-Include("\\script\\global\\vinh\\simcity\\libs\\walk.lua")
+Include("\\script\\global\\vinh\\simcity\\common.lua")
 
 -- Plugins first
 Include("\\script\\global\\vinh\\simcity\\plugins\\index.lua")
@@ -40,6 +39,7 @@ Include("\\script\\global\\vinh\\simcity\\data\\index.lua")
 
 -- Now main class
 Include("\\script\\global\\vinh\\simcity\\class\\fighter_manager.class.lua")
+Include("\\script\\global\\vinh\\simcity\\class\\group_fighter.class.lua")
 
 
 -- Kick start all plugins if needed

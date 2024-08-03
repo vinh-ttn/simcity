@@ -117,7 +117,7 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, cap)
 
 
 
-	return FighterManager:Add({
+	return GroupFighter:Add({
 
 		szName = name or "",
 
@@ -188,7 +188,7 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 	end
 
 
-	return FighterManager:Add({
+	return GroupFighter:Add({
 		szName = name or "",
 
 		nNpcId = thonglinh, -- required, main char ID
@@ -304,8 +304,8 @@ function SimCityChienTranh:phe_tudo(startNPCIndex, perPage, ngoaitrang)
 		local id = startNPCIndex + i
 		local myPath = self:genWalkPath(forCamp)
 
-		local id = self:taoNV(id, forCamp, self.nW, myPath, ngoaitrang or 0)
-		if id > 0 then
+		local fighter = self:taoNV(id, forCamp, self.nW, myPath, ngoaitrang or 0)
+		if fighter then
 			if forCamp == 1 then
 				forCamp = 2
 			else
@@ -366,8 +366,8 @@ function SimCityChienTranh:nv_tudo(cap)
 		local id = pool[random(1, getn(pool))]
 		local myPath = self:genWalkPath(forCamp)
 
-		local id = self:taoNV(id, forCamp, self.nW, myPath, 1, nil, cap)
-		if id > 0 then
+		local fighter = self:taoNV(id, forCamp, self.nW, myPath, 1, nil, cap)
+		if fighter then
 			if forCamp == 1 then
 				forCamp = 2
 			else
@@ -432,14 +432,14 @@ function SimCityChienTranh:phe_quanbinh()
 end
 
 function SimCityChienTranh:removeAll()
-	FighterManager:ClearMap(self.nW)
+	GroupFighter:ClearMap(self.nW)
 end
 
 function SimCityChienTranh:getWorldName()
 	local worldInfo = SimCityWorld:Get(self.nW)
 
 	local counter = 0
-	for k, v in FighterManager.fighterList do
+	for k, v in GroupFighter.fighterList do
 		if v.nMapId and v.nMapId == self.nW then
 			counter = counter + 1
 		end
@@ -558,7 +558,7 @@ function SimCityChienTranh:mainMenu()
 	tinsert(tbSay, "Mêi anh hïng thiªn h¹/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "Thªm qu¸i nh©n/#SimCityChienTranh:goiAnhHungThiep()")
 	tinsert(tbSay, "Thªm quan binh/#SimCityChienTranh:phe_quanbinh()")
-	tinsert(tbSay, "Xem b¶ng xÕp h¹ng/#FighterManager:ThongBaoBXH(" .. (self.nW) .. ")")
+	tinsert(tbSay, "Xem b¶ng xÕp h¹ng/#GroupFighter:ThongBaoBXH(" .. (self.nW) .. ")")
 	tinsert(tbSay, "ThiÕt lËp/#SimCityChienTranh:caidat()")
 	tinsert(tbSay, "Gi¶i t¸n/#SimCityChienTranh:removeAll()")
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
