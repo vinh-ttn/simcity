@@ -116,7 +116,11 @@ function NpcFighter:Show(isNew, goX, goY)
 
                 -- Disable fighting?
                 if (self.isFighting == 0) then
-                    SetNpcKind(nNpcIndex, self.kind or 4)
+                    if (self.isAttackable == 1) then
+                        SetNpcKind(nNpcIndex, 0)
+                    else
+                        SetNpcKind(nNpcIndex, self.kind or 4)
+                    end
                     self:SetFightState(0)
                 end
 
@@ -142,7 +146,7 @@ end
 
 function NpcFighter:Respawn(code, reason)
     -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau 4: bi lag dung 1 cho nay gio ko di duoc
-    -- print(self.role .. ": respawn " .. code .. " " .. reason)
+    --print(self.role .. " " .. self.szName .. ": respawn " .. code .. " " .. reason)
 
 
     local isAllDead = code == 1 and 1 or 0
@@ -168,7 +172,7 @@ function NpcFighter:Respawn(code, reason)
         self:HardResetPos()
 
         -- otherwise reset
-    elseif isAllDead == 1 and (self.role == "keoxe" or self.role == "child") then
+    elseif isAllDead == 1 and (self.role == "vantieu" or self.role == "keoxe" or self.role == "child") then
         nX = self.walkPath[1][1]
         nY = self.walkPath[1][2]
         self.nPosId = 1
@@ -227,7 +231,13 @@ function NpcFighter:IsNpcEnemyAround()
         local fighter2Kind = GetNpcKind(allNpcs[i])
         local fighter2Camp = GetNpcCurCamp(allNpcs[i])
         if fighter2Kind == 0 and (IsAttackableCamp(self.camp, fighter2Camp) == 1) then
-            return 1
+            if (self.role == "vantieu") then
+                if (NPCINFO_GetLevel(allNpcs[i]) >= 20) then
+                    return 1
+                end
+            else
+                return 1
+            end
         end
     end
 
@@ -250,6 +260,10 @@ function NpcFighter:IsPlayerEnemyAround()
 end
 
 function NpcFighter:JoinFight(reason)
+    if (self.role == "vantieu" and self.isAttackable == 0) then
+        return 1
+    end
+
     self:ChildrenJoinFight(reason)
     self.isFighting = 1
     self.tick_canswitch = self.tick_breath +
@@ -296,7 +310,7 @@ function NpcFighter:LeaveFight(isAllDead, reason)
     reason = reason or "no reason"
 
     -- Do not need to respawn just disable fighting
-    if (isAllDead ~= 1 and self.kind ~= 4) then
+    if (isAllDead ~= 1 and (self.kind ~= 4 or self.isAttackable == 1)) then
         self:Walk2ClosestPoint()
         self:SetFightState(0)
     else
@@ -369,7 +383,7 @@ function NpcFighter:HasArrived()
     local nY
     local checkDistance = DISTANCE_CAN_CONTINUE
 
-    if self.role == "child" then
+    if self.role == "child" or self.parent == "vantieu" then
         nX = self.parentAppointPos and self.parentAppointPos[1] or 0
         nY = self.parentAppointPos and self.parentAppointPos[2] or 0
 
@@ -460,7 +474,7 @@ function NpcFighter:HardResetPos()
             walkAreas = { { { pX, pY } } }
 
             -- Dang theo sau thi lay dia diem cua nguoi choi
-        elseif self.role == "keoxe" then
+        elseif self.role == "keoxe" or self.role == "vantieu" then
             local pW, pX, pY = CallPlayerFunction(self:GetPlayer(), GetWorldPos)
             worldInfo.showName = 1
             self.originalWalkPath = { { pX, pY } }
@@ -521,6 +535,16 @@ function NpcFighter:Breath()
     local cachNguoiChoi = 0
 
 
+    self.lastKnownPos = {
+        nX32 = nX32,
+        nY32 = nY32,
+        nW = nW
+    }
+
+    if self.role == "vantieu" then
+        self:OwnerPos()
+    end
+
     -- CHAT FEATRUE - Khong dang theo sau ai het
     worldInfo = SimCityWorld:Get(nW)
 
@@ -550,15 +574,26 @@ function NpcFighter:Breath()
         if self:IsParentFighting() == 1 and self.isFighting == 0 then
             return self:JoinFight("parent dang danh nhau")
         end
-    elseif self.role == "keoxe" then
+    elseif self.role == "keoxe" or self.role == "vantieu" then
         worldInfo.allowFighting = 1
         worldInfo.showFightingArea = 0
-        pW, pX, pY = CallPlayerFunction(self:GetPlayer(), GetWorldPos)
-        cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
+
+        local pID = self:GetPlayer()
+        if pID > 0 then
+            pW, pX, pY = CallPlayerFunction(pID, GetWorldPos)
+            cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
+        end
     end
 
     -- Is fighting? Do nothing except leave fight if possible
     if self.isFighting == 1 then
+        if self.role == "vantieu" then
+            if (self:CanLeaveFight() == 1) then
+                self:LeaveFight(0, "khong tim thay quai")
+            end
+            return 1
+        end
+
         -- Case 1: toi gio chuyen doi
         if self.tick_canswitch < self.tick_breath then
             return self:LeaveFight(0, "toi gio thay doi trang thai")
@@ -591,6 +626,7 @@ function NpcFighter:Breath()
         return 0
     end
 
+    -- Binh thuong
     if ((self.role == "keoxe" and cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) or
             (self.role == "child" and cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) or
             self.role == "citizen") and worldInfo.allowFighting == 1 and
@@ -650,6 +686,19 @@ function NpcFighter:Breath()
             if (countFighting > 0) then
                 return 1
             end
+        end
+    end
+
+    -- Van tieu
+    if (self.role == "vantieu") then
+        -- Co NPC dang tan cong?
+        if self:TriggerFightWithNPC() == 1 then
+            return 1
+        end
+
+        -- Co Nguoi choi dang tan cong?
+        if self:TriggerFightWithPlayer() == 1 then
+            return 1
         end
     end
 
@@ -776,6 +825,19 @@ function NpcFighter:Breath()
         else
             NpcWalk(self.finalIndex, pX + random(-2, 2), pY + random(-2, 2))
         end
+    elseif self.role == "vantieu" then
+        -- Mode 4: follow parent player
+        -- Player has gone different map? Do nothing
+        if self.nMapId ~= pW then
+            return 1
+        end
+
+        -- Otherwise walk toward parent
+        if self.bOwnerHere == 1 then
+            if self.parentAppointPos then
+                NpcWalk(self.finalIndex, self.parentAppointPos[1], self.parentAppointPos[2])
+            end
+        end
     end
     return 1
 end
@@ -866,6 +928,10 @@ function NpcFighter:OnDeath()
         if self.noRevive == 1 then
             if self.role == "citizen" then
                 FighterManager:Remove(self.id)
+            end
+
+            if self.role == "vantieu" then
+                self:NotifyOwner(1)
             end
             return 1
         end
@@ -1040,4 +1106,155 @@ function NpcFighter:IsParentFighting()
         return 1
     end
     return 0
+end
+
+-- Van tieu
+function NpcFighter:OwnerPos()
+    local nOwnerIndex = SearchPlayer(self.playerID)
+    if not (nOwnerIndex > 0) then
+        return not self:OwnerFarAway()
+    end
+
+    local nOwnerX32, nOwnerY32, nOwnerMapIndex = CallPlayerFunction(nOwnerIndex, GetPos)
+    if not nOwnerX32 then
+        return not self:OwnerFarAway()
+    end
+
+    local nSelfX32, nSelfY32, nSelfMapIndex = GetNpcPos(self.finalIndex)
+    local nDis = ((nOwnerX32 - nSelfX32) ^ 2) + ((nOwnerY32 - nSelfY32) ^ 2)
+    if nOwnerMapIndex ~= nSelfMapIndex or nDis >= 750 * 750 then
+        return not self:OwnerFarAway()
+    end
+
+    self:OwnerNear()
+end
+
+function NpcFighter:OwnerNear()
+    local nOwnerIndex = SearchPlayer(self.playerID)
+
+    local pFightState = CallPlayerFunction(nOwnerIndex, GetFightState)
+
+    if pFightState == 1 and self.isAttackable == 0 then
+        self.isAttackable = pFightState
+        self:Respawn(0, "chuyen sang attackable")
+    end
+
+    self.isAttackable = pFightState
+
+    if not self.bOwnerHere then
+        self:OnOwnerEnter()
+        self.bOwnerHere = 1
+    end
+end
+
+function NpcFighter:OnOwnerEnter()
+    local nOwnerIndex = SearchPlayer(self.playerID)
+    KhoaTHP(nOwnerIndex, 1)
+end
+
+function NpcFighter:OwnerFarAway()
+    if self.bOwnerHere then
+        self.bOwnerHere = nil
+        self:OnOwnerLeave()
+        --else
+        --if GetCurServerTime() - tbNpc.nPlayerLeaveTime >= 5 * 60 then
+        --	local _, _, nMapIndex = GetNpcPos(self.nNpcIndex)
+        --	-- do someting when owner leave for 5 minutes here
+        --	return 1
+        --end
+    end
+end
+
+function NpcFighter:OnOwnerLeave()
+    local nOwnerIndex = SearchPlayer(self.playerID)
+    local nCurTime = GetCurServerTime()
+    self.isAttackable = 1
+    self.nPlayerLeaveTime = nCurTime
+    if nOwnerIndex > 0 then
+        self:NotifyOwner(0)
+        KhoaTHP(nOwnerIndex, 0)
+    end
+end
+
+function NpcFighter:NotifyOwner(code)
+    local nOwnerIndex = SearchPlayer(self.playerID)
+    if (not self.playerLeftMap or self.playerLeftMap == 0) and nOwnerIndex > 0 then
+        local name = "<color=white>" .. self.szName
+        local msg = ""
+        local location = ""
+
+        -- Find out the location
+        local worldInfo = SimCityWorld:Get(self.nMapId)
+        local lastPos = self.lastKnownPos
+        if worldInfo and worldInfo.name then
+            if lastPos then
+                location = "tπi <color=yellow>" .. worldInfo.name .. " <color=red>" ..
+                    floor(lastPos.nX32 / (32 * 8)) .. " " .. floor(lastPos.nY32 / (32 * 16)) .. ""
+            else
+                location = "tπi <color=yellow>" .. worldInfo.name
+            end
+        end
+
+        -- Output the msg
+        if code == 0 then
+            msg = name .. " Æ∑ bﬁ b· lπi ph›a sau " .. location
+        end
+        if code == 1 then
+            msg = name .. " m t t›ch " .. location
+        end
+        if code == 2 then
+            msg = name .. " kh´ng may ch’t trong khi di chuy”n"
+        end
+
+        -- Send to the user
+        CallPlayerFunction(nOwnerIndex, Msg2Player, msg)
+    end
+end
+
+function NpcFighter:OwnerLostOnTransport()
+    self:NotifyOwner(2)
+    FighterManager:Remove(self.id)
+end
+
+function NpcFighter:OnPlayerLeaveMap(nX2, nY2, nMapIndex2)
+    if self.isFighting == 1 then
+        return
+    end
+    local nX1, nY1, nMapIndex1 = GetNpcPos(self.finalIndex)
+    if nMapIndex1 ~= nMapIndex2 then
+        return
+    end
+
+    local nDis = ((nX1 - nX2) ^ 2) + ((nY1 - nY2) ^ 2)
+    if nDis <= 750 * 750 then
+        self.playerLeftMap = 1
+    end
+end
+
+function NpcFighter:OnPlayerEnterMap(nX2, nY2, nMapIndex2)
+    if self.playerLeftMap == 1 then
+        local playerIndex = self:GetPlayer()
+
+        if playerIndex > 0 and IsNearStation(playerIndex) == 1 then
+            if (random(1, 99) <= 50) then
+                self.playerLeftMap = 0
+                self:OwnerLostOnTransport()
+                return 0
+            end
+        end
+
+        local pW, pX, pY = CallPlayerFunction(playerIndex, GetWorldPos)
+        self.nMapId = pW
+        self.goX = pX
+        self.goY = pY
+
+        self.isFighting = 0
+        self.tick_canswitch = self.tick_breath
+        self.originalWalkPath = { { pX, pY } }
+        self.walkPath = { { pX, pY } }
+        self.nPosId = 1
+        self:GenWalkPath(0)
+        self:Respawn(2, "chu xe tieu qua map")
+        self.playerLeftMap = 0
+    end
 end

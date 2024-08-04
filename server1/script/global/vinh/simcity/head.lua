@@ -45,3 +45,5 @@ Include("\\script\\global\\vinh\\simcity\\class\\group_fighter.class.lua")
 -- Kick start all plugins if needed
 SimCityNgoaiTrang:init()
 SimCityNPCInfo:init()
+SimCityBaTanh:init()
+FighterManager:init()

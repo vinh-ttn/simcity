@@ -393,3 +393,12 @@ function SimCityNPCInfo:getPoolByCap(cap)
 	end
 	return pool
 end
+
+function SimCityNPCInfo:IsValidFighter(id)
+	if self:notValidChar(id) == 1 or self:isBlacklisted(id) == 1 or
+		self:notFightingChar(id) == 1 then
+		return 0
+	end
+
+	return 1
+end

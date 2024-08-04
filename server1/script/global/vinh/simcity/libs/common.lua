@@ -163,3 +163,18 @@ function Simcity_GetNpcAroundNpcList(nNpcIndex, radius)
 
     return allNpcs, nCount
 end
+
+function IsNearStation(pId)
+    local fighterList = CallPlayerFunction(pId, GetAroundNpcList, 30)
+    local nNpcIdx
+    for i = 1, getn(fighterList) do
+        nNpcIdx = fighterList[i]
+        local kind = GetNpcKind(nNpcIdx)
+        local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
+        if kind == 3 and (nSettingIdx == 239 or nSettingIdx == 236 or nSettingIdx == 237 or nSettingIdx == 238) then
+            return 1
+        end
+    end
+
+    return 0
+end

@@ -6,7 +6,7 @@ IncludeLib("NPCINFO")
 FighterManager = {
     fighterList = {},
     counter = 0,
-
+    fighterByPlayer = {}
 }
 function FighterManager:initCharConfig(config)
     config.playerID = config.playerID or "" -- dang theo sau ai do
@@ -33,24 +33,15 @@ function FighterManager:initCharConfig(config)
     config.cap = config.cap or 1
     config.role = config.role or "citizen"
     config.level = config.level or 95
-
+    config.isAttackable = config.isAttackable or 0
     if config.cap and config.cap ~= "auto" then
         config.maxHP = SimCityNPCInfo:getHPByCap(config.cap)
     end
 end
 
-function FighterManager:isValidChar(id)
-    if SimCityNPCInfo:notValidChar(id) == 1 or SimCityNPCInfo:isBlacklisted(id) == 1 or
-        SimCityNPCInfo:notFightingChar(id) == 1 then
-        return 0
-    end
-
-    return 1
-end
-
 function FighterManager:Add(config)
     -- Not a valid char ?
-    if self:isValidChar(config.nNpcId) == 0 then
+    if config.role ~= "vantieu" and SimCityNPCInfo:IsValidFighter(config.nNpcId) == 0 then
         return 0
     end
 
@@ -78,6 +69,13 @@ function FighterManager:Add(config)
     local newFighter = NpcFighter:New(config)
     if newFighter then
         self.fighterList["n" .. id] = newFighter
+
+        if config.playerID and config.playerID ~= "" then
+            if not self.fighterByPlayer[config.playerID] then
+                self.fighterByPlayer[config.playerID] = {}
+            end
+            tinsert(self.fighterByPlayer[config.playerID], id)
+        end
         return id
     else
         return 0
@@ -106,7 +104,7 @@ end
 function FighterManager:ClearMap(nW, targetListId)
     -- Get info for npc in this world
     for key, fighter in self.fighterList do
-        if fighter.nMapId == nW then
+        if fighter.nMapId == nW and fighter.role ~= "vantieu" then
             if (not targetListId) or (targetListId == fighter.id) then
                 self:Remove(fighter.id)
             end
@@ -220,5 +218,50 @@ function FighterManager:AddScoreToAroundNPC(fighter, nNpcIndex, currRank)
     return 0
 end
 
---EventSys:GetType("LeaveMap"):Reg("ALL", FighterManager.OnPlayerLeaveMap, FighterManager)
--- EventSys:GetType("EnterMap"):Reg("ALL", FighterManager.OnPlayerEnterMap, FighterManager)
+function FighterManager:OnPlayerEnterMap()
+    local szName = GetName()
+    if not szName then
+        return
+    end
+
+    if not self.fighterByPlayer[szName] then
+        return
+    end
+    self:ExecPlayerFunction(1, szName)
+end
+
+function FighterManager:OnPlayerLeaveMap()
+    local szName = GetName()
+    if not szName then
+        return
+    end
+
+    if not self.fighterByPlayer[szName] then
+        return
+    end
+
+    self:ExecPlayerFunction(0, szName)
+end
+
+function FighterManager:ExecPlayerFunction(code, szName)
+    local nX2, nY2, nMapIndex2 = GetPos()
+
+    for i = 1, getn(self.fighterByPlayer[szName]) do
+        local id = self.fighterByPlayer[szName][i]
+        if id then
+            local v = self.fighterList["n" .. id]
+            if v and v.role == "vantieu" and v.playerID == szName then
+                if code == 1 then
+                    v:OnPlayerEnterMap(nX2, nY2, nMapIndex2)
+                else
+                    v:OnPlayerLeaveMap(nX2, nY2, nMapIndex2)
+                end
+            end
+        end
+    end
+end
+
+function FighterManager:init()
+    EventSys:GetType("EnterMap"):Reg("ALL", self.OnPlayerEnterMap, self)
+    EventSys:GetType("LeaveMap"):Reg("ALL", self.OnPlayerLeaveMap, self)
+end
