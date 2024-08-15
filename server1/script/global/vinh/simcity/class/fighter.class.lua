@@ -294,6 +294,10 @@ function NpcFighter:JoinFight(reason)
         W = currW
     }
 
+    if (self.role == "vantieu") then
+        self:NotifyOwner(3)
+    end
+
     self:Respawn(3, "JoinFight " .. reason)
     return 1
 end
@@ -492,8 +496,12 @@ function NpcFighter:HardResetPos()
                 local walkIndex = random(1, getn(walkAreas))
                 self.originalWalkPath = arrCopy(walkAreas[walkIndex])
 
+                if self.mode == "train" then
+                    self.originalWalkPath = arrRandomExtracItems(self.originalWalkPath, 5)
+                end
+
                 -- Trong thanh thi co the random di nguoc chieu
-                if self.mode == "thanhthi" and random(1, 2) < 2 then
+                if (self.mode == "thanhthi" or self.mode == "train") and random(1, 2) < 2 then
                     self.originalWalkPath = arrFlip(self.originalWalkPath)
                 end
 
@@ -692,13 +700,17 @@ function NpcFighter:Breath()
     -- Van tieu
     if (self.role == "vantieu") then
         -- Co NPC dang tan cong?
-        if self:TriggerFightWithNPC() == 1 then
-            return 1
+        if (self.CHANCE_ATTACK_NPC and random(0, self.CHANCE_ATTACK_NPC) <= 2) then
+            if self:TriggerFightWithNPC() == 1 then
+                return 1
+            end
         end
 
         -- Co Nguoi choi dang tan cong?
-        if self:TriggerFightWithPlayer() == 1 then
-            return 1
+        if (self.CHANCE_ATTACK_PLAYER and random(0, self.CHANCE_ATTACK_PLAYER) <= 2) then
+            if self:TriggerFightWithPlayer() == 1 then
+                return 1
+            end
         end
     end
 
@@ -1179,7 +1191,7 @@ end
 function NpcFighter:NotifyOwner(code)
     local nOwnerIndex = SearchPlayer(self.playerID)
     if (not self.playerLeftMap or self.playerLeftMap == 0) and nOwnerIndex > 0 then
-        local name = "<color=white>" .. self.szName
+        local name = "<color=cyan>" .. self.szName .. "<color=white>"
         local msg = ""
         local location = ""
 
@@ -1197,13 +1209,16 @@ function NpcFighter:NotifyOwner(code)
 
         -- Output the msg
         if code == 0 then
-            msg = name .. " ®· bÞ bá l¹i phÝa sau " .. location
+            msg = name .. " ®ang bÞ bá l¹i phÝa sau " .. location
         end
         if code == 1 then
             msg = name .. " mÊt tÝch " .. location
         end
         if code == 2 then
             msg = name .. " kh«ng may chÕt trong khi di chuyÓn"
+        end
+        if code == 3 then
+            msg = name .. " ®ang bÞ tÊn c«ng " .. location
         end
 
         -- Send to the user
@@ -1236,7 +1251,7 @@ function NpcFighter:OnPlayerEnterMap(nX2, nY2, nMapIndex2)
         local playerIndex = self:GetPlayer()
 
         if playerIndex > 0 and IsNearStation(playerIndex) == 1 then
-            if (random(1, 99) <= 50) then
+            if (random(1, 99) <= 95) then
                 self.playerLeftMap = 0
                 self:OwnerLostOnTransport()
                 return 0

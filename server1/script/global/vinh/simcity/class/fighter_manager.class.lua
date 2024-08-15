@@ -48,7 +48,7 @@ function FighterManager:Add(config)
     local worldInfo = SimCityWorld:Get(config.nMapId)
 
     -- All good generate name for Thanh Thi
-    if config.mode == nil or config.mode == "thanhthi" then
+    if config.mode == nil or config.mode == "thanhthi" or config.mode == "train" then
         if worldInfo.showName == 1 then
             if (not config.szName) or config.szName == "" then
                 config.szName = SimCityNPCInfo:getName(config.nNpcId)

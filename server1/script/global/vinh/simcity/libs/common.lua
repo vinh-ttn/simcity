@@ -178,3 +178,18 @@ function IsNearStation(pId)
 
     return 0
 end
+
+function arrRandomExtracItems(arr, n)
+    if getn(arr) < n then
+        return arr
+    end
+
+    local startIndex = random(1, getn(arr) - n + 1)
+    local result = {}
+
+    for i = startIndex, startIndex + n - 1 do
+        tinsert(result, arr[i])
+    end
+
+    return result
+end

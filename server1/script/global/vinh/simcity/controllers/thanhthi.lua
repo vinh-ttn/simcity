@@ -415,14 +415,17 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 		local fighterList = GetAroundNpcList(60)
 		local nNpcIdx
 		local mapping = {}
+		local map9x = 1
+
 		for i = 1, getn(fighterList) do
 			nNpcIdx = fighterList[i]
 			local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
 			level = NPCINFO_GetLevel(nNpcIdx)
 			local kind = GetNpcKind(nNpcIdx)
-			if level <= 90 and nSettingIdx > 0 and kind == 0 and not mapping[nSettingIdx] then
+			if level < 90 and nSettingIdx > 0 and kind == 0 and not mapping[nSettingIdx] then
 				tinsert(tmpFound, nSettingIdx)
 				mapping[nSettingIdx] = 1
+				map9x = 0
 			end
 		end
 
@@ -437,15 +440,60 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 			capHP = 1
 		end
 
+
 		if SimCityWorld:IsThanhThiMap(nW) == 1 then
 			total = 200
+			map9x = 0
 		end
 
-
 		local N = getn(tmpFound)
-		for i = 1, total do
-			local id = tmpFound[random(1, N)]
-			self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95, cap = capHP })
+
+		if map9x == 0 then
+			for i = 1, total do
+				local id = tmpFound[random(1, N)]
+				-- Thanh thi / Duoi 9x
+				self:_createSingle(id, nW, { ngoaitrang = 1, level = level or 95, cap = capHP })
+			end
+			-- Tren 9x = bai luyen cong
+		else
+			total = 20 -- 20 PT tat ca
+			for i = 1, total do
+				local id = tmpFound[random(1, N)]
+				local children5 = {}
+				for j = 1, 7 do
+					tinsert(children5, {
+						mode = "train",
+						szName = SimCityPlayerName:getName(),
+						nNpcId = tmpFound[random(1, N)], -- required, main char ID
+					})
+				end
+				self:_createSingle(id, nW,
+					{
+						szName = SimCityPlayerName:getName(),
+						ngoaitrang = 1,
+						mode = "train",
+						level = level or 95,
+						cap = 1,
+						childrenSetup = children5,
+						walkMode =
+						"random",
+						CHANCE_ATTACK_PLAYER = 1, -- co hoi tan cong nguoi choi neu di ngang qua
+						attackNpcChance = 1, -- co hoi bat chien dau khi thay NPC khac phe
+						CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+						RADIUS_FIGHT_PLAYER = 15, -- scan for player around and randomly attack
+						RADIUS_FIGHT_NPC = 15, -- scan for NPC around and start randomly attack,
+						RADIUS_FIGHT_SCAN = 15, -- scan for fight around and join/leave fight it
+						noStop = 1, -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
+						leaveFightWhenNoEnemy = 1, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
+						walkVar = 2,
+						noBackward = 0, -- do not walk backward
+						kind = 0, -- quai mode
+						TIME_FIGHTING_minTs = 1800,
+						TIME_FIGHTING_maxTs = 3000,
+						TIME_RESTING_minTs = 1,
+						TIME_RESTING_maxTs = 3,
+					})
+			end
 		end
 	end
 end

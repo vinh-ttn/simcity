@@ -56,16 +56,16 @@ function SimCityBaTanh:NewJob()
 	local name = GetName()
 
 	local children5 = {
-		{ 43,   3, { szName = "Heo n¸i" } },
-		{ 43,   3, { szName = "Heo näc" } },
-		{ 42,   2, { szName = "H­u sao" } },
-		{ 13,   2, { szName = "Voi b¶n ®«n" } },
+		{ 43,   3, { szName = "Heo n¸i", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 43,   3, { szName = "Heo näc", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 42,   2, { szName = "H­u sao", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 13,   2, { szName = "Voi b¶n ®«n", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
 
-		{ 2146, 1, { szName = "Xe l­¬ng thùc" } },
+		{ 2146, 1, { szName = "Xe l­¬ng thùc", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
 		--{ 2147, 1, { szName = "Xe quÇn ¸o" } },
 		--{ 2148, 1, { szName = "Xe cña c¶i" } },
 
-		{ 682,  4, { szName = "Gia nh©n" } }
+		{ 682,  4, { szName = "Gia nh©n", CHANCE_ATTACK_NPC = 1, CHANCE_ATTACK_PLAYER = 1 } }
 	}
 	local children = {}
 	for i = 1, getn(children5) do
@@ -143,62 +143,60 @@ function SimCityBaTanh:WalkAllTieu()
 		local parentID = SearchPlayer(name)
 		if parentID > 0 then
 			local pW, pX, pY = CallPlayerFunction(parentID, GetWorldPos)
+			local rW, rX, rY = CallPlayerFunction(parentID, GetPos)
+			local newLoc = "" .. rW .. rX .. rY
+			tieuxa.testLoc = newLoc
+			tieuxa.player_location = { nW = pW, nX = pX, nY = pY }
+			local children = tieuxa.children
 
-			local newLoc = "" .. pW .. pY .. pX
-			if tieuxa.testLoc ~= newLoc then
-				tieuxa.testLoc = newLoc
-				tieuxa.player_location = { nW = pW, nX = pX, nY = pY }
-				local children = tieuxa.children
+			-- Filter out deleted children
+			local newList = {}
+			for i = 1, getn(children) do
+				local id = children[i]
+				if id then
+					local v = FighterManager:Get(id)
+					if v then
+						tinsert(newList, v.id)
+					end
+				end
+			end
+			if getn(newList) > 0 then
+				children = newList
+				tieuxa.children = newList
 
-				-- Filter out deleted children
-				local newList = {}
-				for i = 1, getn(children) do
-					local id = children[i]
-					if id then
-						local v = FighterManager:Get(id)
-						if v then
-							tinsert(newList, v.id)
+				-- Find the centerChar
+				local size = getn(children)
+				local centerCharId = getCenteredCell(createFormation(size))
+				local fighter = FighterManager:Get(children[centerCharId])
+				if not fighter or fighter.isDead == 1 or fighter.nMapId ~= pW then
+					for i = 1, getn(children) do
+						local child = FighterManager:Get(children[i])
+						if child and child.isDead ~= 1 and child.nMapId == pW then
+							fighter = child
+							break
 						end
 					end
 				end
-				if getn(newList) > 0 then
-					children = newList
-					tieuxa.children = newList
 
-					-- Find the centerChar
-					local size = getn(children)
-					local centerCharId = getCenteredCell(createFormation(size))
-					local fighter = FighterManager:Get(children[centerCharId])
-					if not fighter or fighter.isDead == 1 or fighter.nMapId ~= pW then
-						for i = 1, getn(children) do
+				-- If found then can draw
+				if fighter then
+					local nX, nY, nW = GetNpcPos(fighter.finalIndex)
+					nX = nX / 32
+					nY = nY / 32
+					nW = SubWorldIdx2ID(nW)
+					local newPath = genCoords_squareshape({ nX, nY }, { pX, pY }, size)
+					local cachNguoiChoi = GetDistanceRadius(nX, nY, pX, pY)
+
+					if pW == nW and cachNguoiChoi <= DISTANCE_FOLLOW_PLAYER_TOOFAR then
+						local newIds = {}
+						for i = 1, size do
 							local child = FighterManager:Get(children[i])
-							if child and child.isDead ~= 1 and child.nMapId == pW then
-								fighter = child
-								break
+							if child and child.nMapId == pW then
+								child.parentAppointPos = newPath[i]
+								tinsert(newIds, child.id)
 							end
 						end
-					end
-
-					-- If found then can draw
-					if fighter then
-						local nX, nY, nW = GetNpcPos(fighter.finalIndex)
-						nX = nX / 32
-						nY = nY / 32
-						nW = SubWorldIdx2ID(nW)
-						local newPath = genCoords_squareshape({ nX, nY }, { pX, pY }, size)
-						local cachNguoiChoi = GetDistanceRadius(nX, nY, pX, pY)
-
-						if pW == nW and cachNguoiChoi <= DISTANCE_FOLLOW_PLAYER_TOOFAR then
-							local newIds = {}
-							for i = 1, size do
-								local child = FighterManager:Get(children[i])
-								if child and child.nMapId == pW then
-									child.parentAppointPos = newPath[i]
-									tinsert(newIds, child.id)
-								end
-							end
-							tieuxa.children = newIds
-						end
+						tieuxa.children = newIds
 					end
 				end
 			end
