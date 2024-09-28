@@ -2,7 +2,7 @@
 
 —vinhsmoke—
 
-Phiên bản hiện tại: **5.3.2**
+Phiên bản hiện tại: **5.3.3**
 
 Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
 
@@ -12,7 +12,7 @@ Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/m
 -   Tọa độ 116 maps, bổ sung câu chat: [Đỗ Gia Bảo](https://www.facebook.com/groups/800085930700601/user/100002639166984/)
 -   Tọa độ Biện Kinh, Phượng Tường, Đại Lý: [Duy Ngô](https://www.facebook.com/groups/800085930700601/user/61551322996134/)
 -   Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/)
-
+-   [Hướng dẫn sửa lỗi](https://github.com/vinh-ttn/simcity/issues/4) mất đầu thiếu res [Trường Giang](https://www.facebook.com/groups/800085930700601/user/100003690357356)
 
 ## A. Cài đặt/cập nhật qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
 

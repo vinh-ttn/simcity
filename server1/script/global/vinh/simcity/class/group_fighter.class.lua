@@ -246,7 +246,9 @@ function GroupFighter:Show(tbNpc, isNew, goX, goY)
 
 				-- Disable fighting?
 				if (tbNpc.isFighting == 0) then
-					SetNpcKind(nNpcIndex, tbNpc.kind or 4)
+					-- TODO An hien
+					-- SetNpcKind(nNpcIndex, tbNpc.kind or 4)
+					SetNpcKind(nNpcIndex, 0)
 					self:SetFightState(tbNpc, 0)
 				end
 
@@ -1115,8 +1117,11 @@ function GroupFighter:Breath(nListId)
 		end
 
 
+		local myLife = NPCINFO_GetNpcCurrentLife(tbNpc.finalIndex)
+		local maxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+
 		-- Case 2: some player around is fighting and different camp, we join
-		if (tbNpc.CHANCE_ATTACK_PLAYER and random(0, tbNpc.CHANCE_ATTACK_PLAYER) <= 2)
+		if ((tbNpc.CHANCE_ATTACK_PLAYER and random(0, tbNpc.CHANCE_ATTACK_PLAYER) <= 2) or (myLife < maxLife))
 		then
 			if self:JoinFightPlayerCheck(nListId, nNpcIndex) == 1 then
 				return 1
@@ -1446,7 +1451,9 @@ function GroupFighter:ChildrenAdd(nListId, childID)
 			else
 				-- Do magic on this NPC
 				if (tbNpc.isFighting == 0) then
-					SetNpcKind(nNpcIndex, tbNpc.kind or 4)
+					-- TODO An hien
+					-- SetNpcKind(nNpcIndex, tbNpc.kind or 4)
+					SetNpcKind(nNpcIndex, 0)
 				end
 
 				-- Choose side

@@ -116,11 +116,13 @@ function NpcFighter:Show(isNew, goX, goY)
 
                 -- Disable fighting?
                 if (self.isFighting == 0) then
-                    if (self.isAttackable == 1) then
-                        SetNpcKind(nNpcIndex, 0)
-                    else
-                        SetNpcKind(nNpcIndex, self.kind or 4)
-                    end
+                    -- TODO An hien
+                    -- if (self.isAttackable == 1) then
+                    --     SetNpcKind(nNpcIndex, 0)
+                    -- else
+                    --     SetNpcKind(nNpcIndex, self.kind or 4)
+                    -- end
+                    SetNpcKind(nNpcIndex, 0)
                     self:SetFightState(0)
                 end
 
@@ -648,7 +650,11 @@ function NpcFighter:Breath()
             end
 
             -- Case 2: some player around is fighting and different camp, we join
-            if (self.CHANCE_ATTACK_PLAYER and random(0, self.CHANCE_ATTACK_PLAYER) <= 2) then
+            local myLife = NPCINFO_GetNpcCurrentLife(self.finalIndex)
+            local maxLife = NPCINFO_GetNpcCurrentMaxLife(self.finalIndex)
+
+            if ((self.CHANCE_ATTACK_PLAYER and random(0, self.CHANCE_ATTACK_PLAYER) <= 2) or (myLife < maxLife))
+            then
                 if self:TriggerFightWithPlayer() == 1 then
                     return 1
                 end
