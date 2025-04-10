@@ -32,6 +32,7 @@ TONGKIM_AUTOCREATE = 1             -- if 1, auto add NPC to tongkim
 -- PARAM setup
 PARAM_LIST_ID = 1                  -- param to store fighter id
 PARAM_CHILD_ID = 2                 -- param to store child id
+PARAM_TYPE = 3                     -- param to store type
 REFRESH_RATE = 9                   -- refresh rate
 
 -- CHILD SIM CITIZEN/KEOXE setup
