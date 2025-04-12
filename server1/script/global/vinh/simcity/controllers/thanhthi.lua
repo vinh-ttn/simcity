@@ -40,13 +40,13 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 		walkVar = 3,
 		kind = kind,
 		CHANCE_ATTACK_PLAYER = CHANCE_ATTACK_PLAYER, -- co hoi tan cong nguoi choi neu di ngang qua
-		attackNpcChance = CHANCE_AUTO_ATTACK,  -- co hoi bat chien dau
-		CHANCE_ATTACK_NPC = CHANCE_ATTACK_NPC, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+		CHANCE_ATTACK_NPC = CHANCE_AUTO_ATTACK,  -- co hoi bat chien dau
+		CHANCE_JOIN_FIGHT = CHANCE_JOIN_FIGHT, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		noRevive = 0,
 		hardsetName = hardsetName,
 		mode = "thanhthi",
 		level = config.level or 95,
-		resetPosWhenRevive = random(0, 3)
+		resetPosWhenRevive = random(0, 1)
 	}
 
 	for k, v in config do
@@ -57,7 +57,7 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 	SimCitizen:New(objCopy(npcConfig))
 end
 
-function SimCityMainThanhThi:_createTeamPatrol(nW, thonglinh, linh, N, path)
+function SimCityMainThanhThi:_createTeamPatrol(nW, thonglinh, linh, N, pathName)
 	local children5 = {}
 	N = N or 16
 	for i = 1, N do
@@ -71,13 +71,13 @@ function SimCityMainThanhThi:_createTeamPatrol(nW, thonglinh, linh, N, path)
 		camp = 0,             -- optional, camp
 		childrenSetup = children5, -- optional, children
 		walkMode = "formation", -- optional: random or 1 for formation
-		originalWalkPath = path,
+		currentPathIndex = pathName,
 		noStop = 1,           -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 0, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
 		noRevive = 0,         -- optional: 0: keep reviving, 1: dead
 		CHANCE_ATTACK_PLAYER = nil, -- co hoi tan cong nguoi choi neu di ngang qua
-		attackNpcChance = nil, -- co hoi bat chien dau ~= 0 vi day la linh di tuan
-		CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+		CHANCE_ATTACK_NPC = nil, -- co hoi bat chien dau ~= 0 vi day la linh di tuan
+		CHANCE_JOIN_FIGHT = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		kind = 4
 
 	})
@@ -97,19 +97,19 @@ function SimCityMainThanhThi:CreatePatrol()
 		if nW == 37 then
 			linh = 688
 		end
-		for i = 1, getn(allMap) do
-			self:_createTeamPatrol(nW, linh + 2, linh, 6, allMap[i])
+		for pathName, pathValues in allMap do
+			self:_createTeamPatrol(nW, linh + 2, linh, 6, pathName)
 		end
 
 
 		-- Pho tuong + 9 binh
-		self:_createTeamPatrol(nW, linh + 3, linh, 6, allMap[1])
-		self:_createTeamPatrol(nW, linh + 3, linh, 6, allMap[4])
+		self:_createTeamPatrol(nW, linh + 3, linh, 6, "tuongduong_full")
+		self:_createTeamPatrol(nW, linh + 3, linh, 6, "tuongduong_1vongTK")
 
 
 		-- Dai Tuong
-		self:_createTeamPatrol(nW, linh + 4, linh, 9, allMap[2])
-		self:_createTeamPatrol(nW, linh + 5, linh + 1, 9, allMap[2])
+		self:_createTeamPatrol(nW, linh + 4, linh, 9, "tuongduong_trongthanh")
+		self:_createTeamPatrol(nW, linh + 5, linh + 1, 9, "tuongduong_trongthanh")
 	end
 end
 
@@ -147,7 +147,7 @@ function SimCityMainThanhThi:removeAll()
 	self.batchesByMap[nW] = nil
 	
 	-- Remove all NPCs from the map
-	SimCitizen:ClearMap(nW)
+	SimCitizen:ClearMap(nW, "thanhthi")
 	
 	-- Check if we can stop the master timer
 	local anyActiveMaps = false
@@ -346,12 +346,7 @@ function SimCityMainThanhThi:mainMenu()
 		tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
 		CreateTaskSay(tbSay)
 	else
-		local counter = 0
-		for k, v in SimCitizen.fighterList do
-			if v.nMapId and v.nMapId == nW then
-				counter = counter + 1
-			end
-		end
+		local counter = self:countMap(nW)
 		local tbSay = createTaskSayThanhThi("<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>")
 
 		tinsert(tbSay, "Thµnh ThÞ - Bè c¸o thiªn h¹/#SimCityMainThanhThi:thanhthiMenu()")
@@ -399,6 +394,16 @@ function SimCityMainThanhThi:autoThanhThi(inp)
 	self:mainMenu()
 end
 
+function SimCityMainThanhThi:countMap(nW)
+	local counter = 0
+	for k, v in SimCitizen.fighterList do
+		if v.nMapId and v.nMapId == nW then
+			counter = counter + 1
+		end
+	end
+	return counter
+end
+
 function SimCityMainThanhThi:onPlayerEnterMap()
 	if self.autoAddThanhThi ~= 1 then
 		return 1
@@ -424,7 +429,7 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 		end
 
 		local worldInfo = SimCityWorld:Get(nW)
-		if (worldInfo.name ~= "") then
+		if (worldInfo.name ~= "" and self:countMap(nW) == 0) then
 			self:createNpcSoCapByMap()
 			SimCityWorld:Update(nW, "showFightingArea", 0)
 		end
@@ -572,15 +577,14 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 						walkMode =
 						"random",
 						CHANCE_ATTACK_PLAYER = 1, -- co hoi tan cong nguoi choi neu di ngang qua
-						attackNpcChance = 1, -- co hoi bat chien dau khi thay NPC khac phe
-						CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+						CHANCE_ATTACK_NPC = 1, -- co hoi bat chien dau khi thay NPC khac phe
+						CHANCE_JOIN_FIGHT = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 						RADIUS_FIGHT_PLAYER = 15, -- scan for player around and randomly attack
 						RADIUS_FIGHT_NPC = 15, -- scan for NPC around and start randomly attack,
 						RADIUS_FIGHT_SCAN = 15, -- scan for fight around and join/leave fight it
 						noStop = 1, -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 						leaveFightWhenNoEnemy = 1, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
-						walkVar = 2,
-						noBackward = 0, -- do not walk backward
+						walkVar = 2, 
 						kind = 0, -- quai mode
 						TIME_FIGHTING_minTs = 1800,
 						TIME_FIGHTING_maxTs = 3000,
@@ -608,15 +612,8 @@ function processBatches()
 			
 			if batches and currentIndex <= getn(batches) then
 				local batch = batches[currentIndex]
-				local counter = 0
-				local threshold = SimCityMainThanhThi.thanhThiSize or 12
-				
-				-- Count NPCs on this map
-				for k, v in SimCitizen.fighterList do
-					if v.nMapId ~= nil and v.nMapId == mapId then
-						counter = counter + 1
-					end
-				end
+				local counter = SimCityMainThanhThi:countMap(mapId)
+				local threshold = SimCityMainThanhThi.thanhThiSize or 12				
 
 				if counter < threshold then
 					-- Process this batch of NPCs

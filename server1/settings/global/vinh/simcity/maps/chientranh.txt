@@ -1,3 +1,21 @@
-WorldID	WorldName	PathFile
-37	BiÖn Kinh	chientranh\37_bienkinh.txt
-78	T­¬ng D­¬ng	chientranh\78_tuongduong.txt
+WorldID	WorldName	Camp	PathName
+37	Bien Kinh	camp1	tong_huong1
+37	Bien Kinh	camp1	tong_huong2
+37	Bien Kinh	camp1	tong_huong3
+37	Bien Kinh	camp2	kim_huong1
+37	Bien Kinh	camp2	kim_huong2
+37	Bien Kinh	camp2	kim_huong3
+78	Tuong Duong	camp1	tong_huong1
+78	Tuong Duong	camp1	tong_huong2
+78	Tuong Duong	camp2	kim_huong1
+78	Tuong Duong	camp2	kim_huong2
+10000	Tong Kim Nguyen Soai	camp1	huong1trai
+10000	Tong Kim Nguyen Soai	camp1	huong1phai
+10000	Tong Kim Nguyen Soai	camp1	huong1giua
+10000	Tong Kim Nguyen Soai	camp1	huong1tt
+10000	Tong Kim Nguyen Soai	camp1	camp2spawn
+10000	Tong Kim Nguyen Soai	camp2	huong2trai
+10000	Tong Kim Nguyen Soai	camp2	huong2phai
+10000	Tong Kim Nguyen Soai	camp2	huong2giua
+10000	Tong Kim Nguyen Soai	camp2	huong2tt
+10000	Tong Kim Nguyen Soai	camp2	camp1spawn

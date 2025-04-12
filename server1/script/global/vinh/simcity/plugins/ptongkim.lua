@@ -133,7 +133,6 @@ function SimCityTongKim:OnDeath(nNpcIndex, currank)
 
 	if (RANK_PKBONUS[launchrank] == nil or RANK_PKBONUS[launchrank][currank] == nil) then
 		rankradio = 1
-		----print("battle rank tab error!!!please check it !")
 		return 1
 	else
 		rankradio = RANK_PKBONUS[launchrank][currank]

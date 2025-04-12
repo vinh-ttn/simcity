@@ -45,16 +45,7 @@ function SimCitizen:New(fighter)
         tbNpc.worldInfo.foundDialogNpcOnPaths = {}
     end
 
-    -- Set up preset path if using preset mode (only done once at creation)
-    if tbNpc.role == "citizen" and (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths then
-        local pathCount = getn(tbNpc.worldInfo.walkPaths)
-        if pathCount > 0 then
-            tbNpc.currentPathIndex = random(1, pathCount)
-            tbNpc.currentPointIndex = random(1, getn(tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]))
-            tbNpc.pathDirection = 1
-        end
-    end
-
+    
     -- All good generate name for Thanh Thi
     if tbNpc.mode == nil or tbNpc.mode == "thanhthi" or tbNpc.mode == "train" then
         if tbNpc.worldInfo.showName == 1 then
@@ -67,7 +58,6 @@ function SimCitizen:New(fighter)
     end
 
     self.fighterList[nListId] = tbNpc
-    tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(tbNpc)
 
     -- Setup walk paths
     if tbNpc.movementSys:resetPos(self, nListId) == 0 then
@@ -75,7 +65,9 @@ function SimCitizen:New(fighter)
     end
 
     -- Bugfix series
-    tbNpc.series = random(0,4)
+    if tbNpc.series == nil then
+        tbNpc.series = random(0,4)
+    end
 
     -- Create the character on screen
     local canCreate = tbNpc.entitySys:CreateChar(self, tbNpc, 1, tbNpc.goX, tbNpc.goY)
@@ -122,12 +114,20 @@ function SimCitizen:initChildrenConfig(nListId, parentConfig)
     end
 end
 
-function SimCitizen:ClearMap(nW, targetListId)
+function SimCitizen:ClearMap(nW, clearType)
     -- Get info for npc in this world
     for key, fighter in self.fighterList do
         if fighter.nMapId == nW then
-            if (not targetListId) or (targetListId == fighter.id) then
+            if (not clearType) then
                 self:Remove(fighter.id)
+            elseif clearType == "thanhthi" then
+                if fighter.mode ~= "chiendau" then
+                    self:Remove(fighter.id)
+                end
+            elseif clearType == "chiendau" then
+                if fighter.mode == "chiendau" then
+                    self:Remove(fighter.id)
+                end
             end
         end
     end
@@ -208,7 +208,6 @@ end
 function SimCitizen:initCharConfig(config)
 
     config.role = config.role or "citizen"
-    config.currentPathIndex = nil
     config.currentPointIndex = nil
     config.pathDirection = 1  -- 1 for forward, -1 for backward
 

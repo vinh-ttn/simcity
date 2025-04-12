@@ -88,13 +88,12 @@ function SimCityMainVanTieu:tao1xe()
 		hardsetPos = 1,
 
 		CHANCE_ATTACK_PLAYER = 1, -- co hoi tan cong nguoi choi neu di ngang qua
-		attackNpcChance = 1, -- co hoi bat chien dau khi thay NPC khac phe
-		CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+		CHANCE_ATTACK_NPC = 1, -- co hoi bat chien dau khi thay NPC khac phe
+		CHANCE_JOIN_FIGHT = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		RADIUS_FIGHT_PLAYER = 15, -- scan for player around and randomly attack
 		RADIUS_FIGHT_NPC = 1, -- scan for NPC around and start randomly attack,
 		RADIUS_FIGHT_SCAN = 15, -- scan for fight around and join/leave fight it
-
-		noBackward = 1,     -- do not walk backward
+ 
 		kind = 0,           -- quai mode
 		TIME_FIGHTING_minTs = 5,
 		TIME_FIGHTING_maxTs = 5 * 60,

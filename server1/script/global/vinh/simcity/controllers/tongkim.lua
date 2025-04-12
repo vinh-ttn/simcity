@@ -35,24 +35,23 @@ function SimCityMainTongKim:mainMenu()
 
 	local worldInfo = SimCityWorld:Get(nW)
 	if not worldInfo.name then
-		SimCityWorld:New({
-			worldId = nW,
-			name = "Tèng Kim",
-			walkPaths = { map_tongkim_nguyensoai.huong1phai, map_tongkim_nguyensoai.huong1trai, map_tongkim_nguyensoai.huong1giua, map_tongkim_nguyensoai.huong2tt },
-			decoration = {},
-			chientranh = {}
-		})
+		local config = objCopy(SimCityMap[10000])
+		config.worldId = nW
+		config.name = "Tèng Kim"
+		config.decoration = {}
 
+		SimCityWorld:New(config);
 		worldInfo = SimCityWorld:Get(nW)
 		worldInfo.showFightingArea = 0
 		worldInfo.showThangCap = 1
 		worldInfo.showBXH = 1
 	end
 
-	local tbSay = { worldInfo.name .. " khãi löa chinh chiÕn" }
-	tinsert(tbSay, "Mêi anh hïng thiªn h¹/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
-	tinsert(tbSay, "Thªm qu¸i nh©n/#SimCityChienTranh:goiAnhHungThiep()")
-	tinsert(tbSay, "Thªm quan binh/#SimCityChienTranh:phe_quanbinh()")
+	local tbSay = createTaskSayChienTranh(worldInfo.name .. " khãi löa chinh chiÕn")
+
+	tinsert(tbSay, "Ph¸t anh hïng thiÕp/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
+	tinsert(tbSay, "Ph¸t qu¸i nh©n thiÕp/#SimCityChienTranh:goiAnhHungThiep()")
+	tinsert(tbSay, "§iÒu ®éng qu©n binh/#SimCityChienTranh:phe_quanbinh()") 
 	tinsert(tbSay, "Xem b¶ng xÕp h¹ng/#SimCityMainTongKim:xemBXH()")
 	tinsert(tbSay, "ThiÕt lËp/#SimCityChienTranh:caidat()")
 	tinsert(tbSay, "Gi¶i t¸n/#SimCityChienTranh:removeAll()")
@@ -159,14 +158,13 @@ function SimCityMainTongKim:addTongKimNpc()
 		SimCityChienTranh.nW = nW
 		SimCityChienTranh:removeAll()
 		local worldInfo = SimCityWorld:Get(nW)
-		if not worldInfo.name then
-			SimCityWorld:New({
-				worldId = nW,
-				name = "Tèng Kim",
-				walkPaths = { map_tongkim_nguyensoai.huong1phai, map_tongkim_nguyensoai.huong1trai, map_tongkim_nguyensoai.huong1giua, map_tongkim_nguyensoai.huong2tt },
-				decoration = {},
-				chientranh = {}
-			})
+		if not worldInfo.name then	
+			local config = objCopy(SimCityMap[10000])
+			config.worldId = nW
+			config.name = "Tèng Kim"
+			config.decoration = {} 
+
+			SimCityWorld:New(config); 
 
 			worldInfo = SimCityWorld:Get(nW)
 			worldInfo.showFightingArea = 0

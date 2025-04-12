@@ -26,10 +26,8 @@ function SimCityChienTranh:modeTongKim(enable, camp2TopRight)
 end
 
 function SimCityChienTranh:genWalkPath_tongkim(forCamp)
-	local path1 = { map_tongkim_nguyensoai.huong1phai, map_tongkim_nguyensoai.huong1trai, map_tongkim_nguyensoai
-		.huong1giua }
-	local path2 = { map_tongkim_nguyensoai.huong2phai, map_tongkim_nguyensoai.huong2trai, map_tongkim_nguyensoai
-		.huong2giua }
+	local path1 = { "huong1phai", "huong1trai", "huong1giua" }
+	local path2 = { "huong2phai", "huong2trai", "huong2giua" }
 
 	local campDirection = 0
 	if (self.tongkim_camp2TopRight == 1 and forCamp == 1) then
@@ -48,69 +46,52 @@ function SimCityChienTranh:genWalkPath_tongkim(forCamp)
 		campDirection = 1 -- 1 = bottom to top
 	end
 
-
-
 	-- Bottom to top
 	local myPath = {}
 	if (campDirection == 1) then
 		local firstPath = path1[random(1, getn(path1))]
-		local secondPath = path2[random(1, getn(path2))]
-
-		for i = 1, getn(firstPath) do
-			tinsert(myPath, firstPath[i])
-		end
-		for i = 1, getn(secondPath) do
-			tinsert(myPath, secondPath[i])
-		end
-		for i = 1, getn(map_tongkim_nguyensoai.huong2tt) do
-			tinsert(myPath, map_tongkim_nguyensoai.huong2tt[i])
-		end
+		local secondPath = path2[random(1, getn(path2))]	
+		tinsert(myPath, { "camp2spawn", 0 })
+		tinsert(myPath, {firstPath, 1})
+		tinsert(myPath, {secondPath, 1})
+		tinsert(myPath, { "huong2tt", 1 })
 
 		-- Top to bottom
 	else
-		local secondPath = arrFlip(path1[random(1, getn(path1))])
-		local firstPath = arrFlip(path2[random(1, getn(path2))])
-
-		for i = 1, getn(firstPath) do
-			tinsert(myPath, firstPath[i])
-		end
-		for i = 1, getn(secondPath) do
-			tinsert(myPath, secondPath[i])
-		end
-		for i = 1, getn(map_tongkim_nguyensoai.huong1tt) do
-			tinsert(myPath, map_tongkim_nguyensoai.huong1tt[i])
-		end
-	end
+		local firstPath = path2[random(1, getn(path1))]
+		local secondPath = path1[random(1, getn(path2))]	
+		tinsert(myPath, { "camp1spawn", 0 })
+		tinsert(myPath, {firstPath, -1})
+		tinsert(myPath, {secondPath, -1})
+		tinsert(myPath, { "huong1tt", 1 })
+	end 
 	return myPath
 end
+
+ 
+
 
 function SimCityChienTranh:genWalkPath(forCamp)
 	if (self.tongkim == 1) then
 		return self:genWalkPath_tongkim(forCamp)
 	end
-
-	local path1 = self.path1
-	local path2 = self.path2
-
 	-- Bottom to top
-	local myPath = {}
 	if (forCamp == 1) then
-		local firstPath = path1[random(1, getn(path1))]
-		for i = 1, getn(firstPath) do
-			tinsert(myPath, firstPath[i])
-		end
-
-		-- Top to bottom
-	else
-		local firstPath = path2[random(1, getn(path2))]
-		for i = 1, getn(firstPath) do
-			tinsert(myPath, firstPath[i])
-		end
+		return {{self.path1[random(1, getn(self.path1))],1}}
 	end
-	return myPath
+
+	if (forCamp == 2) then
+		return {{self.path2[random(1, getn(self.path2))],1}}
+	end
+
+	return nil
 end
 
-function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, capHP)
+function SimCityChienTranh:taoNV(id, camp, mapID, walkPathNames, nt, theosau, capHP)
+	if not walkPathNames then
+		return nil
+	end
+
 	local name = "Kim"
 	local rank = 1
 	local realCamp = 5
@@ -127,40 +108,38 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, capHP)
 
 
 
-	return GroupFighter:Add({
-
+	return SimCitizen:New({
+		mode = "chiendau",
 		szName = name or "",
 
 		nNpcId = id,                            -- required, main char ID
 		nMapId = mapID,                         -- required, map
 		camp = realCamp,                        -- optional, camp
 
-		walkMode = (theosau and "keoxe") or "random", -- optional: random, keoxe, or formation for formation
+		walkMode = (theosau and "formation") or "preset", -- optional: random, keoxe, or formation for formation
 		walkVar = (theosau and 2) or 4,         -- random walk of radius of 4*2
-		originalWalkPath = map,
+		walkPathNames = walkPathNames,
 
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 5, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
 
 		noRevive = 0,        -- optional: 0: keep reviving, 1: dead
-
-		hardsetPos = random(1, (theosau and 5) or 3),
+ 
 
 		CHANCE_ATTACK_PLAYER = 1, -- co hoi tan cong nguoi choi neu di ngang qua
-		attackNpcChance = 1, -- co hoi bat chien dau khi thay NPC khac phe
-		CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+		CHANCE_ATTACK_NPC = 1, -- co hoi bat chien dau khi thay NPC khac phe
+		CHANCE_JOIN_FIGHT = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		RADIUS_FIGHT_PLAYER = 15, -- scan for player around and randomly attack
 		RADIUS_FIGHT_NPC = 15, -- scan for NPC around and start randomly attack,
 		RADIUS_FIGHT_SCAN = 15, -- scan for fight around and join/leave fight it
-
-		noBackward = 0,     -- do not walk backward
+ 
 		kind = 0,           -- quai mode
 		TIME_FIGHTING_minTs = 1800,
 		TIME_FIGHTING_maxTs = 3000,
 		TIME_RESTING_minTs = 1,
 		TIME_RESTING_maxTs = 3,
 
-		resetPosWhenRevive = random(1, 3),
+		resetPosWhenRevive = 1,
 
 		tongkim = self.tongkim,
 		tongkim_name = name,
@@ -176,7 +155,10 @@ function SimCityChienTranh:taoNV(id, camp, mapID, map, nt, theosau, capHP)
 	})
 end
 
-function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
+function SimCityChienTranh:taodoi(thonglinh, camp, mapID, walkPathNames, children5)
+	if not walkPathNames then
+		return nil
+	end
 	local children = nil
 	local name = "Kim Binh"
 
@@ -198,7 +180,8 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 	end
 
 
-	return GroupFighter:Add({
+	return SimCitizen:New({
+		mode = "chiendau",
 		szName = name or "",
 
 		nNpcId = thonglinh, -- required, main char ID
@@ -206,31 +189,28 @@ function SimCityChienTranh:taodoi(thonglinh, camp, mapID, map, children5)
 		camp = realCamp,    -- optional, camp
 		childrenSetup = children, -- optional, children
 		walkMode = "formation", -- optional: random or 1 for formation
-		originalWalkPath = map,
-
+		walkPathNames = walkPathNames,
+ 
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
 		leaveFightWhenNoEnemy = 5, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
 
 		noRevive = 0,        -- optional: 0: keep reviving, 1: dead
-
-		hardsetPos = random(1, 3),
-
+ 
 		CHANCE_ATTACK_PLAYER = 1, -- co hoi tan cong nguoi choi neu di ngang qua
-		attackNpcChance = 1, -- co hoi bat chien dau khi thay NPC khac phe
-		CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+		CHANCE_ATTACK_NPC = 1, -- co hoi bat chien dau khi thay NPC khac phe
+		CHANCE_JOIN_FIGHT = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 
 		RADIUS_FIGHT_PLAYER = 15, -- scan for player around and randomly attack
 		RADIUS_FIGHT_NPC = 15, -- scan for NPC around and start randomly attack,
 		RADIUS_FIGHT_SCAN = 15, -- scan for fight around and join/leave fight it
-
-		noBackward = 1,     -- do not walk backward
+ 
 		kind = 0,           -- quai mode
 		TIME_FIGHTING_minTs = 1800,
 		TIME_FIGHTING_maxTs = 3000,
 		TIME_RESTING_minTs = 1,
 		TIME_RESTING_maxTs = 3,
 
-		resetPosWhenRevive = random(1, 3),
+		resetPosWhenRevive = 1,
 	})
 end
 
@@ -442,14 +422,14 @@ function SimCityChienTranh:phe_quanbinh()
 end
 
 function SimCityChienTranh:removeAll()
-	GroupFighter:ClearMap(self.nW)
+	SimCitizen:ClearMap(self.nW, "chiendau")
 end
 
 function SimCityChienTranh:getWorldName()
 	local worldInfo = SimCityWorld:Get(self.nW)
 
 	local counter = 0
-	for k, v in GroupFighter.fighterList do
+	for k, v in SimCitizen.fighterList do
 		if v.nMapId and v.nMapId == self.nW then
 			counter = counter + 1
 		end
@@ -573,7 +553,7 @@ function SimCityChienTranh:mainMenu()
 	tinsert(tbSay, "Ph∏t anh hÔng thi’p/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "Ph∏t qu∏i nh©n thi’p/#SimCityChienTranh:goiAnhHungThiep()")
 	tinsert(tbSay, "ßi“u ÆÈng qu©n binh/#SimCityChienTranh:phe_quanbinh()")
-	tinsert(tbSay, "Xem b∂ng x’p hπng/#GroupFighter:ThongBaoBXH(" .. (self.nW) .. ")")
+	tinsert(tbSay, "Xem b∂ng x’p hπng/#SimCitizen:ThongBaoBXH(" .. (self.nW) .. ")")
 	tinsert(tbSay, "Ban l÷nh/#SimCityChienTranh:caidat()")
 	tinsert(tbSay, "Gi∂i t∏n/#SimCityChienTranh:removeAll()")
 	tinsert(tbSay, "K’t thÛc ÆËi thoπi./no")

@@ -4,7 +4,7 @@
 function execChat(tbNpc, isKeoXe) 
     -- Otherwise just Random chat
     if isKeoXe or (tbNpc.worldInfo and tbNpc.worldInfo.allowChat == 1) then
-        if tbNpc.isFighting == 1 then
+        if tbNpc.isFighting == 1 or tbNpc.tongkim == 1 or tbNpc.mode == "chiendau" then
             if random(1, 1000) <= CHANCE_CHAT then
                 NpcChat(tbNpc.finalIndex, SimCityChat.fighting[random(1, getn(SimCityChat.fighting))])
             end
@@ -51,7 +51,10 @@ function execRotDropMoney(tbNpc)
 end
 
 function execRestoreLife(tbNpc)
-    if tbNpc.finalIndex and LIFE_RESTORE_PERCENT > 0 then
+    if tbNpc.isDead == 0 and tbNpc.tick_breath > 0 
+        and tbNpc.finalIndex 
+        and LIFE_RESTORE_PERCENT > 0 
+        and mod(tbNpc.tick_breath, 10*18/REFRESH_RATE) == 0 then
         local currentLife = NPCINFO_GetNpcCurrentLife(tbNpc.finalIndex)
         local maxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
         if currentLife and maxLife and currentLife < maxLife then
@@ -70,7 +73,7 @@ function execRestoreLife(tbNpc)
 end
 
 
-function execAddScoreToAroundNPC(fighter, finalIndex)
+function execAddScoreToAroundNPC(self, fighter, finalIndex)
     local currRank = fighter.rank or 1
     local  allNpcs, nCount = GetNpcAroundNpcList(finalIndex, 15)
     local foundfighters = {}
@@ -171,21 +174,27 @@ SimFun.Citizen = {
         if tbNpc.isDead == 1 then
             return
         end
-        execFindDialogNpcAround(tbNpc)
+
+        if tbNpc.mode ~= "chiendau" then
+            execFindDialogNpcAround(tbNpc)
+            execRotDropMoney(tbNpc)
+        end
+                
         execChat(tbNpc)
-        execRotDropMoney(tbNpc)
         execRestoreLife(tbNpc)
     end,
 
-    OnDeath = function(self, tbNpc, finalIndex)
+    OnDeath = function(self, simInstance, tbNpc, finalIndex)
         if tbNpc.tongkim == 1 then
-            execAddScoreToAroundNPC(tbNpc, finalIndex)
+            execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)
             SimCityTongKim:OnDeath(nNpcIndex, tbNpc.rank or 1)
         end     
         
         -- Random rot tien khi chet
-        if random(1, 1000) <= CHANCE_DROP_MONEY then
-            NpcDropMoney(tbNpc.finalIndex, random(1000, 100000), -1)
+        if tbNpc.mode ~= "chiendau" then
+            if random(1, 1000) <= CHANCE_DROP_MONEY then
+                NpcDropMoney(tbNpc.finalIndex, random(1000, 100000), -1)
+            end
         end
     end
 }
@@ -198,9 +207,9 @@ SimFun.KeoXe = {
         execChat(tbNpc, true)
         execRestoreLife(tbNpc)
     end,
-    OnDeath = function(self, tbNpc, finalIndex)
+    OnDeath = function(self, simInstance, tbNpc, finalIndex)
         if tbNpc.tongkim == 1 then
-            execAddScoreToAroundNPC(tbNpc, finalIndex)
+            execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)
             SimCityTongKim:OnDeath(nNpcIndex, tbNpc.rank or 1)
         end     
     end

@@ -25,13 +25,12 @@ function SimCityBaTanh:CreateChar(config)
 		noRevive = 1,        -- optional: 0: keep reviving, 1: dead
 
 		CHANCE_ATTACK_PLAYER = 1, -- co hoi tan cong nguoi choi neu di ngang qua
-		attackNpcChance = 1, -- co hoi bat chien dau khi thay NPC khac phe
-		CHANCE_ATTACK_NPC = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
+		CHANCE_ATTACK_NPC = 1, -- co hoi bat chien dau khi thay NPC khac phe
+		CHANCE_JOIN_FIGHT = 1, -- co hoi tang cong NPC neu di ngang qua NPC danh nhau
 		RADIUS_FIGHT_PLAYER = 8, -- scan for player around and randomly attack
 		RADIUS_FIGHT_NPC = 8, -- scan for NPC around and start randomly attack,
 		RADIUS_FIGHT_SCAN = 8, -- scan for fight around and join/leave fight it
-
-		noBackward = 1,      -- do not walk backward
+ 
 		kind = 4,            -- quai mode
 		TIME_FIGHTING_minTs = 1800,
 		TIME_FIGHTING_maxTs = 3000,
@@ -56,16 +55,16 @@ function SimCityBaTanh:NewJob()
 	local name = GetName()
 
 	local children5 = {
-		{ 43,   3, { szName = "Heo n¸i", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
-		{ 43,   3, { szName = "Heo näc", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
-		{ 42,   2, { szName = "H­u sao", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
-		{ 13,   2, { szName = "Voi b¶n ®«n", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 43,   3, { szName = "Heo n¸i", CHANCE_JOIN_FIGHT = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 43,   3, { szName = "Heo näc", CHANCE_JOIN_FIGHT = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 42,   2, { szName = "H­u sao", CHANCE_JOIN_FIGHT = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 13,   2, { szName = "Voi b¶n ®«n", CHANCE_JOIN_FIGHT = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
 
-		{ 2146, 1, { szName = "Xe l­¬ng thùc", CHANCE_ATTACK_NPC = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
+		{ 2146, 1, { szName = "Xe l­¬ng thùc", CHANCE_JOIN_FIGHT = 1000, CHANCE_ATTACK_PLAYER = 1000 } },
 		--{ 2147, 1, { szName = "Xe quÇn ¸o" } },
 		--{ 2148, 1, { szName = "Xe cña c¶i" } },
 
-		{ 682,  4, { szName = "Gia nh©n", CHANCE_ATTACK_NPC = 1, CHANCE_ATTACK_PLAYER = 1 } }
+		{ 682,  4, { szName = "Gia nh©n", CHANCE_JOIN_FIGHT = 1, CHANCE_ATTACK_PLAYER = 1 } }
 	}
 	local children = {}
 	for i = 1, getn(children5) do

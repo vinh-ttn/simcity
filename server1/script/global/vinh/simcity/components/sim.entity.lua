@@ -19,7 +19,7 @@ SimEntity.Citizen = {
                 local pW, pX, pY = tbNpc.movementSys:GetParentPos(simInstance, nListId)
                 tX = pX
                 tY = pY
-            elseif tbNpc.role == "citizen" then
+            else
                 if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
                     local path = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]
                     if path and tbNpc.currentPointIndex and tbNpc.currentPointIndex <= getn(path) then
@@ -77,30 +77,31 @@ SimEntity.Citizen = {
                     -- Otherwise choose side
                     SetNpcCurCamp(nNpcIndex, tbNpc.camp)
 
-                    local nPosCount = tbNpc.movementSys:GetRandomWalkPoint(tbNpc)
-                    if nPosCount ~= nil then
-                        SetNpcActiveRegion(nNpcIndex, 1)
-                        SetNpcParam(nNpcIndex, PARAM_LIST_ID, tbNpc.id)
-                        SetNpcParam(nNpcIndex, 4, 1)
-                        SetNpcParam(nNpcIndex, PARAM_TYPE, 1)
-                        SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\components\\sim.timer.lua")
-                    end
+                    SetNpcActiveRegion(nNpcIndex, 1)
+                    SetNpcParam(nNpcIndex, PARAM_LIST_ID, tbNpc.id)
+                    SetNpcParam(nNpcIndex, PARAM_TYPE, 1)
+
+                    -- Indicate SIM npc
+                    SetNpcParam(nNpcIndex, 4, 1)
+                    SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\components\\sim.timer.lua")
+                
 
                     -- Ngoai trang?
                     if (tbNpc.ngoaitrang and tbNpc.ngoaitrang == 1) then
                         SimCityNgoaiTrang:makeup(tbNpc, nNpcIndex)
                     end
 
+                    local nX32, nY32, nMapIndex = GetNpcPos(nNpcIndex)
+                    tbNpc.lastFightPos = {
+                        X = nX32,
+                        Y = nY32,
+                        W = nMapIndex
+                    }
 
-                    -- Disable fighting?
+                    SetNpcKind(nNpcIndex, 0)
+
+                    -- Disable fighting if not chien dau char?
                     if (tbNpc.isFighting == 0) then
-                        -- TODO An hien
-                        -- if (tbNpc.isAttackable == 1) then
-                        --     SetNpcKind(nNpcIndex, 0)
-                        -- else
-                        --     SetNpcKind(nNpcIndex, tbNpc.kind or 4)
-                        -- end
-                        SetNpcKind(nNpcIndex, 0)
                         tbNpc.fightSys:SetFightState(tbNpc, 0)
                     end
 
@@ -133,47 +134,33 @@ SimEntity.Citizen = {
 
         local isAllDead = code == 1 and 1 or 0
 
-        local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
+        local nX32, nY32, nMapIndex = GetNpcPos(tbNpc.finalIndex)
 
         -- Do calculation
-        nX = nX / 32
-        nY = nY / 32
+        local nX = nX32 / 32
+        local nY = nY32 / 32
 
         -- 4 = bi lag or 2 = qua map khac tim cho khac hien len nao
         if code == 4 or code == 2 then
             nX = 0
             nY = 0
-            if code == 4 then
-                tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(tbNpc)
-            end
             tbNpc.movementSys:resetPos(simInstance, nListId)
 
             -- otherwise reset
         elseif isAllDead == 1 and tbNpc.role == "child" then
             nX = tbNpc.parentAppointPos[1]
             nY = tbNpc.parentAppointPos[2]
-        elseif (isAllDead == 1 and tbNpc.resetPosWhenRevive and tbNpc.resetPosWhenRevive >= 1) then
-            if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
-                -- For preset path, select a random point on the path
-                local path = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]
-                if path and getn(path) > 0 then
-                    tbNpc.currentPointIndex = random(1, getn(path))
-                    nX = path[tbNpc.currentPointIndex][1]
-                    nY = path[tbNpc.currentPointIndex][2]
-                end
-            else
-                local newPosId = tbNpc.movementSys:GetRandomWalkPoint(tbNpc)
-                nX = tbNpc.worldInfo.walkGraph.nodes[newPosId][1]
-                nY = tbNpc.worldInfo.walkGraph.nodes[newPosId][2]
-                tbNpc.nPosId = newPosId
-            end
+        elseif (isAllDead == 1 and tbNpc.resetPosWhenRevive and tbNpc.resetPosWhenRevive == 1) then
+            tbNpc.movementSys:resetPos(simInstance, nListId)
+            nX = 0
+            nY = 0
         elseif (isAllDead == 1 and tbNpc.lastPos ~= nil) then
             nX = tbNpc.lastPos.nX32 / 32
             nY = tbNpc.lastPos.nY32 / 32
         else
             tbNpc.lastPos = {
-                nX32 = nX,
-                nY32 = nY
+                nX32 = nX32,
+                nY32 = nY32
             }
         end
 
@@ -185,8 +172,7 @@ SimEntity.Citizen = {
 
 
         -- Normal respawn ? Can del NPC
-        DelNpcSafe(tbNpc.finalIndex)
-
+        DelNpcSafe(tbNpc.finalIndex) 
         self:CreateChar(simInstance, tbNpc, 0, nX, nY)
     end,
     
@@ -195,7 +181,7 @@ SimEntity.Citizen = {
             return 0
         end
 
-        tbNpc.funSys:OnDeath(tbNpc, nNpcIndex)    
+        tbNpc.funSys:OnDeath(simInstance, tbNpc, nNpcIndex)    
 
         if tbNpc.role == "citizen" and tbNpc.children then
             local child
@@ -229,16 +215,10 @@ SimEntity.Citizen = {
                     child.isFighting = tmp.isFighting
 
                     SetNpcParam(tbNpc.finalIndex, PARAM_LIST_ID, tbNpc.id)
-                    SetNpcParam(child.finalIndex, PARAM_LIST_ID, child.id)
-                    SetNpcParam(tbNpc.finalIndex, 4, 1)
-                    SetNpcParam(child.finalIndex, 4, 2)
-
-                    SetNpcParam(tbNpc.finalIndex, PARAM_TYPE, 1)
-                    SetNpcParam(child.finalIndex, PARAM_TYPE, 1)
+                    SetNpcParam(child.finalIndex, PARAM_LIST_ID, child.id)    
 
                     child.isDead = 1
 
-                    --print("Doi chu PT sang nv " .. tbNpc.szName)
                     return 1
                 end
             end
@@ -333,8 +313,11 @@ SimEntity.KeoXe = {
                     SetNpcCurCamp(nNpcIndex, tbNpc.camp)                
                     SetNpcActiveRegion(nNpcIndex, 1)
                     SetNpcParam(nNpcIndex, PARAM_LIST_ID, tbNpc.id)
-                    SetNpcParam(nNpcIndex, 4, 1)
+
                     SetNpcParam(nNpcIndex, PARAM_TYPE, 2)
+
+                    -- Indicate SIM npc
+                    SetNpcParam(nNpcIndex, 4, 1)
                     SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\components\\sim.timer.lua")
 
                     -- Ngoai trang?
@@ -342,16 +325,15 @@ SimEntity.KeoXe = {
                         SimCityNgoaiTrang:makeup(tbNpc, nNpcIndex)
                     end
 
-
+                    local nX32, nY32, nMapIndex = GetNpcPos(nNpcIndex)
+                    tbNpc.lastFightPos = {
+                        X = nX32,
+                        Y = nY32,
+                        W = nMapIndex
+                    }
                     -- Disable fighting?
                     if (tbNpc.isFighting == 0) then
-                        -- TODO An hien
-                        -- if (tbNpc.isAttackable == 1) then
-                        --     SetNpcKind(nNpcIndex, 0)
-                        -- else
-                        --     SetNpcKind(nNpcIndex, tbNpc.kind or 4)
-                        -- end
-                        SetNpcKind(nNpcIndex, 0)
+                        SetNpcKind(nNpcIndex, 0) -- 0: hien 4: trangtri
                         tbNpc.fightSys:SetFightState(tbNpc, 0)
                     end
 
@@ -377,16 +359,15 @@ SimEntity.KeoXe = {
     Respawn = function(self, simInstance, tbNpc, code, reason)
         local nListId = tbNpc.id
         -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau 4: bi lag dung 1 cho nay gio ko di duoc
-        --print("Respawn " .. nListId .. " " .. code .. " " .. reason)
 
 
         local isAllDead = code == 1 and 1 or 0
 
-        local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
+        local nX32, nY32, nMapIndex = GetNpcPos(tbNpc.finalIndex)
 
         -- Do calculation
-        nX = nX / 32
-        nY = nY / 32
+        local nX = nX32 / 32
+        local nY = nY32 / 32
 
         -- 4 = bi lag? 2= qua map khac, tim cho khac hien len nao
         if code == 4 or code == 2 then
@@ -400,8 +381,8 @@ SimEntity.KeoXe = {
             nY = tbNpc.parentAppointPos[2]    
         else
             tbNpc.lastPos = {
-                nX32 = nX,
-                nY32 = nY
+                nX32 = nX32,
+                nY32 = nY32
             }
         end
 
@@ -413,8 +394,7 @@ SimEntity.KeoXe = {
 
 
         -- Normal respawn ? Can del NPC
-        DelNpcSafe(tbNpc.finalIndex)
-
+        DelNpcSafe(tbNpc.finalIndex) 
         self:CreateChar(simInstance, tbNpc, 0, nX, nY)
     end,
     OnDeath = function(self, simInstance, tbNpc, nNpcIndex)
@@ -422,7 +402,7 @@ SimEntity.KeoXe = {
             return 0
         end
 
-        tbNpc.funSys:OnDeath(tbNpc, nNpcIndex)
+        tbNpc.funSys:OnDeath(simInstance, tbNpc, nNpcIndex)
     
         tbNpc.isDead = 1
         tbNpc.finalIndex = nil
@@ -450,6 +430,8 @@ SimEntity.KeoXe = {
         end
     end
 } 
+
+ 
 
 -- Helper function to create a movement behavior by name
 function SimEntitySys(tbNpc)     

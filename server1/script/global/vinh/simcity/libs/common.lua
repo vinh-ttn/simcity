@@ -190,3 +190,15 @@ function SimCityTableFromFile(strFilePatch, tbPattern)
 		return tbResult
 	end
 end
+
+function getObjectKeys(tbl)
+    local result = {}
+    for k,v in tbl do
+        tinsert(result, k)
+    end
+    return result
+end
+
+function _sortByScore(tb1, tb2)
+	return tb1[2] > tb2[2]
+end

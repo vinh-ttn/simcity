@@ -1,5 +1,5 @@
 CHANCE_AUTO_ATTACK = 8000    -- 1/8000 co hoi chuyen sang chien dau
-CHANCE_ATTACK_NPC = 3000     -- 1/3000 co hoi tham gia danh nhau khi di ngang qua dam danh nhau
+CHANCE_JOIN_FIGHT = 3000     -- 1/3000 co hoi tham gia danh nhau khi di ngang qua dam danh nhau
 CHANCE_ATTACK_PLAYER = 2000  -- 1/3000 co hoi danh nguoi neu den gan nguoi choi dang chien dau
 
 STARTUP_AUTOADD_THANHTHI = 1 -- tu dong moi nhan si tren tat ca ban do
@@ -27,7 +27,10 @@ TIME_RESTING = { -- nghi ngoi, khong danh nhau lai trong vong thoi gian nay
 }
 
 -- TONG KIM setup
-TONGKIM_AUTOCREATE = 1             -- if 1, auto add NPC to tongkim
+TONGKIM_AUTOCREATE = 1            	-- if 1, auto add NPC to tongkim
+TONGKIM_SPAWN_MINSTAY = 10          -- thoi gian toi thieu o lai dai doanh truoc khi xong len
+TONGKIM_SPAWN_MAXSTAY = 60          -- thoi gian toi da co the nup trong dai doanh
+
 
 -- PARAM setup
 PARAM_LIST_ID = 1                  -- param to store fighter id

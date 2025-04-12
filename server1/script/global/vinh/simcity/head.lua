@@ -38,8 +38,6 @@ Include("\\script\\global\\vinh\\simcity\\plugins\\index.lua")
 Include("\\script\\global\\vinh\\simcity\\libs\\data.lua")
 
 -- Now main class
-Include("\\script\\global\\vinh\\simcity\\class\\group_fighter.class.lua")
-
 Include("\\script\\global\\vinh\\simcity\\class\\sim_theosau.lua")
 Include("\\script\\global\\vinh\\simcity\\class\\sim_citizen.lua")
 

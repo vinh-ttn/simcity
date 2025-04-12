@@ -20,6 +20,7 @@ function SimCore:initCharConfig(config)
     -- Init stats
     config.isFighting = 0
     config.tick_breath = 0
+    config.tick_canWalk = 0
     config.tick_canswitch = 0
     config.camp = config.camp or random(1, 3)
     config.noRevive = config.noRevive or 0
@@ -74,6 +75,14 @@ function SimCore:OnTimer(nListId)
     end
 
     tbNpc.tick_breath = tbNpc.tick_breath + 1
+
+    if tbNpc.tick_breath > 1800*18/REFRESH_RATE then
+        tbNpc.tick_breath = 0
+        tbNpc.tick_canswitch = 0
+        tbNpc.tick_checklag = nil
+        tbNpc.tick_canWalk = 0
+    end
+
     if tbNpc.isFighting == 1 then
         tbNpc.fightingScore = tbNpc.fightingScore + 10
     end

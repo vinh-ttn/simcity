@@ -39,9 +39,12 @@ function LeaveFight(self, simInstance, tbNpc, isAllDead, reason)
     isAllDead = isAllDead or 0
 
     tbNpc.isFighting = 0
+
+    -- Chien dau can switch back to fight after 0 tick    
     tbNpc.tick_canswitch = tbNpc.tick_breath +
         random(tbNpc.TIME_RESTING_minTs or TIME_RESTING.minTs,
-            tbNpc.TIME_RESTING_maxTs or TIME_RESTING.maxTs) -- trong trang thai di bo 30s-1ph
+            tbNpc.TIME_RESTING_maxTs or TIME_RESTING.maxTs) -- trong trang thai di bo 30s-1ph    
+
     reason = reason or "no reason"
 
     -- Do not need to respawn just disable fighting
@@ -139,8 +142,13 @@ SimFight.Citizen = {
 
         return 0
     end,
-    SetFightState = function(self, tbNpc, mode)
-        SetNpcAI(tbNpc.finalIndex, mode)
+    SetFightState = function(self, tbNpc, mode, nX, nY)
+        if mode == 9 then
+            SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)
+            
+        else
+            SetNpcAI(tbNpc.finalIndex, mode)
+        end
     end,
 
 
@@ -166,34 +174,29 @@ SimFight.Citizen = {
         local nListId = tbNpc.id
         self:ChildrenJoinFight(simInstance, tbNpc, reason)
         tbNpc.isFighting = 1
+
+        
         tbNpc.tick_canswitch = tbNpc.tick_breath +
             random(tbNpc.TIME_FIGHTING_minTs or TIME_FIGHTING.minTs,
                 tbNpc.TIME_FIGHTING_maxTs or TIME_FIGHTING.maxTs) -- trong trang thai pk 1 toi 2ph
+        
 
         reason = reason or "no reason"
 
-        local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
-        currX = floor(currX / 32)
-        currY = floor(currY / 32)
 
         -- If already having last fight pos, we may simply chance AI to 1
         if tbNpc.lastFightPos then
-            local lastPos = tbNpc.lastFightPos
-            if lastPos.W == currW then
-                if (GetDistanceRadius(lastPos.X, lastPos.Y, currX, currY) < DISTANCE_VISION) then
-                    self:SetFightState(tbNpc, 9)
+            local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
+            if tbNpc.lastFightPos.W == currW then
+                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 15) then
+                    self:SetFightState(tbNpc, 9, currX, currY)
                     return 1
                 end
             end
         end
+        
 
-        -- Otherwise save it and respawn
-        tbNpc.lastFightPos = {
-            X = currX,
-            Y = currY,
-            W = currW
-        }
-
+        
         tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)
         return 1
     end,
@@ -293,12 +296,13 @@ SimFight.KeoXe = {
 
         return 0
     end,
-    SetFightState = function(self, tbNpc, mode, currX, currY)
+    SetFightState = function(self, tbNpc, mode, nX, nY)            
         if mode == 9 then
-            SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, currX, currY)
+            SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         else
             SetNpcAI(tbNpc.finalIndex, mode)
         end
+
         if tbNpc.isPlayerFighting == 0 then
             SetNpcCurCamp(tbNpc.finalIndex, 0)
             SetNpcKind(tbNpc.finalIndex, 0)
@@ -309,7 +313,6 @@ SimFight.KeoXe = {
     end,
     JoinFight = function(self, simInstance, tbNpc, reason)
         local nListId = tbNpc.id
-        --print("JoinFight " .. nListId .. " " .. reason)
         tbNpc.isFighting = 1
         tbNpc.tick_canswitch = tbNpc.tick_breath +
             random(tbNpc.TIME_FIGHTING_minTs or TIME_FIGHTING.minTs,
@@ -322,29 +325,16 @@ SimFight.KeoXe = {
             return 0
         end
 
-        local pW, pX, pY = CallPlayerFunction(playerID, GetWorldPos)
-        
-        local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
-        currX = floor(currX / 32)
-        currY = floor(currY / 32)
-
-        -- If already having last fight pos, we may simply change AI to 1
+        -- If already having last fight pos, we may simply chance AI to 1
         if tbNpc.lastFightPos then
-            local lastPos = tbNpc.lastFightPos
-            if lastPos.W == currW then
-                if (GetDistanceRadius(lastPos.X, lastPos.Y, currX, currY) < DISTANCE_VISION) then
-                    self:SetFightState(tbNpc, 9, pX*32, pY*32)
+            local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
+            if tbNpc.lastFightPos.W == currW then
+                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 15) then
+                    self:SetFightState(tbNpc, 9, currX, currY)
                     return 1
                 end
             end
         end
-
-        -- Otherwise save it and respawn
-        tbNpc.lastFightPos = {
-            X = currX,
-            Y = currY,
-            W = currW
-        }
 
         tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)
         return 1

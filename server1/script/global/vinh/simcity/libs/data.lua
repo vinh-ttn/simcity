@@ -28,11 +28,10 @@ end
 function loadMap()
     local mapPath = settingsPath.. "maps\\"
     local thanhthiData = SimCityTableFromFile(mapPath.. "thanhthi.txt", {"*n", "*w", "*w"})
-    local chientranhData = SimCityTableFromFile(mapPath.. "chientranh.txt", {"*n", "*w", "*w"})
+    local chientranhData = SimCityTableFromFile(mapPath.. "chientranh.txt", {"*n", "*w", "*w", "*w"})
     local trangtriData = SimCityTableFromFile(mapPath.. "trangtri.txt", {"*n", "*w", "*w"})
 
     if not thanhthiData or not chientranhData then
-        print("Failed to read backup files")
         return
     end
     for i = 1, getn(thanhthiData) do
@@ -46,7 +45,6 @@ function loadMap()
                 worldId = worldId,
                 name = worldName,
                 walkPaths = {},
-                chientranh = {path1={}, path2={}},
                 decoration = {}
             }
         end
@@ -60,74 +58,42 @@ function loadMap()
             end
             tinsert(allPath[foundWalkPath[i][1]], {foundWalkPath[i][2], foundWalkPath[i][3]})
         end
-        for pathName, pathValues in allPath do
-            tinsert(world.walkPaths, pathValues)
-        end
-
-        if worldId == 10000 then
-            map_tongkim_nguyensoai = allPath
-        end
+        world.walkPaths = allPath
+ 
     end
 
     for i = 1, getn(chientranhData) do
         local entry = chientranhData[i]
         local worldId = entry[1]
         local worldName = entry[2]
-        local filePath = entry[3]
+        local camp = entry[3]
+        local pathName = entry[4]
 
+        if not SimCityMap[worldId] then
+            SimCityMap[worldId] = {
+                worldId = worldId,
+                name = worldName,
+                chientranh = {
+                    path1 = {},
+                    path2 = {}
+                },
+                decoration = {},
+                walkPaths = {}
+            }
+        end
+
+        local world = SimCityMap[worldId]
+        if not world.chientranh then
+            world.chientranh = {
+                path1 = {},
+                path2 = {}
+            }
+        end
         
-        -- Read the path data from the file
-        local pathData = SimCityTableFromFile(mapPath.. filePath, {"*w", "*w", "*n", "*n"})
-        if pathData then
-            
-            if not SimCityMap[worldId] then
-                SimCityMap[worldId] = {
-                    worldId = worldId,
-                    name = worldName,
-                            chientranh = {
-                                path1 = {},
-                                path2 = {}
-                            },
-                            decoration = {},
-                            walkPaths = {}
-                    }
-            end
-
-            local world = SimCityMap[worldId]
-            if not world.chientranh.path1 then
-                world.chientranh.path1 = {}
-            end
-            if not world.chientranh.path2 then
-                world.chientranh.path2 = {}
-            end
-
-            local allPath1 = {}
-            local allPath2 = {}
-            for i=1, getn(pathData) do
-                local path = pathData[i]
-                local camp = path[1]
-                local pathName = "n"..path[2]            
-                local pathX = path[3]
-                local pathY = path[4]
-                if camp == "camp1" then
-                    if not allPath1[pathName] then
-                        allPath1[pathName] = {}
-                    end
-                    tinsert(allPath1[pathName], {pathX, pathY})
-                elseif camp == "camp2" then
-                    if not allPath2[pathName] then
-                        allPath2[pathName] = {}
-                    end
-                    tinsert(allPath2[pathName], {pathX, pathY})
-                end
-            end  
-
-            for pathName, pathValues in allPath1 do
-                tinsert(world.chientranh.path1, pathValues)
-            end
-            for pathName, pathValues in allPath2 do
-                tinsert(world.chientranh.path2, pathValues)
-            end
+        if camp == "camp1" then            
+            tinsert(world.chientranh.path1, pathName)
+        elseif camp == "camp2" then
+            tinsert(world.chientranh.path2, pathName)
         end
     end
 

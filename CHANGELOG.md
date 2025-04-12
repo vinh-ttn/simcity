@@ -1,5 +1,9 @@
 # SimCity Changelog
 
+## 5.6 (13-04-2025)
+- Nâng cấp toàn bộ hệ thống
+- Sim Tống Kim cực kỳ nhanh không lag
+
 ## 5.5.2 (07-04-2025)
 - Giảm lỗi sử dụng quá nhiều ổ cứng do log file
 - Đổi sang hệ thống ECS
