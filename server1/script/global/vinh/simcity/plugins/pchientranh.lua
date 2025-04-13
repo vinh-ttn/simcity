@@ -606,8 +606,20 @@ function SimCityChienTranh:mainMenu()
 	return 1
 end
 
+
+function SimCityChienTranh:countMapSpawn(nW)
+	local counter = 0
+	for k, v in SimCitizen.fighterList do
+		if v.nMapId and v.nMapId == nW and v.baoDanhTongKim == 1 then
+			counter = counter + 1
+		end
+	end
+	return counter
+end
+
+
 function SimCityChienTranh:TaoTongKimSpawn(ngoaitrang)
-	if self.tongkim ~= 1 then
+	if self.tongkim ~= 1 or self:countMapSpawn(self.nW) > 0 then
 		return 1
 	end
 	local forCamp = 1
