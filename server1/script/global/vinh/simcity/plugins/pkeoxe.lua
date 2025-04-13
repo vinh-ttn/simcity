@@ -330,7 +330,7 @@ function SimCityKeoXe:RemoveAll()
 	for key, fighter in SimTheoSau.fighterList do
         local name = GetName()
         if fighter.playerID == name then
-            self:Remove(fighter.id)
+            SimTheoSau:Remove(fighter.id)
         end
     end
 end
