@@ -10,8 +10,6 @@ SimCityChienTranh = {
 }
 
 function createTaskSayChienTranh(mapId, extra)
-	Include("\\script\\global\\vinh\\simcity\\head.lua")
-	Include("\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua")
 
 	local tbOpt = {}
 	local nSettingIdx = 1617
@@ -19,8 +17,8 @@ function createTaskSayChienTranh(mapId, extra)
 	if not extra then
 		extra = ""
 	end
-	local counter = SimCityMainThanhThi:countMap(mapId)
-	tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> ThiÕp vèn kh«ng ph¶i ng­êi tèt, nh­ng thiÕp ®èi víi chµng... ch­a tõng gian dèi." .. extra .. "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>");
+	
+	tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> ThiÕp vèn kh«ng ph¶i ng­êi tèt, nh­ng thiÕp ®èi víi chµng... ch­a tõng gian dèi." .. extra);
 	return tbOpt
 end
 
@@ -461,8 +459,25 @@ function SimCityChienTranh:getWorldName()
 	return { worldInfo.name .. " ChiÕn Lo¹n<enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter }
 end
 
+
+function SimCityChienTranh:countMap(nW)
+	local counter = 0
+	for k, v in SimCitizen.fighterList do
+		if v.nMapId and v.nMapId == nW then
+			counter = counter + 1
+		end
+	end
+	return counter
+end
+
+
 function SimCityChienTranh:goiAnhHungThiepNgoaiTrang()
-	local tbSay = createTaskSayChienTranh(self.nW)
+
+	local counter = self:countMap(self.nW)
+	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
+
+
+	local tbSay = createTaskSayChienTranh(self.nW, extra)
 
 
 	tinsert(tbSay, "§Ö tö tinh anh (100 thiÕp)/#SimCityChienTranh:nv_tudo(1)")
@@ -486,7 +501,9 @@ function SimCityChienTranh:goiAnhHungThiepNgoaiTrang()
 end
 
 function SimCityChienTranh:goiAnhHungThiep()
-	local tbSay = createTaskSayChienTranh(self.nW)
+	local counter = self:countMap(self.nW)
+	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
+	local tbSay = createTaskSayChienTranh(self.nW, extra)
 
 
 
@@ -527,8 +544,9 @@ end
 
 function SimCityChienTranh:caidat()
 	local worldInfo = SimCityWorld:Get(self.nW)
-
-	local tbSay = createTaskSayChienTranh(self.nW)
+	local counter = self:countMap(self.nW)
+	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
+	local tbSay = createTaskSayChienTranh(self.nW, extra)
 
 
 
@@ -568,8 +586,9 @@ function SimCityChienTranh:mainMenu()
 	self.path1 = worldInfo.chientranh.path1
 	self.path2 = worldInfo.chientranh.path2
 
-
-	local tbSay = createTaskSayChienTranh(self.nW)
+	local counter = self:countMap(self.nW)
+	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
+	local tbSay = createTaskSayChienTranh(self.nW, extra)
 	if SimCityMainThanhThi then
 		SimCityMainThanhThi:removeAll()
 	end
