@@ -49,8 +49,10 @@ function SimCityMainTongKim:mainMenu()
 
 	SimCityChienTranh.nW = nW
 	local worldInfo = SimCityWorld:Get(nW)
+	local counter = SimCityChienTranh:countMap(nW)
+	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
 
-	local tbSay = createTaskSayChienTranh(nW, worldInfo.name .. " khãi löa chinh chiÕn")
+	local tbSay = createTaskSayChienTranh(nW, worldInfo.name .. " khãi löa chinh chiÕn" .. extra)
 
 	tinsert(tbSay, "Ph¸t anh hïng thiÕp/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "Ph¸t qu¸i nh©n thiÕp/#SimCityChienTranh:goiAnhHungThiep()")
