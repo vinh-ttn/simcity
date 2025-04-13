@@ -10,6 +10,9 @@ SimCityChienTranh = {
 }
 
 function createTaskSayChienTranh(mapId, extra)
+	Include("\\script\\global\\vinh\\simcity\\head.lua")
+	Include("\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua")
+
 	local tbOpt = {}
 	local nSettingIdx = 1617
 	local nActionId = 0
