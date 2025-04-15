@@ -44,17 +44,7 @@ function SimTheoSau:New(fighter)
  
     return nListId
 end
-
--- Xoa xe cua nguoi choi hien tai
-function SimTheoSau:RemoveAll()
-    for key, fighter in SimTheoSau.fighterList do
-        local name = GetName()
-        if fighter.playerID == name then
-            self:Remove(fighter.id)
-            self.collections[name] = nil
-        end
-    end
-end
+ 
 
 
 -- For keo xe

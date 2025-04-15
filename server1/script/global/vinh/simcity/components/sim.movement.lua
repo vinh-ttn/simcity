@@ -135,7 +135,7 @@ SimMovement.KeoXe = {
         -- Otherwise walk toward parent
         if tbNpc.isFighting == 0 then
             if cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER then
-                if random(1,100) < 10 then 
+                if random(1,100) < 5 then 
                     local targetPos = randomRange({pX, pY}, tbNpc.walkVar or 2)
                     NpcWalk(tbNpc.finalIndex, targetPos[1], targetPos[2]) 
                 end
@@ -221,8 +221,15 @@ SimMovement.Citizen = {
                 if path then
                     local pathLength = getn(path)
 
+
+                    -- Van con thoi gian o lai trong spawn
+                    if (tbNpc.tick_breath < tbNpc.tick_canWalk and tbNpc.tongkim == 1) or (tbNpc.baoDanhTongKim == 1) then
+                        tbNpc.currentPointIndex = random(1, pathLength)
+                        return tbNpc.currentPointIndex
+
+
                     -- Can move as usual
-                    if tbNpc.tick_breath > tbNpc.tick_canWalk then
+                    elseif tbNpc.tick_breath > tbNpc.tick_canWalk then
 
                         if tbNpc.tongkim == 1 
                             and (tbNpc.currentPathIndex == "camp1spawn" or tbNpc.currentPathIndex == "camp2spawn") then
@@ -289,12 +296,6 @@ SimMovement.Citizen = {
                             tbNpc.currentPointIndex = nextIndex
                             return tbNpc.currentPointIndex
                         end
-
-                     
-                    -- Van con thoi gian o lai trong spawn
-                    elseif tbNpc.tick_breath < tbNpc.tick_canWalk and tbNpc.tongkim == 1then
-                        tbNpc.currentPointIndex = random(1, pathLength)
-                        return tbNpc.currentPointIndex
                     end
                 end
             end
@@ -417,7 +418,7 @@ SimMovement.Citizen = {
                         tbNpc.goY = targetPos[2]
                     end
                 else
-                    tbNpc.currentPathIndex = pathNames[random(1, pathCount)]
+                    tbNpc.currentPathIndex = pathNames[tbNpc.hardsetPathIndex or random(1, pathCount)]
                     tbNpc.currentPointIndex = random(1, getn(tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]))
                     tbNpc.pathDirection = 1
                 end
@@ -448,7 +449,7 @@ SimMovement.Citizen = {
             return 1
         end
 
-        if tbNpc.walkMode and tbNpc.walkMode == "formation" then
+        if (tbNpc.walkMode and tbNpc.walkMode == "formation") then
             local centerCharId = getCenteredCell(createFormation(size))
             local fighter = simInstance:Get(tbNpc.children[centerCharId])
 
@@ -465,13 +466,6 @@ SimMovement.Citizen = {
                 local nX, nY, nMapIndex = GetNpcPos(fighter.finalIndex)
                 tbNpc.childrenPath = genCoords_squareshape({ nX / 32, nY / 32 }, { X, Y }, size)
             end
-        else
-            local childrenPath = {}
-            for i = 1, size do
-                local targetPos = randomRange({X, Y}, tbNpc.walkVar or 2)
-                tinsert(childrenPath, { targetPos[1], targetPos[2] })
-            end
-            tbNpc.childrenPath = childrenPath
         end
     end,
 
@@ -631,10 +625,24 @@ SimMovement.Citizen = {
                 keepWalkingRate = 5
             end
 
+            if tbNpc.baoDanhTongKim == 1 then
+                keepWalkingRate = 5
+                if tbNpc.isDialogNpcAround > 0 then
+                    keepWalkingRate = 2
+                end
+                if (random(1, 100) < keepWalkingRate) then
+                    tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(simInstance, tbNpc, tbNpc.nPosId)
+                else
+                    return 1
+                end
+            
             -- Tong kim dang o trong spawn?
-            if (tbNpc.tongkim == 1 and tbNpc.tick_breath < tbNpc.tick_canWalk) then
+            elseif (tbNpc.tongkim == 1 and tbNpc.tick_breath < tbNpc.tick_canWalk) then
+                
+                keepWalkingRate = 5
+                 
                 -- Walk random trong spawn
-                if (random(1, 100) < 5) then
+                if (random(1, 100) < keepWalkingRate) then
                     tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(simInstance, tbNpc, tbNpc.nPosId)
                 else
                     return 1
@@ -739,6 +747,7 @@ SimMovement.FormationChild = {
 
     GetMyPosFromParent = function(self, simInstance, nListId)
         local tbNpc = simInstance.fighterList[nListId]
+
         local foundParent = simInstance:Get(tbNpc.parentID)
         if foundParent then
             return self:GiveChildPos(simInstance, tbNpc.parentID, tbNpc.childID)
@@ -784,10 +793,6 @@ SimMovement.FormationChild = {
         local myPosX = floor(nX32 / 32)
         local myPosY = floor(nY32 / 32)
     
-        local cachNguoiChoi = 0
-       
-        pW, pX, pY = tbNpc.movementSys:GetParentPos(simInstance, nListId)
-        cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
 
         -- Is parent fighting? Join fight or keep fighting
         if tbNpc.fightSys:IsParentFighting(simInstance, tbNpc) == 1 and tbNpc.isFighting == 0 then
@@ -813,6 +818,7 @@ SimMovement.FormationChild = {
         -- Player has gone different map? Do respawn
         local needRespawn = 0
         pW, pX, pY = self:GetParentPos(simInstance, nListId)
+        local cachNguoiChoi =  GetDistanceRadius(myPosX, myPosY, pX, pY)
 
         -- Parent pos available?
         if pW > 0 and pX > 0 and pY > 0 then
@@ -839,7 +845,27 @@ SimMovement.FormationChild = {
 
 
         -- Otherwise walk toward parent
-        local targetW, targetX, targetY = self:GetMyPosFromParent(simInstance, nListId)
+        local targetW = pW
+        local targetX = myPosX
+        local targetY = myPosY 
+        
+        if (tbNpc.childrenWalkMode == "random") then
+
+            if (cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) then
+                if random(1,100) < 5 then 
+                    local randomPos = randomRange({pX, pY}, tbNpc.walkVar or 2)
+                    targetX = randomPos[1]
+                    targetY = randomPos[2]
+                end
+            else
+                local randomPos = randomRange({pX, pY}, tbNpc.walkVar or 2)
+                targetX = randomPos[1]
+                targetY = randomPos[2]
+            end
+ 
+        else
+            targetW, targetX, targetY = self:GetMyPosFromParent(simInstance, nListId)
+        end
 
         -- Parent gave info?
         if targetW > 0 and targetX > 0 and targetY > 0 then

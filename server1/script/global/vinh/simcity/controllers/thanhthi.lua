@@ -37,7 +37,7 @@ function SimCityMainThanhThi:_createSingle(id, Map, config)
 		nNpcId = id, -- required, main char ID
 		nMapId = Map, -- required, map
 		walkMode = "random",
-		walkVar = 3,
+		walkVar = 2,
 		kind = kind,
 		CHANCE_ATTACK_PLAYER = CHANCE_ATTACK_PLAYER, -- co hoi tan cong nguoi choi neu di ngang qua
 		CHANCE_ATTACK_NPC = CHANCE_AUTO_ATTACK,  -- co hoi bat chien dau
@@ -370,7 +370,7 @@ end
 
 function SimCityMainThanhThi:addNpcs()
 	add_dialognpc({
-		{ 1617, 78,  1610, 3235, "\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua", "Tri÷u M…n" }, -- TD
+		{ 1617, 78,  1621, 3253, "\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua", "Tri÷u M…n" }, -- TD
 		{ 1617, 37,  1719, 3091, "\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua", "Tri÷u M…n" }, -- BK
 		{ 1617, 11,  3158, 5082, "\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua", "Tri÷u M…n" }, -- TD
 		{ 1617, 1,   1569, 3198, "\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua", "Tri÷u M…n" }, -- PT
@@ -425,6 +425,7 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 		self.worldStatus["w" .. nW].enabled = 1
 
 		if SimCityWorld:IsTongKimMap(nW) == 1 then
+			SimCityMainTongKim:onPlayerEnterMap()
 			return 1
 		end
 
@@ -451,6 +452,12 @@ function SimCityMainThanhThi:onPlayerExitMap()
 	-- If enabled but no one left, clean it
 	if self.worldStatus["w" .. nW].count == 0 and self.worldStatus["w" .. nW].enabled == 1 then
 		self.worldStatus["w" .. nW] = nil
+
+		if SimCityWorld:IsTongKimMap(nW) == 1 then
+			SimCityMainTongKim:clearTongKimNpc(nW)
+			return 1
+		end
+
 		self:removeAll()
 	end
 end
@@ -470,6 +477,11 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 		local nNpcIdx
 		local mapping = {}
 		local map9x = 1
+		local baoDanhTongKim = 0
+
+		if nW == 323 or nW == 324 or nW == 325 then
+			baoDanhTongKim = 1
+		end
 
 		for i = 1, getn(fighterList) do
 			nNpcIdx = fighterList[i]
@@ -501,7 +513,41 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 
 		local N = getn(tmpFound)
 
-		if map9x == 0 then
+		if baoDanhTongKim == 1 then
+			worldInfo.allowFighting = 0
+			local table1 = {}
+
+			-- Fill each table with 40 random NPCs
+			for i = 1, random(20,40) do 
+				self:_createSingle(
+					tmpFound[random(1, N)], nW, { 
+						ngoaitrang = 1, 
+						level = level or 95, 
+						capHP = capHP , 
+						walkMode = "preset",
+						baoDanhTongKim = 1,
+						hardsetPathIndex = 1,
+						camp = 0,
+						walkVar = 4
+					}
+				)
+			end
+			for i = 1, random(20,40) do 
+				self:_createSingle(
+					tmpFound[random(1, N)], nW, { 
+						ngoaitrang = 1, 
+						level = level or 95, 
+						capHP = capHP , 
+						walkMode = "preset",
+						baoDanhTongKim = 1,
+						hardsetPathIndex = 2,
+						camp = 0,
+						walkVar = 4
+					}
+				)
+			end
+
+		elseif map9x == 0 then
 			if isThanhThi then
 			--	worldInfo.allowFighting = 0
 			--else

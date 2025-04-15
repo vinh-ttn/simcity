@@ -17,4 +17,8 @@ function pActivity:InitAddNpc()
 end
  
 
+function pActivity:ClearTkNpc()
+	Include("\\script\\global\\vinh\\main.lua")
+    simcity_clearTongKim()
+end
 

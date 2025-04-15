@@ -314,11 +314,25 @@ function SimCityKeoXe:mainMenu()
 	tinsert(tbSay, "KÕt giao nhãm qu¸i nh©n/#SimCityKeoXe:goiAnhHungThiep()")
 	--tinsert(tbSay, "ThiÕt lËp/#SimCityKeoXe:caidat()")
 	tinsert(tbSay, "T¹o b·i luyÖn c«ng/#SimCityKeoXe:luyencong()")
-	tinsert(tbSay, "Gi¶i t¸n/#SimTheoSau:RemoveAll()")
+	tinsert(tbSay, "Gi¶i t¸n/#SimCityKeoXe:RemoveAll()")
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbSay)
 
 	return 1
+end
+
+function SimCityKeoXe:RemoveAll()
+	local name = GetName()
+
+	if self.collections[name] then
+		self.collections[name] = nil
+	end
+	for key, fighter in SimTheoSau.fighterList do
+        local name = GetName()
+        if fighter.playerID == name then
+            SimTheoSau:Remove(fighter.id)
+        end
+    end
 end
 
 function SimCityKeoXe:askBaiLevel()
@@ -360,7 +374,7 @@ end
 function SimCityKeoXe:TaoBai(forceLevel)
 	-- Tam thoi xoa xe de tao NPC tu dong neu khong se copy NPC tu xe vao luon
 	if (forceLevel == 999) then
-		SimTheoSau:RemoveAll()
+		self:RemoveAll()
 	end
 
 	local fighterList = GetAroundNpcList(60)

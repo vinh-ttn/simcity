@@ -140,7 +140,7 @@ function execFindDialogNpcAround(tbNpc)
         local fighter2Kind = GetNpcKind(allNpcs[i])
         local fighter2Name = GetNpcName(allNpcs[i])
         local nNpcId = GetNpcSettingIdx(allNpcs[i])
-        if fighter2Kind == 3 and (nNpcId == 108 or nNpcId == 198 or nNpcId == 203 or nNpcId == 384) then
+        if fighter2Kind == 3 and (nNpcId == 108 or nNpcId == 198 or nNpcId == 203 or nNpcId == 384 or nNpcId == 55 or nNpcId == 62) then
             -- Cache the found NPC ID
             if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
                 local pathKey = tbNpc.currentPathIndex .. "_" .. tbNpc.currentPointIndex

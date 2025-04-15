@@ -117,3 +117,6 @@ WorldID	WorldName	PathFile
 23	Th«n Ti™n ßÈng	thanhthi\23_thantiendong.txt
 340	Mπc Cao QuÀt	thanhthi\340_maccaoquat.txt
 10000	tongkim_nguyensoai	thanhthi\10000_tongkim_nguyensoai.txt
+323	B∏o danh Chi’n Tr≠Íng TËng Kim S¨ C p	thanhthi\323_baodanh_tongkim.txt
+324	B∏o danh Chi’n Tr≠Íng TËng Kim Trung C p	thanhthi\323_baodanh_tongkim.txt
+325	B∏o danh Chi’n Tr≠Íng TËng Kim Cao C p	thanhthi\323_baodanh_tongkim.txt
