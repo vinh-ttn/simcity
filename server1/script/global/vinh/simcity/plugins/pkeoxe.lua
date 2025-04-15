@@ -67,8 +67,8 @@ function SimCityKeoXe:taoNV(id, camp, mapID, map, nt, theosau, capHP, extraConfi
 
 		playerID = name,
 		capHP = capHP,
-		role = "keoxe"
-
+		role = "keoxe",
+		mode = "keoxe"
 	};
 	if extraConfig then
 		for k, v in extraConfig do
@@ -329,7 +329,7 @@ function SimCityKeoXe:RemoveAll()
 	end
 	for key, fighter in SimTheoSau.fighterList do
         local name = GetName()
-        if fighter.playerID == name then
+        if fighter.playerID == name and fighter.mode == "keoxe" then
             SimTheoSau:Remove(fighter.id)
         end
     end

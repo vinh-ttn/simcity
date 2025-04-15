@@ -1,6 +1,6 @@
 Include("\\script\\global\\vinh\\simcity\\head.lua")
 Include("\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua")
-
+Include("\\script\\global\\vinh\\simcity\\controllers\\vatnuoi.lua")
 -- Main menu
 function main()
 	SimCityMainThanhThi:mainMenu()

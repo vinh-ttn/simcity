@@ -1,0 +1,68 @@
+npcIdx	category	npcName	cost
+13	V¨n lang hïng téc	Voi Ch©u ¸ 	200000
+14	V¨n lang hïng téc	Voi Hoµng hµ	200000
+11	V¨n lang hïng téc	Heo rõng	200000
+43	V¨n lang hïng téc	Heo tr¾ng	200000
+33	V¨n lang hïng téc	Ho¸n hïng	200000
+12	V¨n lang hïng téc	NhÝm	200000
+27	¦ng tr¶o m«n	D¬i chóa	50000
+28	¦ng tr¶o m«n	D¬i chóa ®á	50000
+29	¦ng tr¶o m«n	D¬i Dong	50000
+30	¦ng tr¶o m«n	D¬i hót m¸u	50000
+24	¦ng tr¶o m«n	Kim §iªu	50000
+26	¦ng tr¶o m«n	KÒn KÒn	50000
+25	¦ng tr¶o m«n	Th­¬ng ­ng	50000
+581	¦ng tr¶o m«n	Thøu ThÇn	50000
+39	Cuång lang téc	Chã ®en	50000
+1351	Cuång lang téc	GÊu ®en	50000
+16	Cuång lang téc	GÊu ®en	50000
+15	Cuång lang téc	GÊu n©u	50000
+6	Cuång lang téc	Sãi ®á	50000
+1498	Cuång lang téc	Sãi tuyÕt	50000
+8	Cuång lang téc	Sãi tuyÕt	50000
+5	Cuång lang téc	Sãi x¸m	50000
+7	Cuång lang téc	Thanh Lang	50000
+40	Cuång lang téc	TuyÕt Qu¸i	50000
+1396	Léc ¶nh cèc	§¹i Xu©n Ng­u	100000
+42	Léc ¶nh cèc	H­¬u ®èm	100000
+448	Léc ¶nh cèc	Nai	100000
+1397	Léc ¶nh cèc	Ng­u Ma V­¬ng	100000
+1395	Léc ¶nh cèc	TiÓu Xu©n Ng­u	100000
+17	Léc ¶nh cèc	Tr©u rõng	100000
+1497	Léc ¶nh cèc	TuÇn Léc	100000
+2155	Léc ¶nh cèc	TuÇn Léc	100000
+2315	ThÇn thó cung	B¹ch Tr­	2000000
+2248	ThÇn thó cung	Chu T­íc	2000000
+2247	ThÇn thó cung	HuyÒn Vò	2000000
+2245	ThÇn thó cung	Kú L©n	2000000
+1727	ThÇn thó cung	Ngäc Long	2000000
+2246	ThÇn thó cung	Thanh Long	2000000
+2240	C¸p m« gi¸o	Bß c¹p	30000
+18	C¸p m« gi¸o	C¸ sÊu	30000
+41	C¸p m« gi¸o	Cãc	30000
+45	C¸p m« gi¸o	NhÖn	30000
+46	C¸p m« gi¸o	RÕt	30000
+19	C¸p m« gi¸o	Th»n l»n ®á	30000
+2275	Xµ téc Èn s¸t	§éc Xµ 	50000
+22	Xµ téc Èn s¸t	Kim Hoµn M·ng Xµ 	30000
+20	Xµ téc Èn s¸t	Nh·n KÝnh M·ng xµ 	30000
+21	Xµ téc Èn s¸t	R¾n xanh	30000
+23	Xµ téc Èn s¸t	XÝch LuyÖn m·ng xµ 	30000
+1699	Xµ téc Èn s¸t	Xµ V­¬ng	30000
+590	Hæ b¸o s¬n l©m	§«ng B¾c hæ	150000
+2100	Hæ b¸o s¬n l©m	§iÕu T×nh B¹ch Hæ	150000
+2	Hæ b¸o s¬n l©m	B¹ch Hæ	150000
+9	Hæ b¸o s¬n l©m	Hå ly	50000
+10	Hæ b¸o s¬n l©m	Hång Hå 	50000
+1	Hæ b¸o s¬n l©m	Hoa Nam hæ 	50000
+31	Hæ b¸o s¬n l©m	Kim Miªu	50000
+3	Hæ b¸o s¬n l©m	Kim TiÒn b¸o	50000
+34	Hæ b¸o s¬n l©m	Linh Miªu	50000
+4	Hæ b¸o s¬n l©m	TuyÕt B¸o	50000
+32	Hæ b¸o s¬n l©m	X¸ LÞ 	30000
+37	Linh hÇu m«n	H¾c DiÖp HÇu 	30000
+2103	Linh hÇu m«n	H¾c DiÖp Linh HÇu	30000
+36	Linh hÇu m«n	Kh«i DiÖp hÇu	30000
+38	Linh hÇu m«n	Kim T¬ HÇu	30000
+2159	Linh hÇu m«n	Linh HÇu QuËy Ph¸	50000
+35	Linh hÇu m«n	Tµng Vùc hÇu	30000

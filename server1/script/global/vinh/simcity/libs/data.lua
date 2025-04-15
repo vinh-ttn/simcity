@@ -4,7 +4,7 @@ settingsPath = "\\settings\\global\\vinh\\simcity\\"
 SimCityPlayerNames = {}
 SimCityChat = {}
 SimCityMap = {}
-
+SimCityPets = {}
 -- Doc ten
 function loadNames()
     local namesData = SimCityTableFromFile(settingsPath.. "names.txt", {"*w"})
@@ -21,6 +21,30 @@ function loadChat()
         SimCityChat[chatData[i][1]] = {}
     end
         tinsert(SimCityChat[chatData[i][1]], chatData[i][2])
+    end
+end
+
+-- Doc pets
+function loadPets()
+    -- nId cat name
+    local petsData = SimCityTableFromFile(settingsPath.. "pets.txt", {"*n", "*w", "*w", "*n"})
+
+    SimCityPets.allCats = {}
+    SimCityPets.allPets = {}
+    for i=1, getn(petsData) do
+        local petId = petsData[i][1]
+        local petCategory = petsData[i][2]		
+		local petName = petsData[i][3]
+        local petCost = petsData[i][4]
+
+        if petId > 0 then
+            if not SimCityPets[petCategory] then  
+                SimCityPets[petCategory] = {}
+                tinsert(SimCityPets.allCats, petCategory)
+            end
+            tinsert(SimCityPets[petCategory], i)
+            SimCityPets.allPets[i] = {petName, petId, petCost}
+        end
     end
 end
 
@@ -118,3 +142,4 @@ end
 loadNames()
 loadChat()
 loadMap()
+loadPets()
