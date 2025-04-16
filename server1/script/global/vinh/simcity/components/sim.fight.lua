@@ -226,13 +226,11 @@ SimFight.Citizen = {
         return 0
     end,
     SetFightState = function(self, tbNpc, mode, nX, nY)
-        SetNpcAI(tbNpc.finalIndex, mode)
-
+        
         --if mode == 9 then
-        --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)
-        --    
+        --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         --else
-        --    SetNpcAI(tbNpc.finalIndex, mode)
+            SetNpcAI(tbNpc.finalIndex, mode)
         --end
     end,
 
@@ -280,8 +278,7 @@ SimFight.Citizen = {
             end
         end
         
-        self:SetFightState(tbNpc, 9, currX, currY)
-        tbNpc.can_respawn_tick_toFight = tbNpc.tick_breath + random(1,5)*18/REFRESH_RATE       
+        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)      
         return 1
     end,
 
@@ -425,8 +422,7 @@ SimFight.KeoXe = {
             end
         end
 
-        self:SetFightState(tbNpc, 9, currX, currY)
-        tbNpc.can_respawn_tick_toFight = tbNpc.tick_breath + random(1,5)*18/REFRESH_RATE       
+        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)     
     
         return 1
     end,

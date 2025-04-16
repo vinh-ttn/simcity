@@ -546,14 +546,7 @@ SimMovement.Citizen = {
         }
 
         -- Is fighting? Do nothing except leave fight if possible
-        if tbNpc.isFighting == 1 then
-
-            -- Case 0: toi gio fight that su
-            if tbNpc.can_respawn_tick_toFight and tbNpc.can_respawn_tick_toFight < tbNpc.tick_breath then
-                tbNpc.can_respawn_tick_toFight = nil
-                return tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JOIN FIGHT")
-            end
-
+        if tbNpc.isFighting == 1 then 
 
             -- Case 1: toi gio chuyen doi
             if tbNpc.tick_canswitch < tbNpc.tick_breath then
@@ -810,13 +803,7 @@ SimMovement.FormationChild = {
         end
 
         -- Am I fighting? Do nothing except leave fight if possible
-        if tbNpc.isFighting == 1 then
-
-            -- Case 0: toi gio fight that su
-            if tbNpc.can_respawn_tick_toFight and tbNpc.can_respawn_tick_toFight < tbNpc.tick_breath then
-                tbNpc.can_respawn_tick_toFight = nil
-                return tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JOIN FIGHT")
-            end
+        if tbNpc.isFighting == 1 then 
 
             -- Case 1: toi gio chuyen doi
             if tbNpc.tick_canswitch < tbNpc.tick_breath then

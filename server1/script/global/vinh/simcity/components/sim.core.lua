@@ -67,11 +67,6 @@ function SimCore:initCharConfig(config)
         end
     end
 
-    -- Tong kim 
-    if config.tongkim and config.tongkim == 1 and (not config.children or getn(config.children) == 0) then
-        config.walkVar = 8
-    end
-
     -- Setup movement behavior    
     config.movementSys = SimMovementSys(config)
     config.funSys = SimFunSys(config)

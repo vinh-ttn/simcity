@@ -141,8 +141,6 @@ SimEntity.Citizen = {
 
     Respawn = function(self, simInstance, tbNpc, code, reason)
 
-        tbNpc.can_respawn_tick_toFight = nil
-
         local nListId = tbNpc.id
         -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau 4: bi lag dung 1 cho nay gio ko di duoc
         --print(tbNpc.role .. " " .. tbNpc.szName .. ": respawn " .. code .. " " .. reason)
@@ -275,7 +273,6 @@ SimEntity.KeoXe = {
     CreateChar = execCreateChar,
     Respawn = function(self, simInstance, tbNpc, code, reason)
 
-        tbNpc.can_respawn_tick_toFight = nil
         local nListId = tbNpc.id
         -- code: 0: con nv con song 1: da chet toan bo 2: keo xe qua map khac 3: chuyen sang chien dau 4: bi lag dung 1 cho nay gio ko di duoc
 
