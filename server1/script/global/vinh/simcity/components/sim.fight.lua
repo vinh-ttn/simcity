@@ -271,7 +271,7 @@ SimFight.Citizen = {
         local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
         if tbNpc.lastFightPos then
             if tbNpc.lastFightPos.W == currW then
-                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 12) then
+                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 16) then
                     self:SetFightState(tbNpc, 9, currX, currY)
                     return 1
                 end
@@ -390,10 +390,8 @@ SimFight.KeoXe = {
         --end
 
         if tbNpc.isPlayerFighting == 0 then
-            SetNpcCurCamp(tbNpc.finalIndex, 0)
             SetNpcKind(tbNpc.finalIndex, 0)
         else
-            SetNpcCurCamp(tbNpc.finalIndex, tbNpc.camp)
             SetNpcKind(tbNpc.finalIndex, tbNpc.kind or 4)
         end
     end,
@@ -415,7 +413,7 @@ SimFight.KeoXe = {
         local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
         if tbNpc.lastFightPos then
             if tbNpc.lastFightPos.W == currW then
-                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 12) then
+                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 16) then
                     self:SetFightState(tbNpc, 9, currX, currY)
                     return 1
                 end

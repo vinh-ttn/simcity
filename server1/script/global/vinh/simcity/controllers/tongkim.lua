@@ -138,13 +138,13 @@ function SimCityMainTongKim:addTongKimNpc()
 	nX, nY, nW = GetNpcPos(id)
 
 
-	id = AddNpcEx(1702, 95, random(0, 4), nW, nX - offSetUnit1, nY + offSetUnit2, 1, "A NhÊt (b¶o vÖ TriÖu MÉn)", 0)
+	id = AddNpcEx(1702, 95, random(0, 4), nW, nX - offSetUnit1, nY + offSetUnit2, 1, "A §¹i", 0)
 	SetNpcCurCamp(id, 2)
 
-	id = AddNpcEx(1939, 95, random(0, 4), nW, nX, nY + offSetUnit2, 1, "A NhÞ (b¶o vÖ TriÖu MÉn)", 0)
+	id = AddNpcEx(1939, 95, random(0, 4), nW, nX, nY + offSetUnit2, 1, "A NhÞ", 0)
 	SetNpcCurCamp(id, 2)
 
-	id = AddNpcEx(1854, 95, random(0, 4), nW, nX + offSetUnit1, nY + offSetUnit2, 1, "A Tam (b¶o vÖ TriÖu MÉn)", 0)
+	id = AddNpcEx(1854, 95, random(0, 4), nW, nX + offSetUnit1, nY + offSetUnit2, 1, "A Tam", 0)
 	SetNpcCurCamp(id, 2)
 
 	id = bt_add_a_diagnpc("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua", 103, vitriVoKy.tientuyen[1],
@@ -152,13 +152,13 @@ function SimCityMainTongKim:addTongKimNpc()
 
 	-- Bao ve cho Vo Ky
 	nX, nY, nW = GetNpcPos(id)
-	id = AddNpcEx(1789, 95, random(0, 4), nW, nX - offSetUnit1, nY + offSetUnit2, 1, "V­¬ng Tiªu (b¶o vÖ V« Kþ)", 0)
+	id = AddNpcEx(1789, 95, random(0, 4), nW, nX - offSetUnit1, nY + offSetUnit2, 1, "V­¬ng Tiªu", 0)
 	SetNpcCurCamp(id, 1)
 
-	id = AddNpcEx(1683, 95, random(0, 4), nW, nX, nY + offSetUnit2, 1, "Chu ChØ Nh­îc (b¶o vÖ V« Kþ)", 0)
+	id = AddNpcEx(1683, 95, random(0, 4), nW, nX, nY + offSetUnit2, 1, "Chu ChØ Nh­îc", 0)
 	SetNpcCurCamp(id, 1)
 
-	id = AddNpcEx(1941, 95, random(0, 4), nW, nX + offSetUnit1, nY + offSetUnit2, 1, "TiÓu Chiªu (b¶o vÖ V« Kþ)", 0)
+	id = AddNpcEx(1941, 95, random(0, 4), nW, nX + offSetUnit1, nY + offSetUnit2, 1, "TiÓu Chiªu", 0)
 	SetNpcCurCamp(id, 1)
 
 
@@ -166,16 +166,23 @@ end
 
 function SimCityMainTongKim:onPlayerEnterMap()
 	if TONGKIM_AUTOCREATE and TONGKIM_AUTOCREATE == 1 then
+
+		SimCityMainTongKim:updateCampPosition()
+		SimCityChienTranh:modeTongKim(1, self.camp2TopRight)
+
 		local nW, nX, nY = GetWorldPos()
 		SimCityMainTongKim:setUpMap(nW)
 
 		SimCityChienTranh.nW = nW
-		self:updateCampPosition()
-		SimCityChienTranh:modeTongKim(1, self.camp2TopRight)		
+		local worldInfo = SimCityWorld:Get(nW)
+		local counter = SimCityChienTranh:countMap(nW)
 		
-		self:clearTongKimNpc(nW)
-		SimCityTongKim.playerInTK[nW] = {}
+		if counter == 0 then
+			print("DONE SETUP TK", self.camp2TopRight)
+			self.playerInTK[nW] = {}
+			SimCityChienTranh:nv_tudo(1)
+		end
+
 		
-		SimCityChienTranh:nv_tudo(1)
 	end
 end
