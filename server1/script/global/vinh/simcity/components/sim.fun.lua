@@ -54,6 +54,7 @@ function execRestoreLife(tbNpc)
     if tbNpc.isDead == 0 and tbNpc.tick_breath > 0 
         and tbNpc.finalIndex 
         and LIFE_RESTORE_PERCENT > 0 
+        and mod(tbNpc.tick_breath, 10*18/REFRESH_RATE) == 0
         then
         local currentLife = NPCINFO_GetNpcCurrentLife(tbNpc.finalIndex)
         local maxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)

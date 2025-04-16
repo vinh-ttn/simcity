@@ -414,8 +414,8 @@ SimMovement.Citizen = {
                     if (tbNpc.tongkim == 1) then
                         tbNpc.currentPointIndex = random(1, pathLength)
                         local targetPos = randomRange({tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex][tbNpc.currentPointIndex][1], tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex][tbNpc.currentPointIndex][2]}, tbNpc.walkVar or 4)
-                        tbNpc.goX = targetPos[1]
-                        tbNpc.goY = targetPos[2]
+                        tbNpc.goX32 = targetPos[1]*32
+                        tbNpc.goY32 = targetPos[2]*32
                     end
                 else
                     tbNpc.currentPathIndex = pathNames[tbNpc.hardsetPathIndex or random(1, pathCount)]
@@ -547,6 +547,14 @@ SimMovement.Citizen = {
 
         -- Is fighting? Do nothing except leave fight if possible
         if tbNpc.isFighting == 1 then
+
+            -- Case 0: toi gio fight that su
+            if tbNpc.can_respawn_tick_toFight and tbNpc.can_respawn_tick_toFight < tbNpc.tick_breath then
+                tbNpc.can_respawn_tick_toFight = nil
+                return tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JOIN FIGHT")
+            end
+
+
             -- Case 1: toi gio chuyen doi
             if tbNpc.tick_canswitch < tbNpc.tick_breath then
                 return tbNpc.fightSys:LeaveFight(simInstance, tbNpc, 0, "toi gio thay doi trang thai")
@@ -712,7 +720,9 @@ SimMovement.FormationChild = {
         local nW = tbNpc.nMapId
 
         -- Dang di theo sau npc khac 
-        local pW, pX, pY = self:GetParentPos(simInstance, nListId)
+        local pW, pX32, pY32 = self:GetParentPos(simInstance, nListId)
+        local pX = floor(pX32 / 32)
+        local pY = floor(pY32 / 32)    
         local targetPos = randomRange({pX, pY }, tbNpc.walkVar or 2)
         tbNpc.parentAppointPos[1] = targetPos[1]
         tbNpc.parentAppointPos[2] = targetPos[2]
@@ -739,7 +749,7 @@ SimMovement.FormationChild = {
         if foundParent then
             local nX32, nY32, nW32 = GetNpcPos(foundParent.finalIndex)
             local nW = SubWorldIdx2ID(nW32)
-            return nW, nX32 / 32, nY32 / 32
+            return nW, nX32, nY32
         end
 
         return 0, 0, 0
@@ -801,6 +811,13 @@ SimMovement.FormationChild = {
 
         -- Am I fighting? Do nothing except leave fight if possible
         if tbNpc.isFighting == 1 then
+
+            -- Case 0: toi gio fight that su
+            if tbNpc.can_respawn_tick_toFight and tbNpc.can_respawn_tick_toFight < tbNpc.tick_breath then
+                tbNpc.can_respawn_tick_toFight = nil
+                return tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JOIN FIGHT")
+            end
+
             -- Case 1: toi gio chuyen doi
             if tbNpc.tick_canswitch < tbNpc.tick_breath then
                 return tbNpc.fightSys:LeaveFight(simInstance, tbNpc, 0, "toi gio thay doi trang thai")
@@ -817,7 +834,9 @@ SimMovement.FormationChild = {
         -- Mode 2: follow parent NPC
         -- Player has gone different map? Do respawn
         local needRespawn = 0
-        pW, pX, pY = self:GetParentPos(simInstance, nListId)
+        pW, pX32, pY32 = self:GetParentPos(simInstance, nListId)
+        local pX = floor(pX32 / 32)
+        local pY = floor(pY32 / 32)
         local cachNguoiChoi =  GetDistanceRadius(myPosX, myPosY, pX, pY)
 
         -- Parent pos available?

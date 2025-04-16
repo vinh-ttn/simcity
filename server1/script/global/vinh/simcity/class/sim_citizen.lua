@@ -70,7 +70,7 @@ function SimCitizen:New(fighter)
     end
 
     -- Create the character on screen
-    local canCreate = tbNpc.entitySys:CreateChar(self, tbNpc, 1, tbNpc.goX, tbNpc.goY)
+    local canCreate = tbNpc.entitySys:CreateChar(self, tbNpc, 1, tbNpc.goX32, tbNpc.goY32)
     if canCreate == 0 then
         return nil
     end
@@ -89,9 +89,7 @@ function SimCitizen:initChildrenConfig(nListId, parentConfig)
         local createdChildren = {}
 
         local nX32, nY32, nW32 = GetNpcPos(tbNpc.finalIndex)
-        local nW = SubWorldIdx2ID(nW32)
-        local nX = nX32 / 32
-        local nY = nY32 / 32
+        local nW = SubWorldIdx2ID(nW32) 
 
         -- Create children
         for i = 1, getn(tbNpc.childrenSetup) do
@@ -112,8 +110,8 @@ function SimCitizen:initChildrenConfig(nListId, parentConfig)
             for k, v in tbNpc.childrenSetup[i] do
                 childConfig[k] = v
             end
-            childConfig.goX = nX
-            childConfig.goY = nY
+            childConfig.goX32 = nX32
+            childConfig.goY32 = nY32
             local childId = self:New(childConfig)
             tinsert(createdChildren, childId)
         end

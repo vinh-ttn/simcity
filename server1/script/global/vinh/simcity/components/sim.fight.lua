@@ -270,8 +270,8 @@ SimFight.Citizen = {
 
 
         -- If already having last fight pos, we may simply chance AI to 1
+        local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
         if tbNpc.lastFightPos then
-            local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
             if tbNpc.lastFightPos.W == currW then
                 if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 12) then
                     self:SetFightState(tbNpc, 9, currX, currY)
@@ -280,9 +280,8 @@ SimFight.Citizen = {
             end
         end
         
-
-        
-        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)
+        self:SetFightState(tbNpc, 9, currX, currY)
+        tbNpc.can_respawn_tick_toFight = tbNpc.tick_breath + random(1,5)*18/REFRESH_RATE       
         return 1
     end,
 
@@ -415,9 +414,9 @@ SimFight.KeoXe = {
             return 0
         end
 
-        -- If already having last fight pos, we may simply chance AI to 1
+        -- If already having last fight pos, we may simply change AI to 1
+        local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
         if tbNpc.lastFightPos then
-            local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
             if tbNpc.lastFightPos.W == currW then
                 if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 12) then
                     self:SetFightState(tbNpc, 9, currX, currY)
@@ -426,7 +425,9 @@ SimFight.KeoXe = {
             end
         end
 
-        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)
+        self:SetFightState(tbNpc, 9, currX, currY)
+        tbNpc.can_respawn_tick_toFight = tbNpc.tick_breath + random(1,5)*18/REFRESH_RATE       
+    
         return 1
     end,
 
