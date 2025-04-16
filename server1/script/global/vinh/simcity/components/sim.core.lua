@@ -22,6 +22,7 @@ function SimCore:initCharConfig(config)
     config.tick_breath = 0
     config.tick_canWalk = 0
     config.tick_canswitch = 0
+    config.tick_canCast = 0
     config.camp = config.camp or random(1, 3)
     config.noRevive = config.noRevive or 0
     config.fightingScore = 0
@@ -37,11 +38,42 @@ function SimCore:initCharConfig(config)
     config.walkMode = config.walkMode or "random"
     config.isDialogNpcAround = 0
 
+    -- Phai nhan vat?
+    if not config.faction and SimCityPhai.id2phai[config.nNpcId] then
+        config.faction = SimCityPhai.id2phai[config.nNpcId]
+    end
+
+    -- He nhan vat?
+    config.series = config.series or random(0,4)
+    if config.faction then
+        if (SimCityPhai[config.faction] and SimCityPhai[config.faction].knownIds[config.nNpcId]) then
+
+            -- He nhan vat
+            config.series = SimCityPhai[config.faction].knownIds[config.nNpcId].series
+
+            -- Nam hay nu
+            if SimCityPhai[config.faction].knownIds[config.nNpcId].gen == 1 then
+                config.nSettingsIdx = -1
+            elseif SimCityPhai[config.faction].knownIds[config.nNpcId].gen == 2 then
+                config.nSettingsIdx = -2
+            end
+
+            -- Ho tro
+            local pool = SimCityPhai[config.faction].noCast
+            if pool and getn(pool) > 0 then
+                config.skillHoTro = random(1, getn(pool))
+            end
+
+        end
+    end
+
     -- Setup movement behavior    
     config.movementSys = SimMovementSys(config)
     config.funSys = SimFunSys(config)
     config.entitySys = SimEntitySys(config)
     config.fightSys = SimFightSys(config)
+
+
 end
 
 function SimCore:Remove(nListId)
@@ -81,6 +113,7 @@ function SimCore:OnTimer(nListId)
         tbNpc.tick_canswitch = 0
         tbNpc.tick_checklag = nil
         tbNpc.tick_canWalk = 0
+        tbNpc.tick_canCast = 0
     end
 
     if tbNpc.isFighting == 1 then
@@ -96,6 +129,11 @@ function SimCore:OnTimer(nListId)
 
     -- Fun
     tbNpc.funSys:Update(tbNpc)
+
+    -- Cast skill
+    if tbNpc.faction and SimCityPhai[tbNpc.faction].normalCast then
+        tbNpc.fightSys:Update(self, tbNpc)
+    end
 end
 
 function SimCore:ATick()    

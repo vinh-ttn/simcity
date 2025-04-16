@@ -5,6 +5,12 @@ SimCityPlayerNames = {}
 SimCityChat = {}
 SimCityMap = {}
 SimCityPets = {}
+
+SimCityPhai = {
+    id2phai={}
+}
+
+
 -- Doc ten
 function loadNames()
     local namesData = SimCityTableFromFile(settingsPath.. "names.txt", {"*w"})
@@ -138,8 +144,63 @@ function loadMap()
     end
 end
 
+-- Doc phai
+function loadPhai()
+    local phaiData = SimCityTableFromFile(settingsPath.. "skills.txt", {"*w", "*n", "*w", "*w", "*n", "*n", "*n"})
+    
+    -- Duong mon khong co skill bi dong gi ca
+    SimCityPhai["duongmon"] = {
+        noCast = {},
+        needCast = {},
+        normalCast = {},
+        knownIds = {}
+    }
+
+    for i=1, getn(phaiData) do
+        local phai = phaiData[i][1]
+        local skillId = phaiData[i][2]
+        local skillName = phaiData[i][3]
+        local skillDesc = phaiData[i][4]
+        local skillMaxLevel = phaiData[i][5]
+        local skillNoCast = phaiData[i][6]
+        local skillNeedCast = phaiData[i][7]
+        
+
+        if not SimCityPhai[phai] then
+            SimCityPhai[phai] = {
+                noCast = {},
+                needCast = {},
+                normalCast = {},
+                knownIds = {}
+            }
+        end
+        if skillNoCast > 0 then
+            tinsert(SimCityPhai[phai].noCast, {skillId, skillMaxLevel, skillName})
+        elseif skillNeedCast > 0 then
+            tinsert(SimCityPhai[phai].needCast, {skillId, skillMaxLevel, skillName})
+        else
+            tinsert(SimCityPhai[phai].normalCast, {skillId, skillMaxLevel, skillName})
+        end
+    end
+
+    local id2factionData = SimCityTableFromFile(settingsPath.. "npcid2faction.txt", {"*n", "*w", "*n", "*n"})
+    for i=1, getn(id2factionData) do
+        local id = id2factionData[i][1]
+        local faction = id2factionData[i][2]
+        local series = id2factionData[i][3]
+        local gen = id2factionData[i][4]
+        if SimCityPhai[faction] then    
+            SimCityPhai[faction].knownIds[id] = {series=series, gen=gen}
+            SimCityPhai.id2phai[id] = faction
+        end
+        
+    end
+
+end
+
 -- EXECUTION
 loadNames()
 loadChat()
 loadMap()
 loadPets()
+loadPhai()

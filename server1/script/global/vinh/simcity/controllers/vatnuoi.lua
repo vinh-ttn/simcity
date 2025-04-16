@@ -40,7 +40,7 @@ function SimCityVatNuoi:mainMenu()
 	local profilePets = self:countPetsFromProfile()
 
 	-- Can buy more pets?
-	if profilePets < 3 then
+	if profilePets < 3 and self.doNotShow[name] ~= 1 then
 		tinsert(tbSay, "Ta muèn mua thó c­ng/#SimCityVatNuoi:showCategories()")
 	end
 
@@ -114,11 +114,6 @@ function SimCityVatNuoi:taoPet(dataRowId, skipSaveProfile)
 	local forCamp = GetCurCamp()
 	local pW, pX, pY = GetWorldPos()
 	local name = GetName()
-
-	-- Show all pets
-	if not skipSaveProfile then
-		self:HideMine(0)
-	end
 
 	self:taoNV(petId, forCamp, pW, 1, 0, {}, 1, {
 		szName = petName .. " cña ".. name,

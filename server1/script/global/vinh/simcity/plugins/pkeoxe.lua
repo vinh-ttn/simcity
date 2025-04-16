@@ -228,7 +228,7 @@ function SimCityKeoXe:taoBangHuu(phai, gen, tenIndex)
 	local ten = self.randomName[tenIndex]
 	local forCamp = GetCurCamp()
 	local pW, pX, pY = GetWorldPos()
-	local tenPhai = "thienvuongbang"
+	local tenPhai = "thienvuong"
 	if phai == 2 then
 		tenPhai = "thieulam"
 	elseif phai == 3 then
@@ -248,61 +248,26 @@ function SimCityKeoXe:taoBangHuu(phai, gen, tenIndex)
 	elseif phai == 10 then
 		tenPhai = "thiennhan"				
 	end
-	-- 1193, 1786, 1481, 1765: thienvuongbang
-	-- 1194, 1787, 1766: thieulam
-	-- 1196, 1788, 1488, 1767: ngudoc
-	-- 1195, 1789, 1485, 1768: duongmon
-	-- 1197, 1790, 1483, 1769: ngami
-	-- 1198, 1791, 1482, 1770: thuyyen
-	-- 1201, 1792, 1480 (thien ngoai), 1484 (van long kich), 1771 (thien ngoai): thiennhan 
-	-- 1199, 1793, 1489, 1772: caibang
-	-- 1200, 1794, 1486, 1773: vodang
-	-- 1202, 1795, 1487, 1774: conlon
 
-	local id = 1193
-	local pool = {1193}
-	local series = 0
-	if tenPhai == "thienvuongbang" then
-		pool = {1193, 1481, 1484, 1765, 1786}
-	elseif tenPhai == "thieulam" then
-		pool = {1194, 1787, 1766}
-	elseif tenPhai == "ngudoc" then
-		series = 1
-		pool = {1196, 1788, 1488, 1767}
-	elseif tenPhai == "duongmon" then
-		series = 1
-		pool = {1195, 1789, 1485, 1768}
-	elseif tenPhai == "ngami" then
-		series = 2
-		pool = {1197, 1790, 1483, 1769}
-	elseif tenPhai == "thuyyen" then
-		series = 2
-		pool = {1198, 1791, 1482, 1770}
-	elseif tenPhai == "thiennhan" then
-		series = 3
-		pool = {1200, 1792, 1480, 1771}
-	elseif tenPhai == "caibang" then
-		series = 3
-		pool = {1199, 1793, 1489, 1772}
-	elseif tenPhai == "vodang" then
-		series = 4
-		pool = {1201, 1794, 1486, 1773}
-	elseif tenPhai == "conlon" then
-		series = 4
-		pool = {1202, 1795, 1487, 1774}
+
+
+	local pool = {}
+	if SimCityPhai[tenPhai] then
+		pool = getObjectKeys(SimCityPhai[tenPhai].knownIds)
+		id = pool[random(1, getn(pool))]
+		local realGen = -2
+		if gen == 1 then
+			realGen = -1
+		end
+		
+		self:taoNV(id, forCamp, pW, 1, 1, {}, 1, {
+			szName = ten,
+			nSettingsIdx = realGen,
+			series = SimCityPhai[tenPhai].knownIds[id].series,
+			faction = tenPhai
+		})
 	end
 
-	id = pool[random(1, getn(pool))]
-	local realGen = -2
-	if gen == 1 then
-		realGen = -1
-	end
-	
-	self:taoNV(id, forCamp, pW, 1, 1, {}, 1, {
-		szName = ten,
-		nSettingsIdx = realGen,
-		series = series
-	})
 	
 end
 

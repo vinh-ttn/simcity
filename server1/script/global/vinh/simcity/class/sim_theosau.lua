@@ -35,8 +35,6 @@ function SimTheoSau:New(fighter)
     end
 
     -- Bugfix series
-    tbNpc.series = tbNpc.series or random(0,4)
-
     tbNpc.isPlayerFighting = CallPlayerFunction(tbNpc.playerID, GetFightState)
 
     -- Create the character on screen

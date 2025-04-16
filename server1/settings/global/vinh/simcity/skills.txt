@@ -1,0 +1,41 @@
+phai	skillId	ten	chucnang	maxLevel	noCast	castBasic
+caibang	130	Tóy §iÖp Cuång Vò 	Hç trî phßng ngù - chñ ®éng	30	0	1
+caibang	277	Ho¹t BÊt L­u Thñ 	Chñ ®éng hç trî chiÕn ®Êu	20	0	1
+conlon	90	Mª Tung ¶o ¶nh		20	0	0
+conlon	171	Thanh Phong phï 	Chñ ®éng hç trî chiÕn ®Êu	20	0	1
+conlon	173	Thiªn Thanh §Şa Träc	Hç trî phßng ngù - chñ ®éng	20	0	1
+conlon	174	Ki B¸n phï 	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+conlon	175	Khi Hµn Ng¹o TuyÕt	Hç trî phßng ngù - bŞ  ®éng	20	0	0
+conlon	178	NhÊt Khİ Tam Thanh	Chñ ®éng hç trî chiÕn ®Êu	20	1	0
+conlon	392	Thóc Ph­îc Chó 	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+conlon	393	B¾c Minh §¸o H¶i	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+conlon	394	Tóy Tiªn T¸ Cèt	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+ngami	86	L­u Thñy 	Vßng trßn  håi phôc thuéc tİnh	20	1	0
+ngami	89	Méng §iÖp 	Vßng trßn  håi phôc thuéc tİnh	20	1	0
+ngami	92	PhËt T©m Tõ H÷u	Vßng trßn  t¨ng c­êng thuéc tİnh	20	1	0
+ngami	93	Tõ Hµng Phæ D	chñ ®éng håi phôc thuéc tİnh	20	0	0
+ngami	282	Thanh ¢m Ph¹n X­íng	Vßng trßn  håi phôc thuéc tİnh	20	1	0
+ngami	332	Phæ §é Chóng Sinh 	Vßng trßn  håi phôc thuéc tİnh	20	1	0
+ngami	712	BÕ NguyÖt PhÊt TrÇn	Vßng trßn  håi phôc thuéc tİnh	20	1	0
+ngudoc	64	B¨ng Lam HuyÒn Tinh	Chñ ®éng hç trî c«ng kİch	20	0	0
+ngudoc	67	Cöu Thiªn Cuång L«i 	Chñ ®éng hç trî c«ng kİch	20	0	0
+ngudoc	69	V« H×nh §éc	Vßng trßn  hç trî c«ng kİch	20	1	0
+ngudoc	70	Xİch DiÖm Thùc Thiªn	Chñ ®éng hç trî c«ng kİch	20	0	0
+ngudoc	72	Xuyªn T©m §éc Thİch	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+ngudoc	73	V¹n §éc Thùc T©m	Chñ ®éng hç trî c«ng kİch	20	0	0
+ngudoc	356	Xuyªn Y Ph¸ Gi¸p 	Xuyªn Y Ph¸ Gi¸p 	20	0	0
+ngudoc	390	§o¹n C©n Hñ Cèt 	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+thiennhan	150	Thiªn Ma Gi¶i ThÓ 	Chñ ®éng hç trî c«ng kİch	30	0	1
+thiennhan	391	NhiÕp Hån Lo¹n T©m 	Chñ ®éng hç trî chiÕn ®Êu	20	0	0
+thienvuong	33	TÜnh T©m QuyÕt	Chñ ®éng hç trî c«ng kİch	20	0	1
+thienvuong	42	Kim Chung Tr¸o	Hç trî phßng ngù - chñ ®éng	20	0	1
+thieulam	15	BÊt ®éng Minh V­¬ng 	Hç trî phßng ngù - chñ ®éng	20	0	1
+thieulam	16	La H¸n TrËn	Vßng trßn  hç trî chiÕn ®Êu	20	1	0
+thieulam	20	S­ Tö Hèng 	C«ng kİch néi c«ng 	20	0	0
+thieulam	273	Nh­ Lai Thiªn DiÖp 	Chñ ®éng hç trî chiÕn ®Êu	30	0	1
+thuyyen	100	Hé ThÓ Hµn B¨ng 	Chñ ®éng hç trî chiÕn ®Êu	20	0	1
+thuyyen	109	TuyÕt ¶nh	Chñ ®éng hç trî c«ng kİch	20	0	1
+thuyyen	269	B¨ng T©m Tr¸i ¶nh	chñ ®éng håi phôc thuéc tİnh	20	0	0
+vodang	157	Täa Väng V« Ng· 	Hç trî phßng ngù - chñ ®éng	20	0	1
+vodang	159	ThÊt Tinh TrËn	Vßng trßn  hç trî c«ng kİch	20	1	0
+vodang	716	XuÊt ø BÊt NhiÔm	chñ ®éng hç trî 	20	0	0

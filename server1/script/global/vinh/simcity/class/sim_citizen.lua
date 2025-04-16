@@ -96,6 +96,14 @@ function SimCitizen:initChildrenConfig(nListId, parentConfig)
         -- Create children
         for i = 1, getn(tbNpc.childrenSetup) do
             local childConfig = objCopy(parentConfig)
+
+            -- Do not inherit faction, series, settingsIdx, skillHoTro
+            childConfig.faction = nil
+            childConfig.series = nil
+            childConfig.nSettingsIdx = nil
+            childConfig.skillHoTro = nil
+            
+            -- Setup parents
             childConfig.parentID = tbNpc.id
             childConfig.childID = i
             childConfig.role = "child"
