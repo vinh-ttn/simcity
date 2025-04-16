@@ -168,7 +168,7 @@ function SimCityMainTongKim:onPlayerEnterMap()
 	if TONGKIM_AUTOCREATE and TONGKIM_AUTOCREATE == 1 then
 
 		SimCityMainTongKim:updateCampPosition()
-		SimCityChienTranh:modeTongKim(1, self.camp2TopRight)
+		SimCityChienTranh:modeTongKim(1, SimCityMainTongKim.camp2TopRight)
 
 		local nW, nX, nY = GetWorldPos()
 		SimCityMainTongKim:setUpMap(nW)

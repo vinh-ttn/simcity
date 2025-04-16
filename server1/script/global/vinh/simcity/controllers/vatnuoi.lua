@@ -115,11 +115,25 @@ function SimCityVatNuoi:taoPet(dataRowId, skipSaveProfile)
 	local pW, pX, pY = GetWorldPos()
 	local name = GetName()
 
+	-- Buy mode?
+	if not skipSaveProfile then
+		if (GetCash() > petCost*10000) then
+			Pay(petCost*10000)
+		else
+			local tbSay = createTaskSayVatNuoi()
+			tinsert(tbSay, "Cã tiÒn råi h·y quay l¹i./no")
+			CreateTaskSay(tbSay)
+			return 1 
+		end
+	end
+	
+	-- Create pet
 	self:taoNV(petId, forCamp, pW, 1, 0, {}, 1, {
 		szName = petName .. " cña ".. name,
 		petId = dataRowId
 	})
 
+	-- Save the pet
 	if not skipSaveProfile then
 		self:savePetsToProfile()
 	end
