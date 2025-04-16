@@ -1,5 +1,11 @@
 # SimCity Changelog
 
+## 5.7 (16-04-2025)
+- Thêm chức năng buff bùa, trấn phái và skill
+- Thêm chức năng "Lão Động Vật" ở gần Tương Dương bán ngựa
+
+# SimCity Changelog
+
 ## 5.6 (13-04-2025)
 - Nâng cấp toàn bộ hệ thống
 - Sim Tống Kim cực kỳ nhanh không lag

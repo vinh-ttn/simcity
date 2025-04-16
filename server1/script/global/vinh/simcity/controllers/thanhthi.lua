@@ -421,7 +421,7 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 	end
 
 	-- If not enabled, create it
-	if self.worldStatus["w" .. nW].enabled == 0 then
+	if not (self.worldStatus["w" .. nW]) or self.worldStatus["w" .. nW].enabled == 0 then
 		self.worldStatus["w" .. nW].enabled = 1
 
 		if SimCityWorld:IsTongKimMap(nW) == 1 then
