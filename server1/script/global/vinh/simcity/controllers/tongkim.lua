@@ -178,8 +178,8 @@ function SimCityMainTongKim:onPlayerEnterMap()
 		local counter = SimCityChienTranh:countMap(nW)
 		
 		if counter == 0 then
-			print("DONE SETUP TK", self.camp2TopRight)
-			self.playerInTK[nW] = {}
+			SimCityTongKim.playerInTK[nW] = {}
+			SimCityMainTongKim:clearTongKimNpc(nW)
 			SimCityChienTranh:nv_tudo(1)
 		end
 
