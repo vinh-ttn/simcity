@@ -38,7 +38,7 @@ function SimTheoSau:New(fighter)
     tbNpc.isPlayerFighting = CallPlayerFunction(tbNpc.playerID, GetFightState)
 
     -- Create the character on screen
-    tbNpc.entitySys:CreateChar(self, tbNpc, 1, tbNpc.goX, tbNpc.goY)
+    tbNpc.entitySys:CreateChar(self, tbNpc, 1, tbNpc.goX32, tbNpc.goY32)
  
     return nListId
 end

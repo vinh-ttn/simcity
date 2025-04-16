@@ -226,12 +226,12 @@ SimFight.Citizen = {
         return 0
     end,
     SetFightState = function(self, tbNpc, mode, nX, nY)
-        if mode == 9 then
-            SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)
-            
-        else
+        
+        --if mode == 9 then
+        --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
+        --else
             SetNpcAI(tbNpc.finalIndex, mode)
-        end
+        --end
     end,
 
 
@@ -268,19 +268,17 @@ SimFight.Citizen = {
 
 
         -- If already having last fight pos, we may simply chance AI to 1
+        local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
         if tbNpc.lastFightPos then
-            local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
             if tbNpc.lastFightPos.W == currW then
-                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 15) then
+                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 12) then
                     self:SetFightState(tbNpc, 9, currX, currY)
                     return 1
                 end
             end
         end
         
-
-        
-        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)
+        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)      
         return 1
     end,
 
@@ -385,11 +383,11 @@ SimFight.KeoXe = {
         return 0
     end,
     SetFightState = function(self, tbNpc, mode, nX, nY)            
-        if mode == 9 then
-            SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
-        else
+        --if mode == 9 then
+        --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
+        --else
             SetNpcAI(tbNpc.finalIndex, mode)
-        end
+        --end
 
         if tbNpc.isPlayerFighting == 0 then
             SetNpcCurCamp(tbNpc.finalIndex, 0)
@@ -413,18 +411,19 @@ SimFight.KeoXe = {
             return 0
         end
 
-        -- If already having last fight pos, we may simply chance AI to 1
+        -- If already having last fight pos, we may simply change AI to 1
+        local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
         if tbNpc.lastFightPos then
-            local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
             if tbNpc.lastFightPos.W == currW then
-                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 15) then
+                if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 12) then
                     self:SetFightState(tbNpc, 9, currX, currY)
                     return 1
                 end
             end
         end
 
-        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)
+        tbNpc.entitySys:Respawn(simInstance, tbNpc, 3, "JoinFight " .. reason)     
+    
         return 1
     end,
 
