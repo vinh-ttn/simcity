@@ -44,10 +44,8 @@ SimMovement.KeoXe = {
             if isPlayerFighting ~= tbNpc.isPlayerFighting then
                 tbNpc.isPlayerFighting = isPlayerFighting
                 if isPlayerFighting == 1 then
-                    SetNpcCurCamp(tbNpc.finalIndex, tbNpc.camp)
                     SetNpcKind(tbNpc.finalIndex, tbNpc.kind or 4)
                 else
-                    SetNpcCurCamp(tbNpc.finalIndex, 0)
                     SetNpcKind(tbNpc.finalIndex, 0)
                 end
             end
