@@ -43,7 +43,7 @@ DISTANCE_CAN_CONTINUE = 5          -- start next position if within 3 points fro
 DISTANCE_CAN_SPIN = 2              -- when spinning make sure the check is tighter
 SPINNING_WAIT_TIME = 0             -- wait time to correct position
 CHAR_SPACING = 1                   -- spacing between fighter characters
-DISTANCE_FOLLOW_PLAYER = 10        -- chay theo nguoi choi neu cach xa
+DISTANCE_FOLLOW_PLAYER = 16        -- chay theo nguoi choi neu cach xa
 DISTANCE_SUPPORT_PLAYER = 8        -- neu gan nguoi choi khoang cach 12 thi chuyen sang chien dau
 DISTANCE_FOLLOW_PLAYER_TOOFAR = 30 -- neu qua xa nguoi choi vi chay nhanh thi phai bien hinh theo
 DISTANCE_VISION = 15               -- qua 15 = phai respawn vi no se quay ve cho cu
