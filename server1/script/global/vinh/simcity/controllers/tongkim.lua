@@ -165,24 +165,10 @@ function SimCityMainTongKim:addTongKimNpc()
 end
 
 function SimCityMainTongKim:onPlayerEnterMap()
-	if TONGKIM_AUTOCREATE and TONGKIM_AUTOCREATE == 1 then
-
-		SimCityMainTongKim:updateCampPosition()
-		SimCityChienTranh:modeTongKim(1, SimCityMainTongKim.camp2TopRight)
-
-		local nW, nX, nY = GetWorldPos()
-		SimCityMainTongKim:setUpMap(nW)
-
-		SimCityChienTranh.nW = nW
-		local worldInfo = SimCityWorld:Get(nW)
+	if TONGKIM_AUTOCREATE and TONGKIM_AUTOCREATE == 1 then 
 		local counter = SimCityChienTranh:countMap(nW)
-		
 		if counter == 0 then
-			SimCityTongKim.playerInTK[nW] = {}
-			SimCityMainTongKim:clearTongKimNpc(nW)
-			SimCityChienTranh:nv_tudo(1)
+			SimCityMainTongKim:mainMenu()
 		end
-
-		
 	end
 end
