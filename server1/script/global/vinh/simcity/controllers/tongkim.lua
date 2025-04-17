@@ -162,6 +162,9 @@ function SimCityMainTongKim:addTongKimNpc()
 	SetNpcCurCamp(id, 1)
 
 
+	-- Clear everyone
+	SimCityMainTongKim:clearTongKimNpc(nW)
+
 end
 
 function SimCityMainTongKim:onPlayerEnterMap()

@@ -454,7 +454,6 @@ function SimCityMainThanhThi:onPlayerExitMap()
 		self.worldStatus["w" .. nW] = nil
 
 		if SimCityWorld:IsTongKimMap(nW) == 1 then
-			SimCityMainTongKim:clearTongKimNpc(nW)
 			return 1
 		end
 
