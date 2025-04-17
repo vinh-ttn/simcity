@@ -50,8 +50,12 @@ SimMovement.KeoXe = {
                 end
             end
 
-
             cachNguoiChoi = GetDistanceRadius(myPosX, myPosY, pX, pY)
+
+            if (cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) then
+                tbNpc.fightSys:execCastOnParent(simInstance, tbNpc, pID, pX, pY)
+            end                       
+
         else
             if not tbNpc.notFoundPlayerTick then
                 tbNpc.notFoundPlayerTick = tbNpc.tick_breath

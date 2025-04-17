@@ -605,7 +605,7 @@ function SimCityMainThanhThi:createNpcSoCapByMap()
 			for i = 1, total do
 				local id = tmpFound[random(1, N)]
 				local children5 = {}
-				for j = 1, 7 do
+				for j = 1, random(4, 7) do
 					tinsert(children5, {
 						mode = "train",
 						szName = SimCityNPCInfo:generateName(),

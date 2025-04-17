@@ -74,7 +74,7 @@ function SimCityVatNuoi:showPetsInCategory(category)
 		local petName = petData[1]
 		local petCost = petData[3]
 		local petCostDisplay = floor(petCost/10000) .. " v¹n l­îng"
-		tinsert(tbSay, format("%s (%s)/#SimCityVatNuoi:taoPet(%s)", petName, petCostDisplay, SimCityPets[category][i]))
+		tinsert(tbSay, format("%s (%s)/#SimCityVatNuoi:taoPet(%s, 0)", petName, petCostDisplay, SimCityPets[category][i]))
 	end
 
 	tinsert(tbSay, "Quay l¹i./#SimCityVatNuoi:mainMenu()")
@@ -116,7 +116,7 @@ function SimCityVatNuoi:taoPet(dataRowId, skipSaveProfile)
 	local name = GetName()
 
 	-- Buy mode?
-	if not skipSaveProfile then
+	if skipSaveProfile == 0 then
 		if (GetCash() > petCost*10000) then
 			Pay(petCost*10000)
 		else
@@ -134,7 +134,7 @@ function SimCityVatNuoi:taoPet(dataRowId, skipSaveProfile)
 	})
 
 	-- Save the pet
-	if not skipSaveProfile then
+	if skipSaveProfile == 0 then
 		self:savePetsToProfile()
 	end
 
@@ -301,7 +301,7 @@ function SimCityVatNuoi:loadPetsFromProfile()
 			local total = GetByte(n_value, 1)
 			for i=1, total do
 				local petId = GetByte(n_value, i+1)
-				self:taoPet(petId, true)
+				self:taoPet(petId, 1)
 			end
 		end
 	end

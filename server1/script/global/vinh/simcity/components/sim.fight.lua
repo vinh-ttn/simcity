@@ -58,7 +58,7 @@ end
 function execCastNormalSkill(self, simInstance, tbNpc)
 
     -- No skill?
-    if not tbNpc.faction or not SimCityPhai[tbNpc.faction] then
+    if not tbNpc.faction or not SimCityPhai[tbNpc.faction] or tbNpc.faction == "ngami" then
         return
     end
 
@@ -88,7 +88,7 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     if foundPlayerEnemy > 0 then
         local targetX, targetY, targetW = CallPlayerFunction(foundPlayerEnemy, GetWorldPos)
         NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel, targetX*32, targetY*32)        
-        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18*REFRESH_RATE/2
+        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18/REFRESH_RATE
         return
     end
 
@@ -96,9 +96,53 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     if foundNpcEnemy > 0 then
         local targetX, targetY, targetW = GetNpcPos(foundNpcEnemy)
         NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel, targetX, targetY)
-        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18*REFRESH_RATE/2
+        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18/REFRESH_RATE
         return
     end
+end
+
+function execCastOnParent(self, simInstance, tbNpc, pId, pX, pY)
+    
+    -- Hien tai chi ho tro Nga Mi
+    if tbNpc.role ~= "keoxe" or tbNpc.faction ~= "ngami" then
+        return
+    end
+
+    -- Ngung cast giua cac lan
+    if (tbNpc.tick_canCast and tbNpc.tick_canCast > tbNpc.tick_breath) then
+        return
+    end
+
+    local parentMax = NPCINFO_GetNpcCurrentMaxLife(PIdx2NpcIdx(pId))
+    local parentCur = NPCINFO_GetNpcCurrentLife(PIdx2NpcIdx(pId))
+    local parentPercent = parentCur / parentMax
+    
+    if parentPercent < 0.5 then
+        NpcCastSkill(tbNpc.finalIndex, 93, 20, pX*32, pY*32)
+        tbNpc.tick_canCast = tbNpc.tick_breath + 10*18/REFRESH_RATE
+    end 
+end
+function execCastOnSelf(self, tbNpc)
+    
+    -- Hien tai chi ho tro Nga Mi
+    if tbNpc.faction ~= "ngami" then
+        return
+    end
+
+    -- Ngung cast giua cac lan
+    if (tbNpc.tick_canCast and tbNpc.tick_canCast > tbNpc.tick_breath) then
+        return
+    end
+
+    local parentMax = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+    local parentCur = NPCINFO_GetNpcCurrentLife(tbNpc.finalIndex)
+    local parentPercent = parentCur / parentMax
+    
+    if parentPercent < 0.3 then
+        local nX, nY, nW = GetNpcPos(tbNpc.finalIndex)
+        NpcCastSkill(tbNpc.finalIndex, 93, random(10,20), nX, nY)
+        tbNpc.tick_canCast = tbNpc.tick_breath + 10*18/REFRESH_RATE
+    end 
 end
 
 function BuffChar(self, simInstance, tbNpc)
@@ -147,6 +191,8 @@ SimFight.Base = {
 SimFight.Citizen = {
     LeaveFight = LeaveFight,
     BuffChar = BuffChar,
+    execCastOnParent = execCastOnParent,
+    execCastOnSelf = execCastOnSelf,    
     TriggerFightWithNPC = function(self, simInstance, tbNpc)
         if tbNpc.isPlayerFighting == 0 then
             return 0
@@ -318,6 +364,8 @@ SimFight.Citizen = {
 SimFight.KeoXe = {
     LeaveFight = LeaveFight,
     BuffChar = BuffChar,
+    execCastOnParent = execCastOnParent,
+    execCastOnSelf = execCastOnSelf,
     TriggerFightWithNPC = function(self, simInstance, tbNpc)
         if tbNpc.isPlayerFighting == 0 then
             return 0
