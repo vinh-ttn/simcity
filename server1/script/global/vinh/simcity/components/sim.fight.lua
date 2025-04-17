@@ -88,7 +88,7 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     if foundPlayerEnemy > 0 then
         local targetX, targetY, targetW = CallPlayerFunction(foundPlayerEnemy, GetWorldPos)
         NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel, targetX*32, targetY*32)        
-        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18*REFRESH_RATE/2
+        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18/REFRESH_RATE
         return
     end
 
@@ -96,7 +96,7 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     if foundNpcEnemy > 0 then
         local targetX, targetY, targetW = GetNpcPos(foundNpcEnemy)
         NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel, targetX, targetY)
-        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18*REFRESH_RATE/2
+        tbNpc.tick_canCast = tbNpc.tick_breath + 15*18/REFRESH_RATE
         return
     end
 end
@@ -117,9 +117,9 @@ function execCastOnParent(self, simInstance, tbNpc, pId, pX, pY)
     local parentCur = NPCINFO_GetNpcCurrentLife(PIdx2NpcIdx(pId))
     local parentPercent = parentCur / parentMax
     
-    if parentPercent < 0.3 then
+    if parentPercent < 0.5 then
         NpcCastSkill(tbNpc.finalIndex, 93, 20, pX*32, pY*32)
-        tbNpc.tick_canCast = tbNpc.tick_breath + 10*18*REFRESH_RATE/2
+        tbNpc.tick_canCast = tbNpc.tick_breath + 10*18/REFRESH_RATE
     end 
 end
 function execCastOnSelf(self, tbNpc)
@@ -140,8 +140,8 @@ function execCastOnSelf(self, tbNpc)
     
     if parentPercent < 0.3 then
         local nX, nY, nW = GetNpcPos(tbNpc.finalIndex)
-        NpcCastSkill(tbNpc.finalIndex, 93, random(1,20), nX, nY)
-        tbNpc.tick_canCast = tbNpc.tick_breath + 10*18*REFRESH_RATE/2
+        NpcCastSkill(tbNpc.finalIndex, 93, random(10,20), nX, nY)
+        tbNpc.tick_canCast = tbNpc.tick_breath + 10*18/REFRESH_RATE
     end 
 end
 
