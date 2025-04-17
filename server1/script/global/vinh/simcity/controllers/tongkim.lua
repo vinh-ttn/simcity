@@ -163,7 +163,7 @@ function SimCityMainTongKim:addTongKimNpc()
 
 
 	-- Clear everyone
-	SimCityMainTongKim:clearTongKimNpc(nW)
+	SimCityMainTongKim:clearTongKimNpc(SubWorldIdx2ID(nW))
 
 end
 
