@@ -72,8 +72,8 @@ function execCastNormalSkill(self, simInstance, tbNpc)
         return
     end
 
-    -- Random cast only 2% allowed
-    if (random(1, 100) > 2) then
+    -- Random cast only 0.5% allowed
+    if (random(1, 1000) > 5) then
         return
     end
 
