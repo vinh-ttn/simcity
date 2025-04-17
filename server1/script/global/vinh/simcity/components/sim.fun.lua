@@ -58,6 +58,13 @@ function execRestoreLife(tbNpc)
         then
         local currentLife = NPCINFO_GetNpcCurrentLife(tbNpc.finalIndex)
         local maxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+
+        -- Ngami = tu buff nao
+        if tbNpc.faction == "ngami" then
+            return tbNpc.fightSys:execCastOnSelf(tbNpc)            
+        end 
+
+        -- Binh thuong = 3000 moi 10 giay
         if currentLife and maxLife and currentLife < maxLife then
             -- Calculate life to restore (percentage of max life)
             local restoreAmount = 3000 --maxLife * LIFE_RESTORE_PERCENT  -- Default 1% if not specified
