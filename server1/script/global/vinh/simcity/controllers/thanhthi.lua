@@ -408,32 +408,28 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 	if self.autoAddThanhThi ~= 1 then
 		return 1
 	end
+	
 	local nW, _, _ = GetWorldPos()
 
-	if not self.worldStatus["w" .. nW] then
-		self.worldStatus["w" .. nW] = {
-			count = 1,
-			enabled = 0,
-			world = nW
+	if SimCityWorld:IsTongKimMap(nW) == 1 then
+		return 1
+	end
+
+	if not self.worldStatus[nW] then
+		self.worldStatus[nW] = {
+			countPlayer = 1,
 		}
 	else
-		self.worldStatus["w" .. nW].count = self.worldStatus["w" .. nW].count + 1
+		self.worldStatus[nW].countPlayer = self.worldStatus[nW].countPlayer + 1
 	end
 
-	-- If not enabled, create it
-	if not (self.worldStatus["w" .. nW]) or self.worldStatus["w" .. nW].enabled == 0 then
-		self.worldStatus["w" .. nW].enabled = 1
+	local worldInfo = SimCityWorld:Get(nW)
 
-		if SimCityWorld:IsTongKimMap(nW) == 1 then
-			return 1
-		end
-
-		local worldInfo = SimCityWorld:Get(nW)
-		if (worldInfo.name ~= "" and self:countMap(nW) == 0) then
-			self:createNpcSoCapByMap()
-			SimCityWorld:Update(nW, "showFightingArea", 0)
-		end
+	if (worldInfo.name ~= "" and self.worldStatus[nW].countPlayer >= 1 and self:countMap(nW) == 0) then
+		self:createNpcSoCapByMap()
+		SimCityWorld:Update(nW, "showFightingArea", 0)
 	end
+
 end
 
 function SimCityMainThanhThi:onPlayerExitMap()
@@ -442,20 +438,18 @@ function SimCityMainThanhThi:onPlayerExitMap()
 	end
 
 	local nW, _, _ = GetWorldPos()
-	if not self.worldStatus["w" .. nW] then
+	if not self.worldStatus[nW] then
 		return 1
 	end
 
-	self.worldStatus["w" .. nW].count = self.worldStatus["w" .. nW].count - 1
+	if SimCityWorld:IsTongKimMap(nW) == 1 then
+		return 1
+	end
+
+	self.worldStatus[nW].countPlayer = self.worldStatus[nW].countPlayer - 1
 
 	-- If enabled but no one left, clean it
-	if self.worldStatus["w" .. nW].count == 0 and self.worldStatus["w" .. nW].enabled == 1 then
-		self.worldStatus["w" .. nW] = nil
-
-		if SimCityWorld:IsTongKimMap(nW) == 1 then
-			return 1
-		end
-
+	if self.worldStatus[nW].countPlayer == 0 then 
 		self:removeAll()
 	end
 end
