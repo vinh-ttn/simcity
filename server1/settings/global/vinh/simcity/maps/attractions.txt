@@ -1,0 +1,161 @@
+worldId	worldName	pX	pY	description	npcId
+176	L©m An	1606	3292	NPC Xa Phu	1
+176	L©m An	1372	3329	NPC Xa Phu	1
+176	L©m An	1601	2912	NPC Xa Phu	1
+176	L©m An	1353	3014	NPC Xa Phu	1
+176	L©m An	1532	3010	Vâ L©m TruyÒn nh©n	1
+176	L©m An	1506	2984	LÔ Quan	1
+176	L©m An	1683	3220	Thî rÌn	1
+176	L©m An	1332	3060	Thî rÌn	1
+176	L©m An	1520	2986	Thî rÌn	1
+176	L©m An	1685	3319	D­îc §iÕm	203
+176	L©m An	1474	3362	D­îc §iÕm	203
+176	L©m An	1544	2964	D­îc §iÕm	203
+176	L©m An	1615	2977	D­îc §iÕm	203
+176	L©m An	1340	3165	TiÖm T¹p Hãa	384
+176	L©m An	1457	3259	Sø Gi¶ KiÖt XuÊt	1
+176	L©m An	1592	2944	ThÝ LuyÖn §­êng	1
+176	L©m An	1371	3007	NhiÕp ThÝ TrÇn	1
+176	L©m An	1387	2961	Hµng Rong	1
+176	L©m An	1561	2980	D· TÈu	1
+176	L©m An	1689	3291	Xa Phu C«ng Thµnh	1
+176	L©m An	1654	3263	Ch­ëng §»ng Cung N÷	1
+176	L©m An	1439	3268	Ch­ëng §»ng Cung N÷	1
+176	L©m An	1384	2979	Ch­ëng §»ng Cung N÷	1
+176	L©m An	1576	2958	Ch­ëng §»ng Cung N÷	1
+176	L©m An	1314	3195	Thî rÌn ThÊn bÝ	1
+176	L©m An	1412	3312	Vâ L©m Minh Chñ	1
+176	L©m An	1442	3061	Chñ TiÒn Trang	1
+176	L©m An	1478	3237	Néi C¸c Th­îng Th­	1
+176	L©m An	1312	2848	ThÊn BÝ Th­¬ng Nh©n	1
+176	L©m An	1657	3261	Ch­ëng §¨ng Cung N÷	1
+176	L©m An	1577	2957	Ch­ëng §¨ng Cung N÷	1
+176	L©m An	1439	3267	Ch­ëng §¨ng Cung N÷	1
+176	L©m An	1385	2977	Ch­ëng §¨ng Cung N÷	1
+1	Ph­îng T­êng	1647	3166	NPC Xa Phu	1
+1	Ph­îng T­êng	1557	3108	NPC Xa Phu	1
+1	Ph­îng T­êng	1520	3230	NPC Xa Phu	1
+1	Ph­îng T­êng	1652	3281	NPC Xa Phu	1
+1	Ph­îng T­êng	1623	3205	Vâ L©m TruyÒn nh©n	1
+1	Ph­îng T­êng	1614	3152	LÔ Quan	1
+1	Ph­îng T­êng	1618	3196	Thî rÌn	1
+1	Ph­îng T­êng	1604	3190	D­îc §iÕm	203
+1	Ph­îng T­êng	1559	3206	TiÖm T¹p Hãa	384
+1	Ph­îng T­êng	1671	3218	Sø Gi¶ Liªn ®Êu	1
+1	Ph­îng T­êng	1586	3229	ThÝ LuyÖn §­êng	1
+1	Ph­îng T­êng	1507	3198	NhiÕp ThÝ TrÇn	1
+1	Ph­îng T­êng	1619	3103	Hµng Rong	1
+1	Ph­îng T­êng	1618	3090	D· TÈu	1
+1	Ph­îng T­êng	1640	3270	Xa Phu C«ng Thµnh	1
+162	§¹i Lý	1669	3124	NPC Xa Phu	1
+162	§¹i Lý	1697	3279	NPC Xa Phu	1
+162	§¹i Lý	1469	3269	NPC Xa Phu	1
+162	§¹i Lý	1628	3184	Vâ L©m TruyÒn nh©n	1
+162	§¹i Lý	1587	3221	LÔ Quan	1
+162	§¹i Lý	15599	3262	Thî rÌn	1
+162	§¹i Lý	1449	3211	D­îc §iÕm	203
+162	§¹i Lý	1535	3201	TiÖm T¹p Hãa	384
+162	§¹i Lý	1651	3226	Sø Gi¶ Liªn §Êu	1
+162	§¹i Lý	1613	3190	ThÝ LuyÖn §­êng	1
+162	§¹i Lý	1574	3227	NhiÕp ThÝ TrÇn	1
+162	§¹i Lý	1671	3236	Hµng Rong	1
+162	§¹i Lý	1651	3226	D· TÈu	1
+162	§¹i Lý	1681	3276	Xa Phu C«ng Thµnh	1
+99	VÜnh L¹c TrÊn	1646	3192	D· TÈu	1
+99	VÜnh L¹c TrÊn	1614	3177	LÔ Quan	1
+99	VÜnh L¹c TrÊn	1595	3227	HiÖu Thuèc	203
+99	VÜnh L¹c TrÊn	1606	3282	T¹p Hãa	384
+99	VÜnh L¹c TrÊn	1630	3304	Xa Phu	1
+99	VÜnh L¹c TrÊn	1607	3161	Xa Phu	1
+100	Chu Tiªn TrÊn	1616	3199	D· TÈu	1
+100	Chu Tiªn TrÊn	1621	3181	LÔ Quan	1
+100	Chu Tiªn TrÊn	1657	3124	HiÖu Thuèc	203
+100	Chu Tiªn TrÊn	1641	3126	T¹p Hãa	384
+100	Chu Tiªn TrÊn	1610	3097	Xa Phu	1
+100	Chu Tiªn TrÊn	1678	3101	Xa Phu	1
+100	Chu Tiªn TrÊn	1719	3217	Xa Phu	1
+100	Chu Tiªn TrÊn	1603	3168	Xa Phu	1
+101	§¹o H­¬ng Th«n	1677	3143	D· TÈu	1
+101	§¹o H­¬ng Th«n	1671	3172	LÔ Quan	1
+101	§¹o H­¬ng Th«n	1679	3196	HiÖu Thuèc	203
+101	§¹o H­¬ng Th«n	1639	3144	T¹p Hãa	384
+101	§¹o H­¬ng Th«n	1623	3098	Xa Phu	1
+37	BiÖn Kinh	1630	3187	NPC Xa Phu	1
+37	BiÖn Kinh	1704	3224	NPC Xa Phu	1
+37	BiÖn Kinh	1595	2994	NPC Xa Phu	1
+37	BiÖn Kinh	1860	2928	NPC Xa Phu	1
+37	BiÖn Kinh	1755	3043	Vâ L©m TruyÒn nh©n	1
+37	BiÖn Kinh	1806	3098	LÔ Quan	1
+37	BiÖn Kinh	1712	3102	Thî rÌn	1
+37	BiÖn Kinh	1747	3050	Thî rÌn	1
+37	BiÖn Kinh	1773	3090	D­îc §iÕm	203
+37	BiÖn Kinh	1786	3103	TiÖm T¹p Hãa	384
+37	BiÖn Kinh	1776	3063	Sø Gi¶ KiÖt XuÊt	1
+37	BiÖn Kinh	1740	3065	ThÝ LuyÖn §­êng	1
+37	BiÖn Kinh	1646	3050	NhiÕp ThÝ TrÇn	1
+37	BiÖn Kinh	1589	3096	Hµng Rong	1
+37	BiÖn Kinh	1784	3042	Néi C¸c Th­îng Th­	1
+37	BiÖn Kinh	1641	3145	B×nh B×nh C« N­¬ng	1
+37	BiÖn Kinh	16620	3019	B×nh B×nh C« N­¬ng	1
+37	BiÖn Kinh	1713	374	B×nh B×nh C« N­¬ng	1
+37	BiÖn Kinh	1865	2968	B×nh B×nh C« N­¬ng	1
+37	BiÖn Kinh	1734	3102	D· TÈu	1
+37	BiÖn Kinh	1693	3212	Xa Phu C«ng Thµnh	1
+78	T­¬ng D­¬ng	1509	3140	NPC Xa Phu	1
+78	T­¬ng D­¬ng	1439	3212	NPC Xa Phu	1
+78	T­¬ng D­¬ng	1598	3378	NPC Xa Phu	1
+78	T­¬ng D­¬ng	1693	3233	NPC Xa Phu	1
+78	T­¬ng D­¬ng	1609	3259	Vâ L©m TruyÒn nh©n	1
+78	T­¬ng D­¬ng	1541	3247	LÔ Quan	1
+78	T­¬ng D­¬ng	1550	3217	Thî rÌn	1
+78	T­¬ng D­¬ng	1612	3244	D­îc §iÕm	203
+78	T­¬ng D­¬ng	1628	3262	TiÖm T¹p Hãa	384
+78	T­¬ng D­¬ng	1546	3118	Sø Gi¶ KiÖt XuÊt	1
+78	T­¬ng D­¬ng	1606	3238	ThÝ LuyÖn §­êng	1
+78	T­¬ng D­¬ng	1511	3208	NhiÕp ThÝ TrÇn	1
+78	T­¬ng D­¬ng	1489	3270	Hµng Rong	1
+78	T­¬ng D­¬ng	1594	3289	D· TÈu	1
+78	T­¬ng D­¬ng	1582	3379	Xa Phu C«ng Thµnh	1
+78	T­¬ng D­¬ng	1554	3183	ThÇn BÝ th­¬ng nh©n	1
+121	Long M«n TrÊn	1959	4500	D· TÈu	1
+121	Long M«n TrÊn	1958	4517	LÔ Quan	1
+121	Long M«n TrÊn	1934	4551	HiÖu Thuèc	203
+121	Long M«n TrÊn	1914	4524	T¹p Hãa	384
+121	Long M«n TrÊn	1924	4527	Xa Phu	1
+121	Long M«n TrÊn	1980	4593	Xa Phu	1
+123	L·o Hæ §éng	1643	3235	D· TÈu	1
+123	L·o Hæ §éng	1606	3227	LÔ Quan	1
+123	L·o Hæ §éng	1600	3209	HiÖu Thuèc	203
+123	L·o Hæ §éng	1630	3231	T¹p Hãa	384
+123	L·o Hæ §éng	1658	3244	Xa Phu	1
+80	D­¬ng Ch©u	1717	3198	NPC Xa Phu	1
+80	D­¬ng Ch©u	1592	3195	NPC Xa Phu	1
+80	D­¬ng Ch©u	1670	2991	NPC Xa Phu	1
+80	D­¬ng Ch©u	1825	3064	NPC Xa Phu	1
+80	D­¬ng Ch©u	1792	3047	Vâ L©m TruyÒn nh©n	1
+80	D­¬ng Ch©u	1745	3000	LÔ Quan	1
+80	D­¬ng Ch©u	1689	3170	Thî rÌn	1
+80	D­¬ng Ch©u	1773	3079	D­îc §iÕm	203
+80	D­¬ng Ch©u	1701	3022	TiÖm T¹p Hãa	384
+80	D­¬ng Ch©u	1754	3035	Sø Gi¶ Liªn ®Êu	1
+80	D­¬ng Ch©u	1705	3058	ThÝ LuyÖn §­êng	1
+80	D­¬ng Ch©u	1702	2962	NhiÕp ThÝ TrÇn	1
+80	D­¬ng Ch©u	1638	3049	Hµng Rong	1
+80	D­¬ng Ch©u	1743	2966	D· TÈu	1
+80	D­¬ng Ch©u	1691	3219	Xa Phu C«ng Thµnh	1
+53	Ba L¨ng HuyÖn	1626	3172	D· TÈu	1
+53	Ba L¨ng HuyÖn	1629	3195	LÔ Quan	1
+53	Ba L¨ng HuyÖn	1598	3209	HiÖu Thuèc	203
+53	Ba L¨ng HuyÖn	1600	3170	T¹p Hãa	384
+53	Ba L¨ng HuyÖn	1578	3236	Xa Phu	1
+174	Long TuyÒn Th«n	1608	3200	D· TÈu	1
+174	Long TuyÒn Th«n	1631	3215	LÔ Quan	1
+174	Long TuyÒn Th«n	1572	3253	HiÖu Thuèc	203
+174	Long TuyÒn Th«n	1566	3202	T¹p Hãa	384
+174	Long TuyÒn Th«n	1634	3196	Xa Phu	1
+20	Giang T©n Th«n	3538	6231	D· TÈu	1
+20	Giang T©n Th«n	3552	6192	LÔ Quan	1
+20	Giang T©n Th«n	3469	6164	HiÖu Thuèc	203
+20	Giang T©n Th«n	3370	6256	T¹p Hãa	384
+20	Giang T©n Th«n	3458	6110	Xa Phu	1
+20	Giang T©n Th«n	3522	6117	NguyÖt L·o	1

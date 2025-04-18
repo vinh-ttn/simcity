@@ -180,9 +180,19 @@ function SimCityTableFromFile(strFilePatch, tbPattern)
 			for j = 1, getn(tbPattern) do
 				local tmp = nil
 				if tbPattern[j] == "*n" then
-					tmp = tonumber(TabFile_GetCell(strFilePatch, i, j))
+                    local cell = TabFile_GetCell(strFilePatch, i, j)
+                    if cell == nil or cell == "" then
+                        tmp = 0
+                    else
+                        tmp = tonumber(cell)
+                    end
 				elseif tbPattern[j] == "*w" then
-					tmp = tostring(TabFile_GetCell(strFilePatch, i, j))
+                    local cell = TabFile_GetCell(strFilePatch, i, j)
+                    if cell == nil or cell == "" then
+                        tmp = ""
+                    else
+                        tmp = tostring(cell)
+                    end
 				end
 				tinsert(tbResult[i-1], tmp)
 			end

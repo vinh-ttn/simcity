@@ -1,532 +1,532 @@
-PathName	X	Y
-tuongduong_DHT	1800	3425
-tuongduong_DHT	1787	3412
-tuongduong_DHT	1774	3406
-tuongduong_DHT	1761	3404
-tuongduong_DHT	1748	3409
-tuongduong_DHT	1741	3416
-tuongduong_DHT	1735	3425
-tuongduong_DHT	1730	3436
-tuongduong_DHT	1725	3448
-tuongduong_DHT	1720	3456
-tuongduong_DHT	1709	3456
-tuongduong_DHT	1696	3452
-tuongduong_DHT	1687	3451
-tuongduong_DHT	1674	3453
-tuongduong_DHT	1665	3457
-tuongduong_DHT	1657	3454
-tuongduong_DHT	1647	3446
-tuongduong_DHT	1637	3436
-tuongduong_DHT	1629	3428
-tuongduong_DHT	1622	3419
-tuongduong_DHT	1615	3410
-tuongduong_DHT	1606	3402
-tuongduong_DHT	1603	3395
-tuongduong_DHT	1599	3388
-tuongduong_DHT	1594	3382
-tuongduong_DHT	1583	3372
-tuongduong_DHT	1577	3364
-tuongduong_DHT	1572	3357
-tuongduong_trongthanh	1554	3257
-tuongduong_trongthanh	1549	3251
-tuongduong_trongthanh	1541	3241
-tuongduong_trongthanh	1535	3237
-tuongduong_trongthanh	1529	3231
-tuongduong_trongthanh	1524	3225
-tuongduong_trongthanh	1517	3217
-tuongduong_trongthanh	1512	3210
-tuongduong_trongthanh	1505	3204
-tuongduong_trongthanh	1497	3197
-tuongduong_trongthanh	1491	3191
-tuongduong_trongthanh	1474	3175
-tuongduong_trongthanh	1471	3186
-tuongduong_trongthanh	1466	3192
-tuongduong_trongthanh	1460	3200
-tuongduong_trongthanh	1455	3206
-tuongduong_trongthanh	1451	3211
-tuongduong_trongthanh	1444	3218
-tuongduong_trongthanh	1441	3226
-tuongduong_trongthanh	1444	3233
-tuongduong_trongthanh	1453	3240
-tuongduong_trongthanh	1462	3246
-tuongduong_trongthanh	1471	3254
-tuongduong_trongthanh	1477	3261
-tuongduong_trongthanh	1483	3268
-tuongduong_trongthanh	1488	3275
-tuongduong_trongthanh	1494	3282
-tuongduong_trongthanh	1500	3287
-tuongduong_trongthanh	1508	3290
-tuongduong_trongthanh	1517	3287
-tuongduong_trongthanh	1525	3281
-tuongduong_trongthanh	1531	3275
-tuongduong_trongthanh	1539	3269
-tuongduong_trongthanh	1546	3263
-tuongduong_trongthanh	1557	3262
-tuongduong_trongthanh	1562	3267
-tuongduong_trongthanh	1569	3274
-tuongduong_trongthanh	1576	3280
-tuongduong_trongthanh	1582	3287
-tuongduong_trongthanh	1588	3293
-tuongduong_trongthanh	1594	3299
-tuongduong_trongthanh	1600	3305
-tuongduong_trongthanh	1605	3313
-tuongduong_trongthanh	1604	3321
-tuongduong_trongthanh	1599	3329
-tuongduong_trongthanh	1594	3336
-tuongduong_trongthanh	1587	3342
-tuongduong_trongthanh	1582	3347
-tuongduong_trongthanh	1574	3351
-tuongduong_trongthanh	1566	3350
-tuongduong_trongthanh	1559	3344
-tuongduong_trongthanh	1551	3337
-tuongduong_trongthanh	1544	3330
-tuongduong_trongthanh	1538	3325
-tuongduong_trongthanh	1532	3318
-tuongduong_trongthanh	1525	3311
-tuongduong_trongthanh	1519	3303
-tuongduong_trongthanh	1521	3296
-tuongduong_trongthanh	1525	3288
-tuongduong_trongthanh	1530	3280
-tuongduong_trongthanh	1536	3272
-tuongduong_trongthanh	1541	3266
-tuongduong_trongthanh	1547	3259
-tuongduong_trongthanh	1565	3242
-tuongduong_trongthanh	1575	3235
-tuongduong_trongthanh	1580	3231
-tuongduong_trongthanh	1590	3224
-tuongduong_trongthanh	1549	3256
-tuongduong_trongthanh	1599	3207
-tuongduong_trongthanh	1609	3201
-tuongduong_trongthanh	1606	3188
-tuongduong_trongthanh	1608	3181
-tuongduong_trongthanh	1613	3174
-tuongduong_trongthanh	1616	3168
-tuongduong_trongthanh	1616	3163
-tuongduong_trongthanh	1613	3171
-tuongduong_trongthanh	1609	3178
-tuongduong_trongthanh	1615	3184
-tuongduong_trongthanh	1620	3192
-tuongduong_trongthanh	1622	3199
-tuongduong_daochoi	1314	3471
-tuongduong_daochoi	1338	3458
-tuongduong_daochoi	1346	3454
-tuongduong_daochoi	1355	3444
-tuongduong_daochoi	1363	3432
-tuongduong_daochoi	1370	3419
-tuongduong_daochoi	1376	3406
-tuongduong_daochoi	1384	3392
-tuongduong_daochoi	1394	3384
-tuongduong_daochoi	1403	3371
-tuongduong_daochoi	1408	3357
-tuongduong_daochoi	1412	3343
-tuongduong_daochoi	1418	3332
-tuongduong_daochoi	1422	3323
-tuongduong_daochoi	1423	3308
-tuongduong_daochoi	1429	3297
-tuongduong_daochoi	1437	3291
-tuongduong_daochoi	1446	3279
-tuongduong_daochoi	1454	3272
-tuongduong_daochoi	1463	3263
-tuongduong_daochoi	1466	3253
-tuongduong_daochoi	1458	3241
-tuongduong_daochoi	1440	3221
-tuongduong_daochoi	1447	3209
-tuongduong_daochoi	1457	3200
-tuongduong_daochoi	1466	3191
-tuongduong_daochoi	1473	3183
-tuongduong_daochoi	1487	3187
-tuongduong_daochoi	1496	3198
-tuongduong_daochoi	1506	3209
-tuongduong_daochoi	1517	3220
-tuongduong_daochoi	1526	3229
-tuongduong_daochoi	1536	3240
-tuongduong_daochoi	1545	3249
-tuongduong_daochoi	1549	3267
-tuongduong_daochoi	1539	3275
-tuongduong_daochoi	1528	3284
-tuongduong_daochoi	1518	3292
-tuongduong_daochoi	1507	3295
-tuongduong_daochoi	1498	3287
-tuongduong_daochoi	1489	3277
-tuongduong_daochoi	1477	3267
-tuongduong_daochoi	1460	3244
-tuongduong_daochoi	1446	3234
-tuongduong_daochoi	1442	3223
-tuongduong_daochoi	1449	3207
-tuongduong_daochoi	1460	3195
-tuongduong_daochoi	1472	3185
-tuongduong_daochoi	1476	3176
-tuongduong_daochoi	1473	3174
-tuongduong_daochoi	1482	3173
-tuongduong_daochoi	1506	3148
-tuongduong_daochoi	1528	3161
-tuongduong_daochoi	1548	3183
-tuongduong_daochoi	1555	3190
-tuongduong_daochoi	1565	3202
-tuongduong_daochoi	1555	3214
-tuongduong_daochoi	1542	3226
-tuongduong_daochoi	1536	3239
-tuongduong_daochoi	1526	3229
-tuongduong_daochoi	1517	3220
-tuongduong_daochoi	1505	3208
-tuongduong_daochoi	1492	3195
-tuongduong_daochoi	1482	3183
-tuongduong_daochoi	1472	3183
-tuongduong_daochoi	1462	3195
-tuongduong_daochoi	1453	3205
-tuongduong_daochoi	1444	3216
-tuongduong_daochoi	1439	3223
-tuongduong_daochoi	1452	3237
-tuongduong_daochoi	1462	3247
-tuongduong_daochoi	1470	3258
-tuongduong_daochoi	1480	3269
-tuongduong_daochoi	1493	3282
-tuongduong_daochoi	1505	3292
-tuongduong_daochoi	1516	3302
-tuongduong_full	1745	3408
-tuongduong_full	1729	3444
-tuongduong_full	1708	3469
-tuongduong_full	1677	3456
-tuongduong_full	1663	3466
-tuongduong_full	1646	3446
-tuongduong_full	1625	3427
-tuongduong_full	1612	3404
-tuongduong_full	1596	3382
-tuongduong_full	1577	3364
-tuongduong_full	1570	3354
-tuongduong_full	1548	3332
-tuongduong_full	1528	3312
-tuongduong_full	1511	3296
-tuongduong_full	1556	3254
-tuongduong_full	1537	3238
-tuongduong_full	1506	3209
-tuongduong_full	1490	3190
-tuongduong_full	1473	3172
-tuongduong_full	1502	3152
-tuongduong_full	1510	3144
-tuongduong_full	1522	3154
-tuongduong_full	1539	3135
-tuongduong_full	1552	3122
-tuongduong_full	1534	3094
-tuongduong_full	1562	3117
-tuongduong_full	1541	3135
-tuongduong_full	1525	3151
-tuongduong_full	1544	3177
-tuongduong_full	1563	3197
-tuongduong_full	1580	3190
-tuongduong_full	1581	3199
-tuongduong_full	1584	3217
-tuongduong_full	1573	3231
-tuongduong_full	1562	3224
-tuongduong_full	1556	3214
-tuongduong_full	1538	3235
-tuongduong_full	1555	3251
-tuongduong_full	1566	3244
-tuongduong_full	1572	3232
-tuongduong_full	1582	3223
-tuongduong_full	1589	3236
-tuongduong_full	1594	3243
-tuongduong_full	1598	3257
-tuongduong_full	1576	3266
-tuongduong_full	1579	3278
-tuongduong_full	1594	3296
-tuongduong_full	1609	3312
-tuongduong_full	1592	3334
-tuongduong_full	1570	3361
-tuongduong_full	1586	3376
-tuongduong_full	1606	3396
-tuongduong_full	1592	3375
-tuongduong_full	1563	3348
-tuongduong_full	1544	3327
-tuongduong_full	1526	3313
-tuongduong_full	1515	3300
-tuongduong_full	1539	3271
-tuongduong_full	1558	3253
-tuongduong_full	1564	3221
-tuongduong_full	1576	3227
-tuongduong_full	1590	3240
-tuongduong_full	1612	3252
-tuongduong_full	1628	3267
-tuongduong_full	1642	3285
-tuongduong_full	1662	3269
-tuongduong_full	1682	3246
-tuongduong_full	1702	3228
-tuongduong_full	1728	3201
-tuongduong_full	1745	3174
-tuongduong_full	1755	3144
-tuongduong_full	1760	3122
-tuongduong_full	1768	3101
-tuongduong_full	1752	3137
-tuongduong_full	1747	3164
-tuongduong_full	1736	3196
-tuongduong_full	1702	3227
-tuongduong_full	1673	3256
-tuongduong_full	1654	3277
-tuongduong_full	1634	3279
-tuongduong_full	1617	3256
-tuongduong_full	1612	3227
-tuongduong_full	1587	3222
-tuongduong_full	1599	3207
-tuongduong_full	1609	3183
-tuongduong_full	1618	3155
-tuongduong_full	1617	3190
-tuongduong_full	1607	3200
-tuongduong_full	1599	3207
-tuongduong_full	1549	3256
-tuongduong_full	1570	3276
-tuongduong_full	1600	3301
-tuongduong_full	1610	3321
-tuongduong_full	1583	3343
-tuongduong_full	1568	3356
-tuongduong_full	1589	3383
-tuongduong_full	1621	3417
-tuongduong_full	1638	3441
-tuongduong_full	1675	3459
-tuongduong_full	1692	3461
-tuongduong_full	1715	3468
-tuongduong_full	1733	3444
-tuongduong_full	1751	3413
-tuongduong_full	1763	3406
-tuongduong_1vongTK	1570	3356
-tuongduong_1vongTK	1564	3349
-tuongduong_1vongTK	1554	3340
-tuongduong_1vongTK	1548	3334
-tuongduong_1vongTK	1542	3326
-tuongduong_1vongTK	1534	3318
-tuongduong_1vongTK	1525	3309
-tuongduong_1vongTK	1515	3298
-tuongduong_1vongTK	1507	3292
-tuongduong_1vongTK	1500	3286
-tuongduong_1vongTK	1491	3278
-tuongduong_1vongTK	1481	3267
-tuongduong_1vongTK	1473	3259
-tuongduong_1vongTK	1465	3252
-tuongduong_1vongTK	1456	3242
-tuongduong_1vongTK	1446	3230
-tuongduong_1vongTK	1440	3222
-tuongduong_1vongTK	1442	3213
-tuongduong_1vongTK	1451	3207
-tuongduong_1vongTK	1460	3199
-tuongduong_1vongTK	1468	3192
-tuongduong_1vongTK	1472	3187
-tuongduong_1vongTK	1480	3179
-tuongduong_1vongTK	1486	3172
-tuongduong_1vongTK	1491	3166
-tuongduong_1vongTK	1498	3158
-tuongduong_1vongTK	1512	3148
-tuongduong_1vongTK	1518	3154
-tuongduong_1vongTK	1525	3160
-tuongduong_1vongTK	1532	3167
-tuongduong_1vongTK	1538	3173
-tuongduong_1vongTK	1547	3182
-tuongduong_1vongTK	1555	3190
-tuongduong_1vongTK	1562	3199
-tuongduong_1vongTK	1568	3207
-tuongduong_1vongTK	1574	3214
-tuongduong_1vongTK	1582	3222
-tuongduong_1vongTK	1590	3230
-tuongduong_1vongTK	1597	3238
-tuongduong_1vongTK	1604	3245
-tuongduong_1vongTK	1613	3253
-tuongduong_1vongTK	1620	3259
-tuongduong_1vongTK	1628	3265
-tuongduong_1vongTK	1633	3270
-tuongduong_1vongTK	1650	3282
-tuongduong_1vongTK	1657	3275
-tuongduong_1vongTK	1664	3267
-tuongduong_1vongTK	1669	3260
-tuongduong_1vongTK	1676	3251
-tuongduong_1vongTK	1684	3244
-tuongduong_1vongTK	1692	3235
-tuongduong_1vongTK	1699	3229
-tuongduong_1vongTK	1706	3222
-tuongduong_1vongTK	1717	3212
-tuongduong_1vongTK	1725	3205
-tuongduong_1vongTK	1730	3199
-tuongduong_1vongTK	1739	3187
-tuongduong_1vongTK	1743	3177
-tuongduong_1vongTK	1747	3167
-tuongduong_1vongTK	1749	3157
-tuongduong_1vongTK	1753	3145
-tuongduong_1vongTK	1756	3135
-tuongduong_1vongTK	1759	3124
-tuongduong_1vongTK	1763	3114
-tuongduong_1vongTK	1767	3103
-tuongduong_1vongTK	1772	3089
-vantieu_tuongduong_phu_congdaohuongthon	1587	3220
-vantieu_tuongduong_phu_congdaohuongthon	1579	3230
-vantieu_tuongduong_phu_congdaohuongthon	1570	3240
-vantieu_tuongduong_phu_congdaohuongthon	1563	3247
-vantieu_tuongduong_phu_congdaohuongthon	1556	3255
-vantieu_tuongduong_phu_congdaohuongthon	1551	3261
-vantieu_tuongduong_phu_congdaohuongthon	1543	3269
-vantieu_tuongduong_phu_congdaohuongthon	1535	3276
-vantieu_tuongduong_phu_congdaohuongthon	1528	3282
-vantieu_tuongduong_phu_congdaohuongthon	1521	3288
-vantieu_tuongduong_phu_congdaohuongthon	1513	3303
-vantieu_tuongduong_phu_congdaohuongthon	1520	3309
-vantieu_tuongduong_phu_congdaohuongthon	1526	3315
-vantieu_tuongduong_phu_congdaohuongthon	1534	3323
-vantieu_tuongduong_phu_congdaohuongthon	1540	3329
-vantieu_tuongduong_phu_congdaohuongthon	1548	3337
-vantieu_tuongduong_phu_congdaohuongthon	1555	3344
-vantieu_tuongduong_phu_congdaohuongthon	1564	3353
-vantieu_tuongduong_phu_congdaohuongthon	1571	3359
-vantieu_tuongduong_phu_congdaohuongthon	1579	3365
-vantieu_tuongduong_phu_congdaohuongthon	1586	3372
-vantieu_tuongduong_phu_congdaohuongthon	1596	3382
-vantieu_tuongduong_phu_congdaohuongthon	1600	3385
-vantieu_tuongduong_phu_congdaohuongthon	1602	3388
-vantieu_tuongduong_phu_congdaohuongthon	1606	3394
-vantieu_tuongduong_phu_congdaohuongthon	1609	3398
-vantieu_tuongduong_phu_congdaohuongthon	1612	3404
-vantieu_tuongduong_phu_congdaohuongthon	1615	3408
-vantieu_tuongduong_phu_congdaohuongthon	1618	3413
-vantieu_tuongduong_phu_congdaohuongthon	1621	3417
-vantieu_tuongduong_phu_congdaohuongthon	1621	3417
-vantieu_tuongduong_phu_congdaohuongthon	1622	3418
-vantieu_tuongduong_phu_congdaohuongthon	1626	3423
-vantieu_tuongduong_phu_congdaohuongthon	1628	3426
-vantieu_tuongduong_phu_congdaohuongthon	1631	3429
-vantieu_tuongduong_phu_congdaohuongthon	1634	3432
-vantieu_tuongduong_phu_congdaohuongthon	1636	3435
-vantieu_tuongduong_phu_congdaohuongthon	1641	3439
-vantieu_tuongduong_phu_congdaohuongthon	1644	3441
-vantieu_tuongduong_phu_congdaohuongthon	1648	3443
-vantieu_tuongduong_phu_congdaohuongthon	1651	3446
-vantieu_tuongduong_phu_congdaohuongthon	1658	3450
-vantieu_tuongduong_phu_congdaohuongthon	1663	3453
-vantieu_tuongduong_phu_congdaohuongthon	1666	3454
-vantieu_tuongduong_phu_congdaohuongthon	1673	3454
-vantieu_tuongduong_phu_congdaohuongthon	1677	3452
-vantieu_tuongduong_phu_congdaohuongthon	1681	3452
-vantieu_tuongduong_phu_congdaohuongthon	1686	3453
-vantieu_tuongduong_phu_congdaohuongthon	1692	3454
-vantieu_tuongduong_phu_congdaohuongthon	1695	3455
-vantieu_tuongduong_phu_congdaohuongthon	1700	3458
-vantieu_tuongduong_phu_congdaohuongthon	1705	3460
-vantieu_tuongduong_phu_congdaohuongthon	1711	3460
-vantieu_tuongduong_phu_congdaohuongthon	1715	3458
-vantieu_tuongduong_phu_congdaohuongthon	1721	3454
-vantieu_tuongduong_phu_congdaohuongthon	1724	3451
-vantieu_tuongduong_phu_congdaohuongthon	1728	3446
-vantieu_tuongduong_phu_congdaohuongthon	1729	3443
-vantieu_tuongduong_phu_congdaohuongthon	1733	3438
-vantieu_tuongduong_phu_congdaohuongthon	1735	3434
-vantieu_tuongduong_phu_congdaohuongthon	1744	3415
-vantieu_tuongduong_phu_congdaohuongthon	1747	3413
-vantieu_tuongduong_phu_congdaohuongthon	1755	3406
-vantieu_tuongduong_phu_congdaohuongthon	1760	3405
-vantieu_tuongduong_phu_congdaohuongthon	1769	3404
-vantieu_tuongduong_phu_congdaohuongthon	1776	3406
-vantieu_tuongduong_phu_congdaohuongthon	1782	3410
-vantieu_tuongduong_phu_congdaohuongthon	1791	3416
-vantieu_tuongduong_phu_congdaohuongthon	1798	3423
-tong_huong1	1595	3213
-tong_huong1	1582	3227
-tong_huong1	1596	3238
-tong_huong1	1606	3248
-tong_huong1	1618	3261
-tong_huong1	1629	3271
-tong_huong1	1645	3290
-tong_huong1	1652	3276
-tong_huong1	1663	3266
-tong_huong1	1671	3259
-tong_huong1	1683	3247
-tong_huong1	1694	3236
-tong_huong1	1703	3226
-tong_huong1	1716	3215
-tong_huong1	1727	3204
-tong_huong1	1732	3196
-tong_huong1	1737	3187
-tong_huong1	1742	3182
-tong_huong1	1746	3167
-tong_huong1	1754	3143
-tong_huong2	1582	3222
-tong_huong2	1601	3244
-tong_huong2	1614	3257
-tong_huong2	1626	3267
-tong_huong2	1638	3277
-tong_huong2	1653	3275
-tong_huong2	1663	3265
-tong_huong2	1674	3254
-tong_huong2	1685	3245
-tong_huong2	1696	3235
-tong_huong2	1707	3224
-tong_huong2	1728	3198
-tong_huong2	1738	3188
-tong_huong2	1739	3182
-tong_huong2	1739	3182
-tong_huong2	1744	3167
-tong_huong2	1752	3150
-tong_huong2	1758	3130
-tong_huong2	1754	3118
-tong_huong2	1743	3114
-tong_huong2	1730	3111
-tong_huong2	1715	3112
-tong_huong2	1702	3106
-tong_huong2	1690	3107
-tong_huong2	1672	3105
-tong_huong2	1664	3103
-tong_huong2	1655	3096
-tong_huong2	1651	3080
-tong_huong2	1650	3063
-tong_huong2	1649	3049
-tong_huong2	1646	3036
-tong_huong2	1645	3021
-tong_huong2	1649	3008
-tong_huong2	1655	2991
-kim_huong1	1770	3089
-kim_huong1	1764	3101
-kim_huong1	1758	3111
-kim_huong1	1752	3125
-kim_huong1	1755	3141
-kim_huong1	1750	3159
-kim_huong1	1744	3176
-kim_huong1	1742	3183
-kim_huong1	1732	3200
-kim_huong1	1718	3212
-kim_huong1	1704	3227
-kim_huong1	1692	3238
-kim_huong1	1678	3250
-kim_huong1	1663	3264
-kim_huong1	1650	3277
-kim_huong1	1635	3277
-kim_huong1	1624	3264
-kim_huong1	1614	3253
-kim_huong1	1601	3239
-kim_huong1	1590	3228
-kim_huong2	1655	2991
-kim_huong2	1649	3008
-kim_huong2	1645	3021
-kim_huong2	1646	3036
-kim_huong2	1649	3049
-kim_huong2	1650	3063
-kim_huong2	1651	3080
-kim_huong2	1655	3096
-kim_huong2	1664	3103
-kim_huong2	1672	3105
-kim_huong2	1690	3107
-kim_huong2	1702	3106
-kim_huong2	1715	3112
-kim_huong2	1730	3111
-kim_huong2	1743	3114
-kim_huong2	1754	3118
-kim_huong2	1758	3130
-kim_huong2	1752	3150
-kim_huong2	1744	3167
-kim_huong2	1739	3182
-kim_huong2	1739	3182
-kim_huong2	1738	3188
-kim_huong2	1728	3198
-kim_huong2	1707	3224
-kim_huong2	1696	3235
-kim_huong2	1685	3245
-kim_huong2	1674	3254
-kim_huong2	1663	3265
-kim_huong2	1653	3275
-kim_huong2	1638	3277
-kim_huong2	1626	3267
-kim_huong2	1614	3257
-kim_huong2	1601	3244
-kim_huong2	1582	3222
+PathName	X	Y	IsExact
+tuongduong_DHT	1800	3425	0
+tuongduong_DHT	1787	3412	0
+tuongduong_DHT	1774	3406	0
+tuongduong_DHT	1761	3404	0
+tuongduong_DHT	1748	3409	0
+tuongduong_DHT	1741	3416	0
+tuongduong_DHT	1735	3425	0
+tuongduong_DHT	1730	3436	0
+tuongduong_DHT	1725	3448	0
+tuongduong_DHT	1720	3456	0
+tuongduong_DHT	1709	3456	0
+tuongduong_DHT	1696	3452	0
+tuongduong_DHT	1687	3451	0
+tuongduong_DHT	1674	3453	0
+tuongduong_DHT	1665	3457	0
+tuongduong_DHT	1657	3454	0
+tuongduong_DHT	1647	3446	0
+tuongduong_DHT	1637	3436	0
+tuongduong_DHT	1629	3428	0
+tuongduong_DHT	1622	3419	0
+tuongduong_DHT	1615	3410	0
+tuongduong_DHT	1606	3402	0
+tuongduong_DHT	1603	3395	0
+tuongduong_DHT	1599	3388	0
+tuongduong_DHT	1594	3382	0
+tuongduong_DHT	1583	3372	0
+tuongduong_DHT	1577	3364	0
+tuongduong_DHT	1572	3357	0
+tuongduong_trongthanh	1554	3257	0
+tuongduong_trongthanh	1549	3251	0
+tuongduong_trongthanh	1541	3241	0
+tuongduong_trongthanh	1535	3237	0
+tuongduong_trongthanh	1529	3231	0
+tuongduong_trongthanh	1524	3225	0
+tuongduong_trongthanh	1517	3217	0
+tuongduong_trongthanh	1512	3210	0
+tuongduong_trongthanh	1505	3204	0
+tuongduong_trongthanh	1497	3197	0
+tuongduong_trongthanh	1491	3191	0
+tuongduong_trongthanh	1474	3175	0
+tuongduong_trongthanh	1471	3186	0
+tuongduong_trongthanh	1466	3192	0
+tuongduong_trongthanh	1460	3200	0
+tuongduong_trongthanh	1455	3206	0
+tuongduong_trongthanh	1451	3211	0
+tuongduong_trongthanh	1444	3218	0
+tuongduong_trongthanh	1441	3226	0
+tuongduong_trongthanh	1444	3233	0
+tuongduong_trongthanh	1453	3240	0
+tuongduong_trongthanh	1462	3246	0
+tuongduong_trongthanh	1471	3254	0
+tuongduong_trongthanh	1477	3261	0
+tuongduong_trongthanh	1483	3268	0
+tuongduong_trongthanh	1488	3275	0
+tuongduong_trongthanh	1494	3282	0
+tuongduong_trongthanh	1500	3287	0
+tuongduong_trongthanh	1508	3290	0
+tuongduong_trongthanh	1517	3287	0
+tuongduong_trongthanh	1525	3281	0
+tuongduong_trongthanh	1531	3275	0
+tuongduong_trongthanh	1539	3269	0
+tuongduong_trongthanh	1546	3263	0
+tuongduong_trongthanh	1557	3262	0
+tuongduong_trongthanh	1562	3267	0
+tuongduong_trongthanh	1569	3274	0
+tuongduong_trongthanh	1576	3280	0
+tuongduong_trongthanh	1582	3287	0
+tuongduong_trongthanh	1588	3293	0
+tuongduong_trongthanh	1594	3299	0
+tuongduong_trongthanh	1600	3305	0
+tuongduong_trongthanh	1605	3313	0
+tuongduong_trongthanh	1604	3321	0
+tuongduong_trongthanh	1599	3329	0
+tuongduong_trongthanh	1594	3336	0
+tuongduong_trongthanh	1587	3342	0
+tuongduong_trongthanh	1582	3347	0
+tuongduong_trongthanh	1574	3351	0
+tuongduong_trongthanh	1566	3350	0
+tuongduong_trongthanh	1559	3344	0
+tuongduong_trongthanh	1551	3337	0
+tuongduong_trongthanh	1544	3330	0
+tuongduong_trongthanh	1538	3325	0
+tuongduong_trongthanh	1532	3318	0
+tuongduong_trongthanh	1525	3311	0
+tuongduong_trongthanh	1519	3303	0
+tuongduong_trongthanh	1521	3296	0
+tuongduong_trongthanh	1525	3288	0
+tuongduong_trongthanh	1530	3280	0
+tuongduong_trongthanh	1536	3272	0
+tuongduong_trongthanh	1541	3266	0
+tuongduong_trongthanh	1547	3259	0
+tuongduong_trongthanh	1565	3242	0
+tuongduong_trongthanh	1575	3235	0
+tuongduong_trongthanh	1580	3231	0
+tuongduong_trongthanh	1590	3224	0
+tuongduong_trongthanh	1549	3256	1
+tuongduong_trongthanh	1599	3207	1
+tuongduong_trongthanh	1609	3201	1
+tuongduong_trongthanh	1606	3188	0
+tuongduong_trongthanh	1608	3181	0
+tuongduong_trongthanh	1613	3174	0
+tuongduong_trongthanh	1616	3168	0
+tuongduong_trongthanh	1616	3163	0
+tuongduong_trongthanh	1613	3171	0
+tuongduong_trongthanh	1609	3178	0
+tuongduong_trongthanh	1615	3184	0
+tuongduong_trongthanh	1620	3192	0
+tuongduong_trongthanh	1622	3199	0
+tuongduong_daochoi	1314	3471	0
+tuongduong_daochoi	1338	3458	0
+tuongduong_daochoi	1346	3454	0
+tuongduong_daochoi	1355	3444	0
+tuongduong_daochoi	1363	3432	0
+tuongduong_daochoi	1370	3419	0
+tuongduong_daochoi	1376	3406	0
+tuongduong_daochoi	1384	3392	0
+tuongduong_daochoi	1394	3384	0
+tuongduong_daochoi	1403	3371	0
+tuongduong_daochoi	1408	3357	0
+tuongduong_daochoi	1412	3343	0
+tuongduong_daochoi	1418	3332	0
+tuongduong_daochoi	1422	3323	0
+tuongduong_daochoi	1423	3308	0
+tuongduong_daochoi	1429	3297	0
+tuongduong_daochoi	1437	3291	0
+tuongduong_daochoi	1446	3279	0
+tuongduong_daochoi	1454	3272	0
+tuongduong_daochoi	1463	3263	0
+tuongduong_daochoi	1466	3253	0
+tuongduong_daochoi	1458	3241	0
+tuongduong_daochoi	1440	3221	0
+tuongduong_daochoi	1447	3209	0
+tuongduong_daochoi	1457	3200	0
+tuongduong_daochoi	1466	3191	0
+tuongduong_daochoi	1473	3183	0
+tuongduong_daochoi	1487	3187	0
+tuongduong_daochoi	1496	3198	0
+tuongduong_daochoi	1506	3209	0
+tuongduong_daochoi	1517	3220	0
+tuongduong_daochoi	1526	3229	0
+tuongduong_daochoi	1536	3240	0
+tuongduong_daochoi	1545	3249	0
+tuongduong_daochoi	1549	3267	0
+tuongduong_daochoi	1539	3275	0
+tuongduong_daochoi	1528	3284	0
+tuongduong_daochoi	1518	3292	0
+tuongduong_daochoi	1507	3295	0
+tuongduong_daochoi	1498	3287	0
+tuongduong_daochoi	1489	3277	0
+tuongduong_daochoi	1477	3267	0
+tuongduong_daochoi	1460	3244	0
+tuongduong_daochoi	1446	3234	0
+tuongduong_daochoi	1442	3223	0
+tuongduong_daochoi	1449	3207	0
+tuongduong_daochoi	1460	3195	0
+tuongduong_daochoi	1472	3185	0
+tuongduong_daochoi	1476	3176	0
+tuongduong_daochoi	1473	3174	0
+tuongduong_daochoi	1482	3173	0
+tuongduong_daochoi	1506	3148	0
+tuongduong_daochoi	1528	3161	0
+tuongduong_daochoi	1548	3183	0
+tuongduong_daochoi	1555	3190	0
+tuongduong_daochoi	1565	3202	0
+tuongduong_daochoi	1555	3214	0
+tuongduong_daochoi	1542	3226	0
+tuongduong_daochoi	1536	3239	0
+tuongduong_daochoi	1526	3229	0
+tuongduong_daochoi	1517	3220	0
+tuongduong_daochoi	1505	3208	0
+tuongduong_daochoi	1492	3195	0
+tuongduong_daochoi	1482	3183	0
+tuongduong_daochoi	1472	3183	0
+tuongduong_daochoi	1462	3195	0
+tuongduong_daochoi	1453	3205	0
+tuongduong_daochoi	1444	3216	0
+tuongduong_daochoi	1439	3223	0
+tuongduong_daochoi	1452	3237	0
+tuongduong_daochoi	1462	3247	0
+tuongduong_daochoi	1470	3258	0
+tuongduong_daochoi	1480	3269	0
+tuongduong_daochoi	1493	3282	0
+tuongduong_daochoi	1505	3292	0
+tuongduong_daochoi	1516	3302	0
+tuongduong_full	1745	3408	0
+tuongduong_full	1729	3444	0
+tuongduong_full	1708	3469	0
+tuongduong_full	1677	3456	0
+tuongduong_full	1663	3466	0
+tuongduong_full	1646	3446	0
+tuongduong_full	1625	3427	0
+tuongduong_full	1612	3404	0
+tuongduong_full	1596	3382	0
+tuongduong_full	1577	3364	0
+tuongduong_full	1570	3354	0
+tuongduong_full	1548	3332	0
+tuongduong_full	1528	3312	0
+tuongduong_full	1511	3296	0
+tuongduong_full	1556	3254	0
+tuongduong_full	1537	3238	0
+tuongduong_full	1506	3209	0
+tuongduong_full	1490	3190	0
+tuongduong_full	1473	3172	0
+tuongduong_full	1502	3152	0
+tuongduong_full	1510	3144	0
+tuongduong_full	1522	3154	0
+tuongduong_full	1539	3135	0
+tuongduong_full	1552	3122	0
+tuongduong_full	1534	3094	0
+tuongduong_full	1562	3117	0
+tuongduong_full	1541	3135	0
+tuongduong_full	1525	3151	0
+tuongduong_full	1544	3177	0
+tuongduong_full	1563	3197	0
+tuongduong_full	1580	3190	0
+tuongduong_full	1581	3199	0
+tuongduong_full	1584	3217	0
+tuongduong_full	1573	3231	0
+tuongduong_full	1562	3224	0
+tuongduong_full	1556	3214	0
+tuongduong_full	1538	3235	0
+tuongduong_full	1555	3251	0
+tuongduong_full	1566	3244	0
+tuongduong_full	1572	3232	0
+tuongduong_full	1582	3223	0
+tuongduong_full	1589	3236	0
+tuongduong_full	1594	3243	0
+tuongduong_full	1598	3257	0
+tuongduong_full	1576	3266	0
+tuongduong_full	1579	3278	0
+tuongduong_full	1594	3296	0
+tuongduong_full	1609	3312	0
+tuongduong_full	1592	3334	0
+tuongduong_full	1570	3361	0
+tuongduong_full	1586	3376	0
+tuongduong_full	1606	3396	0
+tuongduong_full	1592	3375	0
+tuongduong_full	1563	3348	0
+tuongduong_full	1544	3327	0
+tuongduong_full	1526	3313	0
+tuongduong_full	1515	3300	0
+tuongduong_full	1539	3271	0
+tuongduong_full	1558	3253	0
+tuongduong_full	1564	3221	0
+tuongduong_full	1576	3227	0
+tuongduong_full	1590	3240	0
+tuongduong_full	1612	3252	0
+tuongduong_full	1628	3267	0
+tuongduong_full	1642	3285	0
+tuongduong_full	1662	3269	0
+tuongduong_full	1682	3246	0
+tuongduong_full	1702	3228	0
+tuongduong_full	1728	3201	0
+tuongduong_full	1745	3174	0
+tuongduong_full	1755	3144	0
+tuongduong_full	1760	3122	0
+tuongduong_full	1768	3101	0
+tuongduong_full	1752	3137	0
+tuongduong_full	1747	3164	0
+tuongduong_full	1736	3196	0
+tuongduong_full	1702	3227	0
+tuongduong_full	1673	3256	0
+tuongduong_full	1654	3277	0
+tuongduong_full	1634	3279	0
+tuongduong_full	1617	3256	0
+tuongduong_full	1612	3227	0
+tuongduong_full	1587	3222	1
+tuongduong_full	1599	3207	1
+tuongduong_full	1609	3183	1
+tuongduong_full	1618	3155	0
+tuongduong_full	1617	3190	0
+tuongduong_full	1607	3200	1
+tuongduong_full	1599	3207	1
+tuongduong_full	1549	3256	1
+tuongduong_full	1570	3276	0
+tuongduong_full	1600	3301	0
+tuongduong_full	1610	3321	0
+tuongduong_full	1583	3343	0
+tuongduong_full	1568	3356	0
+tuongduong_full	1589	3383	0
+tuongduong_full	1621	3417	0
+tuongduong_full	1638	3441	0
+tuongduong_full	1675	3459	0
+tuongduong_full	1692	3461	0
+tuongduong_full	1715	3468	0
+tuongduong_full	1733	3444	0
+tuongduong_full	1751	3413	0
+tuongduong_full	1763	3406	0
+tuongduong_1vongTK	1570	3356	0
+tuongduong_1vongTK	1564	3349	0
+tuongduong_1vongTK	1554	3340	0
+tuongduong_1vongTK	1548	3334	0
+tuongduong_1vongTK	1542	3326	0
+tuongduong_1vongTK	1534	3318	0
+tuongduong_1vongTK	1525	3309	0
+tuongduong_1vongTK	1515	3298	0
+tuongduong_1vongTK	1507	3292	0
+tuongduong_1vongTK	1500	3286	0
+tuongduong_1vongTK	1491	3278	0
+tuongduong_1vongTK	1481	3267	0
+tuongduong_1vongTK	1473	3259	0
+tuongduong_1vongTK	1465	3252	0
+tuongduong_1vongTK	1456	3242	0
+tuongduong_1vongTK	1446	3230	0
+tuongduong_1vongTK	1440	3222	0
+tuongduong_1vongTK	1442	3213	0
+tuongduong_1vongTK	1451	3207	0
+tuongduong_1vongTK	1460	3199	0
+tuongduong_1vongTK	1468	3192	0
+tuongduong_1vongTK	1472	3187	0
+tuongduong_1vongTK	1480	3179	0
+tuongduong_1vongTK	1486	3172	0
+tuongduong_1vongTK	1491	3166	0
+tuongduong_1vongTK	1498	3158	0
+tuongduong_1vongTK	1512	3148	0
+tuongduong_1vongTK	1518	3154	0
+tuongduong_1vongTK	1525	3160	0
+tuongduong_1vongTK	1532	3167	0
+tuongduong_1vongTK	1538	3173	0
+tuongduong_1vongTK	1547	3182	0
+tuongduong_1vongTK	1555	3190	0
+tuongduong_1vongTK	1562	3199	0
+tuongduong_1vongTK	1568	3207	0
+tuongduong_1vongTK	1574	3214	0
+tuongduong_1vongTK	1582	3222	0
+tuongduong_1vongTK	1590	3230	0
+tuongduong_1vongTK	1597	3238	0
+tuongduong_1vongTK	1604	3245	0
+tuongduong_1vongTK	1613	3253	0
+tuongduong_1vongTK	1620	3259	0
+tuongduong_1vongTK	1628	3265	0
+tuongduong_1vongTK	1633	3270	0
+tuongduong_1vongTK	1650	3282	0
+tuongduong_1vongTK	1657	3275	0
+tuongduong_1vongTK	1664	3267	0
+tuongduong_1vongTK	1669	3260	0
+tuongduong_1vongTK	1676	3251	0
+tuongduong_1vongTK	1684	3244	0
+tuongduong_1vongTK	1692	3235	0
+tuongduong_1vongTK	1699	3229	0
+tuongduong_1vongTK	1706	3222	0
+tuongduong_1vongTK	1717	3212	0
+tuongduong_1vongTK	1725	3205	0
+tuongduong_1vongTK	1730	3199	0
+tuongduong_1vongTK	1739	3187	0
+tuongduong_1vongTK	1743	3177	0
+tuongduong_1vongTK	1747	3167	0
+tuongduong_1vongTK	1749	3157	0
+tuongduong_1vongTK	1753	3145	0
+tuongduong_1vongTK	1756	3135	0
+tuongduong_1vongTK	1759	3124	0
+tuongduong_1vongTK	1763	3114	0
+tuongduong_1vongTK	1767	3103	0
+tuongduong_1vongTK	1772	3089	0
+vantieu_tuongduong_phu_congdaohuongthon	1587	3220	0
+vantieu_tuongduong_phu_congdaohuongthon	1579	3230	0
+vantieu_tuongduong_phu_congdaohuongthon	1570	3240	0
+vantieu_tuongduong_phu_congdaohuongthon	1563	3247	0
+vantieu_tuongduong_phu_congdaohuongthon	1556	3255	0
+vantieu_tuongduong_phu_congdaohuongthon	1551	3261	0
+vantieu_tuongduong_phu_congdaohuongthon	1543	3269	0
+vantieu_tuongduong_phu_congdaohuongthon	1535	3276	0
+vantieu_tuongduong_phu_congdaohuongthon	1528	3282	0
+vantieu_tuongduong_phu_congdaohuongthon	1521	3288	0
+vantieu_tuongduong_phu_congdaohuongthon	1513	3303	0
+vantieu_tuongduong_phu_congdaohuongthon	1520	3309	0
+vantieu_tuongduong_phu_congdaohuongthon	1526	3315	0
+vantieu_tuongduong_phu_congdaohuongthon	1534	3323	0
+vantieu_tuongduong_phu_congdaohuongthon	1540	3329	0
+vantieu_tuongduong_phu_congdaohuongthon	1548	3337	0
+vantieu_tuongduong_phu_congdaohuongthon	1555	3344	0
+vantieu_tuongduong_phu_congdaohuongthon	1564	3353	0
+vantieu_tuongduong_phu_congdaohuongthon	1571	3359	0
+vantieu_tuongduong_phu_congdaohuongthon	1579	3365	0
+vantieu_tuongduong_phu_congdaohuongthon	1586	3372	0
+vantieu_tuongduong_phu_congdaohuongthon	1596	3382	0
+vantieu_tuongduong_phu_congdaohuongthon	1600	3385	0
+vantieu_tuongduong_phu_congdaohuongthon	1602	3388	0
+vantieu_tuongduong_phu_congdaohuongthon	1606	3394	0
+vantieu_tuongduong_phu_congdaohuongthon	1609	3398	0
+vantieu_tuongduong_phu_congdaohuongthon	1612	3404	0
+vantieu_tuongduong_phu_congdaohuongthon	1615	3408	0
+vantieu_tuongduong_phu_congdaohuongthon	1618	3413	0
+vantieu_tuongduong_phu_congdaohuongthon	1621	3417	0
+vantieu_tuongduong_phu_congdaohuongthon	1621	3417	0
+vantieu_tuongduong_phu_congdaohuongthon	1622	3418	0
+vantieu_tuongduong_phu_congdaohuongthon	1626	3423	0
+vantieu_tuongduong_phu_congdaohuongthon	1628	3426	0
+vantieu_tuongduong_phu_congdaohuongthon	1631	3429	0
+vantieu_tuongduong_phu_congdaohuongthon	1634	3432	0
+vantieu_tuongduong_phu_congdaohuongthon	1636	3435	0
+vantieu_tuongduong_phu_congdaohuongthon	1641	3439	0
+vantieu_tuongduong_phu_congdaohuongthon	1644	3441	0
+vantieu_tuongduong_phu_congdaohuongthon	1648	3443	0
+vantieu_tuongduong_phu_congdaohuongthon	1651	3446	0
+vantieu_tuongduong_phu_congdaohuongthon	1658	3450	0
+vantieu_tuongduong_phu_congdaohuongthon	1663	3453	0
+vantieu_tuongduong_phu_congdaohuongthon	1666	3454	0
+vantieu_tuongduong_phu_congdaohuongthon	1673	3454	0
+vantieu_tuongduong_phu_congdaohuongthon	1677	3452	0
+vantieu_tuongduong_phu_congdaohuongthon	1681	3452	0
+vantieu_tuongduong_phu_congdaohuongthon	1686	3453	0
+vantieu_tuongduong_phu_congdaohuongthon	1692	3454	0
+vantieu_tuongduong_phu_congdaohuongthon	1695	3455	0
+vantieu_tuongduong_phu_congdaohuongthon	1700	3458	0
+vantieu_tuongduong_phu_congdaohuongthon	1705	3460	0
+vantieu_tuongduong_phu_congdaohuongthon	1711	3460	0
+vantieu_tuongduong_phu_congdaohuongthon	1715	3458	0
+vantieu_tuongduong_phu_congdaohuongthon	1721	3454	0
+vantieu_tuongduong_phu_congdaohuongthon	1724	3451	0
+vantieu_tuongduong_phu_congdaohuongthon	1728	3446	0
+vantieu_tuongduong_phu_congdaohuongthon	1729	3443	0
+vantieu_tuongduong_phu_congdaohuongthon	1733	3438	0
+vantieu_tuongduong_phu_congdaohuongthon	1735	3434	0
+vantieu_tuongduong_phu_congdaohuongthon	1744	3415	0
+vantieu_tuongduong_phu_congdaohuongthon	1747	3413	0
+vantieu_tuongduong_phu_congdaohuongthon	1755	3406	0
+vantieu_tuongduong_phu_congdaohuongthon	1760	3405	0
+vantieu_tuongduong_phu_congdaohuongthon	1769	3404	0
+vantieu_tuongduong_phu_congdaohuongthon	1776	3406	0
+vantieu_tuongduong_phu_congdaohuongthon	1782	3410	0
+vantieu_tuongduong_phu_congdaohuongthon	1791	3416	0
+vantieu_tuongduong_phu_congdaohuongthon	1798	3423	0
+tong_huong1	1595	3213	0
+tong_huong1	1582	3227	0
+tong_huong1	1596	3238	0
+tong_huong1	1606	3248	0
+tong_huong1	1618	3261	0
+tong_huong1	1629	3271	0
+tong_huong1	1645	3290	0
+tong_huong1	1652	3276	0
+tong_huong1	1663	3266	0
+tong_huong1	1671	3259	0
+tong_huong1	1683	3247	0
+tong_huong1	1694	3236	0
+tong_huong1	1703	3226	0
+tong_huong1	1716	3215	0
+tong_huong1	1727	3204	0
+tong_huong1	1732	3196	0
+tong_huong1	1737	3187	0
+tong_huong1	1742	3182	0
+tong_huong1	1746	3167	0
+tong_huong1	1754	3143	0
+tong_huong2	1582	3222	0
+tong_huong2	1601	3244	0
+tong_huong2	1614	3257	0
+tong_huong2	1626	3267	0
+tong_huong2	1638	3277	0
+tong_huong2	1653	3275	0
+tong_huong2	1663	3265	0
+tong_huong2	1674	3254	0
+tong_huong2	1685	3245	0
+tong_huong2	1696	3235	0
+tong_huong2	1707	3224	0
+tong_huong2	1728	3198	0
+tong_huong2	1738	3188	0
+tong_huong2	1739	3182	0
+tong_huong2	1739	3182	0
+tong_huong2	1744	3167	0
+tong_huong2	1752	3150	0
+tong_huong2	1758	3130	0
+tong_huong2	1754	3118	0
+tong_huong2	1743	3114	0
+tong_huong2	1730	3111	0
+tong_huong2	1715	3112	0
+tong_huong2	1702	3106	0
+tong_huong2	1690	3107	0
+tong_huong2	1672	3105	0
+tong_huong2	1664	3103	0
+tong_huong2	1655	3096	0
+tong_huong2	1651	3080	0
+tong_huong2	1650	3063	0
+tong_huong2	1649	3049	0
+tong_huong2	1646	3036	0
+tong_huong2	1645	3021	0
+tong_huong2	1649	3008	0
+tong_huong2	1655	2991	0
+kim_huong1	1770	3089	0
+kim_huong1	1764	3101	0
+kim_huong1	1758	3111	0
+kim_huong1	1752	3125	0
+kim_huong1	1755	3141	0
+kim_huong1	1750	3159	0
+kim_huong1	1744	3176	0
+kim_huong1	1742	3183	0
+kim_huong1	1732	3200	0
+kim_huong1	1718	3212	0
+kim_huong1	1704	3227	0
+kim_huong1	1692	3238	0
+kim_huong1	1678	3250	0
+kim_huong1	1663	3264	0
+kim_huong1	1650	3277	0
+kim_huong1	1635	3277	0
+kim_huong1	1624	3264	0
+kim_huong1	1614	3253	0
+kim_huong1	1601	3239	0
+kim_huong1	1590	3228	0
+kim_huong2	1655	2991	0
+kim_huong2	1649	3008	0
+kim_huong2	1645	3021	0
+kim_huong2	1646	3036	0
+kim_huong2	1649	3049	0
+kim_huong2	1650	3063	0
+kim_huong2	1651	3080	0
+kim_huong2	1655	3096	0
+kim_huong2	1664	3103	0
+kim_huong2	1672	3105	0
+kim_huong2	1690	3107	0
+kim_huong2	1702	3106	0
+kim_huong2	1715	3112	0
+kim_huong2	1730	3111	0
+kim_huong2	1743	3114	0
+kim_huong2	1754	3118	0
+kim_huong2	1758	3130	0
+kim_huong2	1752	3150	0
+kim_huong2	1744	3167	0
+kim_huong2	1739	3182	0
+kim_huong2	1739	3182	0
+kim_huong2	1738	3188	0
+kim_huong2	1728	3198	0
+kim_huong2	1707	3224	0
+kim_huong2	1696	3235	0
+kim_huong2	1685	3245	0
+kim_huong2	1674	3254	0
+kim_huong2	1663	3265	0
+kim_huong2	1653	3275	0
+kim_huong2	1638	3277	0
+kim_huong2	1626	3267	0
+kim_huong2	1614	3257	0
+kim_huong2	1601	3244	0
+kim_huong2	1582	3222	0

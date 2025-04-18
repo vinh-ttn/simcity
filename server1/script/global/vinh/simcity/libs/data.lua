@@ -60,10 +60,29 @@ function loadMap()
     local thanhthiData = SimCityTableFromFile(mapPath.. "thanhthi.txt", {"*n", "*w", "*w"})
     local chientranhData = SimCityTableFromFile(mapPath.. "chientranh.txt", {"*n", "*w", "*w", "*w"})
     local trangtriData = SimCityTableFromFile(mapPath.. "trangtri.txt", {"*n", "*w", "*w"})
-
+    local attractionsData = SimCityTableFromFile(mapPath.. "attractions.txt", {"*n", "*w", "*n", "*n", "*w", "*n"}) -- worldId, worldName, pX, pY, description, dialogNpcId
     if not thanhthiData or not chientranhData then
         return
     end
+
+    local mapAtractions = {}
+    for i = 1, getn(attractionsData) do
+        local entry = attractionsData[i]
+        local worldId = entry[1]
+        local worldName = entry[2]
+        local pX = entry[3]
+        local pY = entry[4]
+        local description = entry[5]
+        local dialogNpcId = entry[6]
+        if not mapAtractions[worldId] then
+            mapAtractions[worldId] = {
+                {pX, pY, dialogNpcId}
+            }
+        else
+            tinsert(mapAtractions[worldId], {pX, pY, dialogNpcId})
+        end
+    end
+
     for i = 1, getn(thanhthiData) do
         local entry = thanhthiData[i]
         local worldId = entry[1]
@@ -79,14 +98,28 @@ function loadMap()
             }
         end
         local world = SimCityMap[worldId]
-        local foundWalkPath = SimCityTableFromFile(mapPath.. filePath, {"*w", "*n", "*n"})
+        local foundWalkPath = SimCityTableFromFile(mapPath.. filePath, {"*w", "*n", "*n", "*n"})
 
         local allPath = {}
         for i=1, getn(foundWalkPath) do
             if not allPath[foundWalkPath[i][1]] then
                 allPath[foundWalkPath[i][1]] = {}
             end
-            tinsert(allPath[foundWalkPath[i][1]], {foundWalkPath[i][2], foundWalkPath[i][3]})
+
+            local nX = foundWalkPath[i][2]
+            local nY = foundWalkPath[i][3]
+            local isExact = foundWalkPath[i][4]
+            local isNearAtraction = 0
+            if mapAtractions[worldId] then
+                for j=1, getn(mapAtractions[worldId]) do
+                    local atraction = mapAtractions[worldId][j]
+                    if GetDistanceRadius(nX, nY, atraction[1], atraction[2]) < 8 then
+                        isNearAtraction = atraction[3]
+                        break
+                    end
+                end
+            end
+            tinsert(allPath[foundWalkPath[i][1]], {nX, nY, isExact, isNearAtraction})
         end
         world.walkPaths = allPath
  
@@ -145,7 +178,7 @@ function loadMap()
 end
 
 -- Doc phai
-function loadPhai()
+function loadFactions()
     local phaiData = SimCityTableFromFile(settingsPath.. "skills.txt", {"*w", "*n", "*w", "*w", "*n", "*n", "*n"})
     
     -- Duong mon khong co skill bi dong gi ca
@@ -203,4 +236,4 @@ loadNames()
 loadChat()
 loadMap()
 loadPets()
-loadPhai()
+loadFactions()

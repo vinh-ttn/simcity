@@ -599,7 +599,7 @@ SimMovement.Citizen = {
         if (tbNpc.worldInfo.allowFighting == 1 and
             (tbNpc.isFighting == 0 and tbNpc.tick_canswitch < tbNpc.tick_breath)) then
             
-            if (tbNpc.isDialogNpcAround == 0)then
+            if (tbNpc.isAttractionAround == 0)then
                 -- Case 1: someone around is fighting, we join
                 if (tbNpc.CHANCE_JOIN_FIGHT and random(0, tbNpc.CHANCE_JOIN_FIGHT) <= 2) then
                     if tbNpc.fightSys:TriggerFightWithNPC(simInstance, tbNpc) == 1 then
@@ -646,7 +646,7 @@ SimMovement.Citizen = {
         end
 
         -- Khong phai dang keo xe 
-        if tbNpc.tick_checklag and tbNpc.tick_breath > tbNpc.tick_checklag and tbNpc.isDialogNpcAround == 0 then
+        if tbNpc.tick_checklag and tbNpc.tick_breath > tbNpc.tick_checklag and tbNpc.isAttractionAround == 0 then
             tbNpc.entitySys:Respawn(simInstance, tbNpc, 4, "dang bi lag roi")
             return 1
         end
@@ -655,13 +655,13 @@ SimMovement.Citizen = {
         if self:HasArrived(simInstance, tbNpc) == 1 then
             -- Keep walking no stop
             local keepWalkingRate = 90
-            if tbNpc.isDialogNpcAround > 0 then
+            if tbNpc.isAttractionAround > 0 then
                 keepWalkingRate = 5
             end
 
             if tbNpc.baoDanhTongKim == 1 then
                 keepWalkingRate = 5
-                if tbNpc.isDialogNpcAround > 0 then
+                if tbNpc.isAttractionAround > 0 then
                     keepWalkingRate = 2
                 end
                 if (random(1, 100) < keepWalkingRate) then

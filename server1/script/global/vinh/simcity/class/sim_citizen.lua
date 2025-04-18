@@ -38,12 +38,7 @@ function SimCitizen:New(fighter)
     -- Check if walkGraph is nil
     if (tbNpc.role == "citizen" and tbNpc.worldInfo.walkGraph == nil) then
         return nil
-    end
-
-    -- Initialize foundDialogNpcOnPaths in worldInfo if it doesn't exist
-    if tbNpc.worldInfo.walkPaths and not tbNpc.worldInfo.foundDialogNpcOnPaths then
-        tbNpc.worldInfo.foundDialogNpcOnPaths = {}
-    end
+    end 
 
     
     -- All good generate name for Thanh Thi
