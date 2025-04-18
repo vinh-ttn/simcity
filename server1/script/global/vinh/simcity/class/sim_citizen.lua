@@ -64,11 +64,6 @@ function SimCitizen:New(fighter)
         return nil
     end
 
-    -- Bugfix series
-    if tbNpc.series == nil then
-        tbNpc.series = random(0,4)
-    end
-
     -- Create the character on screen
     local canCreate = tbNpc.entitySys:CreateChar(self, tbNpc, 1, tbNpc.goX32, tbNpc.goY32)
     if canCreate == 0 then
