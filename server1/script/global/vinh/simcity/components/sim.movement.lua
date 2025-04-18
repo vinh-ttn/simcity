@@ -182,10 +182,41 @@ SimMovement.Citizen = {
                 return 0
             end
             
+            local nX32, nY32, nW32 = GetNpcPos(tbNpc.finalIndex)
+            local nX = floor(nX32 / 32)
+            local nY = floor(nY32 / 32)
+
             if tbNpc.pathDirection == 1 then
                 tbNpc.currentPointIndex = 1
+                -- Find closest point to current position
+                local minDist = 1000
+                local closestPoint = 1
+                for i = 1, pathLength do
+                    local point = path[i]
+                    local dist = GetDistanceRadius(nX, nY, point[1], point[2])
+                    if dist < minDist then
+                        minDist = dist
+                        closestPoint = i
+                    else
+                        break
+                    end
+                end
+                tbNpc.currentPointIndex = closestPoint
             else
-                tbNpc.currentPointIndex = pathLength
+                -- Find closest point to current position starting from end
+                local minDist = 1000
+                local closestPoint = pathLength
+                for i = 1, pathLength do
+                    local point = path[pathLength - i + 1]
+                    local dist = GetDistanceRadius(nX, nY, point[1], point[2])
+                    if dist < minDist then
+                        minDist = dist
+                        closestPoint = i
+                    else
+                        break
+                    end
+                end
+                tbNpc.currentPointIndex = closestPoint
             end
 
             -- Reset path boundaries

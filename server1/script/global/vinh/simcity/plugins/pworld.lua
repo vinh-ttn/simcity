@@ -149,6 +149,7 @@ function SimCityWorld:New(data)
 		data.chientranh = data.chientranh or {}
 
 		data.tick = 0
+		data.tick_showBXH = 0
 		data.announceBXHTick = 3
 		
 		self.data["w" .. data.worldId] = data
@@ -238,10 +239,14 @@ function SimCityWorld:IsThanhThiMap(pW)
 end
 
 function SimCityWorld:ATick()
-	for wId, worldInfo in self.data do
+	for wId, worldInfo in self.data do		
 		worldInfo.tick = worldInfo.tick + 1
-		if worldInfo.showBXH == 1 and mod(worldInfo.tick, worldInfo.announceBXHTick) == 0 then
-			self:doShowBXH(worldInfo.worldId)
+
+		if worldInfo.showBXH == 1 then
+			if (worldInfo.tick_showBXH < worldInfo.tick) then
+				worldInfo.tick_showBXH = worldInfo.tick + worldInfo.announceBXHTick*60*18/REFRESH_RATE
+				self:doShowBXH(worldInfo.worldId)
+			end
 		end
 	end
 end

@@ -28,8 +28,8 @@ function SimCityChienTranh:modeTongKim(enable, camp2TopRight)
 end
 
 function SimCityChienTranh:genWalkPath_tongkim(forCamp)
-	local path1 = { "huong1phai", "huong1trai", "huong1giua" }
-	local path2 = { "huong2phai", "huong2trai", "huong2giua" }
+	local path1 = { "huong1phai", "huong1trai", "huong1giua", "duoitrai", "duoiphai", "duoigiua" }
+	local path2 = { "huong2phai", "huong2trai", "huong2giua", "trentrai", "trenphai", "trengiua" }
 
 	local campDirection = 0
 	if (self.tongkim_camp2TopRight == 1 and forCamp == 1) then
