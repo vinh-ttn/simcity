@@ -425,7 +425,6 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 		self.worldStatus["w" .. nW].enabled = 1
 
 		if SimCityWorld:IsTongKimMap(nW) == 1 then
-			SimCityMainTongKim:onPlayerEnterMap()
 			return 1
 		end
 
