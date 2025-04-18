@@ -14,10 +14,10 @@ function ComputeWalkGraph(worldMap)
 		for j = 1, getn(path) do
 			local point = path[j]
 			if point[3] and point[3] == 1 then
-				tinsert(exactPoints, {point[1], point[2], 1})
+				tinsert(exactPoints, {point[1], point[2], 1, point[4]})
 			else
-				tinsert(normalPoints, {point[1], point[2]})
-			end
+				tinsert(normalPoints, {point[1], point[2], 0, point[4]})
+			end 
 		end
 	end
 
@@ -26,9 +26,7 @@ function ComputeWalkGraph(worldMap)
 	local processedPoints = {}
 	local graph = {
 		nodes = {},  -- Store node coordinates
-		edges = {},   -- Store connections
-
-		foundDialogNpc = {}
+		edges = {},   -- Store connections 
 	}
 	
 	-- First add all exact points to processed
@@ -67,7 +65,7 @@ function ComputeWalkGraph(worldMap)
 		
 		-- If no snap point found, use original point
 		if not snapped then
-			snapped = {np[1], np[2]}
+			snapped = {np[1], np[2], np[3], np[4]}
 			tinsert(processedPoints, snapped)
 		end
 		
@@ -146,8 +144,7 @@ function SimCityWorld:New(data)
 		data.name = data.name or ""
 		data.walkPaths = data.walkPaths or {}
 		data.decoration = data.decoration or {}
-		data.chientranh = data.chientranh or {}
-
+		data.chientranh = data.chientranh or {} 
 		data.tick = 0
 		data.tick_showBXH = 0
 		data.announceBXHTick = 3

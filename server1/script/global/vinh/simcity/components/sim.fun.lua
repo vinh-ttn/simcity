@@ -31,7 +31,9 @@ function execRotDropMoney(tbNpc)
     
     -- Neu gan ban thuoc va TDP thi se quang ra TDP hoac ngu hoa
     -- Handle special cases for cached dialog NPCs 
-    if tbNpc.isDialogNpcAround == 203 then
+
+    -- Hieu thuoc
+    if tbNpc.isAttractionAround == 203 then
         if random(1, 10000) <= CHANCE_DROP_MONEY then
             local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
             for i=1, 10 do 
@@ -40,7 +42,8 @@ function execRotDropMoney(tbNpc)
         end
     end
 
-    if tbNpc.isDialogNpcAround == 384 then
+    -- Tap hoa
+    if tbNpc.isAttractionAround == 384 then
         if random(1, 10000) <= CHANCE_DROP_MONEY then
             local nX, nY, nMapIndex = GetNpcPos(tbNpc.finalIndex)
             for i=1, 3 do 
@@ -117,50 +120,20 @@ end
  
 function execFindDialogNpcAround(tbNpc)
     if tbNpc.mode ~= "thanhthi" then   
-        tbNpc.isDialogNpcAround = 0
+        tbNpc.isAttractionAround = 0
         return 0
     end
 
-    -- Check cache for preset path
-    if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
-        local pathKey = tbNpc.currentPathIndex .. "_" .. tbNpc.currentPointIndex
-        local cachedNpcId = tbNpc.worldInfo.foundDialogNpcOnPaths[pathKey]
-        
-        if cachedNpcId then
-            tbNpc.isDialogNpcAround = cachedNpcId
-            return cachedNpcId
-        end
-    else
-        -- Original walkGraph cache check
-        local foundDialogNpc = tbNpc.worldInfo.walkGraph.foundDialogNpc
-        if foundDialogNpc[tbNpc.nPosId] ~= nil then
-            tbNpc.isDialogNpcAround = foundDialogNpc[tbNpc.nPosId]
-            return foundDialogNpc[tbNpc.nPosId]
-        end
-    end
+    -- Atrraction points
+    if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then    
+        tbNpc.isAttractionAround = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex][tbNpc.currentPointIndex][4]
+        return tbNpc.isAttractionAround
+    elseif tbNpc.nPosId and tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId] then
+        tbNpc.isAttractionAround = tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId][4]
+        return tbNpc.isAttractionAround
+    end 
 
-    -- If not in cache, search for dialog NPCs nearby
-    local allNpcs = {}
-    local nCount = 0
-    local radius = 8    
-    allNpcs, nCount = GetNpcAroundNpcList(tbNpc.finalIndex, radius)
-    for i = 1, nCount do
-        local fighter2Kind = GetNpcKind(allNpcs[i])
-        local fighter2Name = GetNpcName(allNpcs[i])
-        local nNpcId = GetNpcSettingIdx(allNpcs[i])
-        if fighter2Kind == 3 and (nNpcId == 108 or nNpcId == 198 or nNpcId == 203 or nNpcId == 384 or nNpcId == 55 or nNpcId == 62) then
-            -- Cache the found NPC ID
-            if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
-                local pathKey = tbNpc.currentPathIndex .. "_" .. tbNpc.currentPointIndex
-                tbNpc.worldInfo.foundDialogNpcOnPaths[pathKey] = nNpcId
-            else
-                tbNpc.worldInfo.walkGraph.foundDialogNpc[tbNpc.nPosId] = nNpcId
-            end
-            tbNpc.isDialogNpcAround = nNpcId
-            return nNpcId
-        end
-    end
-    tbNpc.isDialogNpcAround = 0
+    tbNpc.isAttractionAround = 0
     return 0
 end
 
