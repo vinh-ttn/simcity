@@ -27,7 +27,6 @@ TIME_RESTING = { -- nghi ngoi, khong danh nhau lai trong vong thoi gian nay
 }
 
 -- TONG KIM setup
-TONGKIM_AUTOCREATE = 1            	-- if 1, auto add NPC to tongkim
 TONGKIM_SPAWN_MINSTAY = 10          -- thoi gian toi thieu o lai dai doanh truoc khi xong len
 TONGKIM_SPAWN_MAXSTAY = 60          -- thoi gian toi da co the nup trong dai doanh
 

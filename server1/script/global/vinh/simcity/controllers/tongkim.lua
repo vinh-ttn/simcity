@@ -164,14 +164,5 @@ function SimCityMainTongKim:addTongKimNpc()
 
 	-- Clear everyone
 	SimCityMainTongKim:clearTongKimNpc(SubWorldIdx2ID(nW))
-
-	-- Add auto
-	if TONGKIM_AUTOCREATE and TONGKIM_AUTOCREATE == 1 then 
-		local counter = SimCityChienTranh:countMap(nW)
-		if counter == 0 then
-			SimCityChienTranh:modeTongKim(1, self.camp2TopRight)
-			SimCityChienTranh:nv_tudo(1)
-		end
-	end
 end
 
