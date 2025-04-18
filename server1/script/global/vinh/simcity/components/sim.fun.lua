@@ -195,11 +195,10 @@ SimFun.Citizen = {
     OnDeath = function(self, simInstance, tbNpc, finalIndex)
         if tbNpc.tongkim == 1 then
             execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)
-            SimCityTongKim:OnDeath(nNpcIndex, tbNpc.rank or 1)
-        end     
+            SimCityTongKim:OnDeath(tbNpc.finalIndex, tbNpc.rank or 1)
         
         -- Random rot tien khi chet
-        if tbNpc.mode ~= "chiendau" then
+        elseif tbNpc.mode ~= "chiendau" then
             if random(1, 1000) <= CHANCE_DROP_MONEY then
                 NpcDropMoney(tbNpc.finalIndex, random(1000, 100000), -1)
             end
@@ -218,7 +217,7 @@ SimFun.KeoXe = {
     OnDeath = function(self, simInstance, tbNpc, finalIndex)
         if tbNpc.tongkim == 1 then
             execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)
-            SimCityTongKim:OnDeath(nNpcIndex, tbNpc.rank or 1)
+            SimCityTongKim:OnDeath(tbNpc.finalIndex, tbNpc.rank or 1)
         end     
     end
 } 

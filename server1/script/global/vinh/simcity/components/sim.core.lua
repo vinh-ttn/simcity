@@ -41,10 +41,37 @@ function SimCore:initCharConfig(config)
     -- Phai nhan vat?
     if not config.faction and SimCityPhai.id2phai[config.nNpcId] then
         config.faction = SimCityPhai.id2phai[config.nNpcId]
+
+        if (config.faction == "thienvuong" or config.faction == "thieulam") then
+            config.series = 0
+        end
+
+        if (config.faction == "ngudoc" or config.faction == "duongmon") then
+            config.series = 1
+        end
+
+        if (config.faction == "ngami" or config.faction == "thuyyen") then
+            config.series = 2
+        end
+
+        if (config.faction == "caibang" or config.faction == "thiennhan") then
+            config.series = 3
+        end
+
+        if (config.faction == "vodang" or config.faction == "conlon") then
+            config.series = 4
+        end
+        
+        
+        
+        
     end
 
     -- He nhan vat?
-    config.series = config.series or random(0,4)
+    if config.series == nil then
+        config.series = random(0,4)
+    end
+
     if config.faction then
         if (SimCityPhai[config.faction] and SimCityPhai[config.faction].knownIds[config.nNpcId]) then
 
