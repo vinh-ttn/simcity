@@ -14,7 +14,8 @@ Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/m
 -   Tọa độ Lâm An: [Huy Nguyen](https://www.facebook.com/groups/800085930700601/user/100004608648396/)
 -   [Hướng dẫn sửa lỗi mất đầu](https://github.com/vinh-ttn/simcity/issues/4) do thiếu res: [Trường Giang](https://www.facebook.com/groups/800085930700601/user/100003690357356)
 
-## A. Cài đặt/cập nhật qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
+## A. Cách cài đặt SimCity
+### A1. Cách 1: Cài đặt/cập nhật qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
 
 Yêu cầu game server của bạn phải có kết nối internet
 
@@ -28,7 +29,7 @@ Xong, khởi động lại game server.
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/caidat_capnhat_simcity.gif)
 
-## B. Cài đặt/cập nhật thủ công Thành Thị, Chiến Loạn và Kéo Xe
+### A2. Cách 2: Cài đặt/cập nhật thủ công Thành Thị, Chiến Loạn và Kéo Xe
 
 1\) Download file [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
 
@@ -38,7 +39,7 @@ Xong, khởi động lại game server.
 
 \* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
 
-## C. Cài đặt/cập nhật thủ công Tống Kim (Bảo vệ nguyên soái)
+## B. Cách cài đặt/cập nhật thủ công Tống Kim (Bảo vệ nguyên soái)
 
 1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
 
@@ -65,7 +66,7 @@ ngay sau dòng đó, thêm vào dòng
 5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
 Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/>
 
-## D. Giới thiệu tính năng
+## C. Giới thiệu tính năng
 
 Chạy trên JX Server 8
 
@@ -84,16 +85,4 @@ Chạy trên JX Server 8
 **4) Kéo Xe:** bạn có thể gọi nhân sĩ theo sau cùng đi cho an tâm.
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/keoxe.gif)
-
-## E. Thông tin thêm
-
-### Kéo xe NPC
-
-1. Nếu muốn tạo lệnh bài gọi xe nhanh đem theo bên mình (thay vì NPC Vô Kỵ) thì vào <https://jxoffline.github.io/jxtools/shopbuilder.d/>  để tạo thêm 1 vật phẩm với đường link tới file script
-
-`\script\global\vinh\simcity\controllers\main.lua`
-
-2. Nếu muốn thay đổi danh sách theo sau (hoặc tạo riêng cho mình) thì sửa file
-
-`\script\global\vinh\simcity\plugins\pkeoxe.lua`
 
