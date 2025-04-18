@@ -1,5 +1,9 @@
 # SimCity Changelog
 
+## 5.7.1 (18-04-2025)
+- Sửa lỗi không tự động chạy ở JX 6.0
+- Tắt tự động mở trong Tống Kim
+
 ## 5.7 (16-04-2025)
 - Thêm chức năng buff bùa, trấn phái và skill
 - Thêm chức năng "Lão Động Vật" ở gần Tương Dương bán ngựa
