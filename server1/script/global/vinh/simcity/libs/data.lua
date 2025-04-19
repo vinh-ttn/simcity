@@ -57,7 +57,7 @@ end
 -- Doc map thanh thi va chien tranh
 function loadMap()
     local mapPath = settingsPath.. "maps\\"
-    local thanhthiData = SimCityTableFromFile(mapPath.. "thanhthi.txt", {"*n", "*w", "*w"})
+    local thanhthiData = SimCityTableFromFile(mapPath.. "thanhthi.txt", {"*n", "*w", "*w", "*w"})
     local chientranhData = SimCityTableFromFile(mapPath.. "chientranh.txt", {"*n", "*w", "*w", "*w"})
     local trangtriData = SimCityTableFromFile(mapPath.. "trangtri.txt", {"*n", "*w", "*w"})
     local attractionsData = SimCityTableFromFile(mapPath.. "attractions.txt", {"*n", "*w", "*n", "*n", "*w", "*n"}) -- worldId, worldName, pX, pY, description, dialogNpcId
@@ -65,6 +65,7 @@ function loadMap()
         return
     end
 
+    -- Load attractions
     local mapAtractions = {}
     for i = 1, getn(attractionsData) do
         local entry = attractionsData[i]
@@ -83,46 +84,82 @@ function loadMap()
         end
     end
 
+    -- Load thanh thi map
     for i = 1, getn(thanhthiData) do
         local entry = thanhthiData[i]
         local worldId = entry[1]
         local worldName = entry[2]
         local filePath = entry[3]
+        local fileType = entry[4]
 
         if not SimCityMap[worldId] then
             SimCityMap[worldId] = {
                 worldId = worldId,
                 name = worldName,
+                chientranh = {
+                    path1 = {},
+                    path2 = {}
+                },
                 walkPaths = {},
                 decoration = {}
             }
         end
         local world = SimCityMap[worldId]
-        local foundWalkPath = SimCityTableFromFile(mapPath.. filePath, {"*w", "*n", "*n", "*n"})
 
-        local allPath = {}
-        for i=1, getn(foundWalkPath) do
-            if not allPath[foundWalkPath[i][1]] then
-                allPath[foundWalkPath[i][1]] = {}
-            end
+        -- Path mode
+        if fileType == "path" then
+            local foundWalkPath = SimCityTableFromFile(mapPath.. filePath, {"*w", "*n", "*n", "*n"})
 
-            local nX = foundWalkPath[i][2]
-            local nY = foundWalkPath[i][3]
-            local isExact = foundWalkPath[i][4]
-            local isNearAtraction = 0
-            if mapAtractions[worldId] then
-                for j=1, getn(mapAtractions[worldId]) do
-                    local atraction = mapAtractions[worldId][j]
-                    if GetDistanceRadius(nX, nY, atraction[1], atraction[2]) < 8 then
-                        isNearAtraction = atraction[3]
-                        break
+            local allPath = {}
+            for i=1, getn(foundWalkPath) do
+                if not allPath[foundWalkPath[i][1]] then
+                    allPath[foundWalkPath[i][1]] = {}
+                end
+
+                local nX = foundWalkPath[i][2]
+                local nY = foundWalkPath[i][3]
+                local isExact = foundWalkPath[i][4]
+                local isNearAtraction = 0
+                if mapAtractions[worldId] then
+                    for j=1, getn(mapAtractions[worldId]) do
+                        local atraction = mapAtractions[worldId][j]
+                        if GetDistanceRadius(nX, nY, atraction[1], atraction[2]) < 8 then
+                            isNearAtraction = atraction[3]
+                            break
+                        end
                     end
                 end
+                tinsert(allPath[foundWalkPath[i][1]], {nX, nY, isExact, isNearAtraction})
             end
-            tinsert(allPath[foundWalkPath[i][1]], {nX, nY, isExact, isNearAtraction})
+            world.walkPaths = allPath
+
+        -- Map mode
+        elseif fileType == "map" then
+            local foundWalkMap = SimCityTableFromFile(mapPath.. filePath, {"*w", "*n", "*n", "*w"})
+            world.walkGraph = {
+                nodes = {},
+                edges = {}
+            }
+            for i=1, getn(foundWalkMap) do
+                local nodeKey = foundWalkMap[i][1]
+                local isNearAtraction = 0
+                local nX = foundWalkMap[i][2]
+                local nY = foundWalkMap[i][3]
+                if mapAtractions[worldId] then
+                    for j=1, getn(mapAtractions[worldId]) do
+                        local atraction = mapAtractions[worldId][j]
+                        if GetDistanceRadius(nX, nY, atraction[1], atraction[2]) < 8 then
+                            isNearAtraction = atraction[3]
+                            break
+                        end
+                    end
+                end
+
+                local node = {nX, nY, 0, isNearAtraction}
+                world.walkGraph.nodes[nodeKey] = node
+                world.walkGraph.edges[nodeKey] = split(foundWalkMap[i][4], ",")
+            end
         end
-        world.walkPaths = allPath
- 
     end
 
     for i = 1, getn(chientranhData) do

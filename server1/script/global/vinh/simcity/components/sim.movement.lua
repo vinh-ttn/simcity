@@ -170,7 +170,6 @@ SimMovement.Citizen = {
             
             tbNpc.currentPathIndex = nextPath[1]
             tbNpc.pathDirection = nextPath[2]
-            
             -- Validate the path exists in worldInfo
             local path = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]
             if not path then
@@ -188,35 +187,8 @@ SimMovement.Citizen = {
 
             if tbNpc.pathDirection == 1 then
                 tbNpc.currentPointIndex = 1
-                -- Find closest point to current position
-                local minDist = 1000
-                local closestPoint = 1
-                for i = 1, pathLength do
-                    local point = path[i]
-                    local dist = GetDistanceRadius(nX, nY, point[1], point[2])
-                    if dist < minDist then
-                        minDist = dist
-                        closestPoint = i
-                    else
-                        break
-                    end
-                end
-                tbNpc.currentPointIndex = closestPoint
-            else
-                -- Find closest point to current position starting from end
-                local minDist = 1000
-                local closestPoint = pathLength
-                for i = 1, pathLength do
-                    local point = path[pathLength - i + 1]
-                    local dist = GetDistanceRadius(nX, nY, point[1], point[2])
-                    if dist < minDist then
-                        minDist = dist
-                        closestPoint = i
-                    else
-                        break
-                    end
-                end
-                tbNpc.currentPointIndex = closestPoint
+            else               
+                tbNpc.currentPointIndex = pathLength
             end
 
             -- Reset path boundaries
@@ -265,7 +237,7 @@ SimMovement.Citizen = {
                     elseif tbNpc.tick_breath > tbNpc.tick_canWalk then
 
                         if tbNpc.tongkim == 1 
-                            and (tbNpc.currentPathIndex == "camp1spawn" or tbNpc.currentPathIndex == "camp2spawn") then
+                            and (tbNpc.currentPathIndex == "camptren" or tbNpc.currentPathIndex == "campduoi") then
                             self:NextPathSegment(simInstance, tbNpc) 
                             return tbNpc.currentPointIndex
                         end
