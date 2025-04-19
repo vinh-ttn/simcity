@@ -90,13 +90,13 @@ ngay sau dòng đó, thêm vào dòng
 
 4\) Khởi động lại server, vào Tống Kim sẽ có Triệu Mẫn/Vô Kỵ để điều khiển
 
-5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
-Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/>
+5\) (Không cần thiết) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
+Nếu bạn không muốn như vậy. Có thể xem [hướng dẫn để chỉnh server lại](https://www.facebook.com/groups/volamquan/permalink/1264194464289743/) cho có điểm.
 
 
 ## D. Giới thiệu tính năng
 
-Chạy trên JX Server 8
+Chạy trên JX Server 6 và 8
 
 **1) Thành thị:** thành thị sẽ trở nên nhộn nhịp với các gian hàng và các nhân sĩ võ lâm đi lại. Các nhân sĩ có thể đánh nhau bất cứ lúc nào. Ngoài ra bạn có thể gọi thêm quan binh tuần tra (nhưng cũng vô ích) hoặc các quái khách trên cõi giang hồ.
 
