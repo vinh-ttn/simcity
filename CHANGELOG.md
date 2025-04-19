@@ -1,5 +1,9 @@
 # SimCity Changelog
 
+## 5.7.3 (19-04-2025)
+- Sửa lỗi chức năng tự động tắt/mở
+- Nâng cấp chức năng di chuyển trong thành đến những nơi tập trung (hiệu thuốc, tạp hóa, xa phu v.v.)
+  
 ## 5.7.1 (18-04-2025)
 - Sửa lỗi không tự động chạy ở JX 6.0
 - Tắt tự động mở trong Tống Kim
