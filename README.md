@@ -61,13 +61,13 @@ Yêu cầu game server của bạn phải có kết nối internet
 
 ngay sau dòng đó, thêm vào 2 dòng
 
-`"Điều khiển SimCity/#SimCityMainTongKim:mainMenu()",`
+`"Điều khiển SimCity/#SimCityMainThanhThi:mainMenu()",`
 
 `"Điều khiển Kéo Xe/#SimCityKeoXe:mainMenu()",`
 
 Xong. Khởi động lại server, vào Tống Kim và dùng Thần Hành Phù để điều khiển nhân sĩ giang hồ trong Tống Kim.
 
-## C. (Không cần thiết) Thêm NPC Triệu Mẫn và Vô Kỵ trong Tống Kim
+## C. (Không cần thiết) Thêm NPC Triệu Mẫn và Vô Kỵ trong Tống Kim Bảo Vệ Nguyên Soái
 1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
 
 `\script\battles\marshal\mission.lua`
