@@ -27,5 +27,5 @@ function simcity_addNpcs()
 end
 
 function simcity_clearTongKim()
-	SimCityMainTongKim:clearTongKimNpc()
+	SimCityChienTranh:removeAll()
 end

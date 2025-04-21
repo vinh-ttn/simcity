@@ -62,33 +62,7 @@ SimCityTongKim.ITEM_DROPRATE_TABLE = {
 
 SimCityTongKim.NPC_RANK_DROPRATE_TABLE = { 1, 1, 2, 3, 4, 5 }
 
-
-function SimCityTongKim:OnDeathTest(nNpcIndex)
-	State = GetMissionV(MS_STATE);
-	if (State ~= 2) then
-		return
-	end
-
-	--如果是死于其它Npc则不统计排行
-	if (PlayerIndex == nil or PlayerIndex == 0) then
-		return
-	end
-	local rank = 1
-	self:dropItem(nNpcIndex, rank, PlayerIndex)
-	BT_SetData(PL_KILLNPC, BT_GetData(PL_KILLNPC) + 1);
-	BT_SetData(PL_KILLRANK1 + rank - 1, BT_GetData(PL_KILLRANK1 + rank - 1) + 1)
-	pointnpc = bt_addtotalpoint(BT_GetTypeBonus(PL_KILLRANK1 + rank - 1, GetCurCamp()))
-	mar_addmissionpoint(BT_GetTypeBonus(PL_KILLRANK1 + rank - 1, GetCurCamp()))
-	if (pointnpc == nil or pointnpc == 0) then
-		Msg2Player("B筺 nh薾 頲 <color=yellow>0<color> 甶觤 t輈h l騳!")
-	else
-		Msg2Player("B筺 nh薾 頲 <color=yellow>" .. pointnpc .. "<color> 甶觤 t輈h l騳!")
-	end
-	BT_SortLadder()
-	BT_BroadSelf()
-end;
-
-function SimCityTongKim:OnDeath(nNpcIndex, currank)
+function SimCityTongKim:OnDeath(nNpcIndex, currank, attackerIndex)
 	State = GetMissionV(MS_STATE)
 	if (State ~= 2) then
 		return

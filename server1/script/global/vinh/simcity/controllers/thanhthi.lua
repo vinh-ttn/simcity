@@ -88,7 +88,7 @@ function SimCityMainThanhThi:CreatePatrol()
 
 	local worldInfo = SimCityWorld:Get(nW)
 
-	local allMap = worldInfo.walkPaths
+	local allMap = worldInfo.presetPaths
 
 	local linh = 682
 
@@ -338,7 +338,6 @@ function SimCityMainThanhThi:mainMenu()
 	end
 
 	local worldInfo = SimCityWorld:Get(nW)
-	SimCityChienTranh:modeTongKim(0, 0)
 	SimCityChienTranh.nW = nW
 
 	if not worldInfo.name then
@@ -350,12 +349,7 @@ function SimCityMainThanhThi:mainMenu()
 		local tbSay = createTaskSayThanhThi("<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>")
 
 		tinsert(tbSay, "Thµnh ThÞ - Bè c¸o thiªn h¹/#SimCityMainThanhThi:thanhthiMenu()")
-
-		if (not worldInfo.chientranh) or (not worldInfo.chientranh.path1) or (not worldInfo.chientranh.path2) then
-		else 
-			tinsert(tbSay, "Ph¸t ®éng chiÕn tranh/#SimCityChienTranh:mainMenu()")
-		end
-
+		tinsert(tbSay, "Ph¸t ®éng chiÕn tranh/#SimCityChienTranh:mainMenu()")
 		if self.autoAddThanhThi == 1 then
 			tinsert(tbSay, "Tù ®éng thªm (më)/#SimCityMainThanhThi:autoThanhThi(0)")
 		else

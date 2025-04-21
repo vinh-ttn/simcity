@@ -3,44 +3,17 @@ Include("\\script\\global\\vinh\\simcity\\head.lua")
 Include("\\script\\battles\\marshal\\head.lua");
 
 
-SimCityMainTongKim = { camp2TopRight = 0 }
+SimCityMainTongKim = {   }
 
-
-function SimCityMainTongKim:updateCampPosition()
-	local camp1X = GetMissionV(MS_HOMEIN_X1) / 8
-	local camp1Y = GetMissionV(MS_HOMEIN_Y1) / 16
-	local camp2X = GetMissionV(MS_HOMEIN_X2) / 8
-	local camp2Y = GetMissionV(MS_HOMEIN_Y2) / 16
-
-	self.camp2TopRight = 0
-	if (camp2X > camp1X) and (camp2Y < camp1Y) then
-		self.camp2TopRight = 1
-	end
-end
+ 
 
 function SimCityMainTongKim:xemBXH()
 	local nW, nX, nY = GetWorldPos()
 	SimCityWorld:doShowBXH(nW)
 end
 
-function SimCityMainTongKim:setUpMap(nW)
-	local worldInfo = SimCityWorld:Get(nW)
-	if not worldInfo.name then
-		local config = objCopy(SimCityMap[10000])
-		config.worldId = nW
-		config.name = "Tèng Kim"
-		config.decoration = {}
-		config.isTongKim = 1
-		SimCityWorld:New(config);
-		worldInfo = SimCityWorld:Get(nW)
-		worldInfo.showFightingArea = 0
-		worldInfo.showThangCap = 1
-		worldInfo.showBXH = 1
-		worldInfo.announceBXHTick = 1 -- show BXH moi 1 phut
-	end
-end
 
-function createTaskSayTongKim(mapId, extra)
+function createTaskSayTongKim(extra)
 
 	local tbOpt = {}
 	local nSettingIdx = 1617
@@ -52,46 +25,21 @@ function createTaskSayTongKim(mapId, extra)
 	tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> Ng­êi H¸n c¸c ng­¬i lu«n cho r»ng ng­êi Kim chóng ta lµ d· man, nh­ng c¸c ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
 	return tbOpt
 end
+
 function SimCityMainTongKim:mainMenu()
-	SimCityMainTongKim:updateCampPosition()
-	SimCityChienTranh:modeTongKim(1, self.camp2TopRight)
-
 	local nW, nX, nY = GetWorldPos()
-	SimCityMainTongKim:setUpMap(nW)
-
 	SimCityChienTranh.nW = nW
-	local worldInfo = SimCityWorld:Get(nW)
-	local counter = SimCityChienTranh:countMap(nW)
-	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
-
-	local tbSay = createTaskSayTongKim(nW, extra)
-
-	tinsert(tbSay, "Ph¸t anh hïng thiÕp/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
-	tinsert(tbSay, "Ph¸t qu¸i nh©n thiÕp/#SimCityChienTranh:goiAnhHungThiep()")
-	tinsert(tbSay, "§iÒu ®éng qu©n binh/#SimCityChienTranh:phe_quanbinh()") 
-	tinsert(tbSay, "Xem b¶ng xÕp h¹ng/#SimCityMainTongKim:xemBXH()")
-	tinsert(tbSay, "ThiÕt lËp/#SimCityChienTranh:caidat()")
-	tinsert(tbSay, "Gi¶i t¸n/#SimCityChienTranh:removeAll()")
-	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
-	CreateTaskSay(tbSay)
+	SimCityChienTranh:mainMenu()
 	return 1
 end
 
 function main()
 	return SimCityMainTongKim:mainMenu()
 end
-
-function SimCityMainTongKim:clearTongKimNpc(targetWorld)
-	for k, world in SimCityWorld.data do
-		if world.isTongKim == 1 and (not targetWorld or world.worldId == targetWorld) then
-			SimCityChienTranh.nW = world.worldId
-			SimCityChienTranh:removeAll()
-		end
-	end
-end
+ 
 
 function SimCityMainTongKim:addTongKimNpc()
-	SimCityMainTongKim:updateCampPosition()
+	SimCityChienTranh:updateCampPosition()
 
 	local vokyTienTuyen = { 1343 * 32, 3410 * 32 }
 	local vokyHauPhuong = { 1241 * 32, 3549 * 32 }
@@ -113,7 +61,7 @@ function SimCityMainTongKim:addTongKimNpc()
 	}
 
 
-	if self.camp2TopRight == 1 then
+	if SimCityChienTranh.camp2TopRight == 1 then
 		vitriTrieuMan.tientuyen = trieumanTienTuyen
 		vitriTrieuMan.hauphuong = trieumanHauPhuong
 		vitriVoKy.tientuyen = vokyTienTuyen
@@ -175,6 +123,6 @@ function SimCityMainTongKim:addTongKimNpc()
 
 
 	-- Clear everyone
-	SimCityMainTongKim:clearTongKimNpc(SubWorldIdx2ID(nW))
+	SimCityChienTranh:removeAll(SubWorldIdx2ID(nW))
 end
 

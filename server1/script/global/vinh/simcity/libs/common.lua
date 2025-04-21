@@ -212,3 +212,41 @@ end
 function _sortByScore(tb1, tb2)
 	return tb1[2] > tb2[2]
 end
+
+
+function getClosestNode(nodes, nX, nY)
+    local minDist1 = 200
+    local closestNode1 = nil
+
+    for nodeName, coords in nodes do
+        local dist = GetDistanceRadius(nX, nY, coords[1], coords[2])
+        if dist < minDist1 then
+            minDist1 = dist
+            closestNode1 = nodeName
+        end
+    end
+    return closestNode1
+end
+
+
+function nodeNameToCoords(nodeName)
+    local point = split(nodeName, "_")
+    local x = tonumber(point[1])
+    local y = tonumber(point[2])
+    return x, y
+end
+
+function getNodeInfoByNodeName(tbNpc, nodeName)
+    if tbNpc.worldInfo.nodes[nodeName] then        
+        return tbNpc.worldInfo.nodes[nodeName]
+    end
+    local x, y = nodeNameToCoords(nodeName)
+    return {
+        x = x,
+        y = y,
+        isNearAtraction = 0,
+        linkedNodes = {},
+        isNearAtraction = 0,
+        
+    }
+end
