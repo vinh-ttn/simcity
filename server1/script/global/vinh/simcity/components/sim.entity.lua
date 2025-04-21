@@ -19,15 +19,17 @@ function execCreateChar(self, simInstance, tbNpc, isNew, goX32, goY32)
             tX32 = pX32
             tY32 = pY32
         else
-            if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
-                local path = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]
+            if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.presetPaths and tbNpc.currentPathIndex then
+                local path = tbNpc.worldInfo.presetPaths[tbNpc.currentPathIndex]
                 if path and tbNpc.currentPointIndex and tbNpc.currentPointIndex <= getn(path) then
-                    tX32 = path[tbNpc.currentPointIndex][1]*32
-                    tY32 = path[tbNpc.currentPointIndex][2]*32
+                    local node = getNodeInfoByNodeName(tbNpc, path[tbNpc.currentPointIndex])
+                    tX32 = node.x*32
+                    tY32 = node.y*32
                 end
             else
-                tX32 = tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId][1]*32
-                tY32 = tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId][2]*32
+                local node = getNodeInfoByNodeName(tbNpc, tbNpc.nPosId)
+                tX32 = node.x*32
+                tY32 = node.y*32
             end
         end
 
@@ -187,12 +189,12 @@ SimEntity.Citizen = {
         self:CreateChar(simInstance, tbNpc, 0, nX32, nY32)
     end,
     
-    OnDeath = function(self, simInstance, tbNpc, nNpcIndex)        
+    OnDeath = function(self, simInstance, tbNpc, nNpcIndex, attackerIndex)        
         if tbNpc == nil then
             return 0
         end
 
-        tbNpc.funSys:OnDeath(simInstance, tbNpc, nNpcIndex)    
+        tbNpc.funSys:OnDeath(simInstance, tbNpc, nNpcIndex, attackerIndex)    
 
         if tbNpc.role == "citizen" and tbNpc.children then
             local child
@@ -310,12 +312,12 @@ SimEntity.KeoXe = {
         DelNpcSafe(tbNpc.finalIndex) 
         self:CreateChar(simInstance, tbNpc, 0, nX32, nY32)
     end,
-    OnDeath = function(self, simInstance, tbNpc, nNpcIndex)
+    OnDeath = function(self, simInstance, tbNpc, nNpcIndex, attackerIndex)
         if tbNpc == nil then
             return 0
         end
 
-        tbNpc.funSys:OnDeath(simInstance, tbNpc, nNpcIndex)
+        tbNpc.funSys:OnDeath(simInstance, tbNpc, nNpcIndex, attackerIndex)
     
         tbNpc.isDead = 1
         tbNpc.finalIndex = nil

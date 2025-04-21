@@ -73,7 +73,7 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     end
 
     -- Random cast only 0.5% allowed
-    if (random(1, 1000) > 5) then
+    if (random(1, 1000) > 50) then
         return
     end
 
@@ -249,19 +249,20 @@ SimFight.Citizen = {
                         local name = GetNpcName(tbNpc.finalIndex)
                         local lastPos
                         
-                        if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then
-                            local path = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex]
+                        if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.presetPaths and tbNpc.currentPathIndex then
+                            local path = tbNpc.worldInfo.presetPaths[tbNpc.currentPathIndex]
                             if path and tbNpc.currentPointIndex and tbNpc.currentPointIndex <= getn(path) then
                                 lastPos = path[tbNpc.currentPointIndex]
                             end
                         else
-                            lastPos = tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId]
+                            lastPos = tbNpc.nPosId
                         end
                         
-                        if lastPos ~= nil then
+                        if lastPos ~= nil and lastPos ~= "none" then
+                            local node = getNodeInfoByNodeName(tbNpc, lastPos)
                             Msg2Map(tbNpc.nMapId,
                                 "<color=white>" .. name .. "<color> ®¸nh ng­êi t¹i " .. tbNpc.worldInfo.name .. " " ..
-                                floor(lastPos[1] / 8) .. " " .. floor(lastPos[2] / 16) .. "")
+                                floor(node.x / 8) .. " " .. floor(node.y / 16) .. "")
                         end
                     end
                 end

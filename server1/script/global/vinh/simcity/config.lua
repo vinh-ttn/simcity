@@ -35,7 +35,7 @@ TONGKIM_SPAWN_MAXSTAY = 60          -- thoi gian toi da co the nup trong dai doa
 PARAM_LIST_ID = 1                  -- param to store fighter id
 PARAM_CHILD_ID = 2                 -- param to store child id
 PARAM_TYPE = 3                     -- param to store type
-REFRESH_RATE = 9                   -- refresh rate
+REFRESH_RATE = 18                  -- refresh rate
 
 -- CHILD SIM CITIZEN/KEOXE setup
 DISTANCE_CAN_CONTINUE = 5          -- start next position if within 3 points from destination

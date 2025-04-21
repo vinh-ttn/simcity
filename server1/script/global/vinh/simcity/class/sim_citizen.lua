@@ -35,11 +35,6 @@ function SimCitizen:New(fighter)
         tbNpc[k] = v
     end
 
-    -- Check if walkGraph is nil
-    if (tbNpc.role == "citizen" and tbNpc.worldInfo.walkGraph == nil) then
-        return nil
-    end 
-
     
     -- All good generate name for Thanh Thi
     if tbNpc.mode == nil or tbNpc.mode == "thanhthi" or tbNpc.mode == "train" then

@@ -118,22 +118,22 @@ function SimCore:Remove(nListId)
     end
 end
 
-function SimCore:OnDeath(nListId, nNpcIndex)
+function SimCore:OnDeath(nListId, nNpcIndex, attackerIndex)
     local tbNpc = self.fighterList[nListId]
     if tbNpc == nil then
         return 0
     end
 
-    tbNpc.entitySys:OnDeath(self, tbNpc, nNpcIndex)    
+    tbNpc.entitySys:OnDeath(self, tbNpc, nNpcIndex, attackerIndex)    
 end
 
-function SimCore:OnTimer(nListId)
-    local tbNpc = self.fighterList[nListId]
-    if tbNpc == nil or tbNpc.isDead == 1 then
+function SimCore:OnTimer(tbNpc, rate)
+    local tickRate = rate or 1 
+    if tbNpc.isDead == 1 then
         return 0
     end
 
-    tbNpc.tick_breath = tbNpc.tick_breath + 1
+    tbNpc.tick_breath = tbNpc.tick_breath + 1*tickRate
 
     if tbNpc.tick_breath > 1800*18/REFRESH_RATE then
         tbNpc.tick_breath = 0
@@ -142,29 +142,30 @@ function SimCore:OnTimer(nListId)
         tbNpc.tick_canWalk = 0
         tbNpc.tick_canCast = 0
     end
-
-    if tbNpc.isFighting == 1 then
-        tbNpc.fightingScore = tbNpc.fightingScore + 10
-    end
-
-    if tbNpc.isDead == 1 then
-        return 0
-    end
-
+ 
     -- Move
-    tbNpc.movementSys:Move(self, nListId)
+    tbNpc.movementSys:Move(self, tbNpc, isTen)
 
     -- Fun
     tbNpc.funSys:Update(tbNpc)
 
-    -- Cast skill
-    if tbNpc.faction and SimCityPhai[tbNpc.faction].normalCast then
-        tbNpc.fightSys:Update(self, tbNpc)
+    -- The rest 10 seconds per call   
+    if mod(tbNpc.tick_breath, 10*18/REFRESH_RATE) == 0 then
+        
+        -- Cast skill
+        if tbNpc.faction and SimCityPhai[tbNpc.faction].normalCast then
+            tbNpc.fightSys:Update(self, tbNpc)
+        end
+            
+        -- Update fighting score
+        if tbNpc.isFighting == 1 then
+            tbNpc.fightingScore = tbNpc.fightingScore + 100
+        end
     end
 end
 
-function SimCore:ATick()    
+function SimCore:ATick(rate)    
     for key, fighter in self.fighterList do
-        self:OnTimer(key)
+        self:OnTimer(fighter, rate)
     end
 end 

@@ -11,9 +11,14 @@ end
 function mainLoop()
     SimCitizen:ATick()
 	SimTheoSau:ATick()
-	SimCityWorld:ATick()
 	--SimCityKeoXe:ATick()
     AddTimer(REFRESH_RATE, "mainLoop", SimCitizen)
 end 
 
+function worldLoop()
+	SimCityWorld:ATick(20)
+    AddTimer(REFRESH_RATE*20, "worldLoop", SimCityWorld)
+end 
+
 AddTimer(REFRESH_RATE, "mainLoop", SimCitizen)
+AddTimer(REFRESH_RATE*20, "worldLoop", SimCityWorld)

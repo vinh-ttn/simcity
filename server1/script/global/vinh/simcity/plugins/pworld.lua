@@ -1,231 +1,76 @@
 Include("\\script\\lib\\timerlist.lua")
 
-
-
-function ComputeWalkGraph(worldMap)
-	local walkPaths = worldMap.walkPaths
-	-- Store all exact points (priority points) first
-	local exactPoints = {}
-	local normalPoints = {}
-	
-	-- Separate exact points and normal points
-	local i, j
-	for pathName, path in walkPaths do
-		for j = 1, getn(path) do
-			local point = path[j]
-			if point[3] and point[3] == 1 then
-				tinsert(exactPoints, {point[1], point[2], 1, point[4]})
-			else
-				tinsert(normalPoints, {point[1], point[2], 0, point[4]})
-			end 
-		end
-	end
-
-	-- Process normal points and snap to exact points if within radius
-	local SNAP_RADIUS = 5 -- Adjust this value as needed
-	local processedPoints = {}
-	local graph = {
-		nodes = {},  -- Store node coordinates
-		edges = {},   -- Store connections 
-	}
-	
-	-- First add all exact points to processed
-	for i = 1, getn(exactPoints) do
-		local ep = exactPoints[i]
-		tinsert(processedPoints, ep)
-		local nodeKey = ep[1] .. "_" .. ep[2]
-		graph.nodes[nodeKey] = ep
-		graph.edges[nodeKey] = {}
-	end
-	
-	-- Process normal points
-	for i = 1, getn(normalPoints) do
-		local np = normalPoints[i]
-		local snapped = nil
-		
-		-- Check if point should snap to any exact point
-		for j = 1, getn(exactPoints) do
-			local ep = exactPoints[j]
-			if GetDistanceRadius(np[1], np[2], ep[1], ep[2]) <= SNAP_RADIUS then
-				snapped = ep
-				break
-			end
-		end
-		
-		-- If no exact point to snap to, check other normal points
-		if not snapped then
-			for j = 1, getn(processedPoints) do
-				local pp = processedPoints[j]
-				if GetDistanceRadius(np[1], np[2], pp[1], pp[2]) <= SNAP_RADIUS then
-					snapped = pp
-					break
-				end
-			end
-		end
-		
-		-- If no snap point found, use original point
-		if not snapped then
-			snapped = {np[1], np[2], np[3], np[4]}
-			tinsert(processedPoints, snapped)
-		end
-		
-		-- Initialize graph node if not exists
-		local nodeKey = snapped[1] .. "_" .. snapped[2]
-		if not graph.nodes[nodeKey] then
-			graph.nodes[nodeKey] = snapped
-			graph.edges[nodeKey] = {}
-		end
-	end
-	
-	-- Build connections between points based on original paths
-	for pathName, path in walkPaths do
-		for j = 1, getn(path)-1 do
-			local p1 = path[j]
-			local p2 = path[j+1]
-			
-			-- Find corresponding processed points
-			local pp1, pp2 = nil, nil
-			
-			for k = 1, getn(processedPoints) do
-				local pp = processedPoints[k]
-				if GetDistanceRadius(p1[1], p1[2], pp[1], pp[2]) <= SNAP_RADIUS then
-					pp1 = pp
-				end
-				if GetDistanceRadius(p2[1], p2[2], pp[1], pp[2]) <= SNAP_RADIUS then
-					pp2 = pp
-				end
-				if pp1 and pp2 then break end
-			end
-			
-			-- Add bidirectional connection
-			if pp1 and pp2 then
-				local key1 = pp1[1] .. "_" .. pp1[2]
-				local key2 = pp2[1] .. "_" .. pp2[2]
-				
-				-- Check if connection already exists
-				local found = nil
-				for k = 1, getn(graph.edges[key1]) do
-					if graph.edges[key1][k] == key2 then
-						found = 1
-						break
-					end
-				end
-				
-				if not found then
-					tinsert(graph.edges[key1], key2)
-					tinsert(graph.edges[key2], key1)
-				end
-			end
-		end
-	end
-
-	if not worldMap.walkGraph then
-		worldMap.walkGraph = graph
-	else
-		-- Merge new nodes into existing walkGraph
-		for nodeKey, node in graph.nodes do
-			if not worldMap.walkGraph.nodes[nodeKey] then
-				worldMap.walkGraph.nodes[nodeKey] = node
-				
-				-- Check for nearby nodes in existing graph to connect with
-				for existingKey, existingNode in worldMap.walkGraph.nodes do
-					if existingKey ~= nodeKey then
-						-- Extract coordinates from node keys
-						local x1, y1 = node[1], node[2]
-						local x2, y2 = existingNode[1], existingNode[2]
-						
-						-- If nodes are within SNAP_RADIUS, connect them
-						if GetDistanceRadius(x1, y1, x2, y2) <= SNAP_RADIUS then
-							-- Initialize edges arrays if needed
-							if not worldMap.walkGraph.edges[nodeKey] then
-								worldMap.walkGraph.edges[nodeKey] = {}
-							end
-							if not worldMap.walkGraph.edges[existingKey] then
-								worldMap.walkGraph.edges[existingKey] = {}
-							end
-							
-							-- Add bidirectional edges if they don't exist
-							local found1, found2 = nil, nil
-							
-							-- Check if forward edge exists
-							for i = 1, getn(worldMap.walkGraph.edges[nodeKey]) do
-								if worldMap.walkGraph.edges[nodeKey][i] == existingKey then
-									found1 = 1
-									break
-								end
-							end
-							
-							-- Check if reverse edge exists
-							for i = 1, getn(worldMap.walkGraph.edges[existingKey]) do
-								if worldMap.walkGraph.edges[existingKey][i] == nodeKey then
-									found2 = 1
-									break
-								end
-							end
-							
-							-- Add missing edges
-							if not found1 then
-								tinsert(worldMap.walkGraph.edges[nodeKey], existingKey)
-							end
-							if not found2 then
-								tinsert(worldMap.walkGraph.edges[existingKey], nodeKey)
-							end
-						end
-					end
-				end
-			end
-		
-			local edges = graph.edges[nodeKey]
-			if worldMap.walkGraph.edges[nodeKey] then
-				-- Add new edges if they don't already exist
-				for i = 1, getn(edges) do
-					local targetKey = edges[i]
-					local found = nil
-					-- Check if edge already exists
-					for j = 1, getn(worldMap.walkGraph.edges[nodeKey]) do
-						if worldMap.walkGraph.edges[nodeKey][j] == targetKey then
-							found = 1
-							break
-						end
-					end
-					if not found then
-						tinsert(worldMap.walkGraph.edges[nodeKey], targetKey)
-						-- Add reverse edge if it doesn't exist
-						if not worldMap.walkGraph.edges[targetKey] then
-							worldMap.walkGraph.edges[targetKey] = {}
-						end
-						local found2 = nil
-						for j = 1, getn(worldMap.walkGraph.edges[targetKey]) do
-							if worldMap.walkGraph.edges[targetKey][j] == nodeKey then
-								found2 = 1
-								break
-							end
-						end
-						if not found2 then
-							tinsert(worldMap.walkGraph.edges[targetKey], nodeKey)
-						end
-					end
-				end
-			else
-				worldMap.walkGraph.edges[nodeKey] = {}
-				-- Copy edges
-				for i = 1, getn(edges) do
-					tinsert(worldMap.walkGraph.edges[nodeKey], edges[i])
-				end
-			end
-		end
-	end
-	return worldMap.walkGraph
-end
-
-
-
-
 SimCityWorld = {
 	data = {},
 	trangtri = {}
 }
 
+function SimCityWorld:modifyTongKimMap(data)
+	if self:IsTongKimMap(data.worldId) == 0 then
+		return
+	end
+
+	data.name = "Tèng Kim"
+	data.showFightingArea = 0
+	data.showThangCap = 1
+	data.showBXH = 1
+	data.announceBXHTick = 1 
+	data.isTongKim = 1
+
+	-- Tong Kim bao ve nguyen soai
+	if data.worldId == 380 or data.worldId == 378 or data.worldId == 379 then
+
+		-- Clear out all nodes
+		data.nodes = {}
+		data.presetPaths = {}
+
+		-- Add the nodes of map 10000
+		for k,v in SimCityMap[10000].nodes do				
+			data.nodes[k] = {
+				nodeType = 1,
+				x = v.x,
+				y = v.y,
+				linkedNodes = v.linkedNodes,
+				isExact = v.isExact,
+				isNearAtraction = v.isNearAtraction,
+			}
+		end
+
+		data.firstNode = SimCityMap[10000].firstNode
+
+		-- Add haudoanh1 and haudoanh2
+		data.presetPaths.haudoanh1 = SimCityMap[10000].presetPaths.haudoanh1
+		data.presetPaths.haudoanh2 = SimCityMap[10000].presetPaths.haudoanh2
+		data.presetPaths.campduoi = SimCityMap[10000].presetPaths.campduoi
+		data.presetPaths.camptren = SimCityMap[10000].presetPaths.camptren
+
+		-- Chien tranh paths
+		data.chienTranhPaths = {}
+		local path1 = { "huong1phai", "huong1trai", "huong1giua", "duoitrai", "duoiphai", "duoigiua" }
+		local path2 = { "huong2phai", "huong2trai", "huong2giua", "trentrai1", "trentrai2", "trenphai", "trengiua" }
+		
+		-- Add all path combinations to presetPaths
+		for i = 1, getn(path1) do
+			for j = 1, getn(path2) do
+				local pathName = path1[i] .. "_" .. path2[j]
+				data.presetPaths[pathName] = {}
+				
+				-- Add nodes from path1
+				for k=1, getn(SimCityMap[10000].presetPaths[path1[i]]) do
+					tinsert(data.presetPaths[pathName], SimCityMap[10000].presetPaths[path1[i]][k])
+				end
+				
+				-- Add nodes from path2  
+				for k=1, getn(SimCityMap[10000].presetPaths[path2[j]]) do
+					tinsert(data.presetPaths[pathName], SimCityMap[10000].presetPaths[path2[j]][k])
+				end
+				
+				-- Add path to chienTranhPaths
+				tinsert(data.chienTranhPaths, pathName)
+			end
+		end
+	end
+end
 function SimCityWorld:New(data)
 	if not data then
 		return nil
@@ -238,13 +83,14 @@ function SimCityWorld:New(data)
 		data.showName = 1
 		data.showDecoration = 0
 		data.name = data.name or ""
-		data.walkPaths = data.walkPaths or {}
 		data.decoration = data.decoration or {}
-		data.chientranh = data.chientranh or {} 
 		data.tick = 0
 		data.tick_showBXH = 0
 		data.announceBXHTick = 3
 		
+		-- Tong Kim map?
+		self:modifyTongKimMap(data)
+
 		self.data["w" .. data.worldId] = data
 		return self.data["w" .. data.worldId]
 	end
@@ -305,14 +151,9 @@ function SimCityWorld:ShowTrangTri(nW, show)
 		info.showDecoration = 0
 	end
 end
-
 function SimCityWorld:initThanhThi()
 	for worldId, worldInfo in SimCityMap do
-		-- Tongkim is setup by tongkim.lua and not us
-		if self:IsTongKimMap(worldId) == 0 then
-			local targetMap = self:New(worldInfo)		
-			ComputeWalkGraph(targetMap)
-		end
+		self:New(worldInfo)
 	end
 end
 
@@ -321,9 +162,17 @@ function SimCityWorld:doShowBXH(mapID)
 end
 
 function SimCityWorld:IsTongKimMap(nW)
+
+	-- Bao ve nguyen soai
 	if nW == 380 or nW == 378 or nW == 379 then
 		return 1
 	end
+
+	-- Cac map khac
+	if nW == 386 then
+		return 1
+	end
+
 	return 0
 end
 
@@ -334,9 +183,10 @@ function SimCityWorld:IsThanhThiMap(pW)
 	return 0
 end
 
-function SimCityWorld:ATick()
+function SimCityWorld:ATick(tickRate)
+	local rate = tickRate or 1
 	for wId, worldInfo in self.data do		
-		worldInfo.tick = worldInfo.tick + 1
+		worldInfo.tick = worldInfo.tick + 1*rate
 
 		if worldInfo.showBXH == 1 then
 			if (worldInfo.tick_showBXH < worldInfo.tick) then

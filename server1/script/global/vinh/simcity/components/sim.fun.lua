@@ -86,8 +86,11 @@ end
 
 function execAddScoreToAroundNPC(self, fighter, finalIndex)
     local currRank = fighter.rank or 1
+    local scoreTotal = currRank * 1000
+
     local  allNpcs, nCount = GetNpcAroundNpcList(finalIndex, 15)
-    local foundfighters = {}
+    local fighter2
+    local found = {}
     if nCount > 0 then
         for i = 1, nCount do
             local fighter2Kind = GetNpcKind(allNpcs[i])
@@ -95,27 +98,24 @@ function execAddScoreToAroundNPC(self, fighter, finalIndex)
             if (fighter2Kind == 0) then
                 if (fighter2Camp ~= fighter.camp) then
                     local nListId2 = GetNpcParam(allNpcs[i], PARAM_LIST_ID) or 0
+                 
                     if (nListId2 > 0) then
-                        tinsert(foundfighters, nListId2)
+                        tinsert(found, nListId2)
                     end
-                end
-            end
-        end
-
-        local N = getn(foundfighters)
-        if N > 0 then
-            local scoreTotal = currRank * 1000
-            for key, fighter2 in self.fighterList do
-                if fighter2 and fighter2.id ~= fighter.id and fighter2.isFighting == 1 then
-                    fighter2.fightingScore = ceil(
-                        fighter2.fightingScore + (scoreTotal / N) + (scoreTotal / N) * fighter2.rank / 10)
-                    SimCityTongKim:updateRank(fighter2)
                 end
             end
         end
     end
 
-    return 0
+    local N = getn(found)
+
+    for i = 1, N do
+        local fighter2 = self.fighterList[found[i]]
+        if fighter2 and fighter2.id ~= fighter.id and fighter2.isFighting == 1 then
+            fighter2.fightingScore = ceil(fighter2.fightingScore + (scoreTotal / N) + (scoreTotal / N) * fighter2.rank / 10)
+            SimCityTongKim:updateRank(fighter2)
+        end
+    end
 end
  
 function execFindDialogNpcAround(tbNpc)
@@ -125,11 +125,11 @@ function execFindDialogNpcAround(tbNpc)
     end
 
     -- Atrraction points
-    if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.walkPaths and tbNpc.currentPathIndex then    
-        tbNpc.isAttractionAround = tbNpc.worldInfo.walkPaths[tbNpc.currentPathIndex][tbNpc.currentPointIndex][4]
+    if (tbNpc.walkMode == "preset" or tbNpc.walkMode == "formation") and tbNpc.worldInfo.presetPaths and tbNpc.currentPathIndex then    
+        tbNpc.isAttractionAround = getNodeInfoByNodeName(tbNpc, tbNpc.worldInfo.presetPaths[tbNpc.currentPathIndex][tbNpc.currentPointIndex]).isNearAtraction
         return tbNpc.isAttractionAround
-    elseif tbNpc.nPosId and tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId] then
-        tbNpc.isAttractionAround = tbNpc.worldInfo.walkGraph.nodes[tbNpc.nPosId][4]
+    elseif tbNpc.nPosId and tbNpc.nPosId ~= "none" and tbNpc.worldInfo.nodes[tbNpc.nPosId] then
+        tbNpc.isAttractionAround = getNodeInfoByNodeName(tbNpc, tbNpc.nPosId).isNearAtraction
         return tbNpc.isAttractionAround
     end 
 
@@ -165,10 +165,13 @@ SimFun.Citizen = {
         execRestoreLife(tbNpc)
     end,
 
-    OnDeath = function(self, simInstance, tbNpc, finalIndex)
+    OnDeath = function(self, simInstance, tbNpc, finalIndex, attackerIndex)
         if tbNpc.tongkim == 1 then
-            execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)
-            SimCityTongKim:OnDeath(tbNpc.finalIndex, tbNpc.rank or 1)
+            if not PlayerIndex or PlayerIndex == 0 then
+                execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)            
+            else
+                SimCityTongKim:OnDeath(tbNpc.finalIndex, tbNpc.rank or 1, attackerIndex)
+            end
         
         -- Random rot tien khi chet
         elseif tbNpc.mode ~= "chiendau" then
@@ -187,11 +190,8 @@ SimFun.KeoXe = {
         execChat(tbNpc, true)
         execRestoreLife(tbNpc)
     end,
-    OnDeath = function(self, simInstance, tbNpc, finalIndex)
-        if tbNpc.tongkim == 1 then
-            execAddScoreToAroundNPC(simInstance, tbNpc, finalIndex)
-            SimCityTongKim:OnDeath(tbNpc.finalIndex, tbNpc.rank or 1)
-        end     
+    OnDeath = function(self, simInstance, tbNpc, finalIndex, attackerIndex)
+        
     end
 } 
 
