@@ -2,7 +2,7 @@
 
 —vinhsmoke—
 
-Phiên bản hiện tại: **5.7.3** (cập nhật ngày [19/04/2025](CHANGELOG.md))
+Phiên bản hiện tại: **5.7.4** (cập nhật ngày [19/04/2025](CHANGELOG.md))
 
 Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
 
@@ -15,7 +15,7 @@ Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/m
 -   [Hướng dẫn sửa lỗi mất đầu](https://github.com/vinh-ttn/simcity/issues/4) do thiếu res: [Trường Giang](https://www.facebook.com/groups/800085930700601/user/100003690357356)
 
 ## A. Cách cài đặt SimCity
-### A1. Cách 1: Cài đặt/cập nhật qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
+### Cách 1: Cài đặt/cập nhật qua [1ClickVMFull](https://docs.google.com/document/d/1BUtlCyJdIg-Dc15EZLYU7dMAcGA4wzcZDMBrM3dRpcc/edit?usp=sharing)
 
 Yêu cầu game server của bạn phải có kết nối internet
 
@@ -25,22 +25,49 @@ Yêu cầu game server của bạn phải có kết nối internet
 
 3\) Sau đó điền vào **vinh-ttn/simcity** và enter để cập nhật từ github này
 
-Xong, khởi động lại game server.
+4\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
+
+* gặp Triệu Mẫn để sử dụng simcity
+
+* gặp Vô Kỵ để điều khiển kéo xe
 
 ![](https://github.com/vinh-ttn/materials/blob/main/simcity/caidat_capnhat_simcity.gif)
 
-### A2. Cách 2: Cài đặt/cập nhật thủ công Thành Thị, Chiến Loạn và Kéo Xe
+### Cách 2: Cài đặt/cập nhật thủ công Thành Thị, Chiến Loạn và Kéo Xe
 
 1\) Download file [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz) về, giải nén và chép toàn bộ vào thư mục gốc của server
 
 2\) Xong. Khởi động server và tìm đến gần hiệu thuốc Tương Dương:
 
-\* gặp Triệu Mẫn để sử dụng simcity
+* gặp Triệu Mẫn để sử dụng simcity
 
-\* gặp Vô Kỵ để điều khiển kéo xe (+ nhận lệnh bài kéo xe\*)
+* gặp Vô Kỵ để điều khiển kéo xe
 
-## B. Cách cài đặt/cập nhật thủ công Tống Kim (Bảo vệ nguyên soái)
 
+## B. Sửa thần hành phù để điều khiển SimCity/Kéo Xe bất cứ đâu bao gồm Tống Kim
+
+1\) Mở file thần hành phù
+
+`\script\item\ib\shenxingfu.lua`
+
+2\) Thêm 2 dòng này vào đầu file
+
+`Include("\\script\\global\\vinh\\simcity\\head.lua")`
+`Include("\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua")`
+
+3\) Tìm đế hàm main() của file có đoạn:
+
+`Thôn trang - Thành thị - Môn phái - CLD/gototown`
+
+ngay sau dòng đó, thêm vào 2 dòng
+
+`"Điều khiển SimCity/#SimCityMainThanhThi:mainMenu()",`
+
+`"Điều khiển Kéo Xe/#SimCityKeoXe:mainMenu()",`
+
+Xong. Khởi động lại server, vào Tống Kim và dùng Thần Hành Phù để điều khiển nhân sĩ giang hồ trong Tống Kim.
+
+## C. (Không cần thiết) Thêm NPC Triệu Mẫn và Vô Kỵ trong Tống Kim Bảo Vệ Nguyên Soái
 1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
 
 `\script\battles\marshal\mission.lua`
@@ -61,14 +88,15 @@ ngay sau dòng đó, thêm vào dòng
 
 `SimCityMainTongKim:addTongKimNpc()`
 
-4\) Khởi động lại server, vào Tống Kim sẽ có sẵn NPC đang đánh nhau và Triệu Mẫn/Vô Kỵ để điều khiển
+4\) Khởi động lại server, vào Tống Kim sẽ có Triệu Mẫn/Vô Kỵ để điều khiển
 
-5\) (Không cần lắm) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
-Nếu bạn không muốn như vậy. Có thể xem hướng dẫn để chỉnh server lại như sau: <https://www.facebook.com/groups/volamquan/permalink/1264194464289743/>
+5\) (Không cần thiết) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
+Nếu bạn không muốn như vậy. Có thể xem [hướng dẫn để chỉnh server lại](https://www.facebook.com/groups/volamquan/permalink/1264194464289743/) cho có điểm.
 
-## C. Giới thiệu tính năng
 
-Chạy trên JX Server 8
+## D. Giới thiệu tính năng
+
+Chạy trên JX Server 6 và 8
 
 **1) Thành thị:** thành thị sẽ trở nên nhộn nhịp với các gian hàng và các nhân sĩ võ lâm đi lại. Các nhân sĩ có thể đánh nhau bất cứ lúc nào. Ngoài ra bạn có thể gọi thêm quan binh tuần tra (nhưng cũng vô ích) hoặc các quái khách trên cõi giang hồ.
 

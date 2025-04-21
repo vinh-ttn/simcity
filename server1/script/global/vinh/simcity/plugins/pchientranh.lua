@@ -29,7 +29,7 @@ end
 
 function SimCityChienTranh:genWalkPath_tongkim(forCamp)
 	local path1 = { "huong1phai", "huong1trai", "huong1giua", "duoitrai", "duoiphai", "duoigiua" }
-	local path2 = { "huong2phai", "huong2trai", "huong2giua", "trentrai", "trenphai", "trengiua" }
+	local path2 = { "huong2phai", "huong2trai", "huong2giua", "trentrai1", "trentrai2", "trenphai", "trengiua" }
 
 	local campDirection = 0
 	if (self.tongkim_camp2TopRight == 1 and forCamp == 1) then
@@ -53,16 +53,16 @@ function SimCityChienTranh:genWalkPath_tongkim(forCamp)
 	if (campDirection == 1) then
 		local firstPath = path1[random(1, getn(path1))]
 		local secondPath = path2[random(1, getn(path2))]	
-		tinsert(myPath, { "camp2spawn", 0 })
+		tinsert(myPath, { "campduoi", 0 })
 		tinsert(myPath, {firstPath, 1})
 		tinsert(myPath, {secondPath, 1})
 		tinsert(myPath, { "huong2tt", 1 })
 
 		-- Top to bottom
 	else
-		local firstPath = path2[random(1, getn(path1))]
-		local secondPath = path1[random(1, getn(path2))]	
-		tinsert(myPath, { "camp1spawn", 0 })
+		local firstPath = path2[random(1, getn(path2))]
+		local secondPath = path1[random(1, getn(path1))]	
+		tinsert(myPath, { "camptren", 0 })
 		tinsert(myPath, {firstPath, -1})
 		tinsert(myPath, {secondPath, -1})
 		tinsert(myPath, { "huong1tt", 1 })

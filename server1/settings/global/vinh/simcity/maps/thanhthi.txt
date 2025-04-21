@@ -1,122 +1,172 @@
-WorldID	WorldName	PathFile
-167	§iÓm Th­¬ng S¬n	thanhthi\167_diemthuongson.txt
-42	Thiªn T©m §éng	thanhthi\42_thientamdong.txt
-56	Hoµnh S¬n Ph¸i	thanhthi\56_hoanhsonphai.txt
-121	Long M«n TrÊn	thanhthi\121_longmontran.txt
-74	Miªu LÜnh	thanhthi\74_mieulinh.txt
-163	¸c B¸ §Þa §¹o	thanhthi\163_acbadiadao.txt
-21	Thanh Thµnh S¬n	thanhthi\21_thanhthanhson.txt
-92	Thôc C­¬ng S¬n	thanhthi\92_thuccuongson.txt
-94	Linh Cèc §éng	thanhthi\94_linhcocdong.txt
-131	C«n L«n	thanhthi\131_conlon.txt
-4	Kim Quang §éng	thanhthi\4_kimquangdong.txt
-12	§Þa §¹o HËu ViÖn	thanhthi\12_diadaohauvien.txt
-114	108 La H¸n TrËn	thanhthi\114_108lahantran.txt
-83	Háa Lang §éng	thanhthi\83_hoalangdong.txt
-99	VÜnh L¹c TrÊn	thanhthi\99_vinhlactran.txt
-195	Nh¹n §¶ng S¬n	thanhthi\195_nhandangson.txt
-71	B¹ch Thñy §éng	thanhthi\71_bachthuydong.txt
-129	L­u Tiªn §éng TÇng 5	thanhthi\129_luutiendongtang5.txt
-179	La Tiªu S¬n	thanhthi\179_latieuson.txt
-198	Thanh Kª §éng	thanhthi\198_thanhkedong.txt
-90	Phôc Ng­u S¬n §«ng	thanhthi\90_phucnguusondong.txt
-199	Vò L¨ng §éng	thanhthi\199_vulangdong.txt
-200	Cæ D­¬ng §éng	thanhthi\200_coduongdong.txt
-113	MËt ThÊt ThiÕu L©m	thanhthi\113_matthatthieulam.txt
-3	KiÕm C¸c T©y B¾c	thanhthi\3_kiemcactaybac.txt
-341	M¹n B¾c Th¶o Nguyªn	thanhthi\341_manbacthaonguyen.txt
-168	Phông Nh·n §éng	thanhthi\168_phungnhandong.txt
-81	Vâ §ang	thanhthi\81_vodang.txt
-103	ThiÕu L©m	thanhthi\103_thieulam.txt
-202	Phï Dung §éng	thanhthi\202_phudungdong.txt
-8	L¨ng TÇn Thñy Hoµng	thanhthi\8_langtanthuyhoang.txt
-342	Vi Son §¶o	thanhthi\342_visondao.txt
-2	Hoa S¬n	thanhthi\2_hoasondinh.txt
-19	KiÕm C¸c T©y Nam	thanhthi\19_kiemcactaynam.txt
-205	D­¬ng Trung §éng	thanhthi\205_duongtrungdong.txt
-225	Sa M¹c TÇng 1	thanhthi\225_samactang1.txt
-320	Ch©n Nói Tr­êng B¹ch	thanhthi\320_channuitruongbach.txt
-135	KiÕn ThÝnh Phong	thanhthi\135_kienthinhphong.txt
-65	Thiªn V­¬ng §¶o	thanhthi\65_thienvuongdao.txt
-53	Ba L¨ng HuyÖn	thanhthi\53_balanghuyen.txt
-122	Hoµng Hµ Nguyen §Çu	thanhthi\122_hoanghanguyendau.txt
-50	ThÊt S¸t §éng	thanhthi\50_thatsatdong.txt
-75	Kháa Lang §éng	thanhthi\75_khoalangdong.txt
-93	TiÕn Cóc §éng	thanhthi\93_tiencucdong.txt
-124	C¸n Viªn §éng	thanhthi\124_canviendong.txt
-9	Tr­êng Giang Nguyªn §Çu	thanhthi\9_truonggiangnguyendau.txt
-69	Thanh Loa §¶o S¬n §éng	thanhthi\69_thanhloadaosondong.txt
-115	C¸i Bang	thanhthi\115_caibang.txt
-227	Sa M¹c TÇng 3	thanhthi\227_samactang3.txt
-165	Thiªn TÇm Th¸p TÇng 2	thanhthi\165_thientamthaptang2.txt
-154	Thóy Yªn	thanhthi\154_thuyyen.txt
-120	T­êng V©n §éng TÇng 8	thanhthi\120_tuongvandongtang8.txt
-321	Tr­êng B¹ch S¬n Nam	thanhthi\321_truongbachsonnam.txt
-66	§¸y §éng §×nh Hå TÇng 1	thanhthi\66_daydongdinhhotang1.txt
-116	T­êng V©n §éng	thanhthi\116_tuongvandong.txt
-322	Tr­êng B¹ch S¬n B¾c	thanhthi\322_truongbachsonbac.txt
-201	B¨ng Hµ §éng	thanhthi\201_banghadong.txt
-41	Phôc Ng­u S¬n T©y	thanhthi\41_phucnguusontay.txt
-204	Phi Thiªn §éng	thanhthi\204_phithiendong.txt
-183	ngudoc	thanhthi\183_ngudoc.txt
-25	§­êng M«n	thanhthi\25_duongmon.txt
-172	§iÓm Th­¬ng §éng TÇng 2	thanhthi\172_diemthuongdongtang2.txt
-173	§iÓm Th­¬ng §éng TÇng 3	thanhthi\173_diemthuongdongtang3.txt
-111	Méc NhËn H¹ng	thanhthi\111_mocnhanhang.txt
-43	KiÕm C¸c Trung Nguyªn	thanhthi\43_kiemcactrungnguyen.txt
-875	H¾c Sa §éng	thanhthi\875_hacsadong.txt
-123	L·o Hæ §éng	thanhthi\123_laohodong.txt
-73	Phôc L­u §éng	thanhthi\73_phucluudong.txt
-125	L­u Tiªn §éng TÇng 1	thanhthi\125_luutiendongtang1.txt
-1046	Tiªu Dao	thanhthi\1046_tieudao.txt
-319	L©m Du Quan	thanhthi\319_lamduquan.txt
-164	Thiªn TÇm Th¸p TÇng 1	thanhthi\164_thientamthaptang1.txt
-180	Long Cung §éng	thanhthi\180_longcungdong.txt
-37	BiÖn Kinh	thanhthi\37_bienkinh.txt
-132	B¨ng HuyÖt §éng	thanhthi\132_banghuyetdong.txt
-100	Chu Tiªn TrÊn	thanhthi\100_chutientran.txt
-171	§iÓm Th­¬ng §éng TÇng 1	thanhthi\171_diemthuongdongtang1.txt
-140	D­îc V­¬ng Cèc	thanhthi\140_duocvuongcoc.txt
-190	Mª Cung NhËp M«n	thanhthi\190_mecungnhapmon.txt
-22	B¹ch V©n §éng	thanhthi\22_bachvandong.txt
-76	S¬n B¶o §éng	thanhthi\76_sonbaodong.txt
-51	Th¸nh §éng TÇng 1	thanhthi\51_thanhdongtang1.txt
-52	Th¸nh §éng TÇng 2	thanhthi\52_thanhdongtang2.txt
-59	Thiªn V­¬ng Bang	thanhthi\59_thienvuongbang.txt
-68	Thanh Loa §¶o	thanhthi\68_thanhloadao.txt
-162	§¹i Lý	thanhthi\162_daily.txt
-1	Ph­îng T­êng	thanhthi\1_phuongtuong.txt
-117	T­êng V©n §éng TÇng 2	thanhthi\117_tuongvandongtang2.txt
-987	Hoa S¬n	thanhthi\987_hoason.txt
-14	M·nh Hæ §éng	thanhthi\14_manhhodong.txt
-80	D­¬ng Ch©u	thanhthi\80_duongchau.txt
-226	Sa M¹c TÇng 2	thanhthi\226_samactang2.txt
-1042	Vò Hån	thanhthi\1042_vuhon.txt
-13	Nga Mi	thanhthi\13_ngami.txt
-82	Mª Cung §¸y GiÕng	thanhthi\82_mecungdaygieng.txt
-55	§µo Hoa Nguyªn	thanhthi\55_daohoanguyen.txt
-72	§¹i Tï §éng	thanhthi\72_daitudong.txt
-194	Ngäc Hoa §éng	thanhthi\194_ngochoadong.txt
-182	NghiÖt Long §éng	thanhthi\182_nghietlongdong.txt
-170	Thæ PhØ §éng	thanhthi\170_thophidong.txt
-70	Vò L¨ng S¬n	thanhthi\70_vulangson.txt
-10	L©m An	thanhthi\10_nhanthachdong.txt
-203	V« Danh §éng	thanhthi\203_vodanhdong.txt
-77	YÕn Tö §éng	thanhthi\77_yentudong.txt
-153	Th¹ch Cæ TrÊn	thanhthi\153_thachcotran.txt
-7	TÇn L¨ng	thanhthi\7_tanlang.txt
-176	L©m An	thanhthi\176_laman.txt
-5	Kinh Hoµng §éng	thanhthi\5_kinhhoangdong.txt
-6	Táa V©n §éng	thanhthi\6_toavandong.txt
-101	§¹o H­¬ng Th«n	thanhthi\101_daohuongthon.txt
-91	Mª Cung Kª Qu¸n §éng	thanhthi\91_mecungkequandong.txt
-78	T­¬ng D­¬ng	thanhthi\78_tuongduong.txt
-24	H­íng Thñy §éng	thanhthi\24_huongthuydong.txt
-174	Long TuyÒn Th«n	thanhthi\174_longtuyenthon.txt
-20	Giang T©n Th«n	thanhthi\20_giangtanthon.txt
-23	ThÇn Tiªn §éng	thanhthi\23_thantiendong.txt
-340	M¹c Cao QuËt	thanhthi\340_maccaoquat.txt
-10000	tongkim_nguyensoai	thanhthi\10000_tongkim_nguyensoai.txt
-323	B¸o danh ChiÕn Tr­êng Tèng Kim S¬ CÊp	thanhthi\323_baodanh_tongkim.txt
-324	B¸o danh ChiÕn Tr­êng Tèng Kim Trung CÊp	thanhthi\323_baodanh_tongkim.txt
-325	B¸o danh ChiÕn Tr­êng Tèng Kim Cao CÊp	thanhthi\323_baodanh_tongkim.txt
+WorldID	WorldName	PathFile	Type
+167	§iÓm Th­¬ng S¬n	thanhthi\167_diemthuongson.txt	path
+42	Thiªn T©m §éng	thanhthi\42_thientamdong.txt	path
+56	Hoµnh S¬n Ph¸i	thanhthi\56_hoanhsonphai.txt	path
+121	Long M«n TrÊn	thanhthi\121_longmontran.txt	path
+74	Miªu LÜnh	thanhthi\74_mieulinh.txt	path
+163	¸c B¸ §Þa §¹o	thanhthi\163_acbadiadao.txt	path
+21	Thanh Thµnh S¬n	thanhthi\21_thanhthanhson.txt	path
+92	Thôc C­¬ng S¬n	thanhthi\92_thuccuongson.txt	path
+94	Linh Cèc §éng	thanhthi\94_linhcocdong.txt	path
+131	C«n L«n	thanhthi\131_conlon.txt	path
+4	Kim Quang §éng	thanhthi\4_kimquangdong.txt	path
+12	§Þa §¹o HËu ViÖn	thanhthi\12_diadaohauvien.txt	path
+114	108 La H¸n TrËn	thanhthi\114_108lahantran.txt	path
+83	Háa Lang §éng	thanhthi\83_hoalangdong.txt	path
+99	VÜnh L¹c TrÊn	thanhthi\99_vinhlactran.txt	path
+195	Nh¹n §¶ng S¬n	thanhthi\195_nhandangson.txt	path
+71	B¹ch Thñy §éng	thanhthi\71_bachthuydong.txt	path
+129	L­u Tiªn §éng TÇng 5	thanhthi\129_luutiendongtang5.txt	path
+179	La Tiªu S¬n	thanhthi\179_latieuson.txt	path
+198	Thanh Kª §éng	thanhthi\198_thanhkedong.txt	path
+90	Phôc Ng­u S¬n §«ng	thanhthi\90_phucnguusondong.txt	path
+199	Vò L¨ng §éng	thanhthi\199_vulangdong.txt	path
+200	Cæ D­¬ng §éng	thanhthi\200_coduongdong.txt	path
+113	MËt ThÊt ThiÕu L©m	thanhthi\113_matthatthieulam.txt	path
+3	KiÕm C¸c T©y B¾c	thanhthi\3_kiemcactaybac.txt	path
+341	M¹n B¾c Th¶o Nguyªn	thanhthi\341_manbacthaonguyen.txt	path
+168	Phông Nh·n §éng	thanhthi\168_phungnhandong.txt	path
+81	Vâ §ang	thanhthi\81_vodang.txt	path
+103	ThiÕu L©m	thanhthi\103_thieulam.txt	path
+202	Phï Dung §éng	thanhthi\202_phudungdong.txt	path
+8	L¨ng TÇn Thñy Hoµng	thanhthi\8_langtanthuyhoang.txt	path
+342	Vi Son §¶o	thanhthi\342_visondao.txt	path
+2	Hoa S¬n	thanhthi\2_hoasondinh.txt	path
+19	KiÕm C¸c T©y Nam	thanhthi\19_kiemcactaynam.txt	path
+205	D­¬ng Trung §éng	thanhthi\205_duongtrungdong.txt	path
+225	Sa M¹c TÇng 1	thanhthi\225_samactang1.txt	path
+320	Ch©n Nói Tr­êng B¹ch	thanhthi\320_channuitruongbach.txt	path
+135	KiÕn ThÝnh Phong	thanhthi\135_kienthinhphong.txt	path
+65	Thiªn V­¬ng §¶o	thanhthi\65_thienvuongdao.txt	path
+53	Ba L¨ng HuyÖn	thanhthi\53_balanghuyen.txt	path
+122	Hoµng Hµ Nguyen §Çu	thanhthi\122_hoanghanguyendau.txt	path
+50	ThÊt S¸t §éng	thanhthi\50_thatsatdong.txt	path
+75	Kháa Lang §éng	thanhthi\75_khoalangdong.txt	path
+93	TiÕn Cóc §éng	thanhthi\93_tiencucdong.txt	path
+124	C¸n Viªn §éng	thanhthi\124_canviendong.txt	path
+9	Tr­êng Giang Nguyªn §Çu	thanhthi\9_truonggiangnguyendau.txt	path
+69	Thanh Loa §¶o S¬n §éng	thanhthi\69_thanhloadaosondong.txt	path
+115	C¸i Bang	thanhthi\115_caibang.txt	path
+227	Sa M¹c TÇng 3	thanhthi\227_samactang3.txt	path
+165	Thiªn TÇm Th¸p TÇng 2	thanhthi\165_thientamthaptang2.txt	path
+154	Thóy Yªn	thanhthi\154_thuyyen.txt	path
+120	T­êng V©n §éng TÇng 8	thanhthi\120_tuongvandongtang8.txt	path
+321	Tr­êng B¹ch S¬n Nam	thanhthi\321_truongbachsonnam.txt	path
+66	§¸y §éng §×nh Hå TÇng 1	thanhthi\66_daydongdinhhotang1.txt	path
+116	T­êng V©n §éng	thanhthi\116_tuongvandong.txt	path
+322	Tr­êng B¹ch S¬n B¾c	thanhthi\322_truongbachsonbac.txt	path
+201	B¨ng Hµ §éng	thanhthi\201_banghadong.txt	path
+41	Phôc Ng­u S¬n T©y	thanhthi\41_phucnguusontay.txt	path
+204	Phi Thiªn §éng	thanhthi\204_phithiendong.txt	path
+183	ngudoc	thanhthi\183_ngudoc.txt	path
+25	§­êng M«n	thanhthi\25_duongmon.txt	path
+172	§iÓm Th­¬ng §éng TÇng 2	thanhthi\172_diemthuongdongtang2.txt	path
+173	§iÓm Th­¬ng §éng TÇng 3	thanhthi\173_diemthuongdongtang3.txt	path
+111	Méc NhËn H¹ng	thanhthi\111_mocnhanhang.txt	path
+43	KiÕm C¸c Trung Nguyªn	thanhthi\43_kiemcactrungnguyen.txt	path
+875	H¾c Sa §éng	thanhthi\875_hacsadong.txt	path
+123	L·o Hæ §éng	thanhthi\123_laohodong.txt	path
+73	Phôc L­u §éng	thanhthi\73_phucluudong.txt	path
+125	L­u Tiªn §éng TÇng 1	thanhthi\125_luutiendongtang1.txt	path
+1046	Tiªu Dao	thanhthi\1046_tieudao.txt	path
+319	L©m Du Quan	thanhthi\319_lamduquan.txt	path
+164	Thiªn TÇm Th¸p TÇng 1	thanhthi\164_thientamthaptang1.txt	path
+180	Long Cung §éng	thanhthi\180_longcungdong.txt	path
+37	BiÖn Kinh	thanhthi\37_bienkinh.txt	path
+132	B¨ng HuyÖt §éng	thanhthi\132_banghuyetdong.txt	path
+100	Chu Tiªn TrÊn	thanhthi\100_chutientran.txt	path
+171	§iÓm Th­¬ng §éng TÇng 1	thanhthi\171_diemthuongdongtang1.txt	path
+140	D­îc V­¬ng Cèc	thanhthi\140_duocvuongcoc.txt	path
+190	Mª Cung NhËp M«n	thanhthi\190_mecungnhapmon.txt	path
+22	B¹ch V©n §éng	thanhthi\22_bachvandong.txt	path
+76	S¬n B¶o §éng	thanhthi\76_sonbaodong.txt	path
+51	Th¸nh §éng TÇng 1	thanhthi\51_thanhdongtang1.txt	path
+52	Th¸nh §éng TÇng 2	thanhthi\52_thanhdongtang2.txt	path
+59	Thiªn V­¬ng Bang	thanhthi\59_thienvuongbang.txt	path
+68	Thanh Loa §¶o	thanhthi\68_thanhloadao.txt	path
+162	§¹i Lý	thanhthi\162_daily.txt	path
+1	Ph­îng T­êng	thanhthi\1_phuongtuong.txt	path
+117	T­êng V©n §éng TÇng 2	thanhthi\117_tuongvandongtang2.txt	path
+987	Hoa S¬n	thanhthi\987_hoason.txt	path
+14	M·nh Hæ §éng	thanhthi\14_manhhodong.txt	path
+80	D­¬ng Ch©u	thanhthi\80_duongchau.txt	path
+226	Sa M¹c TÇng 2	thanhthi\226_samactang2.txt	path
+1042	Vò Hån	thanhthi\1042_vuhon.txt	path
+13	Nga Mi	thanhthi\13_ngami.txt	path
+82	Mª Cung §¸y GiÕng	thanhthi\82_mecungdaygieng.txt	path
+55	§µo Hoa Nguyªn	thanhthi\55_daohoanguyen.txt	path
+72	§¹i Tï §éng	thanhthi\72_daitudong.txt	path
+194	Ngäc Hoa §éng	thanhthi\194_ngochoadong.txt	path
+182	NghiÖt Long §éng	thanhthi\182_nghietlongdong.txt	path
+170	Thæ PhØ §éng	thanhthi\170_thophidong.txt	path
+70	Vò L¨ng S¬n	thanhthi\70_vulangson.txt	path
+10	L©m An	thanhthi\10_nhanthachdong.txt	path
+203	V« Danh §éng	thanhthi\203_vodanhdong.txt	path
+77	YÕn Tö §éng	thanhthi\77_yentudong.txt	path
+153	Th¹ch Cæ TrÊn	thanhthi\153_thachcotran.txt	path
+7	TÇn L¨ng	thanhthi\7_tanlang.txt	path
+176	L©m An	thanhthi\176_laman.txt	path
+5	Kinh Hoµng §éng	thanhthi\5_kinhhoangdong.txt	path
+6	Táa V©n §éng	thanhthi\6_toavandong.txt	path
+101	§¹o H­¬ng Th«n	thanhthi\101_daohuongthon.txt	path
+91	Mª Cung Kª Qu¸n §éng	thanhthi\91_mecungkequandong.txt	path
+78	T­¬ng D­¬ng	thanhthi\78_tuongduong.txt	path
+24	H­íng Thñy §éng	thanhthi\24_huongthuydong.txt	path
+174	Long TuyÒn Th«n	thanhthi\174_longtuyenthon.txt	path
+20	Giang T©n Th«n	thanhthi\20_giangtanthon.txt	path
+23	ThÇn Tiªn §éng	thanhthi\23_thantiendong.txt	path
+340	M¹c Cao QuËt	thanhthi\340_maccaoquat.txt	path
+10000	tongkim_nguyensoai	thanhthi\10000_tongkim_nguyensoai.txt	path
+323	B¸o danh ChiÕn Tr­êng Tèng Kim S¬ CÊp	thanhthi\323_baodanh_tongkim.txt	path
+324	B¸o danh ChiÕn Tr­êng Tèng Kim Trung CÊp	thanhthi\323_baodanh_tongkim.txt	path
+325	B¸o danh ChiÕn Tr­êng Tèng Kim Cao CÊp	thanhthi\323_baodanh_tongkim.txt	path
+1	Noname	thanhthi\1_map.txt	map
+100	Noname	thanhthi\100_map.txt	map
+101	Noname	thanhthi\101_map.txt	map
+11	Noname	thanhthi\11_map.txt	map
+121	Noname	thanhthi\121_map.txt	map
+124	Noname	thanhthi\124_map.txt	map
+144	Noname	thanhthi\144_map.txt	map
+153	Noname	thanhthi\153_map.txt	map
+162	Noname	thanhthi\162_map.txt	map
+174	Noname	thanhthi\174_map.txt	map
+176	Noname	thanhthi\176_map.txt	map
+20	Noname	thanhthi\20_map.txt	map
+224	Noname	thanhthi\224_map.txt	map
+225	Noname	thanhthi\225_map.txt	map
+226	Noname	thanhthi\226_map.txt	map
+227	Noname	thanhthi\227_map.txt	map
+321	Noname	thanhthi\321_map.txt	map
+322	Noname	thanhthi\322_map.txt	map
+342	Noname	thanhthi\342_map.txt	map
+37	Noname	thanhthi\37_map.txt	map
+389	Noname	thanhthi\389_map.txt	map
+53	Noname	thanhthi\53_map.txt	map
+586	Noname	thanhthi\586_map.txt	map
+587	Noname	thanhthi\587_map.txt	map
+589	Noname	thanhthi\589_map.txt	map
+590	Noname	thanhthi\590_map.txt	map
+591	Noname	thanhthi\591_map.txt	map
+593	Noname	thanhthi\593_map.txt	map
+594	Noname	thanhthi\594_map.txt	map
+595	Noname	thanhthi\595_map.txt	map
+597	Noname	thanhthi\597_map.txt	map
+75	Noname	thanhthi\75_map.txt	map
+78	Noname	thanhthi\78_map.txt	map
+80	Noname	thanhthi\80_map.txt	map
+875	Noname	thanhthi\875_map.txt	map
+919	Noname	thanhthi\919_map.txt	map
+920	Noname	thanhthi\920_map.txt	map
+921	Noname	thanhthi\921_map.txt	map
+922	Noname	thanhthi\922_map.txt	map
+923	Noname	thanhthi\923_map.txt	map
+924	Noname	thanhthi\924_map.txt	map
+93	Noname	thanhthi\93_map.txt	map
+99	Noname	thanhthi\99_map.txt	map
+380	Noname	thanhthi\380_map.txt	map
+383	Noname	thanhthi\383_map.txt	map
+386	Noname	thanhthi\386_map.txt	map
+580	Noname	thanhthi\580_map.txt	map
+581	Noname	thanhthi\581_map.txt	map
+606	Noname	thanhthi\606_map.txt	map
+904	Noname	thanhthi\904_map.txt	map

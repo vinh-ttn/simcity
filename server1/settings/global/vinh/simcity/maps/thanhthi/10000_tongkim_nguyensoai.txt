@@ -1,350 +1,361 @@
-PathName	X	Y
-huong2giua	1444	3341
-huong2giua	1452	3331
-huong2giua	1461	3320
-huong2giua	1471	3307
-huong2giua	1482	3296
-huong2giua	1491	3284
-huong2giua	1503	3271
-huong2giua	1512	3262
-huong2giua	1522	3249
-huong2giua	1534	3237
-huong2giua	1543	3228
-huong2giua	1559	3213
-huong2giua	1570	3199
-huong2trai	1461	3318
-huong2trai	1457	3305
-huong2trai	1455	3289
-huong2trai	1456	3274
-huong2trai	1460	3257
-huong2trai	1464	3240
-huong2trai	1470	3224
-huong2trai	1478	3210
-huong2trai	1487	3197
-huong2trai	1498	3181
-huong2trai	1506	3167
-huong2trai	1515	3155
-huong2trai	1525	3143
-huong2trai	1538	3154
-huong2trai	1546	3170
-huong2trai	1554	3181
-huong2trai	1568	3196
-huong2trai	1571	3197
-huong2phai	1457	3329
-huong2phai	1477	3330
-huong2phai	1491	3330
-huong2phai	1515	3331
-huong2phai	1523	3323
-huong2phai	1534	3316
-huong2phai	1549	3315
-huong2phai	1561	3308
-huong2phai	1574	3298
-huong2phai	1585	3291
-huong2phai	1596	3278
-huong2phai	1606	3265
-huong2phai	1613	3253
-huong2phai	1615	3240
-huong2phai	1607	3225
-huong2phai	1599	3211
-huong2phai	1590	3198
-huong2phai	1583	3188
-huong2phai	1571	3195
-huong2phai	1569	3198
-huong1phai	1344	3464
-huong1phai	1336	3450
-huong1phai	1340	3462
-huong1phai	1347	3478
-huong1phai	1355	3487
-huong1phai	1369	3483
-huong1phai	1383	3475
-huong1phai	1392	3460
-huong1phai	1400	3447
-huong1phai	1405	3430
-huong1phai	1410	3417
-huong1phai	1416	3404
-huong1phai	1419	3388
-huong1phai	1423	3372
-huong1phai	1431	3357
-huong1phai	1438	3338
-huong1phai	1450	3334
-huong1phai	1457	3325
-huong2tt	1571	3198
-huong2tt	1568	3191
-huong2tt	1559	3181
-huong2tt	1561	3173
-huong2tt	1569	3175
-huong2tt	1582	3181
-huong2tt	1590	3189
-huong2tt	1589	3208
-huong2tt	1580	3220
-huong2tt	1568	3221
-huong2tt	1556	3213
-huong2tt	1553	3189
-huong2tt	1558	3209
-huong2tt	1565	3204
-huong2tt	1571	3198
-huong2tt	1582	3185
-huong1tt	1346	3429
-huong1tt	1348	3423
-huong1tt	1354	3424
-huong1tt	1343	3423
-huong1tt	1333	3423
-huong1tt	1319	3429
-huong1tt	1315	3432
-huong1tt	1327	3429
-huong1tt	1332	3423
-huong1tt	1347	3429
-huong1tt	1351	3440
-huong1tt	1343	3451
-huong1tt	1346	3469
-huong1tt	1343	3464
-huong1tt	1338	3455
-huong1tt	1327	3442
-huong1tt	1320	3432
-huong1giua	1331	3445
-huong1giua	1343	3426
-huong1giua	1353	3415
-huong1giua	1364	3402
-huong1giua	1373	3391
-huong1giua	1382	3381
-huong1giua	1392	3369
-huong1giua	1400	3359
-huong1giua	1402	3341
-huong1giua	1412	3330
-huong1giua	1423	3339
-huong1giua	1434	3334
-huong1giua	1443	3333
-huong1giua	1454	3328
-huong1trai	1314	3432
-huong1trai	1316	3445
-huong1trai	1312	3433
-huong1trai	1308	3425
-huong1trai	1303	3414
-huong1trai	1301	3403
-huong1trai	1305	3390
-huong1trai	1310	3381
-huong1trai	1317	3373
-huong1trai	1325	3365
-huong1trai	1344	3352
-huong1trai	1351	3347
-huong1trai	1354	3336
-huong1trai	1363	3330
-huong1trai	1370	3329
-huong1trai	1381	3331
-huong1trai	1392	3330
-huong1trai	1400	3329
-huong1trai	1413	3336
-huong1trai	1425	3340
-huong1trai	1435	3343
-huong1trai	1440	3335
-huong1trai	1453	3320
-camp1spawn	1571	3201
-camp1spawn	1585	3183
-camp1spawn	1573	3170
-camp1spawn	1558	3181
-camp1spawn	1541	3213
-camp1spawn	1559	3222
-camp1spawn	1570	3236
-camp1spawn	1584	3223
-camp1spawn	1591	3212
-camp1spawn	1593	3196
-camp1spawn	1586	3186
-camp1spawn	1600	3214
-camp2spawn	1349	3422
-camp2spawn	1344	3423
-camp2spawn	1339	3418
-camp2spawn	1331	3416
-camp2spawn	1322	3423
-camp2spawn	1315	3430
-camp2spawn	1309	3440
-camp2spawn	1307	3451
-camp2spawn	1308	3462
-camp2spawn	1316	3467
-camp2spawn	1324	3458
-camp2spawn	1328	3446
-camp2spawn	1337	3454
-camp2spawn	1343	3458
-camp2spawn	1348	3441
-camp2spawn	1357	3426
-camp2spawn	1356	3417
-camp2spawn	1336	3422
-haudoanh2	1683	3053
-haudoanh2	1680	3050
-haudoanh2	1673	3048
-haudoanh2	1670	3051
-haudoanh2	1662	3058
-haudoanh2	1656	3066
-haudoanh2	1663	3083
-haudoanh2	1673	3093
-haudoanh2	1680	3086
-haudoanh2	1682	3072
-haudoanh2	1687	3067
-haudoanh2	1696	3068
-haudoanh2	1702	3073
-haudoanh2	1709	3083
-haudoanh2	1714	3087
-haudoanh2	1710	3094
-haudoanh2	1705	3100
-haudoanh2	1699	3106
-haudoanh2	1691	3114
-haudoanh2	1683	3112
-haudoanh2	1678	3100
-haudoanh2	1675	3090
-haudoanh2	1680	3077
-haudoanh2	1687	3074
-haudoanh2	1670	3094
-haudoanh1	1226	3567
-haudoanh1	1226	3563
-haudoanh1	1231	3560
-haudoanh1	1235	3563
-haudoanh1	1240	3553
-haudoanh1	1244	3548
-haudoanh1	1249	3548
-haudoanh1	1251	3543
-haudoanh1	1253	3534
-duoigiua	1359	3411
-duoigiua	1366	3400
-duoigiua	1372	3390
-duoigiua	1376	3384
-duoigiua	1376	3377
-duoigiua	1383	3365
-duoigiua	1397	3363
-duoigiua	1412	3374
-duoigiua	1421	3384
-duoigiua	1426	3369
-duoigiua	1431	3354
-duoigiua	1448	3344
-duoigiua	1458	3342
-duoigiua	1461	3330
-duoigiua	1461	3327
-duoiphai	1350	3489
-duoiphai	1359	3490
-duoiphai	1369	3491
-duoiphai	1369	3491
-duoiphai	1373	3487
-duoiphai	1377	3485
-duoiphai	1381	3482
-duoiphai	1386	3478
-duoiphai	1395	3467
-duoiphai	1395	3462
-duoiphai	1395	3454
-duoiphai	1394	3442
-duoiphai	1394	3440
-duoiphai	1397	3433
-duoiphai	1404	3415
-duoiphai	1404	3415
-duoiphai	1413	3412
-duoiphai	1416	3405
-duoiphai	1419	3386
-duoiphai	1417	3369
-duoiphai	1411	3358
-duoiphai	1406	3343
-duoiphai	1418	3330
-duoiphai	1426	3323
-duoiphai	1433	3318
-duoiphai	1439	3316
-duoiphai	1434	3298
-duoitrai	1308	3426
-duoitrai	1306	3416
-duoitrai	1301	3411
-duoitrai	1294	3401
-duoitrai	1301	3394
-duoitrai	1307	3379
-duoitrai	1315	3371
-duoitrai	1322	3369
-duoitrai	1334	3363
-duoitrai	1345	3352
-duoitrai	1351	3335
-duoitrai	1364	3326
-duoitrai	1376	3320
-duoitrai	1384	3314
-duoitrai	1391	3328
-duoitrai	1396	3337
-duoitrai	1403	3350
-duoitrai	1408	3359
-duoitrai	1417	3367
-duoitrai	1429	3365
-duoitrai	1443	3357
-duoitrai	1449	3347
-duoitrai	1456	3341
-duoitrai	1463	3333
-trengiua	1544	3232
-trengiua	1538	3235
-trengiua	1528	3240
-trengiua	1521	3244
-trengiua	1520	3254
-trengiua	1517	3262
-trengiua	1507	3273
-trengiua	1493	3272
-trengiua	1495	3287
-trengiua	1497	3300
-trengiua	1498	3307
-trengiua	1493	3327
-trengiua	1486	3335
-trengiua	1478	3338
-trengiua	1460	3342
-trengiua	1450	3351
-trenphai	1608	3222
-trenphai	1612	3232
-trenphai	1614	3240
-trenphai	1615	3251
-trenphai	1614	3265
-trenphai	1606	3273
-trenphai	1590	3275
-trenphai	1583	3282
-trenphai	1578	3297
-trenphai	1569	3310
-trenphai	1555	3314
-trenphai	1539	3313
-trenphai	1529	3322
-trenphai	1521	3331
-trenphai	1487	3334
-trenphai	1477	3327
-trenphai	1465	3318
-trenphai	1446	3298
-trenphai	1443	3287
-trenphai	1433	3307
-trenphai	1433	3321
-trentrai	1544	3227
-trentrai	1522	3252
-trentrai	1522	3253
-trentrai	1513	3257
-trentrai	1508	3266
-trentrai	1502	3274
-trentrai	1495	3278
-trentrai	1485	3275
-trentrai	1480	3268
-trentrai	1460	3264
-trentrai	1449	3266
-trentrai	1445	3275
-trentrai	1444	3282
-trentrai	1444	3296
-trentrai	1445	3317
-trentrai	1439	3332
-trentrai	1458	3341
-trentrai	1449	3350
-trentrai	1440	3355
-trentrai	1432	3366
-trentrai	1542	3158
-trentrai	1536	3155
-trentrai	1528	3151
-trentrai	1512	3146
-trentrai	1510	3156
-trentrai	1510	3171
-trentrai	1504	3175
-trentrai	1500	3177
-trentrai	1486	3189
-trentrai	1483	3201
-trentrai	1473	3215
-trentrai	1468	3219
-trentrai	1470	3231
-trentrai	1472	3246
-trentrai	1472	3258
-trentrai	1475	3261
-trentrai	1480	3266
-trentrai	1483	3290
-trentrai	1477	3303
-trentrai	1472	3318
-trentrai	1460	3328
-trentrai	1457	3339
-trentrai	1446	3335
+PathName	X	Y	isExact
+huong2giua	1444	3341	0
+huong2giua	1452	3331	0
+huong2giua	1461	3320	0
+huong2giua	1471	3307	0
+huong2giua	1482	3296	0
+huong2giua	1491	3284	0
+huong2giua	1503	3271	0
+huong2giua	1512	3262	0
+huong2giua	1522	3249	0
+huong2giua	1530	3243	1
+huong2giua	1534	3237	0
+huong2giua	1543	3228	0
+huong2giua	1559	3213	0
+huong2giua	1570	3199	0
+huong2trai	1461	3318	0
+huong2trai	1457	3305	0
+huong2trai	1455	3289	0
+huong2trai	1456	3274	0
+huong2trai	1460	3257	0
+huong2trai	1464	3240	0
+huong2trai	1470	3224	0
+huong2trai	1478	3210	0
+huong2trai	1487	3197	0
+huong2trai	1498	3181	0
+huong2trai	1506	3167	0
+huong2trai	1515	3155	0
+huong2trai	1525	3143	0
+huong2trai	1538	3154	0
+huong2trai	1542	3163	1
+huong2trai	1546	3170	0
+huong2trai	1554	3181	0
+huong2trai	1568	3196	0
+huong2trai	1571	3197	0
+huong2phai	1457	3329	0
+huong2phai	1477	3330	0
+huong2phai	1491	3330	0
+huong2phai	1515	3331	0
+huong2phai	1523	3323	0
+huong2phai	1534	3316	0
+huong2phai	1549	3315	0
+huong2phai	1561	3308	0
+huong2phai	1574	3298	0
+huong2phai	1585	3291	0
+huong2phai	1596	3278	0
+huong2phai	1606	3265	0
+huong2phai	1613	3253	0
+huong2phai	1615	3240	0
+huong2phai	1607	3225	0
+huong2phai	1599	3211	0
+huong2phai	1590	3198	0
+huong2phai	1583	3188	0
+huong2phai	1571	3195	0
+huong2phai	1569	3198	0
+huong2phai	1609	3228	1
+huong1phai	1344	3464	0
+huong1phai	1348	3479	1
+huong1phai	1336	3450	0
+huong1phai	1340	3462	0
+huong1phai	1347	3478	0
+huong1phai	1355	3487	0
+huong1phai	1369	3483	0
+huong1phai	1383	3475	0
+huong1phai	1392	3460	0
+huong1phai	1400	3447	0
+huong1phai	1405	3430	0
+huong1phai	1410	3417	0
+huong1phai	1416	3404	0
+huong1phai	1419	3388	0
+huong1phai	1423	3372	0
+huong1phai	1431	3357	0
+huong1phai	1438	3338	0
+huong1phai	1450	3334	0
+huong1phai	1457	3325	0
+huong2tt	1571	3198	0
+huong2tt	1568	3191	0
+huong2tt	1559	3181	0
+huong2tt	1561	3173	0
+huong2tt	1569	3175	0
+huong2tt	1582	3181	0
+huong2tt	1590	3189	0
+huong2tt	1589	3208	0
+huong2tt	1580	3220	0
+huong2tt	1568	3221	0
+huong2tt	1556	3213	0
+huong2tt	1553	3189	0
+huong2tt	1558	3209	0
+huong2tt	1565	3204	0
+huong2tt	1571	3198	0
+huong2tt	1582	3185	0
+huong1tt	1346	3429	0
+huong1tt	1348	3423	0
+huong1tt	1354	3424	0
+huong1tt	1343	3423	0
+huong1tt	1333	3423	0
+huong1tt	1319	3429	0
+huong1tt	1315	3432	0
+huong1tt	1327	3429	0
+huong1tt	1332	3423	0
+huong1tt	1347	3429	0
+huong1tt	1351	3440	0
+huong1tt	1343	3451	0
+huong1tt	1346	3469	0
+huong1tt	1343	3464	0
+huong1tt	1338	3455	0
+huong1tt	1327	3442	0
+huong1tt	1320	3432	0
+huong1giua	1331	3445	0
+huong1giua	1343	3426	0
+huong1giua	1353	3415	0
+huong1giua	1361	3407	1
+huong1giua	1364	3402	0
+huong1giua	1373	3391	0
+huong1giua	1382	3381	0
+huong1giua	1392	3369	0
+huong1giua	1400	3359	0
+huong1giua	1402	3341	0
+huong1giua	1412	3330	0
+huong1giua	1423	3339	0
+huong1giua	1434	3334	0
+huong1giua	1443	3333	0
+huong1giua	1454	3328	0
+huong1trai	1314	3432	0
+huong1trai	1316	3445	0
+huong1trai	1312	3433	0
+huong1trai	1308	3425	0
+huong1trai	1303	3414	1
+huong1trai	1301	3403	0
+huong1trai	1305	3390	0
+huong1trai	1310	3381	0
+huong1trai	1317	3373	0
+huong1trai	1325	3365	0
+huong1trai	1344	3352	0
+huong1trai	1351	3347	0
+huong1trai	1354	3336	0
+huong1trai	1363	3330	0
+huong1trai	1370	3329	0
+huong1trai	1381	3331	0
+huong1trai	1392	3330	0
+huong1trai	1400	3329	0
+huong1trai	1413	3336	0
+huong1trai	1425	3340	0
+huong1trai	1435	3343	0
+huong1trai	1440	3335	0
+huong1trai	1453	3320	0
+camptren	1571	3201	0
+camptren	1585	3183	0
+camptren	1573	3170	0
+camptren	1558	3181	0
+camptren	1541	3213	0
+camptren	1559	3222	0
+camptren	1570	3236	0
+camptren	1584	3223	0
+camptren	1591	3212	0
+camptren	1593	3196	0
+camptren	1586	3186	0
+camptren	1600	3214	0
+campduoi	1349	3422	0
+campduoi	1344	3423	0
+campduoi	1339	3418	0
+campduoi	1331	3416	0
+campduoi	1322	3423	0
+campduoi	1315	3430	0
+campduoi	1309	3440	0
+campduoi	1307	3451	0
+campduoi	1308	3462	0
+campduoi	1316	3467	0
+campduoi	1324	3458	0
+campduoi	1328	3446	0
+campduoi	1337	3454	0
+campduoi	1343	3458	0
+campduoi	1348	3441	0
+campduoi	1357	3426	0
+campduoi	1356	3417	0
+campduoi	1336	3422	0
+haudoanh2	1683	3053	0
+haudoanh2	1680	3050	0
+haudoanh2	1673	3048	0
+haudoanh2	1670	3051	0
+haudoanh2	1662	3058	0
+haudoanh2	1656	3066	0
+haudoanh2	1663	3083	0
+haudoanh2	1673	3093	0
+haudoanh2	1680	3086	0
+haudoanh2	1682	3072	0
+haudoanh2	1687	3067	0
+haudoanh2	1696	3068	0
+haudoanh2	1702	3073	0
+haudoanh2	1709	3083	0
+haudoanh2	1714	3087	0
+haudoanh2	1710	3094	0
+haudoanh2	1705	3100	0
+haudoanh2	1699	3106	0
+haudoanh2	1691	3114	0
+haudoanh2	1683	3112	0
+haudoanh2	1678	3100	0
+haudoanh2	1675	3090	0
+haudoanh2	1680	3077	0
+haudoanh2	1687	3074	0
+haudoanh2	1670	3094	0
+haudoanh1	1226	3567	0
+haudoanh1	1226	3563	0
+haudoanh1	1231	3560	0
+haudoanh1	1235	3563	0
+haudoanh1	1240	3553	0
+haudoanh1	1244	3548	0
+haudoanh1	1249	3548	0
+haudoanh1	1251	3543	0
+haudoanh1	1253	3534	0
+duoigiua	1359	3411	0
+duoigiua	1361	3407	1
+duoigiua	1366	3400	0
+duoigiua	1372	3390	0
+duoigiua	1376	3384	0
+duoigiua	1376	3377	0
+duoigiua	1383	3365	0
+duoigiua	1397	3363	0
+duoigiua	1412	3374	0
+duoigiua	1421	3384	0
+duoigiua	1426	3369	0
+duoigiua	1431	3354	0
+duoigiua	1448	3344	0
+duoigiua	1458	3342	0
+duoigiua	1461	3330	0
+duoigiua	1461	3327	0
+duoiphai	1348	3479	1
+duoiphai	1350	3489	0
+duoiphai	1359	3490	0
+duoiphai	1369	3491	0
+duoiphai	1369	3491	0
+duoiphai	1373	3487	0
+duoiphai	1377	3485	0
+duoiphai	1381	3482	0
+duoiphai	1386	3478	0
+duoiphai	1395	3467	0
+duoiphai	1395	3462	0
+duoiphai	1395	3454	0
+duoiphai	1394	3442	0
+duoiphai	1394	3440	0
+duoiphai	1397	3433	0
+duoiphai	1404	3415	0
+duoiphai	1404	3415	0
+duoiphai	1413	3412	0
+duoiphai	1416	3405	0
+duoiphai	1419	3386	0
+duoiphai	1417	3369	0
+duoiphai	1411	3358	0
+duoiphai	1406	3343	0
+duoiphai	1418	3330	0
+duoiphai	1426	3323	0
+duoiphai	1433	3318	0
+duoiphai	1439	3316	0
+duoiphai	1434	3298	0
+duoitrai	1308	3426	0
+duoitrai	1306	3416	1
+duoitrai	1301	3411	1
+duoitrai	1294	3401	0
+duoitrai	1301	3394	0
+duoitrai	1307	3379	0
+duoitrai	1315	3371	0
+duoitrai	1322	3369	0
+duoitrai	1334	3363	0
+duoitrai	1345	3352	0
+duoitrai	1351	3335	0
+duoitrai	1364	3326	0
+duoitrai	1376	3320	0
+duoitrai	1384	3314	0
+duoitrai	1391	3328	0
+duoitrai	1396	3337	0
+duoitrai	1403	3350	0
+duoitrai	1408	3359	0
+duoitrai	1417	3367	0
+duoitrai	1429	3365	0
+duoitrai	1443	3357	0
+duoitrai	1449	3347	0
+duoitrai	1456	3341	0
+duoitrai	1463	3333	0
+trentrai2	1446	3335	0
+trentrai2	1457	3339	0
+trentrai2	1460	3328	0
+trentrai2	1472	3318	0
+trentrai2	1477	3303	0
+trentrai2	1483	3290	0
+trentrai2	1480	3266	0
+trentrai2	1475	3261	0
+trentrai2	1472	3258	0
+trentrai2	1472	3246	0
+trentrai2	1470	3231	0
+trentrai2	1468	3219	0
+trentrai2	1473	3215	0
+trentrai2	1483	3201	0
+trentrai2	1486	3189	0
+trentrai2	1500	3177	0
+trentrai2	1504	3175	0
+trentrai2	1510	3171	0
+trentrai2	1510	3156	0
+trentrai2	1512	3146	0
+trentrai2	1528	3151	0
+trentrai2	1536	3155	0
+trentrai2	1542	3158	0
+trentrai2	1542	3163	1
+trentrai1	1432	3366	0
+trentrai1	1440	3355	0
+trentrai1	1449	3350	0
+trentrai1	1458	3341	0
+trentrai1	1439	3332	0
+trentrai1	1445	3317	0
+trentrai1	1444	3296	0
+trentrai1	1444	3282	0
+trentrai1	1445	3275	0
+trentrai1	1449	3266	0
+trentrai1	1460	3264	0
+trentrai1	1480	3268	0
+trentrai1	1485	3275	0
+trentrai1	1495	3278	0
+trentrai1	1502	3274	0
+trentrai1	1508	3266	0
+trentrai1	1513	3257	0
+trentrai1	1522	3253	0
+trentrai1	1522	3252	0
+trentrai1	1542	3163	1
+trentrai1	1544	3227	0
+trenphai	1433	3321	0
+trenphai	1433	3307	0
+trenphai	1443	3287	0
+trenphai	1446	3298	0
+trenphai	1465	3318	0
+trenphai	1477	3327	0
+trenphai	1487	3334	0
+trenphai	1521	3331	0
+trenphai	1529	3322	0
+trenphai	1539	3313	0
+trenphai	1555	3314	0
+trenphai	1569	3310	0
+trenphai	1578	3297	0
+trenphai	1583	3282	0
+trenphai	1590	3275	0
+trenphai	1606	3273	0
+trenphai	1614	3265	0
+trenphai	1615	3251	0
+trenphai	1614	3240	0
+trenphai	1612	3232	0
+trenphai	1608	3222	0
+trenphai	1609	3228	1
+trengiua	1450	3351	0
+trengiua	1460	3342	0
+trengiua	1478	3338	0
+trengiua	1486	3335	0
+trengiua	1493	3327	0
+trengiua	1498	3307	0
+trengiua	1497	3300	0
+trengiua	1495	3287	0
+trengiua	1493	3272	0
+trengiua	1507	3273	0
+trengiua	1517	3262	0
+trengiua	1520	3254	0
+trengiua	1521	3244	0
+trengiua	1528	3240	0
+trengiua	1540	3245	1
+trengiua	1538	3235	0
+trengiua	1544	3232	0

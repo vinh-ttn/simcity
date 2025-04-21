@@ -40,6 +40,18 @@ function SimCityMainTongKim:setUpMap(nW)
 	end
 end
 
+function createTaskSayTongKim(mapId, extra)
+
+	local tbOpt = {}
+	local nSettingIdx = 1617
+	local nActionId = 0
+	if not extra then
+		extra = ""
+	end
+	
+	tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> Ng­êi H¸n c¸c ng­¬i lu«n cho r»ng ng­êi Kim chóng ta lµ d· man, nh­ng c¸c ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
+	return tbOpt
+end
 function SimCityMainTongKim:mainMenu()
 	SimCityMainTongKim:updateCampPosition()
 	SimCityChienTranh:modeTongKim(1, self.camp2TopRight)
@@ -52,7 +64,7 @@ function SimCityMainTongKim:mainMenu()
 	local counter = SimCityChienTranh:countMap(nW)
 	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
 
-	local tbSay = createTaskSayChienTranh(nW, worldInfo.name .. " khãi löa chinh chiÕn" .. extra)
+	local tbSay = createTaskSayTongKim(nW, extra)
 
 	tinsert(tbSay, "Ph¸t anh hïng thiÕp/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "Ph¸t qu¸i nh©n thiÕp/#SimCityChienTranh:goiAnhHungThiep()")

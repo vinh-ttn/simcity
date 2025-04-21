@@ -118,7 +118,103 @@ function ComputeWalkGraph(worldMap)
 			end
 		end
 	end
-	worldMap.walkGraph = graph
+
+	if not worldMap.walkGraph then
+		worldMap.walkGraph = graph
+	else
+		-- Merge new nodes into existing walkGraph
+		for nodeKey, node in graph.nodes do
+			if not worldMap.walkGraph.nodes[nodeKey] then
+				worldMap.walkGraph.nodes[nodeKey] = node
+				
+				-- Check for nearby nodes in existing graph to connect with
+				for existingKey, existingNode in worldMap.walkGraph.nodes do
+					if existingKey ~= nodeKey then
+						-- Extract coordinates from node keys
+						local x1, y1 = node[1], node[2]
+						local x2, y2 = existingNode[1], existingNode[2]
+						
+						-- If nodes are within SNAP_RADIUS, connect them
+						if GetDistanceRadius(x1, y1, x2, y2) <= SNAP_RADIUS then
+							-- Initialize edges arrays if needed
+							if not worldMap.walkGraph.edges[nodeKey] then
+								worldMap.walkGraph.edges[nodeKey] = {}
+							end
+							if not worldMap.walkGraph.edges[existingKey] then
+								worldMap.walkGraph.edges[existingKey] = {}
+							end
+							
+							-- Add bidirectional edges if they don't exist
+							local found1, found2 = nil, nil
+							
+							-- Check if forward edge exists
+							for i = 1, getn(worldMap.walkGraph.edges[nodeKey]) do
+								if worldMap.walkGraph.edges[nodeKey][i] == existingKey then
+									found1 = 1
+									break
+								end
+							end
+							
+							-- Check if reverse edge exists
+							for i = 1, getn(worldMap.walkGraph.edges[existingKey]) do
+								if worldMap.walkGraph.edges[existingKey][i] == nodeKey then
+									found2 = 1
+									break
+								end
+							end
+							
+							-- Add missing edges
+							if not found1 then
+								tinsert(worldMap.walkGraph.edges[nodeKey], existingKey)
+							end
+							if not found2 then
+								tinsert(worldMap.walkGraph.edges[existingKey], nodeKey)
+							end
+						end
+					end
+				end
+			end
+		
+			local edges = graph.edges[nodeKey]
+			if worldMap.walkGraph.edges[nodeKey] then
+				-- Add new edges if they don't already exist
+				for i = 1, getn(edges) do
+					local targetKey = edges[i]
+					local found = nil
+					-- Check if edge already exists
+					for j = 1, getn(worldMap.walkGraph.edges[nodeKey]) do
+						if worldMap.walkGraph.edges[nodeKey][j] == targetKey then
+							found = 1
+							break
+						end
+					end
+					if not found then
+						tinsert(worldMap.walkGraph.edges[nodeKey], targetKey)
+						-- Add reverse edge if it doesn't exist
+						if not worldMap.walkGraph.edges[targetKey] then
+							worldMap.walkGraph.edges[targetKey] = {}
+						end
+						local found2 = nil
+						for j = 1, getn(worldMap.walkGraph.edges[targetKey]) do
+							if worldMap.walkGraph.edges[targetKey][j] == nodeKey then
+								found2 = 1
+								break
+							end
+						end
+						if not found2 then
+							tinsert(worldMap.walkGraph.edges[targetKey], nodeKey)
+						end
+					end
+				end
+			else
+				worldMap.walkGraph.edges[nodeKey] = {}
+				-- Copy edges
+				for i = 1, getn(edges) do
+					tinsert(worldMap.walkGraph.edges[nodeKey], edges[i])
+				end
+			end
+		end
+	end
 	return worldMap.walkGraph
 end
 
@@ -212,8 +308,11 @@ end
 
 function SimCityWorld:initThanhThi()
 	for worldId, worldInfo in SimCityMap do
-		local targetMap = self:New(worldInfo)		
-		ComputeWalkGraph(targetMap)
+		-- Tongkim is setup by tongkim.lua and not us
+		if self:IsTongKimMap(worldId) == 0 then
+			local targetMap = self:New(worldInfo)		
+			ComputeWalkGraph(targetMap)
+		end
 	end
 end
 
