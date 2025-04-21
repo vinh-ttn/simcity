@@ -1,5 +1,10 @@
 # SimCity Changelog
 
+## 5.8 (22-04-2025)
+- Mở thêm các map Tống Kim khác
+- Thay đổi hệ thống đường đi ngẫu nhiên
+
+
 ## 5.7.3 (19-04-2025)
 - Sửa lỗi chức năng tự động tắt/mở
 - Nâng cấp chức năng di chuyển trong thành đến những nơi tập trung (hiệu thuốc, tạp hóa, xa phu v.v.)
