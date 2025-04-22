@@ -4,6 +4,8 @@ SimCitizen = objCopy(SimCore)
 SimCitizen.fighterList = {}  -- Override with own list
 SimCitizen.counter = 1
 SimCitizen.removedIds = {}
+SimCitizen.currentProcessGroup = 1 -- Add current group counter
+SimCitizen.totalFighters = 0 -- Track total fighters
 
 function SimCitizen:New(fighter)
 
@@ -18,11 +20,18 @@ function SimCitizen:New(fighter)
         self.counter = self.counter + 1
     end
 
+    -- Increment total fighters
+    self.totalFighters = self.totalFighters + 1
+    
+    -- Assign to group 1 or 2 evenly
+    local processGroup = (mod(self.totalFighters, 2) + 1)
+
     local tbNpc = {
         id = nListId,
         children = nil,
         worldInfo = SimCityWorld:Get(fighter.nMapId),
-        last2VisitedEdges = {} -- Track last visited edges for more natural movement
+        last2VisitedEdges = {}, -- Track last visited edges for more natural movement
+        processGroup = processGroup -- Alternate between group 1 and 2
     }
 
     -- Check if worldInfo is nil

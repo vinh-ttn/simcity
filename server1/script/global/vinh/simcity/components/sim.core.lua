@@ -8,7 +8,9 @@ IncludeLib("NPCINFO")
 SimCore = {
     fighterList = {},
     counter = 1,
-    removedIds = {}
+    removedIds = {},
+    currentProcessGroup = 1,
+    totalFighters = 0
 }
 
 function SimCore:Get(nListId)
@@ -103,6 +105,7 @@ function SimCore:initCharConfig(config)
 
 end
 
+
 function SimCore:Remove(nListId)
     local tbNpc = self.fighterList[nListId]
     if tbNpc then
@@ -113,8 +116,12 @@ function SimCore:Remove(nListId)
                 self:Remove(tbNpc.children[i])
             end
         end
+
         self.fighterList[nListId] = nil
         tinsert(self.removedIds, nListId)
+        
+        -- Decrement total fighters
+        self.totalFighters = self.totalFighters - 1
     end
 end
 
@@ -144,7 +151,7 @@ function SimCore:OnTimer(tbNpc, rate)
     end
  
     -- Move
-    tbNpc.movementSys:Move(self, tbNpc, isTen)
+    tbNpc.movementSys:Move(self, tbNpc)
 
     -- Fun
     tbNpc.funSys:Update(tbNpc)
@@ -165,7 +172,21 @@ function SimCore:OnTimer(tbNpc, rate)
 end
 
 function SimCore:ATick(rate)    
-    for key, fighter in self.fighterList do
-        self:OnTimer(fighter, rate)
+    -- Process all fighters if total count <= 800
+    if self.totalFighters <= 600 then
+        for _, fighter in self.fighterList do
+            self:OnTimer(fighter, rate)
+        end
+        return
     end
+
+    -- Over 800 fighters - process only current group
+    for _, fighter in self.fighterList do
+        if fighter.processGroup == self.currentProcessGroup then
+            self:OnTimer(fighter, rate)
+        end
+    end
+
+    -- Move to next group (alternating between 1 and 2)
+    self.currentProcessGroup = self.currentProcessGroup == 1 and 2 or 1
 end 

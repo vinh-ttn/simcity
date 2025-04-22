@@ -41,37 +41,62 @@ end
 function SimCityMainTongKim:addTongKimNpc()
 	SimCityChienTranh:updateCampPosition()
 
-	local vokyTienTuyen = { 1343 * 32, 3410 * 32 }
-	local vokyHauPhuong = { 1241 * 32, 3549 * 32 }
+	local worldInfo = SimCityWorld:Get(SubWorld)
 
-	local trieumanTienTuyen = { 1541 * 32, 3200 * 32 }
-	local trieumanHauPhuong = { 1688 * 32, 3072 * 32 }
+	local home1InX = GetMissionV(MS_HOMEIN_X1)
+	local home1InY = GetMissionV(MS_HOMEIN_Y1)
+	local home1OutX = GetMissionV(MS_HOMEOUT_X1)
+	local home1OutY = GetMissionV(MS_HOMEOUT_Y1)
 
+	local home2InX = GetMissionV(MS_HOMEIN_X2)
+	local home2InY = GetMissionV(MS_HOMEIN_Y2)
+	local home2OutX = GetMissionV(MS_HOMEOUT_X2)
+	local home2OutY = GetMissionV(MS_HOMEOUT_Y2)
 
-	local vitriTrieuMan = {
-		tientuyen = {},
-		hauphuong = {},
-		id = 1617
-	}
+	if worldInfo.nodes then
+		local nodes = {}
+		for k,v in worldInfo.nodes do			
+			nodes[k] = {v.x, v.y}
+		end
+
+		local closestHome1In = getClosestNode(nodes, home1InX, home1InY)
+		local closestHome1Out = getClosestNode(nodes, home1OutX, home1OutY)
+		local closestHome2In = getClosestNode(nodes, home2InX, home2InY)
+		local closestHome2Out = getClosestNode(nodes, home2OutX, home2OutY)
+
+		if closestHome1In then
+			home1InX = nodes[closestHome1In][1]
+			home1InY = nodes[closestHome1In][2]
+		end
+
+		if closestHome1Out then
+			home1OutX = nodes[closestHome1Out][1]
+			home1OutY = nodes[closestHome1Out][2]
+		end
+
+		if closestHome2In then
+			home2InX = nodes[closestHome2In][1]
+			home2InY = nodes[closestHome2In][2]
+		end
+
+		if closestHome2Out then
+			home2OutX = nodes[closestHome2Out][1]
+			home2OutY = nodes[closestHome2Out][2]
+		end
+	end
+
 
 	local vitriVoKy = {
-		tientuyen = {},
-		hauphuong = {},
+		tientuyen = {home1OutX*32, home1OutY*32},
+		hauphuong = {home1InX*32, home1InY*32},
 		id = 103
 	}
 
-
-	if SimCityChienTranh.camp2TopRight == 1 then
-		vitriTrieuMan.tientuyen = trieumanTienTuyen
-		vitriTrieuMan.hauphuong = trieumanHauPhuong
-		vitriVoKy.tientuyen = vokyTienTuyen
-		vitriVoKy.hauphuong = vokyHauPhuong
-	else
-		vitriTrieuMan.tientuyen = vokyTienTuyen
-		vitriTrieuMan.hauphuong = vokyHauPhuong
-		vitriVoKy.tientuyen = trieumanTienTuyen
-		vitriVoKy.hauphuong = trieumanHauPhuong
-	end
+	local vitriTrieuMan = {
+		tientuyen = {home2OutX*32, home2OutY*32},
+		hauphuong = {home2InX*32, home2InY*32},
+		id = 1617
+	}
 
 
 	-- Hau doanh

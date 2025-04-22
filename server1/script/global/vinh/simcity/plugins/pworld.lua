@@ -161,24 +161,38 @@ function SimCityWorld:doShowBXH(mapID)
 	SimCitizen:ThongBaoBXH(mapID)
 end
 
-function SimCityWorld:IsTongKimMap(nW)
-
-	-- Bao ve nguyen soai
-	if nW == 380 or nW == 378 or nW == 379 then
-		return 1
-	end
-
-	-- Cac map khac	
-	if nW == 386 then
-		return 1
-	end
-
-	local worldInfo = self:Get(nW)
-	if worldInfo.presetPaths and worldInfo.presetPaths.haudoanh1 then
-		return 1
-	end
-
-	return 0
+function SimCityWorld:IsTongKimMap(nMapID)
+	local tWorldMapIDs = {
+        [375] = 1,
+        [376] = 1,
+        [377] = 1,
+        [378] = 1,
+        [379] = 1,
+        [380] = 1,
+        [381] = 1,
+        [382] = 1,
+        [383] = 1,
+        [384] = 1,
+        [385] = 1,
+        [386] = 1,
+        [868] = 1,
+        [869] = 1,
+        [870] = 1,
+        [883] = 1,
+        [884] = 1,
+        [885] = 1,
+        [900] = 1,
+        [902] = 1,
+        [903] = 1,
+        [904] = 1
+    }
+    
+    -- Check if the input map ID exists in our table
+    if tWorldMapIDs[nMapID] then
+        return 1
+    else
+        return 0
+    end 
 end
 
 function SimCityWorld:IsThanhThiMap(pW)
