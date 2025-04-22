@@ -168,8 +168,13 @@ function SimCityWorld:IsTongKimMap(nW)
 		return 1
 	end
 
-	-- Cac map khac
+	-- Cac map khac	
 	if nW == 386 then
+		return 1
+	end
+
+	local worldInfo = self:Get(nW)
+	if worldInfo.presetPaths and worldInfo.presetPaths.haudoanh1 then
 		return 1
 	end
 
