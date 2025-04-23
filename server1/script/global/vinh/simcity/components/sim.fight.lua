@@ -228,7 +228,7 @@ SimFight.Citizen = {
     TriggerFightWithPlayer = function(self, simInstance, tbNpc)
         -- FIGHT other player
         if GetNpcAroundPlayerList then
-            if tbNpc.isPlayerEnemyAround == 1 then
+            if tbNpc.isPlayerEnemyAround > 0 then
                 if tbNpc.role == "citizen" then                
                     if tbNpc.worldInfo.showFightingArea == 1 then
                         local name = GetNpcName(tbNpc.finalIndex)
@@ -408,7 +408,7 @@ SimFight.KeoXe = {
             return 0
         end
         -- FIGHT other player        
-        if tbNpc.isPlayerEnemyAround == 1 then
+        if tbNpc.isPlayerEnemyAround > 0 then
             return self:JoinFight(simInstance, tbNpc, "player around")
         end
 
