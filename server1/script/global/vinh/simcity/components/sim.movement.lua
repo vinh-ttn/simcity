@@ -9,6 +9,9 @@ function IsActive(self, simInstance,tbNpc)
     end
 
     -- Track player around
+    tbNpc.isPlayerEnemyAround = 0
+    local scanFightRadius = tbNpc.RADIUS_FIGHT_PLAYER or RADIUS_FIGHT_PLAYER
+
     if GetNpcAroundPlayerList then
         local allNpcs, nCount = GetNpcAroundPlayerList(tbNpc.finalIndex, 32)
         for i = 1, nCount do
@@ -23,6 +26,16 @@ function IsActive(self, simInstance,tbNpc)
             if not tbNpc.worldInfo.playerTracker[pID] then
                 tbNpc.worldInfo.playerTracker[pID] = {pX, pY, camp}
                 tbNpc.worldInfo.playerTrackerCount = tbNpc.worldInfo.playerTrackerCount + 1
+            end
+
+            -- Is this player an enemy?
+            if tbNpc.lastPos 
+                and tbNpc.camp ~= 0
+                and IsAttackableCamp(camp, tbNpc.camp) == 1
+                and GetDistanceRadius(tbNpc.lastPos.nX32/32, tbNpc.lastPos.nY32/32, pX, pY) <= scanFightRadius
+                and CallPlayerFunction(pID, GetFightState) == 1 
+                 then
+                tbNpc.isPlayerEnemyAround = pID
             end
         end
 

@@ -1,21 +1,3 @@
-function IsPlayerEnemyAround(tbNpc)
-    local scanFightRadius = tbNpc.RADIUS_FIGHT_PLAYER or RADIUS_FIGHT_PLAYER
-
-    if not tbNpc.lastPos then
-        return 0
-    end
-
-    for k, v in tbNpc.worldInfo.playerTracker do
-        if (GetDistanceRadius(tbNpc.lastPos.nX32/32, tbNpc.lastPos.nY32/32, v[1], v[2]) <= scanFightRadius
-                and CallPlayerFunction(k, GetFightState) == 1 
-                and IsAttackableCamp(v[3], tbNpc.camp) == 1 
-                and tbNpc.camp ~= 0) then
-            return k
-        end
-    end
-    return 0
-end
-
 function ChildrenLeaveFight(self, simInstance, tbNpc, code, reason)
     if not tbNpc.children then
         return 1
@@ -87,7 +69,7 @@ function execCastNormalSkill(self, simInstance, tbNpc)
 
     
     -- Cast skill
-    local foundPlayerEnemy = IsPlayerEnemyAround(tbNpc)
+    local foundPlayerEnemy = tbNpc.isPlayerEnemyAround
     if foundPlayerEnemy > 0 then
         local targetX, targetY, targetW = CallPlayerFunction(foundPlayerEnemy, GetWorldPos)
         NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel, targetX*32, targetY*32)        
@@ -230,7 +212,7 @@ SimFight.Citizen = {
 
         -- No attacker around including NPC and Player ? Stop
         if (self:IsNpcEnemyAround(simInstance, tbNpc) == 0 and
-                IsPlayerEnemyAround(tbNpc) == 0) then
+                tbNpc.isPlayerEnemyAround == 0) then
             if (tbNpc.leaveFightWhenNoEnemy and tbNpc.leaveFightWhenNoEnemy > 0) then
                 local realCanSwitchTick = tbNpc.tick_breath + tbNpc.leaveFightWhenNoEnemy - 1
 
@@ -246,7 +228,7 @@ SimFight.Citizen = {
     TriggerFightWithPlayer = function(self, simInstance, tbNpc)
         -- FIGHT other player
         if GetNpcAroundPlayerList then
-            if IsPlayerEnemyAround(tbNpc) > 0 then
+            if tbNpc.isPlayerEnemyAround == 1 then
                 if tbNpc.role == "citizen" then                
                     if tbNpc.worldInfo.showFightingArea == 1 then
                         local name = GetNpcName(tbNpc.finalIndex)
@@ -408,7 +390,7 @@ SimFight.KeoXe = {
 
         -- No attacker around including NPC and Player ? Stop
         if (self:IsNpcEnemyAround(simInstance, tbNpc) == 0 and
-                IsPlayerEnemyAround(tbNpc) == 0) then
+                tbNpc.isPlayerEnemyAround == 0) then
             if (tbNpc.leaveFightWhenNoEnemy and tbNpc.leaveFightWhenNoEnemy > 0) then
                 local realCanSwitchTick = tbNpc.tick_breath + tbNpc.leaveFightWhenNoEnemy - 1
 
@@ -425,11 +407,9 @@ SimFight.KeoXe = {
         if tbNpc.isPlayerFighting == 0 then
             return 0
         end
-        -- FIGHT other player
-        if GetNpcAroundPlayerList then
-            if IsPlayerEnemyAround(tbNpc) > 0 then
-                return self:JoinFight(simInstance, tbNpc, "player around")
-            end
+        -- FIGHT other player        
+        if tbNpc.isPlayerEnemyAround == 1 then
+            return self:JoinFight(simInstance, tbNpc, "player around")
         end
 
         return 0
