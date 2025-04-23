@@ -917,13 +917,43 @@ SimMovement.Citizen = {
         -- Mode 1: randomwalk
         tbNpc.tick_checklag = nil
         if self:HasArrived(simInstance, tbNpc) == 1 then
-            if (tbNpc.noStop == 1 or random(1, 100) < 907) then
+            -- Keep walking no stop
+            local keepWalkingRate = 90
+            if tbNpc.isAttractionAround > 0 then
+                keepWalkingRate = 5
+            end
+
+            if tbNpc.baoDanhTongKim then
+                keepWalkingRate = 5
+                if tbNpc.isAttractionAround > 0 then
+                    keepWalkingRate = 2
+                end
+                if (random(1, 100) < keepWalkingRate) then
+                    tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(simInstance, tbNpc, tbNpc.nPosId)
+                else
+                    return 1
+                end
+            
+            -- Tong kim dang o trong spawn?
+            elseif (tbNpc.tongkim == 1 and tbNpc.tick_breath < tbNpc.tick_canWalk) then
+                
+                keepWalkingRate = 5
+                 
+                -- Walk random trong spawn
+                if (random(1, 100) < keepWalkingRate) then
+                    tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(simInstance, tbNpc, tbNpc.nPosId)
+                else
+                    return 1
+                end
+
+            -- Normal walk
+            elseif (tbNpc.noStop == 1 or random(1, 100) < keepWalkingRate) then
                 tbNpc.nPosId = tbNpc.movementSys:GetRandomWalkPoint(simInstance, tbNpc, tbNpc.nPosId)
             
             -- Stop walking
             else
                 return 1
-            end 
+            end
         end
 
         local targetPos
