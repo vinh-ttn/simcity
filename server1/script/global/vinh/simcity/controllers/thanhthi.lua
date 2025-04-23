@@ -1,14 +1,15 @@
 --Include("\\script\\global\\vinh\\simcity\\head.lua")
 Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")
 SimCityMainThanhThi = {
-	worldStatus = {},
 	autoAddThanhThi = STARTUP_AUTOADD_THANHTHI,
 	thanhThiSize = THANHTHI_SIZE,
 	batchesByMap = {}, -- Store batches by map ID
 	timerIdsByMap = {}, -- Store current batch index for each map
 	masterTimerId = nil, -- Global timer for all batch processing
 	patrolMap = nil,
-	patrolTimerId = nil
+	patrolTimerId = nil,
+
+	playerTimerIdsByMap = {},
 }
 
 function createTaskSayThanhThi(extra)
@@ -134,8 +135,9 @@ function SimCityMainThanhThi:createNpcSet(cap, total, ngoaitrang)
 	end
 end
 
-function SimCityMainThanhThi:removeAll()
-	local nW, nX, nY = GetWorldPos()
+function SimCityMainThanhThi:removeAll(worldId)
+	local mapId, _, _ = GetWorldPos()
+	local nW = worldId or mapId
 	
 	-- Mark this map's batches as canceled
 	if self.timerIdsByMap[nW] then
@@ -399,40 +401,35 @@ function SimCityMainThanhThi:countMap(nW)
 end
 
 function SimCityMainThanhThi:onPlayerEnterMap()
+	local nW, pX, pY = GetWorldPos()
+	local worldInfo = SimCityWorld:Get(nW)
+	local camp = GetCurCamp()
+	worldInfo.playerTracker[PlayerIndex] = {pX, pY, camp}
+	worldInfo.playerTrackerCount = worldInfo.playerTrackerCount + 1
 	if self.autoAddThanhThi ~= 1 then
 		return 1
 	end
-	
-	local nW, _, _ = GetWorldPos()
 
 	if SimCityWorld:IsTongKimMap(nW) == 1 then
 		return 1
 	end
 
-	if not self.worldStatus[nW] then
-		self.worldStatus[nW] = {
-			countPlayer = 1,
-		}
-	else
-		self.worldStatus[nW].countPlayer = self.worldStatus[nW].countPlayer + 1
+	if not self.playerTimerIdsByMap[nW] then
+		self.playerTimerIdsByMap[nW] = AddTimer(3*18, "SimCityMainThanhThi:autoCreateNpc", nW)
 	end
-
-	local worldInfo = SimCityWorld:Get(nW)
-
-	if (worldInfo.name ~= "" and self.worldStatus[nW].countPlayer >= 1 and self:countMap(nW) == 0) then
-		self:createNpcSoCapByMap()
-		SimCityWorld:Update(nW, "showFightingArea", 0)
-	end
-
+	
 end
 
 function SimCityMainThanhThi:onPlayerExitMap()
+	local nW, _, _ = GetWorldPos()
+	local worldInfo = SimCityWorld:Get(nW)
+	worldInfo.playerTracker[PlayerIndex] = nil
+	worldInfo.playerTrackerCount = worldInfo.playerTrackerCount - 1
 	if self.autoAddThanhThi ~= 1 then
 		return 1
 	end
 
-	local nW, _, _ = GetWorldPos()
-	if not self.worldStatus[nW] then
+	if not worldInfo.playerTracker[PlayerIndex] then
 		return 1
 	end
 
@@ -440,16 +437,31 @@ function SimCityMainThanhThi:onPlayerExitMap()
 		return 1
 	end
 
-	self.worldStatus[nW].countPlayer = self.worldStatus[nW].countPlayer - 1
 
-	-- If enabled but no one left, clean it
-	if self.worldStatus[nW].countPlayer == 0 then 
-		self:removeAll()
+	if not self.playerTimerIdsByMap[nW] then
+		self.playerTimerIdsByMap[nW] = AddTimer(10*18, "SimCityMainThanhThi:autoCreateNpc", nW)
 	end
 end
 
-function SimCityMainThanhThi:createNpcSoCapByMap()
-	local nW, _, _ = GetWorldPos()
+
+function SimCityMainThanhThi:autoCreateNpc(nW)
+	local worldInfo = SimCityWorld:Get(nW)
+
+	if (worldInfo.name ~= "" and worldInfo.playerTrackerCount >= 1 and self:countMap(nW) == 0) then
+		self:createNpcSoCapByMap(nW)
+	end
+
+	-- If enabled but no one left, clean it
+	if worldInfo.playerTrackerCount == 0 then 
+		self:removeAll(nW)
+	end
+
+	self.playerTimerIdsByMap[nW] = nil
+end
+
+function SimCityMainThanhThi:createNpcSoCapByMap(worldId)
+	local mapId, _, _ = GetWorldPos()
+	local nW = worldId or mapId
 
 	local worldInfo = SimCityWorld:Get(nW)
 	if (worldInfo.name ~= "") then

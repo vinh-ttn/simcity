@@ -1,13 +1,16 @@
 function IsPlayerEnemyAround(tbNpc)
-    -- FIGHT other player
-    if GetNpcAroundPlayerList then
-        local allNpcs, nCount = GetNpcAroundPlayerList(tbNpc.finalIndex, tbNpc.RADIUS_FIGHT_PLAYER or RADIUS_FIGHT_PLAYER)
-        for i = 1, nCount do
-            if (CallPlayerFunction(allNpcs[i], GetFightState) == 1 and
-                    IsAttackableCamp(CallPlayerFunction(allNpcs[i], GetCurCamp), tbNpc.camp) == 1 and
-                    tbNpc.camp ~= 0) then
-                return allNpcs[i]
-            end
+    local scanFightRadius = tbNpc.RADIUS_FIGHT_PLAYER or RADIUS_FIGHT_PLAYER
+
+    if not tbNpc.lastPos then
+        return 0
+    end
+
+    for k, v in tbNpc.worldInfo.playerTracker do
+        if (GetDistanceRadius(tbNpc.lastPos.nX32/32, tbNpc.lastPos.nY32/32, v[1], v[2]) <= scanFightRadius
+                and CallPlayerFunction(k, GetFightState) == 1 
+                and IsAttackableCamp(v[3], tbNpc.camp) == 1 
+                and tbNpc.camp ~= 0) then
+            return k
         end
     end
     return 0

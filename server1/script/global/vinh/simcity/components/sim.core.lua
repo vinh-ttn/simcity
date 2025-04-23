@@ -140,6 +140,12 @@ function SimCore:OnTimer(tbNpc, rate)
         return 0
     end
 
+    -- Check if should be active
+    if tbNpc.movementSys:IsActive(self, tbNpc) == 0 then
+        tbNpc.movementSys:MoveInactive(self, tbNpc)
+        return 0
+    end
+
     tbNpc.tick_breath = tbNpc.tick_breath + 1*tickRate
 
     if tbNpc.tick_breath > 1800*18/REFRESH_RATE then
@@ -149,7 +155,7 @@ function SimCore:OnTimer(tbNpc, rate)
         tbNpc.tick_canWalk = 0
         tbNpc.tick_canCast = 0
     end
- 
+    
     -- Move
     tbNpc.movementSys:Move(self, tbNpc)
 

@@ -87,6 +87,8 @@ function SimCityWorld:New(data)
 		data.tick = 0
 		data.tick_showBXH = 0
 		data.announceBXHTick = 3
+		data.playerTracker = {}
+		data.playerTrackerCount = 0
 		
 		-- Tong Kim map?
 		self:modifyTongKimMap(data)
