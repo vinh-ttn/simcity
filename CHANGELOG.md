@@ -1,5 +1,8 @@
 # SimCity Changelog
 
+## 5.8.1 (24-04-2025)
+- Giảm tải hệ thống
+ 
 ## 5.8 (22-04-2025)
 - Mở thêm các map Tống Kim khác
 - Thay đổi hệ thống đường đi ngẫu nhiên
