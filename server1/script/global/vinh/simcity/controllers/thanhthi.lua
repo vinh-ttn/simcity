@@ -431,14 +431,15 @@ function SimCityMainThanhThi:onPlayerExitMap()
 	local worldInfo = SimCityWorld:Get(nW)
 	worldInfo.playerTracker[PlayerIndex] = nil
 	worldInfo.playerTrackerCount = worldInfo.playerTrackerCount - 1
-	if self.autoAddThanhThi ~= 1 then
+ 
+	if SimCityWorld:IsTongKimMap(nW) ~= 1 and self.autoAddThanhThi ~= 1 then
 		return 1
 	end
-
+ 
 	if worldInfo.playerTrackerCount ~= 0 then
 		return 1
 	end
-
+ 
 	if not self.playerTimerIdsByMap[nW] then
 		self.playerTimerIdsByMap[nW] = AddTimer(10*18, "SimCityMainThanhThi:autoCreateNpc", nW)
 	end
@@ -453,8 +454,12 @@ function SimCityMainThanhThi:autoCreateNpc(nW)
 	end
 
 	-- If enabled but no one left, clean it
-	if worldInfo.playerTrackerCount == 0 then 
-		self:removeAll(nW)
+	if worldInfo.playerTrackerCount == 0 then  
+		if SimCityWorld:IsTongKimMap(nW) ~= 1 then
+			self:removeAll(nW)
+		else
+			SimCityChienTranh:removeAll(SubWorldIdx2ID(nW))
+		end
 	end
 
 	self.playerTimerIdsByMap[nW] = nil
