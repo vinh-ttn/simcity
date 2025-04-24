@@ -108,12 +108,17 @@ end
 
 function SimCityMainTongKim:onPlayerEnterMap(pW)
 	
+	local isBaoDanh = 0 
+	if pW == 323 or pW == 324 or pW == 325 then
+		isBaoDanh = 1
+	end
+
 	-- Check if there is a Trieu Man or Vo Ky in the map
-	local fighterList = GetAroundNpcList(50)
+	local fighterList = GetAroundNpcList(isBaoDanh and 16 or 50)
 
 	local tmpFound
 	local nNpcIdx
-	
+
 	for i = 1, getn(fighterList) do
 		nNpcIdx = fighterList[i]
 		local script = GetNpcScript(nNpcIdx)
@@ -132,7 +137,7 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 	end
 
 	-- Neu la dia diem bao danh thi them vao Trieu Man va Vo Ky
-	if pW == 323 or pW == 324 or pW == 325 then
+	if isBaoDanh == 1 then
 		return SimCityMainTongKim:addTongKimOpenNpc()
 	end
 	
