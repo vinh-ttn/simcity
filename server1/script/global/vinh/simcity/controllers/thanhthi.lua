@@ -458,7 +458,7 @@ function SimCityMainThanhThi:autoCreateNpc(nW)
 		if SimCityWorld:IsTongKimMap(nW) ~= 1 then
 			self:removeAll(nW)
 		else
-			SimCityChienTranh:removeAll(SubWorldIdx2ID(nW))
+			SimCityChienTranh:removeAll(nW)
 		end
 	end
 

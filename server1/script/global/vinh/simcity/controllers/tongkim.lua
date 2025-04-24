@@ -114,7 +114,7 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 	end
 
 	-- Check if there is a Trieu Man or Vo Ky in the map
-	local fighterList = GetAroundNpcList(isBaoDanh and 16 or 50)
+	local fighterList = GetAroundNpcList(isBaoDanh and 32 or 50)
 
 	local tmpFound
 	local nNpcIdx
