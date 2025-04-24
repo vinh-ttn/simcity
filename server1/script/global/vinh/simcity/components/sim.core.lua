@@ -141,7 +141,7 @@ function SimCore:OnTimer(tbNpc, rate)
     end
 
     -- Check if should be active
-    if tbNpc.movementSys:IsActive(self, tbNpc) == 0 then
+    if (not tbNpc.tongkim or tbNpc.tongkim ~= 1) and tbNpc.movementSys:IsActive(self, tbNpc) == 0 then
         tbNpc.movementSys:MoveInactive(self, tbNpc)
         return 0
     end

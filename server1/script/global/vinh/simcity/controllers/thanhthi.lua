@@ -411,7 +411,13 @@ function SimCityMainThanhThi:onPlayerEnterMap()
 	end
 
 	if SimCityWorld:IsTongKimMap(nW) == 1 then
+		SimCityMainTongKim:onPlayerEnterMap(nW)
 		return 1
+	end
+
+	-- Neu la dia diem bao danh thi them vao Trieu Man va Vo Ky
+	if nW == 323 or nW == 324 or nW == 325 then
+		SimCityMainTongKim:onPlayerEnterMap(nW)
 	end
 
 	if not self.playerTimerIdsByMap[nW] then

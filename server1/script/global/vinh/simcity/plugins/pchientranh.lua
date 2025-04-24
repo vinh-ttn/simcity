@@ -10,28 +10,31 @@ SimCityChienTranh = {
 
 function createTaskSayChienTranh(mapId, extra)
 
+	local worldInfo = SimCityWorld:Get(mapId)
 	local tbOpt = {}
 	local nSettingIdx = 1617
 	local nActionId = 0
 	if not extra then
 		extra = ""
+	end 
+
+	local showVoKy = 0
+	if worldInfo.isTongKim == 1 then
+		local camp = GetCurCamp()
+		if camp and camp == 1 then
+			showVoKy = 1
+		end
 	end
-	
-	tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> ThiÕp vèn kh«ng ph¶i ng­êi tèt, nh­ng thiÕp ®èi víi chµng... ch­a tõng gian dèi." .. extra);
+
+	-- Show it
+	if showVoKy == 1 then
+		nSettingIdx = 103
+		tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ:<link> Ng­êi H¸n lu«n cho r»ng ng­êi Kim lµ d· man, nh­ng ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
+	else
+		tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> Ng­êi H¸n c¸c ng­¬i lu«n cho r»ng ng­êi Kim chóng ta lµ d· man, nh­ng c¸c ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
+	end
+
 	return tbOpt
-end
-
-function SimCityChienTranh:updateCampPosition()
-	local camp1X = GetMissionV(MS_HOMEOUT_X1)
-	local camp1Y = GetMissionV(MS_HOMEOUT_Y1)
-	local camp2X = GetMissionV(MS_HOMEOUT_X2)
-	local camp2Y = GetMissionV(MS_HOMEOUT_Y2)
-
-	self.camp2TopRight = 0
-	if (camp2X ~= 0) and (camp2Y ~= 0) and (camp2X > camp1X) and (camp2Y < camp1Y) then
-		self.camp2TopRight = 1
-	end
-	return self.camp2TopRight
 end
 
 function SimCityChienTranh:getCampDirection(forCamp)

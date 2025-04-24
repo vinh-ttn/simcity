@@ -21,7 +21,7 @@ function simcity_addNpcs()
 	for id, map in SimCityMap do
 		EventSys:GetType("EnterMap"):Reg(id, SimCityMainThanhThi.onPlayerEnterMap, SimCityMainThanhThi)
 		EventSys:GetType("LeaveMap"):Reg(id, SimCityMainThanhThi.onPlayerExitMap, SimCityMainThanhThi)
-		EventSys:GetType("EnterMap"):Reg(id, SimCityVatNuoi.onPlayerEnterMap, SimCityVatNuoi)
+		EventSys:GetType("EnterMap"):Reg(id, SimCityVatNuoi.onPlayerEnterMap, SimCityVatNuoi)		
 	end
 	
 
