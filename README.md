@@ -2,7 +2,7 @@
 
 —vinhsmoke—
 
-Phiên bản hiện tại: **5.8.1** (cập nhật ngày [24/04/2025](CHANGELOG.md))
+Phiên bản hiện tại: **5.8.2** (cập nhật ngày [24/04/2025](CHANGELOG.md))
 
 Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
 
@@ -43,43 +43,8 @@ Yêu cầu game server của bạn phải có kết nối internet
 
 * gặp Vô Kỵ để điều khiển kéo xe
 
-## B. Cách cài đặt Tống Kim
 
-Thêm NPC Triệu Mẫn và Vô Kỵ trong Tống Kim để có thể mời thêm kiếm khách tham gia Tống Kim.
-
-**B1. Đối với map Bảo Vệ Nguyên Soái**
-
-1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
-
-`\script\battles\marshal\mission.lua`
-
-2\) Tìm đến dòng (thứ 4-5 gì đó từ trên đếm xuống):
-
-`Include("\\script\\battles\\marshal\\head.lua")`
-
-và thêm vào dòng ngay sau đó
-
-`Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")`
-
-3\) Tìm đế hàm dòng (173) của hàm function InitMission():
-
-`BT_SetMissionName("Phương Thức Bảo Vệ Nguyên Soái”)`
-
-ngay sau dòng đó, thêm vào dòng
-
-`SimCityMainTongKim:addTongKimNpc()`
-
-4\) Khởi động lại server, vào Tống Kim sẽ có Triệu Mẫn/Vô Kỵ để điều khiển
-
-5\) (Không cần thiết) Vì mặc định của game, mỗi phe cần 1 người chơi để đánh mới có điểm.\
-Nếu bạn không muốn như vậy. Có thể xem [hướng dẫn để chỉnh server lại](https://www.facebook.com/groups/volamquan/permalink/1264194464289743/) cho có điểm dù chỉ 1 người chơi.
-
-**B2. Đối với các map tống kim còn lại**
-
-Tìm file mission tương ứng trong các thư mục của battles và làm tương tự như map Bảo Vệ Nguyên Soái (marshal) ở trên. 
-Nghĩa là thêm dòng `Include("...")` vào gần đầu file và thêm dòng `SimCityMainTongKim:addTongKimNpc()` vào cuối hàm InitMission().
-
-## C. Sửa thần hành phù để điều khiển SimCity/Kéo Xe bất cứ đâu (không bao gồm Tống Kim)
+## B. Sửa thần hành phù để điều khiển SimCity/Kéo Xe bất cứ đâu (không bao gồm Tống Kim)
 
 1\) Mở file thần hành phù
 
@@ -104,7 +69,7 @@ Xong. Khởi động lại server, vào Tống Kim và dùng Thần Hành Phù �
 
 
 
-## D. Giới thiệu tính năng
+## C. Giới thiệu tính năng
 
 Chạy trên JX Server 6 và 8
 

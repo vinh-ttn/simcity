@@ -1,7 +1,9 @@
 # SimCity Changelog
 
-## 5.8.1 (24-04-2025)
+## 5.8.2 (24-04-2025)
 - Giảm tải hệ thống
+- Mở Tống Kim bất kỳ lúc nào
+- Tự động thêm Vô Kỵ Triệu Mẫn vào chiến trường
  
 ## 5.8 (22-04-2025)
 - Mở thêm các map Tống Kim khác
