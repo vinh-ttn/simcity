@@ -4,7 +4,7 @@ Include("\\script\\mission\\sevencity\\war.lua")
 
 function Mo_TongKim(level)
 	Battle_StartNewRound(1, level );
-	zAddLocalCountNews = "ChiÃ•n trÂ­Ãªng TÃ¨ng Kim Â®ang trong giai Â®oÂ¹n bÂ¸o danh. CÂ¸c hiÃ–p khÂ¸ch muÃ¨n tham gia hÂ·y nhanh chÃ£ng Â®Ã•n TÂ­Â¬ng DÂ­Â¬ng hoÃ†c Chu TiÂªn trÃŠn Â®Ã“ bÂ¸o danh! (hoÃ†c dÃ¯ng TÃ¨ng Kim ChiÂªu thÂ­)"
+	zAddLocalCountNews = "ChiÕn tr­êng Tèng Kim ®ang trong giai ®o¹n b¸o danh. C¸c hiÖp kh¸ch muèn tham gia h·y nhanh chãng ®Õn T­¬ng D­¬ng hoÆc Chu Tiªn TrÊn ®Ó b¸o danh! (hoÆc dïng Tèng Kim chiªu th­ )"
 	GlobalExecute(format("dw Msg2SubWorld([[%s]])",zAddLocalCountNews))
 	GlobalExecute(format("dw AddLocalCountNews([[%s]], 1)",zAddLocalCountNews))
 end
