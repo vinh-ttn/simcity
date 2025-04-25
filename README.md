@@ -44,32 +44,7 @@ Yêu cầu game server của bạn phải có kết nối internet
 * gặp Vô Kỵ để điều khiển kéo xe
 
 
-## B. Sửa thần hành phù để điều khiển SimCity/Kéo Xe bất cứ đâu (không bao gồm Tống Kim)
-
-1\) Mở file thần hành phù
-
-`\script\item\ib\shenxingfu.lua`
-
-2\) Thêm 2 dòng này vào đầu file
-
-`Include("\\script\\global\\vinh\\simcity\\head.lua")`
-`Include("\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua")`
-
-3\) Tìm đế hàm main() của file có đoạn:
-
-`Thôn trang - Thành thị - Môn phái - CLD/gototown`
-
-ngay sau dòng đó, thêm vào 2 dòng
-
-`"Điều khiển SimCity/#SimCityMainThanhThi:mainMenu()",`
-
-`"Điều khiển Kéo Xe/#SimCityKeoXe:mainMenu()",`
-
-Xong. Khởi động lại server, vào Tống Kim và dùng Thần Hành Phù để điều khiển nhân sĩ giang hồ trong Tống Kim.
-
-
-
-## C. Giới thiệu tính năng
+## B. Giới thiệu tính năng
 
 Chạy trên JX Server 6 và 8
 
