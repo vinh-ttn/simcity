@@ -639,26 +639,44 @@ function SimCityChienTranh:taoHauDoanh(ngoaitrang)
 	local capHP = 3
 	local pool = SimCityNPCInfo:getPoolByCap(capHP)
 	local total = 0
+	local pW, pX, pY = GetWorldPos()
+	local userCamp = GetCurCamp()
+
 	while total < 20 do
 		local id = pool[random(1, getn(pool))] 
 		 
 		local myPath = {}
 
 		if worldInfo.presetPaths.haudoanh1 and worldInfo.presetPaths.haudoanh2 then
-			local myHauDoanh = "haudoanh1"
-			if self.camp2TopRight == 1 then 
-				if forCamp == 2 then
+			local myHauDoanh = "haudoanh1"			
+
+			-- Note: sometimes preset paths are swapped around in correctly, we need to check based on user position
+			local firstPoint = worldInfo.presetPaths.haudoanh1[1]
+			local firstPointX, firstPointY = nodeNameToCoords(firstPoint)
+			local dist1 = GetDistanceRadius(pX, pY, firstPointX, firstPointY)
+
+			local secondPoint = worldInfo.presetPaths.haudoanh2[1]
+			local secondPointX, secondPointY = nodeNameToCoords(secondPoint)
+			local dist2 = GetDistanceRadius(pX, pY, secondPointX, secondPointY)
+
+			-- TH 1, dang o chung camp voi user va haudoanh nao gan user nhat?
+			if userCamp == forCamp then 
+				if dist2 < dist1 then
 					myHauDoanh = "haudoanh2"
 				else
 					myHauDoanh = "haudoanh1"
 				end
-			else
-				if forCamp == 1 then
-					myHauDoanh = "haudoanh2"
-				else
+			-- TH 2, dang o khac camp voi user va hau doanh nao xa user nhat
+			elseif userCamp ~= forCamp then
+				if dist2 < dist1 then
 					myHauDoanh = "haudoanh1"
+				else
+					myHauDoanh = "haudoanh2"
 				end
 			end
+
+
+
 			myPath = { {myHauDoanh, 1} }
 
 		elseif worldInfo.presetPaths.haudoanh1 then
