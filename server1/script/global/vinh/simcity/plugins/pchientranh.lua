@@ -652,9 +652,20 @@ function SimCityChienTranh:taoHauDoanh(ngoaitrang)
 			local campDirection = self:getCampDirection(forCamp)
 			local firstPoint 
 			if campDirection == 1 then
-				firstPoint = worldInfo.presetPaths.campduoi[1]
+				if worldInfo.presetPaths.campduoi then
+					firstPoint = worldInfo.presetPaths.campduoi[1] 
+				end
 			else
-				firstPoint = worldInfo.presetPaths.camptren[1]
+				if worldInfo.presetPaths.camptren then
+					firstPoint = worldInfo.presetPaths.camptren[1] 
+				end
+			end
+
+			if not firstPoint then
+				local pW, pX, pY = GetWorldPos()
+				if pX and pY then
+					firstPoint = pX.."_"..pY
+				end
 			end
 
 			local firstHauDoanh1Point = worldInfo.presetPaths.haudoanh1[1]
