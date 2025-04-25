@@ -1,5 +1,9 @@
 # SimCity Changelog
 
+## 5.8.4 (25-04-2025)
+- Thêm chức năng khai chiến Tống Kim xông lên không cần đợi
+- Sửa lỗi hậu doanh
+
 ## 5.8.3 (24-04-2025)
 - Giảm tải hệ thống
 - Mở Tống Kim bất kỳ lúc nào

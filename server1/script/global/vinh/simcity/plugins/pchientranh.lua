@@ -486,8 +486,7 @@ function SimCityChienTranh:goiAnhHungThiepNgoaiTrang()
 	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
 
 
-	local tbSay = createTaskSayChienTranh(self.nW, extra)
-
+	local tbSay = createTaskSayChienTranh(self.nW, extra)	
 
 	tinsert(tbSay, "§Ö tö tinh anh (100 thiÕp)/#SimCityChienTranh:nv_tudo(1)")
 	tinsert(tbSay, "§Ö tö tinh anh (5 nhãm)/#SimCityChienTranh:nv_tudo_xe(1)")
@@ -534,6 +533,16 @@ function SimCityChienTranh:goiAnhHungThiep()
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbSay)
 	return 1
+end
+
+function SimCityChienTranh:khaiChienTongKim()	
+	if GetMissionV(1) ~= 2 then			
+		AddGlobalCountNews("Thêi gian b¸o danh ®· kÕt thóc. ChiÕn ®Êu chÝnh thøc b¾t ®Çu", 2);
+		Msg2Map(self.nW, "Phong V©n LuËn KiÕm chÝnh thøc khai chiÕn! C¸c chiÕn sÜ! X«ng lªn!");
+		SetMissionV(1,2);
+		BT_SetData( 46, GetGameTime() )
+		PutMessage("§Þch qu©n ®· b¾t ®Çu hµnh ®éng! C¸c chiÕn sÜ! X«ng lªn!")
+	end
 end
 
 function SimCityChienTranh:showBXH(inp)
@@ -599,6 +608,12 @@ function SimCityChienTranh:mainMenu()
 		SimCityMainThanhThi:removeAll()
 	end
 
+	if worldInfo.isTongKim == 1 then
+		if GetMissionV(1) ~= 2 then
+			tinsert(tbSay, "Khai chiÕn ngay lËp tøc/#SimCityChienTranh:khaiChienTongKim()")
+		end
+	end
+
 	tinsert(tbSay, "Ph¸t anh hïng thiÕp/#SimCityChienTranh:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "Ph¸t qu¸i nh©n thiÕp/#SimCityChienTranh:goiAnhHungThiep()")
 	tinsert(tbSay, "§iÒu ®éng qu©n binh/#SimCityChienTranh:phe_quanbinh()")
@@ -639,26 +654,44 @@ function SimCityChienTranh:taoHauDoanh(ngoaitrang)
 	local capHP = 3
 	local pool = SimCityNPCInfo:getPoolByCap(capHP)
 	local total = 0
+	local pW, pX, pY = GetWorldPos()
+	local userCamp = GetCurCamp()
+
 	while total < 20 do
 		local id = pool[random(1, getn(pool))] 
 		 
 		local myPath = {}
 
 		if worldInfo.presetPaths.haudoanh1 and worldInfo.presetPaths.haudoanh2 then
-			local myHauDoanh = "haudoanh1"
-			if self.camp2TopRight == 1 then 
-				if forCamp == 2 then
+			local myHauDoanh = "haudoanh1"			
+
+			-- Note: sometimes preset paths are swapped around in correctly, we need to check based on user position
+			local firstPoint = worldInfo.presetPaths.haudoanh1[1]
+			local firstPointX, firstPointY = nodeNameToCoords(firstPoint)
+			local dist1 = GetDistanceRadius(pX, pY, firstPointX, firstPointY)
+
+			local secondPoint = worldInfo.presetPaths.haudoanh2[1]
+			local secondPointX, secondPointY = nodeNameToCoords(secondPoint)
+			local dist2 = GetDistanceRadius(pX, pY, secondPointX, secondPointY)
+
+			-- TH 1, dang o chung camp voi user va haudoanh nao gan user nhat?
+			if userCamp == forCamp then 
+				if dist2 < dist1 then
 					myHauDoanh = "haudoanh2"
 				else
 					myHauDoanh = "haudoanh1"
 				end
-			else
-				if forCamp == 1 then
-					myHauDoanh = "haudoanh2"
-				else
+			-- TH 2, dang o khac camp voi user va hau doanh nao xa user nhat
+			elseif userCamp ~= forCamp then
+				if dist2 < dist1 then
 					myHauDoanh = "haudoanh1"
+				else
+					myHauDoanh = "haudoanh2"
 				end
 			end
+
+
+
 			myPath = { {myHauDoanh, 1} }
 
 		elseif worldInfo.presetPaths.haudoanh1 then
