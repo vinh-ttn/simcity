@@ -101,6 +101,8 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 		SimCityChienTranh:nv_tudo(1)
 	end
 
+	SimCityChienTranh:taoHauDoanh(1)
+
 end
 
 function SimCityMainTongKim:addTongKimOpenNpc()

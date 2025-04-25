@@ -299,8 +299,7 @@ function SimCityChienTranh:taophe(nW, camp, linhthuong1, linhthuong2, hieuuy, ph
 end
 
 function SimCityChienTranh:phe_tudo(startNPCIndex, perPage, ngoaitrang)
-	self:taoHauDoanh(ngoaitrang or 0)
-
+ 
 	local worldInfo = SimCityWorld:Get(self.nW)
 
 	local forCamp = 1
@@ -320,8 +319,7 @@ function SimCityChienTranh:phe_tudo(startNPCIndex, perPage, ngoaitrang)
 end
 
 function SimCityChienTranh:phe_tudo_xe(startNPCIndex, perPage, ngoaitrang)
-	self:taoHauDoanh(ngoaitrang or 0)
-
+ 
 	local worldInfo = SimCityWorld:Get(self.nW)
 
 	local forCamp = 1
@@ -367,8 +365,7 @@ function SimCityChienTranh:phe_tudo_xe(startNPCIndex, perPage, ngoaitrang)
 end
 
 function SimCityChienTranh:nv_tudo(capHP)
-	self:taoHauDoanh(1)
-
+ 
 	local worldInfo = SimCityWorld:Get(self.nW)
 
 	local forCamp = 1
@@ -393,8 +390,7 @@ function SimCityChienTranh:nv_tudo(capHP)
 end
 
 function SimCityChienTranh:nv_tudo_xe(capHP)
-	self:taoHauDoanh(1)
-
+ 
 	local forCamp = 1
 	local pool = SimCityNPCInfo:getPoolByCap(capHP)
 
@@ -649,43 +645,21 @@ function SimCityChienTranh:taoHauDoanh(ngoaitrang)
 		local myPath = {}
 
 		if worldInfo.presetPaths.haudoanh1 and worldInfo.presetPaths.haudoanh2 then
-			local campDirection = self:getCampDirection(forCamp)
-			local firstPoint 
-			if campDirection == 1 then
-				if worldInfo.presetPaths.campduoi then
-					firstPoint = worldInfo.presetPaths.campduoi[1] 
+			local myHauDoanh = "haudoanh1"
+			if self.camp2TopRight == 1 then 
+				if forCamp == 2 then
+					myHauDoanh = "haudoanh2"
+				else
+					myHauDoanh = "haudoanh1"
 				end
 			else
-				if worldInfo.presetPaths.camptren then
-					firstPoint = worldInfo.presetPaths.camptren[1] 
+				if forCamp == 1 then
+					myHauDoanh = "haudoanh2"
+				else
+					myHauDoanh = "haudoanh1"
 				end
 			end
-
-			if not firstPoint then
-				local pW, pX, pY = GetWorldPos()
-				if pX and pY then
-					firstPoint = pX.."_"..pY
-				end
-			end
-
-			local firstHauDoanh1Point = worldInfo.presetPaths.haudoanh1[1]
-			local firstHauDoanh2Point = worldInfo.presetPaths.haudoanh2[1]
-
-			local firstHauDoanh1X, firstHauDoanh1Y = nodeNameToCoords(firstHauDoanh1Point)
-			local firstHauDoanh2X, firstHauDoanh2Y = nodeNameToCoords(firstHauDoanh2Point)
-
-			local firstPointX, firstPointY = nodeNameToCoords(firstPoint)
-
-			local dist1 = GetDistanceRadius(firstPointX, firstPointY, firstHauDoanh1X, firstHauDoanh1Y)
-			local dist2 = GetDistanceRadius(firstPointX, firstPointY, firstHauDoanh2X, firstHauDoanh2Y)
-
-			if dist1 < dist2 then
-				myPath = { {"haudoanh1", 1} }
-			else
-				myPath = { {"haudoanh2", 1} }
-			end
-
-			
+			myPath = { {myHauDoanh, 1} }
 
 		elseif worldInfo.presetPaths.haudoanh1 then
 			myPath = { {"haudoanh1", 1} }
