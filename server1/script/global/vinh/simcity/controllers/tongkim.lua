@@ -48,7 +48,7 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 
 	local pW, pX, pY = GetWorldPos()
 	local worldInfo = SimCityWorld:Get(pW)
-	SimCityChienTranh:removeAll(SubWorldIdx2ID(pW))
+	SimCityChienTranh:removeAll(pW)
 
 	-- Determine camp
 	local myCamp = GetCurCamp() 
@@ -94,6 +94,13 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 		SimCityChienTranh.camp2TopRight = 1
 	end
 
+	-- Auto added?
+	local counter = SimCityChienTranh:countMap(pW)
+	if STARTUP_AUTOADD_THANHTHI == 1 and counter == 0 then
+		SimCityChienTranh:nv_tudo(1)
+		SimCityChienTranh:nv_tudo(1)
+	end
+
 end
 
 function SimCityMainTongKim:addTongKimOpenNpc()
@@ -130,7 +137,7 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 		end
 
 		if kind == 3 then
-			if strfind(script, "transport.lua") or strfind(script, "doctor.lua") then
+			if strfind(script, "transport.lua") or strfind(script, "doctor.lua") or strfind(script, "openbox.lua") then
 				tmpFound = nNpcIdx
 			end
 		end
