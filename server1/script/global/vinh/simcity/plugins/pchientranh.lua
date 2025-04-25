@@ -4,8 +4,7 @@ SimCityChienTranh = {
 
 	path1 = {},
 	path2 = {},
-
-	camp2TopRight = 0
+ 
 }
 
 function createTaskSayChienTranh(mapId, extra)
@@ -36,26 +35,7 @@ function createTaskSayChienTranh(mapId, extra)
 
 	return tbOpt
 end
-
-function SimCityChienTranh:getCampDirection(forCamp)
-	local campDirection = 0
-	if (self.camp2TopRight == 1 and forCamp == 1) then
-		campDirection = 1
-	end
-
-	if (self.camp2TopRight == 1 and forCamp ~= 1) then
-		campDirection = 0
-	end
-
-	if (self.camp2TopRight == 0 and forCamp == 1) then
-		campDirection = 0
-	end
-
-	if (self.camp2TopRight == 0 and forCamp ~= 1) then
-		campDirection = 1 -- 1 = bottom to top
-	end
-	return campDirection
-end
+ 
 
 function SimCityChienTranh:genWalkPath(forCamp) 
 	local worldInfo = SimCityWorld:Get(self.nW)
@@ -63,7 +43,23 @@ function SimCityChienTranh:genWalkPath(forCamp)
 	local path1 = worldInfo.chienTranhPaths
 	-- Duoi len tren
 	local myPath = {}
-	local campDirection = self:getCampDirection(forCamp)
+	local campDirection = 1
+	
+	if (worldInfo.camp2TopRight == 1) then
+		if forCamp == 1 then
+			campDirection = 1
+		else
+			campDirection = 2
+		end
+	else
+		if forCamp == 1 then
+			campDirection = 2
+		else
+			campDirection = 1
+		end
+	end
+
+
 	if (campDirection == 1) then
 		local mainPath = path1[random(1, getn(path1))]
 		local mySpawn = "campduoi"
@@ -589,7 +585,7 @@ end
 
 function SimCityChienTranh:mainMenu()
 	local worldInfo = SimCityWorld:Get(self.nW)
-	local result = SimCityGraphToChienTranh:build(worldInfo, 32)
+	local result = SimCityGraphToChienTranh:build(worldInfo, 32, worldInfo.camp2TopRight)
 
 	if (result == 0) then
 		local tbSay = createTaskSayThanhThi("<enter><enter>ChiÕn lo¹n t¹i b¶n ®å nµy ch­a ®­îc më. Chµng cã thÓ gëi <color=yellow>®Þa ®å chÝ<color> ®Õn t¸c gi¶ trªn fb héi qu¸n.")

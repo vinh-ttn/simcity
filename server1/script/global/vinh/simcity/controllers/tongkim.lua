@@ -48,7 +48,6 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 
 	local pW, pX, pY = GetWorldPos()
 	local worldInfo = SimCityWorld:Get(pW)
-	SimCityChienTranh:removeAll(pW)
 
 	-- Determine camp
 	local myCamp = GetCurCamp() 
@@ -89,24 +88,33 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 	end
 
 	-- Finally set it
-	SimCityChienTranh.camp2TopRight = 0
+	worldInfo.camp2TopRight = 0
 	if (camp2X ~= 0) and (camp2Y ~= 0) and (camp2X > camp1X) and (camp2Y < camp1Y) then
-		SimCityChienTranh.camp2TopRight = 1
+		worldInfo.camp2TopRight = 1
 	end
+
+	worldInfo.camp1X = camp1X
+	worldInfo.camp1Y = camp1Y
+	worldInfo.camp2X = camp2X
+	worldInfo.camp2Y = camp2Y
+	local result = SimCityGraphToChienTranh:build(worldInfo, 32)
 
 	-- Auto added?
-	local counter = SimCityChienTranh:countMap(pW)
-	if STARTUP_AUTOADD_THANHTHI == 1 and counter == 0 then
-		SimCityChienTranh:nv_tudo(1)
-		SimCityChienTranh:nv_tudo(1)
+	if (result ~= 0) then
+		local counter = SimCityChienTranh:countMap(pW)
+		
+		if STARTUP_AUTOADD_THANHTHI == 1 and counter == 0 then
+			SimCityChienTranh:nv_tudo(1)
+			SimCityChienTranh:nv_tudo(1)
+		end
+
+		-- Add hau doanh
+		SimCityChienTranh:taoHauDoanh(1)
+
+		-- Khai chien luon
+		SimCityChienTranh.nW = pW
+		SimCityChienTranh:khaiChienTongKim()
 	end
-
-	-- Add hau doanh
-	SimCityChienTranh:taoHauDoanh(1)
-
-	-- Khai chien luon
-	SimCityChienTranh.nW = pW
-	SimCityChienTranh:khaiChienTongKim()
 end
 
 function SimCityMainTongKim:addTongKimOpenNpc()
@@ -131,15 +139,17 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 
 	local tmpFound
 	local nNpcIdx
+	local didRemove = 0
 
 	for i = 1, getn(fighterList) do
 		nNpcIdx = fighterList[i]
 		local script = GetNpcScript(nNpcIdx)
 		local kind = GetNpcKind(nNpcIdx)
 
-		-- Neu da add roi thi thoi
+		-- Neu da add roi thi xoa di
 		if kind == 3 and script == "\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua" then
-			return 1
+			DelNpcSafe(nNpcIdx)
+			didRemove = 1
 		end
 
 		if kind == 3 then
@@ -156,6 +166,9 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 	
 	-- Neu tim thay Quan Nhu Quan thi them vao Trieu Man va Vo Ky
 	if tmpFound then
+		if didRemove == 0 then
+			SimCityChienTranh:removeAll(pW)
+		end
 		SimCityMainTongKim:addTongKimNpcByPlayer()
 	end
 

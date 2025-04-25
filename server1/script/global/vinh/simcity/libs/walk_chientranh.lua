@@ -400,6 +400,15 @@ SimCityGraphToChienTranh = {
         local camp2X = GetMissionV(MS_HOMEOUT_X2)
         local camp2Y = GetMissionV(MS_HOMEOUT_Y2)
 
+        if camp1X == 0 or camp1Y == 0 or camp2X == 0 or camp2Y == 0 then
+            if worldInfo.camp1X and worldInfo.camp1Y and worldInfo.camp2X and worldInfo.camp2Y then
+                camp1X = worldInfo.camp1X
+                camp1Y = worldInfo.camp1Y
+                camp2X = worldInfo.camp2X
+                camp2Y = worldInfo.camp2Y
+            end
+        end
+
         -- Neu khong co camp
         if (camp1X == 0 or camp1Y == 0 or camp2X == 0 or camp2Y == 0) then
             camp1X, camp1Y, camp2X, camp2Y = self:autoFindSpawnPositions(nodes, worldInfo.firstNode[1], worldInfo.firstNode[2])           
