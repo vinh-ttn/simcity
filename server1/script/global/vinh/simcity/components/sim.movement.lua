@@ -314,7 +314,7 @@ SimMovement.Citizen = {
                                         closestIndex = i
                                     end
                                 end
-                                if (closestIndex ~= tbNpc.currentPointIndex) then
+                                if (closestDist > 0 and closestIndex ~= tbNpc.currentPointIndex) then
                                     tbNpc.currentPointIndex = closestIndex
                                     return 0
                                 end
