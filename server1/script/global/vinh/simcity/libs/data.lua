@@ -221,7 +221,7 @@ function loadMap()
 
                         -- Try to snap to existing nodes within 16 radius
                         local snappedNode = nil
-                        local minDist = 16
+                        local minDist = 8
                         for existingNode, nodeData in world.nodes do
                             local dist = GetDistanceRadius(x, y, nodeData.x, nodeData.y)
                             if dist <= minDist then
@@ -255,7 +255,7 @@ function loadMap()
                                     local dx = otherNode.x - world.nodes[testNode].x
                                     local dy = otherNode.y - world.nodes[testNode].y
                                     
-                                    if GetDistanceRadius(x, y, otherNode.x, otherNode.y) <= 24 then
+                                    if GetDistanceRadius(x, y, otherNode.x, otherNode.y) <= 16 then
                                         tinsert(world.nodes[nodeName].linkedNodes, otherNodeName)
                                         
                                         -- Add this node to the other node's linkedNodes that other was not preset
