@@ -51,6 +51,9 @@ function SimCityWorld:modifyTongKimMap(data)
 		local path1 = { "huong1phai", "huong1trai", "huong1giua", "duoitrai", "duoiphai", "duoigiua" }
 		local path2 = { "huong2phai", "huong2trai", "huong2giua", "trentrai1", "trentrai2", "trenphai", "trengiua" }
 		
+
+		data.builtPaths["campduoi_camptren"] = {}
+
 		-- Add all path combinations to presetPaths
 		for i = 1, getn(path1) do
 			for j = 1, getn(path2) do
@@ -66,6 +69,8 @@ function SimCityWorld:modifyTongKimMap(data)
 				for k=1, getn(SimCityMap[10000].presetPaths[path2[j]]) do
 					tinsert(data.presetPaths[pathName], SimCityMap[10000].presetPaths[path2[j]][k])
 				end 
+
+				tinsert(data.builtPaths["campduoi_camptren"], pathName)
 			end
 		end
 	end
