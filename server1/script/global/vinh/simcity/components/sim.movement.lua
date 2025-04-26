@@ -19,13 +19,15 @@ function IsActive(self, simInstance,tbNpc)
             local camp = CallPlayerFunction(pID, GetCurCamp)
             local pW, pX, pY = CallPlayerFunction(pID, GetWorldPos)
 
-            if tbNpc.worldInfo.playerTracker[pID] and tbNpc.worldInfo.playerTracker[pID][1] ~= pX and tbNpc.worldInfo.playerTracker[pID][2] ~= pY then
-                tbNpc.worldInfo.playerTracker[pID] = {pX, pY, camp}
-            end
+            if tbNpc.worldInfo then
+                if tbNpc.worldInfo.playerTracker[pID] and tbNpc.worldInfo.playerTracker[pID][1] ~= pX and tbNpc.worldInfo.playerTracker[pID][2] ~= pY then
+                    tbNpc.worldInfo.playerTracker[pID] = {pX, pY, camp}
+                end
 
-            if not tbNpc.worldInfo.playerTracker[pID] then
-                tbNpc.worldInfo.playerTracker[pID] = {pX, pY, camp}
-                tbNpc.worldInfo.playerTrackerCount = tbNpc.worldInfo.playerTrackerCount + 1
+                if not tbNpc.worldInfo.playerTracker[pID] then
+                    tbNpc.worldInfo.playerTracker[pID] = {pX, pY, camp}
+                    tbNpc.worldInfo.playerTrackerCount = tbNpc.worldInfo.playerTrackerCount + 1
+                end
             end
 
             -- Is this player an enemy?
@@ -55,9 +57,7 @@ end
 
 SimMovement = {}
 SimMovement.KeoXe = {
-    IsActive = function(self, simInstance, tbNpc)
-        return 1
-    end,
+    IsActive = IsActive,
 
     resetPos = function(self, simInstance, nListId)
         local tbNpc = simInstance.fighterList[nListId]
