@@ -1,4 +1,5 @@
 Include("\\script\\mission\\sevencity\\war.lua")
+Include("\\script\\missions\\citydefence\\head.lua")
 
 --------------------------------------------------------------------
 
@@ -10,3 +11,21 @@ function Mo_TongKim(level)
 end
 
 
+function Mo_PhongHoaLienThanh(loai, phe)
+	if (phe == 2) then
+		OutputMsg("'VÖ quèc liªn thµnh'   phe Kim ®· b¾t ®Çu b¸o danh.");
+
+		if loai == 1 then 
+			GlobalExecute("dw CityDefence_OpenMain(2)");
+		else
+			GlobalExecute("dw NewCityDefence_OpenMain(2)");
+		end
+	else
+		OutputMsg("'VÖ quèc liªn thµnh'   Tèng ®· b¾t ®Çu b¸o danh.");
+		if loai == 1 then 
+			GlobalExecute("dw CityDefence_OpenMain(1)");
+		else
+			GlobalExecute("dw NewCityDefence_OpenMain(1)");
+		end
+	end
+end
