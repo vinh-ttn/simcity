@@ -165,7 +165,7 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 		if didRemove == 0 then
 			SimCityChienTranh:removeAll(pW)
 		end
-		AddTimer(18*3, "SimCityMainTongKim:addTongKimNpcByPlayer", PlayerIndex)
+		AddTimer(18*2, "SimCityMainTongKim:addTongKimNpcByPlayer", PlayerIndex)
 	end
 
 end
