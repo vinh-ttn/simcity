@@ -44,8 +44,8 @@ end
 function SimCityMainTongKim:addTongKimNpc()
 end
 
-function SimCityMainTongKim:addTongKimNpcByPlayer()
-
+function SimCityMainTongKim:addTongKimNpcByPlayer(pId)
+	PlayerIndex = pId
 	local pW, pX, pY = GetWorldPos()
 	local worldInfo = SimCityWorld:Get(pW)
 
@@ -165,7 +165,7 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 		if didRemove == 0 then
 			SimCityChienTranh:removeAll(pW)
 		end
-		AddTimer(18*3, "SimCityMainTongKim:addTongKimNpcByPlayer", self)
+		AddTimer(18*3, "SimCityMainTongKim:addTongKimNpcByPlayer", PlayerIndex)
 	end
 
 end
