@@ -133,7 +133,8 @@ function loadMap()
                     linkedNodes = linkedNodes, 
                     isExact = isExact, 
                     nodeType = nodeType, -- 0: normal, 1: war
-                    isNearAtraction = 0
+                    isNearAtraction = 0,
+                    isNotPreset = 1
                 }
 
                 if mapAtractions[worldId] then
@@ -168,14 +169,10 @@ function loadMap()
                 local pathName = foundWalkMap[i][1]
                 local nodeName = foundWalkMap[i][2]
 
-                if world.nodes[nodeName] then
-                    if not allPaths[pathName] then
-                        allPaths[pathName] = {}
-                    end
-                    tinsert(allPaths[pathName], nodeName)
-                else
-                    print("Simcity loi preset file: " .. filePath .. ". Bo qua node vi khong tim thay dinh nghia: " .. nodeName)
+                if not allPaths[pathName] then
+                    allPaths[pathName] = {}
                 end
+                tinsert(allPaths[pathName], nodeName)
             end
             world.presetPaths = allPaths
         end
@@ -210,6 +207,85 @@ function loadMap()
                 SimCityMap[worldId].presetPaths[campName] = {}
             end
             tinsert(SimCityMap[worldId].presetPaths[campName], nodeName)
+        end
+    end
+
+    -- Final touch, for those missing node definition in preset paths
+    for worldId, world in SimCityMap do
+        if world.presetPaths then
+            for presetName, preset in world.presetPaths do
+                for i=1, getn(preset) do
+                    local nodeName = preset[i]
+                    if not world.nodes[nodeName] then
+                        local x, y = nodeNameToCoords(nodeName)
+
+                        -- Try to snap to existing nodes within 16 radius
+                        local snappedNode = nil
+                        local minDist = 16
+                        for existingNode, nodeData in world.nodes do
+                            local dist = GetDistanceRadius(x, y, nodeData.x, nodeData.y)
+                            if dist <= minDist then
+                                snappedNode = existingNode
+                                minDist = dist
+                            end
+                        end
+
+                        -- Replace current preset node with snapped node if found
+                        local testNode = nodeName
+                        if snappedNode then
+                            testNode = snappedNode
+                        end
+
+                        if world.nodes[testNode] and world.nodes[testNode].isNotPreset == 1 then
+                            preset[i] = testNode
+                        else
+                            world.nodes[nodeName] = {
+                                nodeType = 1,
+                                x = x,
+                                y = y,
+                                linkedNodes = {},
+                                isExact = 0,
+                                isNearAtraction = 0,
+                                isNotPreset = 0
+                            }
+                        
+                            -- Find linked nodes within 16 radius
+                            for otherNodeName, otherNode in world.nodes do
+                                if otherNodeName ~= testNode and otherNodeName ~= nodeName then
+                                    local dx = otherNode.x - world.nodes[testNode].x
+                                    local dy = otherNode.y - world.nodes[testNode].y
+                                    
+                                    if GetDistanceRadius(x, y, otherNode.x, otherNode.y) <= 24 then
+                                        tinsert(world.nodes[nodeName].linkedNodes, otherNodeName)
+                                        
+                                        -- Add this node to the other node's linkedNodes that other was not preset
+                                        local found = 0
+                                        if otherNode.isNotPreset == 0 then
+                                            for j=1, getn(otherNode.linkedNodes) do
+                                                if otherNode.linkedNodes[j] == nodeName then
+                                                    found = 1
+                                                    break
+                                                end
+                                            end
+                                            if found == 0 then
+                                                tinsert(otherNode.linkedNodes, nodeName)
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            if world.presetPaths.campduoi then
+                world.presetPaths.baseDuoi = {"campduoi"}
+            end
+
+            if world.presetPaths.camptren then
+                world.presetPaths.baseTren = {"camptren"}
+            end
         end
     end
 end

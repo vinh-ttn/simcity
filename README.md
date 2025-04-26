@@ -2,7 +2,7 @@
 
 —vinhsmoke—
 
-Phiên bản hiện tại: **5.8.4** (cập nhật ngày [25/04/2025](CHANGELOG.md))
+Phiên bản hiện tại: **5.9** (cập nhật ngày [26/04/2025](CHANGELOG.md))
 
 Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
 

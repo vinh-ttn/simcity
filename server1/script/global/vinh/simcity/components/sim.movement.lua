@@ -291,8 +291,9 @@ SimMovement.Citizen = {
                     then
                     
                     -- No direct edge, need to find path to next node 
-                    local paths = SimCityGraphToChienTranh:find_all_paths(nodes, currentNodeName, nextNodeName, 1, 0)
-                    
+                    --print("NEXT PATH", currentNodeName, nextNodeName)
+                    local paths = SimCityGraphToChienTranh:find_all_paths(nodes, currentNodeName, nextNodeName, 0)
+                    --print("FOUND PATHS 2", getn(paths))
                     if paths and getn(paths) > 0 then
                         -- Take first found path and set current point to first node
                         -- Loop through all found paths to find first matching one
@@ -305,8 +306,9 @@ SimMovement.Citizen = {
                                 local closestDist = 999999
                                 local closestIndex = 1
                                 for i = 1, getn(currentPath) do
-                                    local dist = GetDistanceRadius(nodes[currentPath[i]][1], nodes[currentPath[i]][2], 
-                                                                 firstNodeCoords.x, firstNodeCoords.y)
+                                    local dist = GetDistanceRadius(
+                                        nodes[currentPath[i]][1], nodes[currentPath[i]][2], 
+                                        firstNodeCoords[1], firstNodeCoords[2])
                                     if dist < closestDist then
                                         closestDist = dist
                                         closestIndex = i
@@ -582,12 +584,19 @@ SimMovement.Citizen = {
                     tbNpc.currentPathIndex = tbNpc.walkPathNames[1][1]
                     tbNpc.pathDirection = tbNpc.walkPathNames[1][2]
                     tbNpc.pathSegment = 1
+
                     local pathLength = getn(tbNpc.worldInfo.presetPaths[tbNpc.currentPathIndex])
-                    if tbNpc.pathDirection == 1 or tbNpc.pathDirection == 0 then
-                        tbNpc.currentPointIndex = random(1, 3)
-                    elseif tbNpc.pathDirection == -1 then
-                        tbNpc.currentPointIndex = random(pathLength - 3, pathLength)
+
+                    if pathLength > 3 then                        
+                        if tbNpc.pathDirection == 1 or tbNpc.pathDirection == 0 then
+                            tbNpc.currentPointIndex = random(1, 3)
+                        elseif tbNpc.pathDirection == -1 then
+                            tbNpc.currentPointIndex = random(pathLength - 3, pathLength)
+                        end
+                    else
+                        tbNpc.currentPointIndex = 1
                     end
+
                     tbNpc.pathStart = nil
                     tbNpc.pathEnd = nil
                     tbNpc.tick_canWalk = tbNpc.tick_breath + random(TONGKIM_SPAWN_MINSTAY, TONGKIM_SPAWN_MAXSTAY)*18/REFRESH_RATE

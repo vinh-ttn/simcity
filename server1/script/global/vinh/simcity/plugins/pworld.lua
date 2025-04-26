@@ -43,9 +43,11 @@ function SimCityWorld:modifyTongKimMap(data)
 		data.presetPaths.haudoanh2 = SimCityMap[10000].presetPaths.haudoanh2
 		data.presetPaths.campduoi = SimCityMap[10000].presetPaths.campduoi
 		data.presetPaths.camptren = SimCityMap[10000].presetPaths.camptren
+		data.presetPaths.baseDuoi = {"campduoi"}
+		data.presetPaths.baseTren = {"camptren"}
 
 		-- Chien tranh paths
-		data.chienTranhPaths = {}
+		data.chienTranhPaths = 1
 		local path1 = { "huong1phai", "huong1trai", "huong1giua", "duoitrai", "duoiphai", "duoigiua" }
 		local path2 = { "huong2phai", "huong2trai", "huong2giua", "trentrai1", "trentrai2", "trenphai", "trengiua" }
 		
@@ -63,12 +65,30 @@ function SimCityWorld:modifyTongKimMap(data)
 				-- Add nodes from path2  
 				for k=1, getn(SimCityMap[10000].presetPaths[path2[j]]) do
 					tinsert(data.presetPaths[pathName], SimCityMap[10000].presetPaths[path2[j]][k])
-				end
-				
-				-- Add path to chienTranhPaths
-				tinsert(data.chienTranhPaths, pathName)
+				end 
 			end
 		end
+	end
+
+	-- Map: phong hoa lien thanh
+	if data.worldId == 580 or data.worldId == 581 then
+		
+		tinsert(data.presetPaths.baseTren, "thuthanhtrai")
+		tinsert(data.presetPaths.baseTren, "thuthanhphai")
+		tinsert(data.presetPaths.baseTren, "thuthanhgiua")
+
+		tinsert(data.presetPaths.baseTren, "camptrentrai")
+		tinsert(data.presetPaths.baseTren, "camptrenphai")
+
+		data.teamRatio = 0.8 --80% team 1, 20% team 2
+ 
+		data.restrictedSpawns = {
+			camptren = {
+				["thuthanhtrai"] = 1,
+				["thuthanhphai"] = 1,
+				["thuthanhgiua"] = 1
+			}
+		}
 	end
 end
 function SimCityWorld:New(data)
@@ -89,7 +109,9 @@ function SimCityWorld:New(data)
 		data.announceBXHTick = 3
 		data.playerTracker = {}
 		data.playerTrackerCount = 0
-		
+		data.builtPaths = {}
+		data.restrictedSpawns = {}
+
 		-- Tong Kim map?
 		self:modifyTongKimMap(data)
 
@@ -146,7 +168,7 @@ function SimCityWorld:ShowTrangTri(nW, show)
 		-- Dont want to show but showing? Delete it
 	elseif show == 0 and fighter.isShowing == 1 then
 		for i = 1, getn(fighter.result) do
-			DelNpc(fighter.result[i])
+			DelNpcSafe(fighter.result[i])
 		end
 		fighter.result = {}
 		fighter.isShowing = 0
@@ -177,6 +199,8 @@ function SimCityWorld:IsTongKimMap(nMapID)
         [384] = 1,
         [385] = 1,
         [386] = 1,
+		[580] = 1,
+		[581] = 1,
         [868] = 1,
         [869] = 1,
         [870] = 1,

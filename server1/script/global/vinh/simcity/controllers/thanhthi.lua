@@ -351,7 +351,10 @@ function SimCityMainThanhThi:mainMenu()
 		local tbSay = createTaskSayThanhThi("<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>")
 
 		tinsert(tbSay, "Thµnh ThÞ - Bè c¸o thiªn h¹/#SimCityMainThanhThi:thanhthiMenu()")
+		tinsert(tbSay, "Ph¸t ®éng Phong Háa Liªn Thµnh/#SimCityMainThanhThi:moPhongHoaLienThanh()")
 		tinsert(tbSay, "Ph¸t ®éng chiÕn tranh/#SimCityChienTranh:mainMenu()")
+
+
 		if self.autoAddThanhThi == 1 then
 			tinsert(tbSay, "Tù ®éng thªm (më)/#SimCityMainThanhThi:autoThanhThi(0)")
 		else
@@ -361,6 +364,20 @@ function SimCityMainThanhThi:mainMenu()
 		tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
 		CreateTaskSay(tbSay)
 	end
+	return 1
+end
+
+function SimCityMainThanhThi:execPhongHoaLienThanh(level, phe)
+	RemoteExc("\\script\\simcity.lua", "Mo_PhongHoaLienThanh", {level, phe})
+	return 1
+end
+function SimCityMainThanhThi:moPhongHoaLienThanh()
+	local tbSay = createTaskSayThanhThi("")
+	tinsert(tbSay, "Tèng VÖ quèc Phong Háa liªn thµnh/#SimCityMainThanhThi:execPhongHoaLienThanh(2,1)")
+	tinsert(tbSay, "Kim VÖ quèc Phong Háa liªn thµnh/#SimCityMainThanhThi:execPhongHoaLienThanh(2,2)")
+	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
+	CreateTaskSay(tbSay)
+
 	return 1
 end
 
@@ -483,7 +500,7 @@ function SimCityMainThanhThi:createNpcSoCapByMap(worldId)
 		local map9x = 1
 		local baoDanhTongKim = 0
 
-		if nW == 323 or nW == 324 or nW == 325 then
+		if nW == 323 or nW == 324 or nW == 325 or nW == 518 or nW == 519 then
 			baoDanhTongKim = 1
 		end
 
@@ -520,9 +537,11 @@ function SimCityMainThanhThi:createNpcSoCapByMap(worldId)
 		if baoDanhTongKim == 1 then
 			worldInfo.allowFighting = 0
 			local table1 = {}
+			local countPathNames = getn(getObjectKeys(worldInfo.presetPaths))
 
 			-- Fill each table with 40 random NPCs
-			for i = 1, random(20,40) do 
+			if countPathNames > 0 then
+				for i = 1, random(20,40) do 
 				self:_createSingle(
 					tmpFound[random(1, N)], nW, { 
 						ngoaitrang = 1, 
@@ -535,8 +554,10 @@ function SimCityMainThanhThi:createNpcSoCapByMap(worldId)
 						walkVar = 4
 					}
 				)
+				end
 			end
-			for i = 1, random(20,40) do 
+			if countPathNames > 1 then
+				for i = 1, random(20,40) do 
 				self:_createSingle(
 					tmpFound[random(1, N)], nW, { 
 						ngoaitrang = 1, 
@@ -549,8 +570,8 @@ function SimCityMainThanhThi:createNpcSoCapByMap(worldId)
 						walkVar = 4
 					}
 				)
+				end
 			end
-
 		elseif map9x == 0 then
 			if isThanhThi then
 			--	worldInfo.allowFighting = 0

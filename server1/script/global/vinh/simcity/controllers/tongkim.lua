@@ -78,7 +78,7 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 			end
 		end
 
-		if (camp == 1 or myCamp == 1) then
+		if (myCamp == 1) then
 			camp2X = furthestNode.x
 			camp2Y = furthestNode.y
 		else 
@@ -97,7 +97,8 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 	worldInfo.camp1Y = camp1Y
 	worldInfo.camp2X = camp2X
 	worldInfo.camp2Y = camp2Y
-	local result = SimCityGraphToChienTranh:build(worldInfo, 32)
+	local result = SimCityGraphToChienTranh:build(worldInfo, 32) 
+	 
 
 	-- Auto added?
 	if (result ~= 0) then
@@ -109,11 +110,7 @@ function SimCityMainTongKim:addTongKimNpcByPlayer()
 		end
 
 		-- Add hau doanh
-		SimCityChienTranh:taoHauDoanh(1)
-
-		-- Khai chien luon
-		SimCityChienTranh.nW = pW
-		SimCityChienTranh:khaiChienTongKim()
+		SimCityChienTranh:taoHauDoanh(1)		
 	end
 end
 
@@ -128,8 +125,7 @@ function SimCityMainTongKim:addTongKimOpenNpc()
 end
 
 function SimCityMainTongKim:onPlayerEnterMap(pW)
-	
-	local isBaoDanh = 0 
+  	local isBaoDanh = 0 
 	if pW == 323 or pW == 324 or pW == 325 then
 		isBaoDanh = 1
 	end
@@ -169,7 +165,7 @@ function SimCityMainTongKim:onPlayerEnterMap(pW)
 		if didRemove == 0 then
 			SimCityChienTranh:removeAll(pW)
 		end
-		SimCityMainTongKim:addTongKimNpcByPlayer()
+		AddTimer(18*3, "SimCityMainTongKim:addTongKimNpcByPlayer", self)
 	end
 
 end

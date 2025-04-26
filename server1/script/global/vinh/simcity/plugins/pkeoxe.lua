@@ -330,7 +330,7 @@ function SimCityKeoXe:XoaBai()
 		local kind = GetNpcKind(nNpcIdx)
 		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
 		if nSettingIdx > 0 and kind == 0 then
-			DelNpc(nNpcIdx)
+			DelNpcSafe(nNpcIdx)
 		end
 	end
 	return 0
