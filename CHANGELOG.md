@@ -1,5 +1,9 @@
 # SimCity Changelog
 
+## 5.9.2 (27-04-2025)
+- Sửa lỗi tạo quái nhân
+- Thay đổi AI
+
 ## 5.9.1 (26-04-2025)
 - Sửa lỗi Kéo Xe đứng im
 - Sửa lỗi tạo sai camp trong Tống Kim

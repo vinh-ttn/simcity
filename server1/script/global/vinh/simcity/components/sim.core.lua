@@ -39,6 +39,7 @@ function SimCore:initCharConfig(config)
     config.parentAppointPos = {0, 0}
     config.walkMode = config.walkMode or "random"
     config.isAttractionAround = 0
+    config.isPlayerEnemyAround = 0
 
     -- Phai nhan vat?
     if not config.faction and SimCityPhai.id2phai[config.nNpcId] then

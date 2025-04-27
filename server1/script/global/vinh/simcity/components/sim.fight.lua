@@ -258,7 +258,9 @@ SimFight.Citizen = {
         return 0
     end,
     SetFightState = function(self, tbNpc, mode, nX, nY)
-        
+        if mode == 9 then
+            mode = 1
+        end
         --if mode == 9 then
         --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         --else
@@ -414,7 +416,11 @@ SimFight.KeoXe = {
 
         return 0
     end,
-    SetFightState = function(self, tbNpc, mode, nX, nY)            
+    SetFightState = function(self, tbNpc, mode, nX, nY)   
+        if mode == 9 then 
+            mode = 1
+            
+        end
         --if mode == 9 then
         --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         --else
