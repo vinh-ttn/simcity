@@ -1,5 +1,9 @@
 # SimCity Changelog
 
+## 5.10 (04-05-2025)
+- Tính năng Thú Cưng
+
+
 ## 5.9.2 (27-04-2025)
 - Sửa lỗi tạo quái nhân
 - Thay đổi AI

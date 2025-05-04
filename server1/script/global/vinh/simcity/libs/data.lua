@@ -292,7 +292,7 @@ end
 
 -- Doc phai
 function loadFactions()
-    local phaiData = SimCityTableFromFile(settingsPath.. "skills.txt", {"*w", "*n", "*w", "*w", "*n", "*n", "*n"})
+    local phaiData = SimCityTableFromFile(settingsPath.. "skills.txt", {"*w", "*n", "*w", "*w", "*n", "*n", "*n", "*n"})
     
     -- Duong mon khong co skill bi dong gi ca
     SimCityPhai["duongmon"] = {
@@ -310,6 +310,7 @@ function loadFactions()
         local skillMaxLevel = phaiData[i][5]
         local skillNoCast = phaiData[i][6]
         local skillNeedCast = phaiData[i][7]
+        local skillCost = phaiData[i][8]
         
 
         if not SimCityPhai[phai] then
@@ -321,11 +322,11 @@ function loadFactions()
             }
         end
         if skillNoCast > 0 then
-            tinsert(SimCityPhai[phai].noCast, {skillId, skillMaxLevel, skillName})
+            tinsert(SimCityPhai[phai].noCast, {skillId, skillMaxLevel, skillName, skillCost, i})
         elseif skillNeedCast > 0 then
-            tinsert(SimCityPhai[phai].needCast, {skillId, skillMaxLevel, skillName})
+            tinsert(SimCityPhai[phai].needCast, {skillId, skillMaxLevel, skillName, skillCost, i})
         else
-            tinsert(SimCityPhai[phai].normalCast, {skillId, skillMaxLevel, skillName})
+            tinsert(SimCityPhai[phai].normalCast, {skillId, skillMaxLevel, skillName, skillCost, i})
         end
     end
 

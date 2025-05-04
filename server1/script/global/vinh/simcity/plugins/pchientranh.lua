@@ -28,7 +28,7 @@ function createTaskSayChienTranh(mapId, extra)
 	-- Show it
 	if showVoKy == 1 then
 		nSettingIdx = 103
-		tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ:<link> Ng­êi H¸n lu«n cho r»ng ng­êi Kim lµ d· man, nh­ng ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
+		tinsert(tbOpt, 1, "<dec><link=image[0,14]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ:<link> Ng­êi H¸n lu«n cho r»ng ng­êi Kim lµ d· man, nh­ng ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
 	else
 		tinsert(tbOpt, 1, "<dec><link=image[8,15]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">TriÖu MÉn:<link> Ng­êi H¸n c¸c ng­¬i lu«n cho r»ng ng­êi Kim chóng ta lµ d· man, nh­ng c¸c ng­¬i cã biÕt chiÕn tranh b¾t ®Çu tõ ®©u kh«ng?" .. extra);
 	end
@@ -328,14 +328,16 @@ function SimCityChienTranh:phe_tudo(startNPCIndex, perPage, ngoaitrang)
 	local forCamp = 1
 	for i = 0, perPage do
 		local id = startNPCIndex + i
-		local myPath = self:genWalkPath(forCamp)
+		if SimCityNPCInfo:IsValidFighter(id) == 1 then
+			local myPath = self:genWalkPath(forCamp)
 
-		local fighter = self:taoNV(id, forCamp, worldInfo, myPath, ngoaitrang or 0)
-		if fighter then
-			if forCamp == 1 then
-				forCamp = 2
-			else
-				forCamp = 1
+			local fighter = self:taoNV(id, forCamp, worldInfo, myPath, ngoaitrang or 0)
+			if fighter then
+				if forCamp == 1 then
+					forCamp = 2
+				else
+					forCamp = 1
+				end
 			end
 		end
 	end

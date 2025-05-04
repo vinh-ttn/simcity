@@ -63,7 +63,7 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     end
 
     -- Random skill
-    local selectedSkill = SimCityPhai[tbNpc.faction].normalCast[random(1, skillCount)]
+    local selectedSkill = tbNpc.skillCastBua or SimCityPhai[tbNpc.faction].normalCast[random(1, skillCount)]
     local skillId = selectedSkill[1]
     local skillLevel = selectedSkill[2]
 
@@ -135,31 +135,48 @@ function BuffChar(self, simInstance, tbNpc)
     if tbNpc.skillHoTro and tbNpc.faction and tbNpc.skillHoTro > 0 then
 
         -- Tat Sau Vo Hinh khi ko chien dau
-        if SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1] == 69 
-            and tbNpc.isFighting == 0 then
-            SetNpcAuraSkill(tbNpc.finalIndex, 1, 1)
-        else
-            SetNpcAuraSkill(tbNpc.finalIndex, 
-                SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1], 
-                tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][2] or 1
-            )
+        if SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro] then
+            if SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1] == 69 
+                and tbNpc.isFighting == 0 then
+                SetNpcAuraSkill(tbNpc.finalIndex, 1, 1)
+            else
+                SetNpcAuraSkill(tbNpc.finalIndex, 
+                    SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1], 
+                    tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][2] or 1
+                )
+            end
         end
     end
 
     -- Tran phai
     if tbNpc.faction and SimCityPhai[tbNpc.faction].needCast then
-        for i=1, getn(SimCityPhai[tbNpc.faction].needCast) do
-            local skillId = SimCityPhai[tbNpc.faction].needCast[i][1]
-            local skillLevel = tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].needCast[i][2] or 1
-            NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel)
 
-            -- Set new max life is not fighting
-            local currentMaxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
-            if tbNpc.isFighting == 0 and currentMaxLife > 0 and (not tbNpc.maxHP or tbNpc.maxHP < currentMaxLife) then
-                tbNpc.maxHP = currentMaxLife
-                NPCINFO_SetNpcCurrentLife(tbNpc.finalIndex, tbNpc.maxHP)
+        if tbNpc.skillTranPhai then
+            local skillId = tbNpc.skillTranPhai[1]
+            local skillLevel = tbNpc.skillTranPhai[2]
+            if skillId > 0 then
+                NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel)
+                -- Set new max life is not fighting
+                local currentMaxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+                if tbNpc.isFighting == 0 and currentMaxLife > 0 and (not tbNpc.maxHP or tbNpc.maxHP < currentMaxLife) then
+                    tbNpc.maxHP = currentMaxLife
+                    NPCINFO_SetNpcCurrentLife(tbNpc.finalIndex, tbNpc.maxHP)
+                end
             end
+        else
+            for i=1, getn(SimCityPhai[tbNpc.faction].needCast) do
+                local skillId = SimCityPhai[tbNpc.faction].needCast[i][1]
+                local skillLevel = tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].needCast[i][2] or 1
+                NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel)
 
+                -- Set new max life is not fighting
+                local currentMaxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+                if tbNpc.isFighting == 0 and currentMaxLife > 0 and (not tbNpc.maxHP or tbNpc.maxHP < currentMaxLife) then
+                    tbNpc.maxHP = currentMaxLife
+                    NPCINFO_SetNpcCurrentLife(tbNpc.finalIndex, tbNpc.maxHP)
+                end
+
+            end
         end
     end
     
