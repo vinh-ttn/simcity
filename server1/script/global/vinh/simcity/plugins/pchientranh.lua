@@ -674,8 +674,8 @@ function SimCityChienTranh:mainMenu()
 	local counter = self:countMap(self.nW)
 	local extra = "<enter><enter><color=yellow>Nh©n sè hiÖn t¹i: " .. counter .. "<color>"
 	local tbSay = createTaskSayChienTranh(self.nW, extra)
-	if SimCityMainThanhThi then
-		SimCityMainThanhThi:removeAll()
+	if SimCityThanhThi then
+		SimCityThanhThi:removeAll()
 	end
 
 	if worldInfo.isTongKim == 1 then

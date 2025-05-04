@@ -137,7 +137,7 @@ end
 
 function SimCore:OnTimer(tbNpc, rate)
     local tickRate = rate or 1 
-    if tbNpc.isDead == 1 then
+    if tbNpc.isDead == 1 or (tbNpc.isStanding and tbNpc.isStanding == 1) then
         return 0
     end
 

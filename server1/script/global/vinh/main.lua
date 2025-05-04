@@ -7,11 +7,12 @@ end
 
 function simcity_addNpcs()
 	-- SimCity: them Trieu Man o 7 thanh
-	SimCityMainThanhThi:addNpcs()
+	SimCityThanhThi:addNpcs()
 	
 	-- KeoXe: them VoKy o TuongDuong
 	add_dialognpc({ 
 		{103,78,1619,3251,"\\script\\global\\vinh\\simcity\\controllers\\keoxe.lua","V« Kþ"}, 
+		{103,53,1614,3210,"\\script\\global\\vinh\\simcity\\controllers\\keoxe.lua","V« Kþ"},
 	})
 
 	-- VatNuoi: them VatNuoi o TuongDuong
@@ -19,8 +20,8 @@ function simcity_addNpcs()
 
 	-- Event sys when user enter/leave map
 	for id, map in SimCityMap do
-		EventSys:GetType("EnterMap"):Reg(id, SimCityMainThanhThi.onPlayerEnterMap, SimCityMainThanhThi)
-		EventSys:GetType("LeaveMap"):Reg(id, SimCityMainThanhThi.onPlayerExitMap, SimCityMainThanhThi)
+		EventSys:GetType("EnterMap"):Reg(id, SimCityThanhThi.onPlayerEnterMap, SimCityThanhThi)
+		EventSys:GetType("LeaveMap"):Reg(id, SimCityThanhThi.onPlayerExitMap, SimCityThanhThi)
 		EventSys:GetType("EnterMap"):Reg(id, SimCityVatNuoi.onPlayerEnterMap, SimCityVatNuoi)		
 	end
 	

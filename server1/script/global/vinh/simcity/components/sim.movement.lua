@@ -99,10 +99,13 @@ SimMovement.KeoXe = {
 
             if isPlayerFighting ~= tbNpc.isPlayerFighting then
                 tbNpc.isPlayerFighting = isPlayerFighting
-                if isPlayerFighting == 1 then
-                    SetNpcKind(tbNpc.finalIndex, tbNpc.kind or 4)
-                else
-                    SetNpcKind(tbNpc.finalIndex, 0)
+
+                if tbNpc.mode ~= "tieuthiep" then
+                    if isPlayerFighting == 1 then
+                        SetNpcKind(tbNpc.finalIndex, tbNpc.kind or 4)
+                    else
+                        SetNpcKind(tbNpc.finalIndex, 0)
+                    end
                 end
             end
 
@@ -147,7 +150,7 @@ SimMovement.KeoXe = {
 
 
         -- Binh thuong
-        if (cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) then
+        if (cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER and (not tbNpc.mode or tbNpc.mode ~= "tieuthiep")) then
             
             -- Case 1: someone around is fighting, we join
             if (tbNpc.CHANCE_JOIN_FIGHT and random(0, tbNpc.CHANCE_JOIN_FIGHT) <= 2) then

@@ -84,8 +84,13 @@ function execCreateChar(self, simInstance, tbNpc, isNew, goX32, goY32)
 
                 -- Indicate SIM npc
                 SetNpcParam(nNpcIndex, 4, 1)
-                SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\components\\sim.timer.lua")
-            
+
+                -- SimCity Helper?
+                if tbNpc.mode == "tieuthiep" then
+                    SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\controllers\\tieuthiep.lua")
+                else
+                    SetNpcScript(nNpcIndex, "\\script\\global\\vinh\\simcity\\components\\sim.timer.lua")
+                end
 
                 -- Ngoai trang?
                 if (tbNpc.ngoaitrang and tbNpc.ngoaitrang == 1) then
@@ -103,7 +108,7 @@ function execCreateChar(self, simInstance, tbNpc, isNew, goX32, goY32)
                     nY32 = nY32
                 }
 
-                SetNpcKind(nNpcIndex, 0)
+                SetNpcKind(nNpcIndex, tbNpc.kind or 0)
 
                 -- Disable fighting if not chien dau char?
                 if (tbNpc.isFighting == 0) then

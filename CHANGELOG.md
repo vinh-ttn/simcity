@@ -1,5 +1,8 @@
 # SimCity Changelog
 
+## 5.11 (05-05-2025)
+- Tính năng Tiểu Thiếp
+
 ## 5.10 (04-05-2025)
 - Tính năng Thú Cưng
 

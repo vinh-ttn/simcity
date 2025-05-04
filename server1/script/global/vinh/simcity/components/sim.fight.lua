@@ -433,7 +433,12 @@ SimFight.KeoXe = {
 
         return 0
     end,
-    SetFightState = function(self, tbNpc, mode, nX, nY)   
+    SetFightState = function(self, tbNpc, mode, nX, nY)  
+        
+        if tbNpc.mode == "tieuthiep" then
+            return 1
+        end
+
         if mode == 9 then 
             mode = 1
             
