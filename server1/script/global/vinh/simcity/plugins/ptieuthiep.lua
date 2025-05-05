@@ -41,7 +41,7 @@ function SimCityTieuThiep:taoNV(id, camp, mapID, map, nt, theosau, capHP, extraC
 		
 
 		noStop = 1,          -- optional: cannot pause any stop (otherwise 90% walk 10% stop)
-		leaveFightWhenNoEnemy = 5, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
+		leaveFightWhenNoEnemy = 1, -- optional: leave fight instantly after no enemy, otherwise there's waiting period
 
 		noRevive = 0,        -- optional: 0: keep reviving, 1: dead
 
@@ -52,11 +52,11 @@ function SimCityTieuThiep:taoNV(id, camp, mapID, map, nt, theosau, capHP, extraC
 		RADIUS_FIGHT_NPC = 10, -- scan for NPC around and start randomly attack,
 		RADIUS_FIGHT_SCAN = 10, -- scan for fight around and join/leave fight it
  
-		kind = 0,            -- quai mode
-		TIME_FIGHTING_minTs = 1800,
-		TIME_FIGHTING_maxTs = 3000,
-		TIME_RESTING_minTs = 0,
-		TIME_RESTING_maxTs = 1,
+		kind = 3,            -- quai mode
+		TIME_FIGHTING_minTs = 1800*18/REFRESH_RATE,
+		TIME_FIGHTING_maxTs = 3000*18/REFRESH_RATE,
+		TIME_RESTING_minTs = 60*18/REFRESH_RATE,
+		TIME_RESTING_maxTs = 120*18/REFRESH_RATE,
 
 
 		ngoaitrang = nt or 0,
@@ -132,8 +132,12 @@ function SimCityTieuThiep:nhanTieuThiepConfirm(name, id)
 	self:taoNV(id, forCamp, pW, 1, 0, {}, 1, {
 		szName = name .. " cña ".. GetName(),
 		nSettingsIdx = id,
-		series = 0,
-		kind = 3
+		series = 2,
+		kind = 3,
+		faction = "ngami",
+		skillHoTro = 5,
+		skillTranPhai = {109, 20},
+		skillCastBua = {93, 20}
 	})
 end
  

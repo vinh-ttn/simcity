@@ -32,7 +32,7 @@ function LeaveFight(self, simInstance, tbNpc, isAllDead, reason)
     reason = reason or "no reason"
 
     -- Do not need to respawn just disable fighting
-    if (isAllDead ~= 1 and (tbNpc.kind ~= 4 or tbNpc.isAttackable == 1)) then        
+    if (isAllDead ~= 1 and tbNpc.kind ~= 3 and (tbNpc.kind ~= 4 or tbNpc.isAttackable == 1)) then        
         self:SetFightState(tbNpc, 0)
     else
         tbNpc.entitySys:Respawn(simInstance, tbNpc, isAllDead, reason)
@@ -435,19 +435,25 @@ SimFight.KeoXe = {
     end,
     SetFightState = function(self, tbNpc, mode, nX, nY)  
         
-        if tbNpc.mode == "tieuthiep" then
-            return 1
+        -- Mode = 9 is no longer used
+        if mode == 9 then 
+            mode = 1            
         end
 
-        if mode == 9 then 
-            mode = 1
-            
-        end
         --if mode == 9 then
         --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         --else
             SetNpcAI(tbNpc.finalIndex, mode)
         --end
+
+        if tbNpc.mode == "tieuthiep" then
+            if mode == 1 then 
+                SetNpcKind(tbNpc.finalIndex, 0)
+            else
+                SetNpcKind(tbNpc.finalIndex, tbNpc.kind or 4)
+            end
+            return 1
+        end
 
         if tbNpc.isPlayerFighting == 0 then
             SetNpcKind(tbNpc.finalIndex, 0)
@@ -471,7 +477,7 @@ SimFight.KeoXe = {
 
         -- If already having last fight pos, we may simply change AI to 1
         local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
-        if tbNpc.lastFightPos then
+        if tbNpc.lastFightPos and (not tbNpc.mode or tbNpc.mode ~= "tieuthiep") then
             if tbNpc.lastFightPos.W == currW then
                 if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 16) then
                     self:SetFightState(tbNpc, 9, currX, currY)

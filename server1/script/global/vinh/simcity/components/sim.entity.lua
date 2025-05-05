@@ -108,7 +108,11 @@ function execCreateChar(self, simInstance, tbNpc, isNew, goX32, goY32)
                     nY32 = nY32
                 }
 
-                SetNpcKind(nNpcIndex, tbNpc.kind or 0)
+                if tbNpc.isFighting == 1 then
+                    SetNpcKind(nNpcIndex, 0)
+                else
+                    SetNpcKind(nNpcIndex, tbNpc.kind or 0)
+                end
 
                 -- Disable fighting if not chien dau char?
                 if (tbNpc.isFighting == 0) then

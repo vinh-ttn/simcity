@@ -150,7 +150,7 @@ SimMovement.KeoXe = {
 
 
         -- Binh thuong
-        if (cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER and (not tbNpc.mode or tbNpc.mode ~= "tieuthiep")) then
+        if (cachNguoiChoi <= DISTANCE_SUPPORT_PLAYER) then
             
             -- Case 1: someone around is fighting, we join
             if (tbNpc.CHANCE_JOIN_FIGHT and random(0, tbNpc.CHANCE_JOIN_FIGHT) <= 2) then
