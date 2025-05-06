@@ -48,3 +48,6 @@ DISTANCE_FOLLOW_PLAYER_TOOFAR = 30 -- neu qua xa nguoi choi vi chay nhanh thi ph
 DISTANCE_VISION = 15               -- qua 15 = phai respawn vi no se quay ve cho cu
 
 LIFE_RESTORE_PERCENT = 0.01        -- phan tram life se duoc hoi lai moi 1s
+
+
+ENABLE_BANNGUAMIXDEV = 0		   -- sua lai thanh 1 neu xai ban mix dev vi bi mat ban ngua
