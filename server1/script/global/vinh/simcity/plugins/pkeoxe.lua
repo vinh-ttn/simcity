@@ -273,10 +273,12 @@ end
 
 function SimCityKeoXe:mainMenu()
 	local tbSay = createTaskSayKeoxe()
+	tinsert(tbSay, "KÕt duyªn cïng tiÓu thiÕp/#SimCityTieuThiep:nhanTieuThiep(1)")
+	
 	tinsert(tbSay, "KÕt giao b»ng h÷u/#SimCityKeoXe:ketgiaoPhai(0)")
 	tinsert(tbSay, "KÕt giao nhãm anh hïng/#SimCityKeoXe:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "KÕt giao nhãm qu¸i nh©n/#SimCityKeoXe:goiAnhHungThiep()")
-	tinsert(tbSay, "NhËn tiÓu thiÕp/#SimCityTieuThiep:nhanTieuThiep(1)")
+	
 	--tinsert(tbSay, "ThiÕt lËp/#SimCityKeoXe:caidat()")
 	tinsert(tbSay, "Gi¶i t¸n/#SimCityKeoXe:RemoveAll()")
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")

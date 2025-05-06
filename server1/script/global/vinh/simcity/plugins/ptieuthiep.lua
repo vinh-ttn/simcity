@@ -1,27 +1,39 @@
-SimCityTieuThiep = { 
-	collections = {},
-	collections_knownPoint = {} 
-}
+SimCityTieuThiep = {}
 
-
-function createTaskSayTieuThiep()
+function createTaskSayTieuThiep(extra)
 	local tbOpt = {}
 
 	local name = GetName()
 
 	local foundId
-	for key, fighter in SimTheoSau.fighterList do
-        if fighter.playerID == name and fighter.mode == "tieuthiep" then
-            foundId = fighter.nNpcId
-        end
-    end
+	local foundName = "V« Kþ"
+
+	local found = SimCityTieuThiep:retrieveMine()
+	if getn(found) > 0 then
+		fighter = SimTheoSau.fighterList[found[1]]
+		foundId = fighter.nNpcId
+		foundName = fighter.szName
+	end
+
+	local saying = extra or "Nh©n sinh nh­ méng, tr­êng l­u v« tËn, gÆp gì chØ lµ tho¸ng qua"
 
 	local nSettingIdx = foundId or 103
 
 
 	local nActionId = 1
-	tinsert(tbOpt, 1, "<dec><link=image[0,10]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ:<link> Nh©n sinh nh­ méng, tr­êng l­u v« tËn, gÆp gì chØ lµ tho¸ng qua");
+	tinsert(tbOpt, 1, "<dec><link=image[0,10]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">"..foundName..":<link> "..saying);
 	return tbOpt
+end
+
+function SimCityTieuThiep:retrieveMine()
+	local name = GetName()
+	local found = {}
+	for key, fighter in SimTheoSau.fighterList do
+        if fighter.playerID == name and fighter.mode == "tieuthiep" then
+            tinsert(found, key)
+        end
+    end
+	return found
 end
 
 function SimCityTieuThiep:taoNV(id, camp, mapID, map, nt, theosau, capHP, extraConfig)
@@ -74,17 +86,7 @@ function SimCityTieuThiep:taoNV(id, camp, mapID, map, nt, theosau, capHP, extraC
 			tbNpc[k] = v
 		end
 	end
-	local nListId = SimTheoSau:New(tbNpc);
-
-	if not self.collections[name] then
-		self.collections[name] = {}
-	end
-
-	if nListId > 0 then
-		tinsert(self.collections[name], nListId)
-	end
-
-	return nListId
+	return SimTheoSau:New(tbNpc);
 end
 
 
@@ -115,10 +117,19 @@ function SimCityTieuThiep:nhanTieuThiep(id)
 	local nSettingIdx = xemNpcIds[id][1]
 	local nName = xemNpcIds[id][2]
 	local nActionId = 1
-	tinsert(tbOpt, 1, "<dec><link=image[0,108]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ:<link><enter><enter>Ng­¬i cã muèn nµng <color=yellow>"..nName.."<color> hµnh tÈu giang hå cïng ng­¬i?");
+	tinsert(tbOpt, 1, "<dec><link=image[0,108]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId).."><link>Duyªn t×nh ngì tr¨m n¨m, nh­ng khi tØnh giÊc th× ng­êi ®· bá ®i.<enter><enter>Ng­¬i cã muèn <color=yellow>"..nName.."<color> hµnh tÈu giang hå cïng ng­¬i? ");		
+	
+	local found = self:retrieveMine()
+	if getn(found) > 0 then
+		fighter = SimTheoSau.fighterList[found[1]]		
+		tinsert(tbOpt, "§a t¹, duyªn t×nh víi "..fighter.szName.." dang dë t¹i ®©y/#SimCityTieuThiep:RemoveAll()")		
+	end
 
-	tinsert(tbOpt, format("Chän %s/#SimCityTieuThiep:nhanTieuThiepConfirm('%s', %s)", nName, nName, nSettingIdx))	
-	tinsert(tbOpt, "Xem kÕ tiÕp/#SimCityTieuThiep:nhanTieuThiep("..(id+1)..")")
+
+	tinsert(tbOpt, format("KÕt duyªn cïng %s (10 v¹n)/#SimCityTieuThiep:nhanTieuThiepConfirm('%s', %s)", nName, nName, nSettingIdx))	
+
+
+	tinsert(tbOpt, "Xem tiÕp/#SimCityTieuThiep:nhanTieuThiep("..(id+1)..")")
 	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbOpt)
 
@@ -126,11 +137,18 @@ function SimCityTieuThiep:nhanTieuThiep(id)
 end
 
 function SimCityTieuThiep:nhanTieuThiepConfirm(name, id)
+	if GetCash() < 100000 then
+		local tbOpt = createTaskSayTieuThiep("KÕt duyªn kh«ng ph¶i chuyÖn ®¬n gi¶n, tiÒn b¹c lµ cÇn thiÕt. NÕu ch­a ®ñ, th«i ®µnh ®îi thªm thêi gian.")
+		tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
+		CreateTaskSay(tbOpt)
+		return 1
+	end
 	local forCamp = GetCurCamp()
 	local pW, pX, pY = GetWorldPos()
 	self:RemoveAll()
+	Pay(100000)
 	self:taoNV(id, forCamp, pW, 1, 0, {}, 1, {
-		szName = name .. " cña ".. GetName(),
+		szName = name,
 		nSettingsIdx = id,
 		series = 2,
 		kind = 3,
@@ -204,17 +222,17 @@ function SimCityTieuThiep:trieuhoi()
 	local tbOpt = createTaskSayTieuThiep()
 	tinsert(tbOpt, "Gäi PT ®Õn ®©y/SimCityTieuThiep:GoiPTToiNoi()")
 	tinsert(tbOpt, "Gäi bang ®Õn ®©y/SimCityTieuThiep:GoiBangToiNoi()")
-	tinsert(tbOpt, "§Õn n¬i tÐ xe/SimCityTieuThiep:DenNoiTeXe()")
 	tinsert(tbOpt, "Quay l¹i/#SimCityTieuThiep:mainMenu()")
 	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbOpt)
 end
 
-function SimCityTieuThiep:muathuoc()
-	local tbOpt = createTaskSayTieuThiep()
+function SimCityTieuThiep:muathuoc(saying)
+	local tbOpt = createTaskSayTieuThiep(saying)
 
-	tinsert(tbOpt, "Mau cho ta xin Ýt thuèc/#SimCityTieuThiep:nhan5hoa()")
-	tinsert(tbOpt, "Mau cho ta xin TDP/#SimCityTieuThiep:nhanTDP()")
+	tinsert(tbOpt, "Cho ta xin Ýt thuèc/#SimCityTieuThiep:nhan5hoa()")
+	tinsert(tbOpt, "Cho ta xin TDP/#SimCityTieuThiep:nhanTDP()")
+	tinsert(tbOpt, "Cho ta xin Ýt tiÒn/#SimCityTieuThiep:nhanTien()")
  
 	tinsert(tbOpt, "Quay l¹i/#SimCityTieuThiep:mainMenu()")
 	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
@@ -235,16 +253,31 @@ function SimCityTieuThiep:nhanTDP()
 	end
 end
 
+function SimCityTieuThiep:nhanTien()
+	if random(1, 100) <= 90 then
+		return self:muathuoc("Xin thø lçi, thiÕp ch¼ng tiÖn can dù chuyÖn tiÒn b¹c, mong chµng hiÓu cho nçi khã xö nµy.")
+	end
+
+	local amount = random(1, 5)
+	Earn(amount*10000)
+	local tbOpt = createTaskSayTieuThiep("Nam tö h¸n ®¹i tr­îng phu, ai ngê l¹i khiÕn <color=yellow>n÷ nhi ta ph¶i rót hÇu bao<color> tr­íc. Méng ­íc mét m¸i nhµ tranh hai qu¶ tim vµng ®©y sao?<enter><enter>Cho ng­¬i <color=yellow>"..amount.." v¹n<color>.")
+	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
+	CreateTaskSay(tbOpt)
+	
+	return 1
+end
 function SimCityTieuThiep:mainMenu()
 
 	local tbOpt = createTaskSayTieuThiep()
 	local name = GetName()
 	local isStanding = 0
-	for key, fighter in SimTheoSau.fighterList do        
-        if fighter.playerID == name and fighter.mode == "tieuthiep" and fighter.isStanding == 1 then
-            isStanding = 1
-        end
-    end
+	local found = self:retrieveMine()
+	if getn(found) > 0 then
+		fighter = SimTheoSau.fighterList[found[1]]
+		if fighter.isStanding == 1 then
+			isStanding = 1
+		end
+	end
 	if isStanding == 1 then
 		tinsert(tbOpt, "H·y ®i theo ta/#SimCityTieuThiep:SetStanding(0)")
 	else
@@ -255,6 +288,8 @@ function SimCityTieuThiep:mainMenu()
 	tinsert(tbOpt, "Gäi thµnh viªn PT, bang héi/#SimCityTieuThiep:trieuhoi()")
 	tinsert(tbOpt, "T¹o b·i luyÖn c«ng/#SimCityTieuThiep:luyencong()")
 	tinsert(tbOpt, "T×m V« Kþ, TriÖu MÉn vµ L·o §éng VËt/#SimCityTieuThiep:simcityMenu()")	
+	tinsert(tbOpt, "§Õn n¬i tÐ xe/SimCityTieuThiep:DenNoiTeXe()")
+
 	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbOpt)
 	return 1
@@ -262,12 +297,22 @@ end
 
 function SimCityTieuThiep:SetStanding(isStanding)
 	local name = GetName()
-	for key, fighter in SimTheoSau.fighterList do
-		if fighter.playerID == name and fighter.mode == "tieuthiep" then
-			fighter.isStanding = isStanding
-		end
+	local found = self:retrieveMine()
+	if getn(found) > 0 then
+		fighter = SimTheoSau.fighterList[found[1]]
+		fighter.isStanding = isStanding
 	end
+
+	local saying = "Chóng ta tiÕp tôc lªn ®­êng!"
+	if isStanding == 1 then
+		saying = "Ta ®øng ®©y chê ng­¬i, h·y quay l¹i ®ãn ta nhÐ."
+	end
+	local tbOpt = createTaskSayTieuThiep(saying)
+	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
+	CreateTaskSay(tbOpt)
+	return 1
 end
+
 
 function SimCityTieuThiep:simcityMenu()	
 	local tbOpt = createTaskSayTieuThiep()
@@ -284,15 +329,12 @@ end
 function SimCityTieuThiep:RemoveAll()
 	local name = GetName()
 
-	if self.collections[name] then
-		self.collections[name] = nil
+	 
+	local found = self:retrieveMine()
+	if getn(found) > 0 then
+		fighter = SimTheoSau.fighterList[found[1]]
+		SimTheoSau:Remove(fighter.id)
 	end
-	
-	for key, fighter in SimTheoSau.fighterList do
-        if fighter.playerID == name and fighter.mode == "tieuthiep" then
-            SimTheoSau:Remove(fighter.id)
-        end
-    end
 end
 
 function SimCityTieuThiep:askBaiLevel()
