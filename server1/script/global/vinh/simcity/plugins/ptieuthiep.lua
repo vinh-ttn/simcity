@@ -288,7 +288,7 @@ function SimCityTieuThiep:mainMenu()
 	tinsert(tbOpt, "Gäi thµnh viªn PT, bang héi/#SimCityTieuThiep:trieuhoi()")
 	tinsert(tbOpt, "T¹o b·i luyÖn c«ng/#SimCityTieuThiep:luyencong()")
 	tinsert(tbOpt, "T×m V« Kþ, TriÖu MÉn vµ L·o §éng VËt/#SimCityTieuThiep:simcityMenu()")	
-	tinsert(tbOpt, "§Õn n¬i tÐ xe/SimCityTieuThiep:DenNoiTeXe()")
+	tinsert(tbOpt, "§Õn n¬i tÐ xe/#SimCityTieuThiep:DenNoiTeXe()")
 
 	tinsert(tbOpt, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbOpt)
