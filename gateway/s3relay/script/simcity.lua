@@ -1,5 +1,4 @@
 Include("\\script\\mission\\sevencity\\war.lua")
-Include("\\script\\missions\\citydefence\\head.lua")
 
 --------------------------------------------------------------------
 
