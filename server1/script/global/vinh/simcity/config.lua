@@ -3,7 +3,7 @@ CHANCE_JOIN_FIGHT = 3000     -- 1/3000 co hoi tham gia danh nhau khi di ngang qu
 CHANCE_ATTACK_PLAYER = 2000  -- 1/3000 co hoi danh nguoi neu den gan nguoi choi dang chien dau
 
 STARTUP_AUTOADD_THANHTHI = 1 -- tu dong moi nhan si tren tat ca ban do
-THANHTHI_SIZE = 200    		 -- so luong nhan si trong thanh thi
+THANHTHI_SIZE = 100    		 -- so luong nhan si trong thanh thi
 THANHTHI_QUAI = 0			 -- co cho phep quai nhan tu dong xuat hien trong thanh thi hay khong
 LUYENCONG_AUTOADD = 1		 -- tu dong them nhan si luyen cong vao map 9x
 

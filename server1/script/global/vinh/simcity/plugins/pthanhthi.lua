@@ -526,7 +526,7 @@ function SimCityThanhThi:createNpcSoCapByMap(worldId)
 
 
 		if isThanhThi then
-			total = THANHTHI_SIZE or 200
+			total = THANHTHI_SIZE or 100
 			map9x = 0
 		end
 
