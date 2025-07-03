@@ -2,7 +2,7 @@
 
 —vinhsmoke—
 
-Phiên bản hiện tại: **5.8** (cập nhật ngày [22/04/2025](CHANGELOG.md))
+Phiên bản hiện tại: **5.11.1** (cập nhật ngày [05/05/2025](CHANGELOG.md))
 
 Download: [main.tar.gz](https://github.com/vinh-ttn/simcity/archive/refs/heads/main.tar.gz)
 
@@ -44,57 +44,7 @@ Yêu cầu game server của bạn phải có kết nối internet
 * gặp Vô Kỵ để điều khiển kéo xe
 
 
-## B. Sửa thần hành phù để điều khiển SimCity/Kéo Xe bất cứ đâu bao gồm Tống Kim
-
-1\) Mở file thần hành phù
-
-`\script\item\ib\shenxingfu.lua`
-
-2\) Thêm 2 dòng này vào đầu file
-
-`Include("\\script\\global\\vinh\\simcity\\head.lua")`
-`Include("\\script\\global\\vinh\\simcity\\controllers\\thanhthi.lua")`
-
-3\) Tìm đế hàm main() của file có đoạn:
-
-`Thôn trang - Thành thị - Môn phái - CLD/gototown`
-
-ngay sau dòng đó, thêm vào 2 dòng
-
-`"Điều khiển SimCity/#SimCityMainThanhThi:mainMenu()",`
-
-`"Điều khiển Kéo Xe/#SimCityKeoXe:mainMenu()",`
-
-Xong. Khởi động lại server, vào Tống Kim và dùng Thần Hành Phù để điều khiển nhân sĩ giang hồ trong Tống Kim.
-
-## C. (Không cần thiết) Thêm NPC Triệu Mẫn và Vô Kỵ trong Tống Kim Bảo Vệ Nguyên Soái
-1\) Để có được NPC Triệu Mẫn và Vô Kỵ trong Tống Kim, cần mở file
-
-`\script\battles\marshal\mission.lua`
-
-2\) Tìm đến dòng (thứ 4-5 gì đó từ trên đếm xuống):
-
-`Include("\\script\\battles\\marshal\\head.lua")`
-
-và thêm vào dòng ngay sau đó
-
-`Include("\\script\\global\\vinh\\simcity\\controllers\\tongkim.lua")`
-
-3\) Tìm đế hàm dòng (173) của hàm function InitMission():
-
-`BT_SetMissionName("Phương Thức Bảo Vệ Nguyên Soái”)`
-
-ngay sau dòng đó, thêm vào dòng
-
-`SimCityMainTongKim:addTongKimNpc()`
-
-4\) Khởi động lại server, vào Tống Kim sẽ có Triệu Mẫn/Vô Kỵ để điều khiển
-
-5\) (Không cần thiết) Vì mặc định của KingSoft/VNG, mỗi phe cần 1 người chơi để đánh bạn mới có điểm.\
-Nếu bạn không muốn như vậy. Có thể xem [hướng dẫn để chỉnh server lại](https://www.facebook.com/groups/volamquan/permalink/1264194464289743/) cho có điểm.
-
-
-## D. Giới thiệu tính năng
+## B. Giới thiệu tính năng
 
 Chạy trên JX Server 6 và 8
 

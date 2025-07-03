@@ -1,0 +1,12 @@
+path	nodename
+baodanh1	1598_3175
+baodanh1	1593_3170
+baodanh1	1589_3159
+baodanh1	1588_3147
+baodanh1	1582_3139
+baodanh1	1570_3135
+baodanh1	1565_3145
+baodanh1	1552_3143
+baodanh1	1591_3145
+baodanh1	1606_3162
+baodanh1	1611_3166

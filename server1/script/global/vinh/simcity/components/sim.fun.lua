@@ -161,7 +161,7 @@ SimFun.Citizen = {
             execRotDropMoney(tbNpc)
         end
                 
-        execChat(tbNpc)
+        execChat(tbNpc, 0)
         execRestoreLife(tbNpc)
     end,
 
@@ -187,7 +187,7 @@ SimFun.KeoXe = {
         if tbNpc.isDead == 1 then
             return
         end
-        execChat(tbNpc, true)
+        execChat(tbNpc, 1)
         execRestoreLife(tbNpc)
     end,
     OnDeath = function(self, simInstance, tbNpc, finalIndex, attackerIndex)

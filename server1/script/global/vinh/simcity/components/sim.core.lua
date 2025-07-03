@@ -8,7 +8,9 @@ IncludeLib("NPCINFO")
 SimCore = {
     fighterList = {},
     counter = 1,
-    removedIds = {}
+    removedIds = {},
+    currentProcessGroup = 1,
+    totalFighters = 0
 }
 
 function SimCore:Get(nListId)
@@ -37,6 +39,7 @@ function SimCore:initCharConfig(config)
     config.parentAppointPos = {0, 0}
     config.walkMode = config.walkMode or "random"
     config.isAttractionAround = 0
+    config.isPlayerEnemyAround = 0
 
     -- Phai nhan vat?
     if not config.faction and SimCityPhai.id2phai[config.nNpcId] then
@@ -103,6 +106,7 @@ function SimCore:initCharConfig(config)
 
 end
 
+
 function SimCore:Remove(nListId)
     local tbNpc = self.fighterList[nListId]
     if tbNpc then
@@ -113,8 +117,12 @@ function SimCore:Remove(nListId)
                 self:Remove(tbNpc.children[i])
             end
         end
+
         self.fighterList[nListId] = nil
         tinsert(self.removedIds, nListId)
+        
+        -- Decrement total fighters
+        self.totalFighters = self.totalFighters - 1
     end
 end
 
@@ -129,8 +137,16 @@ end
 
 function SimCore:OnTimer(tbNpc, rate)
     local tickRate = rate or 1 
-    if tbNpc.isDead == 1 then
+    if tbNpc.isDead == 1 or (tbNpc.isStanding and tbNpc.isStanding == 1) then
         return 0
+    end
+
+    -- Check if should be active
+    if tbNpc.movementSys:IsActive(self, tbNpc) == 0 then
+        if (not tbNpc.tongkim or tbNpc.tongkim ~= 1) then
+            tbNpc.movementSys:MoveInactive(self, tbNpc)
+            return 0
+        end
     end
 
     tbNpc.tick_breath = tbNpc.tick_breath + 1*tickRate
@@ -142,9 +158,9 @@ function SimCore:OnTimer(tbNpc, rate)
         tbNpc.tick_canWalk = 0
         tbNpc.tick_canCast = 0
     end
- 
+    
     -- Move
-    tbNpc.movementSys:Move(self, tbNpc, isTen)
+    tbNpc.movementSys:Move(self, tbNpc)
 
     -- Fun
     tbNpc.funSys:Update(tbNpc)
@@ -165,7 +181,21 @@ function SimCore:OnTimer(tbNpc, rate)
 end
 
 function SimCore:ATick(rate)    
-    for key, fighter in self.fighterList do
-        self:OnTimer(fighter, rate)
+    -- Process all fighters if total count <= 800
+    if self.totalFighters <= 600 then
+        for _, fighter in self.fighterList do
+            self:OnTimer(fighter, rate)
+        end
+        return
     end
+
+    -- Over 800 fighters - process only current group
+    for _, fighter in self.fighterList do
+        if fighter.processGroup == self.currentProcessGroup then
+            self:OnTimer(fighter, rate)
+        end
+    end
+
+    -- Move to next group (alternating between 1 and 2)
+    self.currentProcessGroup = self.currentProcessGroup == 1 and 2 or 1
 end 

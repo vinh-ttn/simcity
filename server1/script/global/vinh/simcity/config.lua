@@ -3,7 +3,7 @@ CHANCE_JOIN_FIGHT = 3000     -- 1/3000 co hoi tham gia danh nhau khi di ngang qu
 CHANCE_ATTACK_PLAYER = 2000  -- 1/3000 co hoi danh nguoi neu den gan nguoi choi dang chien dau
 
 STARTUP_AUTOADD_THANHTHI = 1 -- tu dong moi nhan si tren tat ca ban do
-THANHTHI_SIZE = 200    		 -- so luong nhan si trong thanh thi
+THANHTHI_SIZE = 100    		 -- so luong nhan si trong thanh thi
 THANHTHI_QUAI = 0			 -- co cho phep quai nhan tu dong xuat hien trong thanh thi hay khong
 LUYENCONG_AUTOADD = 1		 -- tu dong them nhan si luyen cong vao map 9x
 
@@ -27,8 +27,8 @@ TIME_RESTING = { -- nghi ngoi, khong danh nhau lai trong vong thoi gian nay
 }
 
 -- TONG KIM setup
-TONGKIM_SPAWN_MINSTAY = 10          -- thoi gian toi thieu o lai dai doanh truoc khi xong len
-TONGKIM_SPAWN_MAXSTAY = 60          -- thoi gian toi da co the nup trong dai doanh
+TONGKIM_SPAWN_MINSTAY = 10         -- thoi gian toi thieu o lai dai doanh truoc khi xong len
+TONGKIM_SPAWN_MAXSTAY = 60         -- thoi gian toi da co the nup trong dai doanh
 
 
 -- PARAM setup
@@ -48,3 +48,6 @@ DISTANCE_FOLLOW_PLAYER_TOOFAR = 30 -- neu qua xa nguoi choi vi chay nhanh thi ph
 DISTANCE_VISION = 15               -- qua 15 = phai respawn vi no se quay ve cho cu
 
 LIFE_RESTORE_PERCENT = 0.01        -- phan tram life se duoc hoi lai moi 1s
+
+
+ENABLE_BANNGUAMIXDEV = 0		   -- sua lai thanh 1 neu xai ban mix dev vi bi mat ban ngua

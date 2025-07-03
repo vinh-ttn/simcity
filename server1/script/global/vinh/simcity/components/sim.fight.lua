@@ -1,18 +1,3 @@
-function IsPlayerEnemyAround(tbNpc)
-    -- FIGHT other player
-    if GetNpcAroundPlayerList then
-        local allNpcs, nCount = GetNpcAroundPlayerList(tbNpc.finalIndex, tbNpc.RADIUS_FIGHT_PLAYER or RADIUS_FIGHT_PLAYER)
-        for i = 1, nCount do
-            if (CallPlayerFunction(allNpcs[i], GetFightState) == 1 and
-                    IsAttackableCamp(CallPlayerFunction(allNpcs[i], GetCurCamp), tbNpc.camp) == 1 and
-                    tbNpc.camp ~= 0) then
-                return allNpcs[i]
-            end
-        end
-    end
-    return 0
-end
-
 function ChildrenLeaveFight(self, simInstance, tbNpc, code, reason)
     if not tbNpc.children then
         return 1
@@ -47,7 +32,7 @@ function LeaveFight(self, simInstance, tbNpc, isAllDead, reason)
     reason = reason or "no reason"
 
     -- Do not need to respawn just disable fighting
-    if (isAllDead ~= 1 and (tbNpc.kind ~= 4 or tbNpc.isAttackable == 1)) then        
+    if (isAllDead ~= 1 and tbNpc.kind ~= 3 and (tbNpc.kind ~= 4 or tbNpc.isAttackable == 1)) then        
         self:SetFightState(tbNpc, 0)
     else
         tbNpc.entitySys:Respawn(simInstance, tbNpc, isAllDead, reason)
@@ -78,13 +63,13 @@ function execCastNormalSkill(self, simInstance, tbNpc)
     end
 
     -- Random skill
-    local selectedSkill = SimCityPhai[tbNpc.faction].normalCast[random(1, skillCount)]
+    local selectedSkill = tbNpc.skillCastBua or SimCityPhai[tbNpc.faction].normalCast[random(1, skillCount)]
     local skillId = selectedSkill[1]
     local skillLevel = selectedSkill[2]
 
     
     -- Cast skill
-    local foundPlayerEnemy = IsPlayerEnemyAround(tbNpc)
+    local foundPlayerEnemy = tbNpc.isPlayerEnemyAround
     if foundPlayerEnemy > 0 then
         local targetX, targetY, targetW = CallPlayerFunction(foundPlayerEnemy, GetWorldPos)
         NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel, targetX*32, targetY*32)        
@@ -150,31 +135,48 @@ function BuffChar(self, simInstance, tbNpc)
     if tbNpc.skillHoTro and tbNpc.faction and tbNpc.skillHoTro > 0 then
 
         -- Tat Sau Vo Hinh khi ko chien dau
-        if SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1] == 69 
-            and tbNpc.isFighting == 0 then
-            SetNpcAuraSkill(tbNpc.finalIndex, 1, 1)
-        else
-            SetNpcAuraSkill(tbNpc.finalIndex, 
-                SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1], 
-                tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][2] or 1
-            )
+        if SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro] then
+            if SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1] == 69 
+                and tbNpc.isFighting == 0 then
+                SetNpcAuraSkill(tbNpc.finalIndex, 1, 1)
+            else
+                SetNpcAuraSkill(tbNpc.finalIndex, 
+                    SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][1], 
+                    tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].noCast[tbNpc.skillHoTro][2] or 1
+                )
+            end
         end
     end
 
     -- Tran phai
     if tbNpc.faction and SimCityPhai[tbNpc.faction].needCast then
-        for i=1, getn(SimCityPhai[tbNpc.faction].needCast) do
-            local skillId = SimCityPhai[tbNpc.faction].needCast[i][1]
-            local skillLevel = tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].needCast[i][2] or 1
-            NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel)
 
-            -- Set new max life is not fighting
-            local currentMaxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
-            if tbNpc.isFighting == 0 and currentMaxLife > 0 and (not tbNpc.maxHP or tbNpc.maxHP < currentMaxLife) then
-                tbNpc.maxHP = currentMaxLife
-                NPCINFO_SetNpcCurrentLife(tbNpc.finalIndex, tbNpc.maxHP)
+        if tbNpc.skillTranPhai then
+            local skillId = tbNpc.skillTranPhai[1]
+            local skillLevel = tbNpc.skillTranPhai[2]
+            if skillId > 0 then
+                NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel)
+                -- Set new max life is not fighting
+                local currentMaxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+                if tbNpc.isFighting == 0 and currentMaxLife > 0 and (not tbNpc.maxHP or tbNpc.maxHP < currentMaxLife) then
+                    tbNpc.maxHP = currentMaxLife
+                    NPCINFO_SetNpcCurrentLife(tbNpc.finalIndex, tbNpc.maxHP)
+                end
             end
+        else
+            for i=1, getn(SimCityPhai[tbNpc.faction].needCast) do
+                local skillId = SimCityPhai[tbNpc.faction].needCast[i][1]
+                local skillLevel = tbNpc.role == "keoxe" and SimCityPhai[tbNpc.faction].needCast[i][2] or 1
+                NpcCastSkill(tbNpc.finalIndex, skillId, skillLevel)
 
+                -- Set new max life is not fighting
+                local currentMaxLife = NPCINFO_GetNpcCurrentMaxLife(tbNpc.finalIndex)
+                if tbNpc.isFighting == 0 and currentMaxLife > 0 and (not tbNpc.maxHP or tbNpc.maxHP < currentMaxLife) then
+                    tbNpc.maxHP = currentMaxLife
+                    NPCINFO_SetNpcCurrentLife(tbNpc.finalIndex, tbNpc.maxHP)
+                end
+
+            end
         end
     end
     
@@ -227,7 +229,7 @@ SimFight.Citizen = {
 
         -- No attacker around including NPC and Player ? Stop
         if (self:IsNpcEnemyAround(simInstance, tbNpc) == 0 and
-                IsPlayerEnemyAround(tbNpc) == 0) then
+                tbNpc.isPlayerEnemyAround == 0) then
             if (tbNpc.leaveFightWhenNoEnemy and tbNpc.leaveFightWhenNoEnemy > 0) then
                 local realCanSwitchTick = tbNpc.tick_breath + tbNpc.leaveFightWhenNoEnemy - 1
 
@@ -243,7 +245,7 @@ SimFight.Citizen = {
     TriggerFightWithPlayer = function(self, simInstance, tbNpc)
         -- FIGHT other player
         if GetNpcAroundPlayerList then
-            if IsPlayerEnemyAround(tbNpc) > 0 then
+            if tbNpc.isPlayerEnemyAround > 0 then
                 if tbNpc.role == "citizen" then                
                     if tbNpc.worldInfo.showFightingArea == 1 then
                         local name = GetNpcName(tbNpc.finalIndex)
@@ -273,7 +275,9 @@ SimFight.Citizen = {
         return 0
     end,
     SetFightState = function(self, tbNpc, mode, nX, nY)
-        
+        if mode == 9 then
+            mode = 1
+        end
         --if mode == 9 then
         --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         --else
@@ -405,7 +409,7 @@ SimFight.KeoXe = {
 
         -- No attacker around including NPC and Player ? Stop
         if (self:IsNpcEnemyAround(simInstance, tbNpc) == 0 and
-                IsPlayerEnemyAround(tbNpc) == 0) then
+                tbNpc.isPlayerEnemyAround == 0) then
             if (tbNpc.leaveFightWhenNoEnemy and tbNpc.leaveFightWhenNoEnemy > 0) then
                 local realCanSwitchTick = tbNpc.tick_breath + tbNpc.leaveFightWhenNoEnemy - 1
 
@@ -422,21 +426,34 @@ SimFight.KeoXe = {
         if tbNpc.isPlayerFighting == 0 then
             return 0
         end
-        -- FIGHT other player
-        if GetNpcAroundPlayerList then
-            if IsPlayerEnemyAround(tbNpc) > 0 then
-                return self:JoinFight(simInstance, tbNpc, "player around")
-            end
+        -- FIGHT other player        
+        if tbNpc.isPlayerEnemyAround > 0 then
+            return self:JoinFight(simInstance, tbNpc, "player around")
         end
 
         return 0
     end,
-    SetFightState = function(self, tbNpc, mode, nX, nY)            
+    SetFightState = function(self, tbNpc, mode, nX, nY)  
+        
+        -- Mode = 9 is no longer used
+        if mode == 9 then 
+            mode = 1            
+        end
+
         --if mode == 9 then
         --    SetNpcAI(tbNpc.finalIndex, mode, 20, -1, -1, -1, -1, -1, 0, nX, nY)            
         --else
             SetNpcAI(tbNpc.finalIndex, mode)
         --end
+
+        if tbNpc.mode == "tieuthiep" then
+            if mode == 1 then 
+                SetNpcKind(tbNpc.finalIndex, 0)
+            else
+                SetNpcKind(tbNpc.finalIndex, tbNpc.kind or 4)
+            end
+            return 1
+        end
 
         if tbNpc.isPlayerFighting == 0 then
             SetNpcKind(tbNpc.finalIndex, 0)
@@ -460,7 +477,7 @@ SimFight.KeoXe = {
 
         -- If already having last fight pos, we may simply change AI to 1
         local currX, currY, currW = GetNpcPos(tbNpc.finalIndex)
-        if tbNpc.lastFightPos then
+        if tbNpc.lastFightPos and (not tbNpc.mode or tbNpc.mode ~= "tieuthiep") then
             if tbNpc.lastFightPos.W == currW then
                 if (GetDistanceRadius(tbNpc.lastFightPos.X/32, tbNpc.lastFightPos.Y/32, currX/32, currY/32) < 16) then
                     self:SetFightState(tbNpc, 9, currX, currY)

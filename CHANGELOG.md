@@ -1,5 +1,34 @@
 # SimCity Changelog
 
+## 5.11.1 (05-05-2025)
+- Tính năng Tiểu Thiếp
+- Cập nhật tính năng Tiểu Thiếp theo sau buff và đánh
+
+## 5.10 (04-05-2025)
+- Tính năng Thú Cưng
+
+
+## 5.9.2 (27-04-2025)
+- Sửa lỗi tạo quái nhân
+- Thay đổi AI
+
+## 5.9.1 (26-04-2025)
+- Sửa lỗi Kéo Xe đứng im
+- Sửa lỗi tạo sai camp trong Tống Kim
+
+
+## 5.9 (26-04-2025)
+- Thêm chức năng Phong Hỏa Liên Thành
+
+## 5.8.4 (25-04-2025)
+- Thêm chức năng khai chiến Tống Kim xông lên không cần đợi
+- Sửa lỗi hậu doanh
+
+## 5.8.3 (24-04-2025)
+- Giảm tải hệ thống
+- Mở Tống Kim bất kỳ lúc nào
+- Tự động thêm Vô Kỵ Triệu Mẫn vào chiến trường
+ 
 ## 5.8 (22-04-2025)
 - Mở thêm các map Tống Kim khác
 - Thay đổi hệ thống đường đi ngẫu nhiên

@@ -250,3 +250,78 @@ function getNodeInfoByNodeName(tbNpc, nodeName)
         
     }
 end
+
+
+function faction2DisplayName(faction)
+    local tbSay = {}
+    if faction == 1 then
+        return "Thiªn V­¬ng Bang"
+    elseif faction == 2 then
+        return "ThiÕu L©m"
+    elseif faction == 3 then
+        return "Vâ §ang"
+    elseif faction == 4 then
+        return "C«n L«n"
+    elseif faction == 5 then
+        return "§­êng M«n"
+    elseif faction == 6 then
+        return "Ngò §éc"
+    elseif faction == 7 then
+        return "Nga Mi"
+    elseif faction == 8 then
+        return "Thóy Yªn"
+    elseif faction == 9 then
+        return "C¸i Bang"
+    elseif faction == 10 then
+        return "Thiªn NhÉn"
+    end
+end
+
+
+function faction2Key(phai)
+	local tenPhai = "thienvuong"
+    if phai == 2 then
+		tenPhai = "thieulam"
+	elseif phai == 3 then
+		tenPhai = "vodang"
+	elseif phai == 4 then
+		tenPhai = "conlon"
+	elseif phai == 5 then
+		tenPhai = "duongmon"
+	elseif phai == 6 then
+		tenPhai = "ngudoc"
+	elseif phai == 7 then
+		tenPhai = "ngami"
+	elseif phai == 8 then
+		tenPhai = "thuyyen"
+	elseif phai == 9 then
+		tenPhai = "caibang"
+	elseif phai == 10 then
+		tenPhai = "thiennhan"				
+	end
+	return tenPhai
+end
+
+function factionKey2Idx(key)
+    if key == "thienvuong" then
+        return 1
+    elseif key == "thieulam" then
+        return 2
+    elseif key == "vodang" then
+        return 3
+    elseif key == "conlon" then
+        return 4
+    elseif key == "duongmon" then
+        return 5
+    elseif key == "ngudoc" then
+        return 6
+    elseif key == "ngami" then
+        return 7
+    elseif key == "thuyyen" then
+        return 8
+    elseif key == "caibang" then
+        return 9
+    elseif key == "thiennhan" then
+        return 10
+    end
+end

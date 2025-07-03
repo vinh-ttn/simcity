@@ -8,7 +8,7 @@ SimCityGraphToChienTranh = {
     end,
 
     -- Find nodes within and outside the radius of spawn points
-    analyze_spawn_zones = function(self, nodes, spawn1, spawn2, radius)
+    createCampPresetAuto = function(self, nodes, spawn1, spawn2, radius)
         local valid_nodes = {}  -- Nodes outside both spawn zones
         local spawn1_zone = {[spawn1] = 1}  -- Nodes in spawn1's zone (including spawn1)
         local spawn2_zone = {[spawn2] = 1}  -- Nodes in spawn2's zone (including spawn2)
@@ -71,9 +71,9 @@ SimCityGraphToChienTranh = {
                 tinsert(all_paths, current_path)
             elseif getn(current_path) < max_path_length then
                 -- Otherwise, explore all connected nodes
-                if nodes[current_node] and nodes[current_node][5] then
-                    for i = 1, getn(nodes[current_node][5]) do
-                        local neighbor = nodes[current_node][5][i] 
+                if nodes[current_node] and nodes[current_node][3] then
+                    for i = 1, getn(nodes[current_node][3]) do
+                        local neighbor = nodes[current_node][3][i] 
                         -- Check if the neighbor is valid (outside exclusion radius or is a main spawn point)
                         if (valid_nodes[neighbor] == 1 or neighbor == toNode) and not visited[neighbor] then
                             -- Create a new path with the neighbor added
@@ -110,7 +110,7 @@ SimCityGraphToChienTranh = {
         -- If we've found enough paths
         if paths_found_ref[1] >= max_paths_param then
             return paths_found_ref[1]
-        end
+        end 
 
         -- If we've reached the destination
         if current_node == toNode_param then
@@ -129,14 +129,14 @@ SimCityGraphToChienTranh = {
             return paths_found_ref[1]
         end
 
-        -- Get all neighbors
+        -- Get all neighbors - use consistent neighbor access (index 5 like in BFS)
         if nodes[current_node] and nodes[current_node][3] then
             -- Create a copy of edges to shuffle
             local neighbors = {}
             for i = 1, getn(nodes[current_node][3]) do
                 local neighbor = nodes[current_node][3][i]
-                -- Only add non-visited neighbors
-                if not visited_param[neighbor] then
+                -- Only add non-visited neighbors that are valid
+                if not visited_param[neighbor] and (valid_nodes_param[neighbor] == 1 or neighbor == toNode_param) then
                     tinsert(neighbors, neighbor)
                 end
             end
@@ -147,158 +147,108 @@ SimCityGraphToChienTranh = {
             -- Try each neighbor
             for i = 1, getn(neighbors) do
                 local neighbor = neighbors[i]
+                -- Mark as visited before recursing
+                visited_param[neighbor] = 1
+                -- Add to current path
+                tinsert(current_path, neighbor)
                 
-                -- Check if neighbor is valid and not visited
-                if (valid_nodes_param[neighbor] == 1 or neighbor == toNode_param) then
-                    -- Mark as visited
-                    visited_param[neighbor] = 1
-                    
-                    -- Add to current path
-                    tinsert(current_path, neighbor)
-                    
-                    -- Recurse with updated path
-                    paths_found_ref[1] = self:dfs(nodes, neighbor, current_path, paths_found_ref, max_paths_param, max_path_length_param, all_paths_param, visited_param, valid_nodes_param, toNode_param)
-                    
-                    -- Backtrack: remove from path and visited
-                    tremove(current_path)
-                    visited_param[neighbor] = nil
-                    
-                    -- If we've found enough paths, stop exploring
-                    if paths_found_ref[1] >= max_paths_param then
-                        return paths_found_ref[1]
-                    end
+                -- Recurse with updated path
+                paths_found_ref[1] = self:dfs(nodes, neighbor, current_path, paths_found_ref, max_paths_param, max_path_length_param, all_paths_param, visited_param, valid_nodes_param, toNode_param)
+                
+                -- Backtrack: remove from path and visited
+                tremove(current_path)
+                visited_param[neighbor] = nil
+                
+                -- If we've found enough paths, stop exploring
+                if paths_found_ref[1] >= max_paths_param then
+                    return paths_found_ref[1]
                 end
             end
         end
         return paths_found_ref[1]
     end,
+
     -- Depth first search with randomization for finding paths
-    depth_first_search = function(self, max_paths, valid_nodes, nodes, fromNode, toNode)
+    depth_first_search = function(self, max_paths_input, valid_nodes, nodes, fromNode, toNode)
         local all_paths = {}
-        local paths_found = 0
         local max_path_length = 100  -- Maximum length of any single path
-        local visited = {}
-        -- Start DFS from the beginning node
-        visited[fromNode] = 1
+        local visited = {[fromNode] = 1}  -- Initialize with start node
+        -- Use input max_paths instead of shadowing it
+        local max_paths = max_paths_input or 10  -- Default to 10 if not specified
         -- Use a table to pass paths_found by reference
         local paths_found_ref = {0}
+        
+        -- Add safety check for nodes
+        if not nodes[fromNode] or not nodes[toNode] then
+            return all_paths
+        end
+
         self:dfs(nodes, fromNode, {fromNode}, paths_found_ref, max_paths, max_path_length, all_paths, visited, valid_nodes, toNode)
         
         return all_paths
     end,
 
     -- Find all paths from source to destination
-    find_all_paths = function(self, nodes, spawn1, spawn2, exclusion_radius, use_dfs)
-        local valid_nodes, spawn1_zone, spawn2_zone = self:analyze_spawn_zones(nodes, spawn1, spawn2, exclusion_radius)
-    
-        local output = {}
-        local meToOthers = {}
-        for k,v in spawn1_zone do
-            for k2,v2 in spawn2_zone do
-                tinsert(meToOthers, {k, k2})
+    find_all_paths = function(self, nodes, spawn1, spawn2, use_dfs)
+        local valid_nodes = {}  -- Nodes outside both spawn zones
+        for node_name, nodeData in nodes do
+            if node_name ~= spawn1 and node_name ~= spawn2 then                
+                valid_nodes[node_name] = 1
             end
         end
 
-        local totalPaths = getn(meToOthers)
+        -- Find closest nodes to spawn points within valid nodes
+        local spawn1_closest = spawn1
+        local spawn2_closest = spawn2
+        local spawn1_min_dist = 999999
+        local spawn2_min_dist = 999999
 
-        -- Calculate limit per path based on total paths
-        local limit = 1 
-        limit = floor(30 / totalPaths)
-        if limit < 1 then
-            limit = 1
-        end 
+        -- Check each valid node's distance to spawn points
+        local spawn1X, spawn1Y = nodeNameToCoords(spawn1)
+        local spawn2X, spawn2Y = nodeNameToCoords(spawn2)
+        for node_name, _ in valid_nodes do
+            if nodes[node_name] then                
+                local node_x = nodes[node_name][1]
+                local node_y = nodes[node_name][2]
+                
+                -- Calculate distances using GetDistanceRadius
+                local dist_to_spawn1 = GetDistanceRadius(node_x, node_y, spawn1X, spawn1Y)
+                local dist_to_spawn2 = GetDistanceRadius(node_x, node_y, spawn2X, spawn2Y)
 
-        for i=1,getn(meToOthers) do
-            local k = meToOthers[i][1]
-            local k2 = meToOthers[i][2]
-            local all_paths
+                -- Update closest node to spawn1
+                if dist_to_spawn1 < spawn1_min_dist then
+                    spawn1_min_dist = dist_to_spawn1
+                    spawn1_closest = node_name
+                end
 
-            if use_dfs == 1 then
-                all_paths = self:depth_first_search(limit, valid_nodes, nodes, k, k2)
-            else
-                all_paths = self:breadth_first_search(limit, valid_nodes, nodes, k, k2)
-            end
-
-            for i=1,getn(all_paths) do
-                local path = all_paths[i]
-                tinsert(output, path)
-            end
-        end
-        return output
-    end,
-
-    -- Main function to generate and display paths
-    generate_paths = function(self, nodes, spawn1, spawn2, exclusion_radius)
-        --print("Finding paths from " .. spawn1 .. " to " .. spawn2)
-        --print("Identifying nodes within " .. exclusion_radius .. " units as spawn zones")
-
-        -- Get nodes within spawn zones for display
-        local _, spawn1_zone, spawn2_zone = self:analyze_spawn_zones(nodes, spawn1, spawn2, exclusion_radius)
-
-        -- Display spawn zones
-        --print("\nSpawn 1 Zone (" .. spawn1 .. "):")
-        local spawn1_nodes = {}
-        for node,_ in spawn1_zone do
-            tinsert(spawn1_nodes, node) 
-        end
-        -- Basic sort for Lua 4.0
-        for i = 1, getn(spawn1_nodes) do
-            for j = i + 1, getn(spawn1_nodes) do
-                if spawn1_nodes[i] > spawn1_nodes[j] then
-                    spawn1_nodes[i], spawn1_nodes[j] = spawn1_nodes[j], spawn1_nodes[i]
+                -- Update closest node to spawn2  
+                if dist_to_spawn2 < spawn2_min_dist then
+                    spawn2_min_dist = dist_to_spawn2
+                    spawn2_closest = node_name
                 end
             end
         end
-        for i = 1, getn(spawn1_nodes) do
-            local node = spawn1_nodes[i]
-            local dist_str = self:distance(node, spawn1, nodes) 
-            --print("  " .. node .. " (Distance: " .. dist_str .. ")")
-        end
 
-        --print("\nSpawn 2 Zone (" .. spawn2 .. "):")
-        local spawn2_nodes = {}
-        for node,_ in spawn2_zone do
-            tinsert(spawn2_nodes, node) 
+        -- Add closest nodes back to valid nodes if found
+        if spawn1_closest then
+            valid_nodes[spawn1_closest] = 1
         end
-        -- Basic sort for Lua 4.0
-        for i = 1, getn(spawn2_nodes) do
-            for j = i + 1, getn(spawn2_nodes) do
-            if spawn2_nodes[i] > spawn2_nodes[j] then
-                spawn2_nodes[i], spawn2_nodes[j] = spawn2_nodes[j], spawn2_nodes[i]
-            end
-            end
+        if spawn2_closest then
+            valid_nodes[spawn2_closest] = 1
         end
-        for i = 1, getn(spawn2_nodes) do
-            local node = spawn2_nodes[i]
-            local dist_str = self:distance(node, spawn2, nodes)
-            --print("  " .. node .. " (Distance: " .. dist_str .. ")")
-        end
-
-        -- Find paths between spawn points
-        local paths = self:find_all_paths(nodes, spawn1, spawn2, exclusion_radius, 1)
-
-        --print("\nFound " .. getn(paths) .. " paths:")
-        for i = 1, getn(paths) do
-            local path = paths[i]
-            --print("\nPath " .. i .. " (length: " .. getn(path) .. "):")
-            local path_str = ""
-            for j = 1, getn(path) do
-            if j > 1 then
-                path_str = path_str .. " -> "
-            end
-            path_str = path_str .. path[j]
-            end
-            --print(path_str)
-        end
-
-        return paths, spawn1_zone, spawn2_zone
+  
+        local all_paths 
+        if use_dfs == 1 then
+            all_paths = self:depth_first_search(10, valid_nodes, nodes, spawn1_closest, spawn2_closest)
+        else
+            all_paths = self:breadth_first_search(10, valid_nodes, nodes, spawn1_closest, spawn2_closest )
+        end 
+         
+        return all_paths
     end,
 
     -- Tao duong di cho NPCs
-    autoFindSpawnPositions = function(self, nodes, firstNodeX, firstNodeY)
-
-        
-        
+    autoFindSpawnPositions = function(self, nodes, firstNodeX, firstNodeY) 
 
         -- Find diagonal extreme points for each camp region
         local allX, allY = {}, {}
@@ -381,6 +331,13 @@ SimCityGraphToChienTranh = {
             return 0
         end
 
+        -- Neu da xac dinh duoc camp duoi va tren thi khong can lam gi
+        if worldInfo.presetPaths.baseDuoi and worldInfo.presetPaths.baseTren 
+            and worldInfo.presetPaths.campduoi and worldInfo.presetPaths.camptren             
+            then
+            worldInfo.chienTranhPaths = 1
+            return 1
+        end
         -- Or prebuit?
         if worldInfo.chienTranhPaths then
             return 1
@@ -389,16 +346,24 @@ SimCityGraphToChienTranh = {
         -- Lay nodes chien tranh
         local nodes = {}
         for k,v in worldInfo.nodes do
-            if v.nodeType == 1 then
+            if v.nodeType == 1 and v.isNotPreset == 1 then
                 nodes[k] = {v.x, v.y, v.linkedNodes}
             end
         end
 
         -- Tim spawn1 va spawn2
-        local camp1X = GetMissionV(MS_HOMEOUT_X1)
-        local camp1Y = GetMissionV(MS_HOMEOUT_Y1)
-        local camp2X = GetMissionV(MS_HOMEOUT_X2)
-        local camp2Y = GetMissionV(MS_HOMEOUT_Y2)
+        local camp1X, camp1Y, camp2X, camp2Y = 0, 0, 0, 0
+        if worldInfo.camp1X and worldInfo.camp1Y and worldInfo.camp2X and worldInfo.camp2Y then
+            camp1X = worldInfo.camp1X
+            camp1Y = worldInfo.camp1Y
+            camp2X = worldInfo.camp2X
+            camp2Y = worldInfo.camp2Y
+        else
+            camp1X = GetMissionV(MS_HOMEOUT_X1)
+            camp1Y = GetMissionV(MS_HOMEOUT_Y1)
+            camp2X = GetMissionV(MS_HOMEOUT_X2)
+            camp2Y = GetMissionV(MS_HOMEOUT_Y2)
+        end
 
         -- Neu khong co camp
         if (camp1X == 0 or camp1Y == 0 or camp2X == 0 or camp2Y == 0) then
@@ -431,44 +396,92 @@ SimCityGraphToChienTranh = {
         end
         if closestNode2 then
             spawn2 = closestNode2 
-        end  
-
-
-        -- Already build
-        if (worldInfo.spawn1 == spawn1 and worldInfo.spawn2 == spawn2) then
-            return 1
-        end
-       
+        end   
+ 
         if not spawn1 or not spawn2 then
             --print("Khong the thiet lap chien loan")
             return 0
         end
 
-        local paths, spawn1_zone, spawn2_zone = self:generate_paths(nodes, spawn1, spawn2, exclusion_radius)
-
-        if getn(paths) == 0 then
-            return 0
-        end      
-        
+        local _, spawn1_zone, spawn2_zone = self:createCampPresetAuto(nodes, spawn1, spawn2, exclusion_radius)
+         
         -- Setup camp spawns
-        local campduoi = {}
-        for node,_ in spawn1_zone do
-            tinsert(campduoi, node) 
+        if not worldInfo.presetPaths.baseDuoi then
+            local campduoi = {}
+            for node,_ in spawn1_zone do
+                tinsert(campduoi, node) 
+                --worldInfo.nodes[node].isNotPreset = 0
+            end
+            worldInfo.presetPaths.baseDuoi = {"campduoi"}
+            worldInfo.presetPaths.campduoi = campduoi
         end
-        worldInfo.presetPaths.campduoi = campduoi
 
-        local camptren = {}
-        for node,_ in spawn2_zone do
-            tinsert(camptren, node) 
+        if not worldInfo.presetPaths.camptren then
+            local camptren = {}
+            for node,_ in spawn2_zone do
+                tinsert(camptren, node) 
+                --worldInfo.nodes[node].isNotPreset = 0
+            end
+            worldInfo.presetPaths.baseTren = {"camptren"}
+            worldInfo.presetPaths.camptren = camptren
         end
-        worldInfo.presetPaths.camptren = camptren
         
         
         -- Setup walk path
-        worldInfo.chienTranhPaths = {}
+        worldInfo.chienTranhPaths = 1
+        return 1
+    end,
+    
+    
+    -- Tao duong di cho NPCs
+    autoFindPathNames = function(self, worldInfo, mySpawn, theirSpawn, mode)
+         -- Or already defined?
+        local foundDefinedPath = nil
+        local from = mySpawn
+        local to = theirSpawn
+        if mode == 1 then
+            from = theirSpawn
+            to = mySpawn
+        end
+
+        if worldInfo.builtPaths[from .. "_" .. to] then
+            foundDefinedPath = worldInfo.builtPaths[from .. "_" .. to]
+        end
+
+        if foundDefinedPath then
+            return foundDefinedPath[random(1, getn(foundDefinedPath))]
+        end
+
+         -- Lay nodes chien tranh
+        local nodes = {}
+        for k,v in worldInfo.nodes do
+            if v.nodeType == 1 and v.isNotPreset == 1 then
+                nodes[k] = {v.x, v.y, v.linkedNodes}
+            end
+        end
+
+        local spawn1 = worldInfo.presetPaths[from][1]
+        local spawn2 = worldInfo.presetPaths[to][1]
+
+        -- Find paths between spawn points
+        local paths = self:find_all_paths(nodes, spawn1, spawn2, 1)
+
+        -- Cannot build?
+        if getn(paths) == 0 then
+            foundDefinedPath = worldInfo.builtPaths["campduoi_camptren"]
+
+            if foundDefinedPath then
+                return foundDefinedPath[random(1, getn(foundDefinedPath))]
+            else
+                --print("Khong tim duoc duong di")
+                return mySpawn
+            end
+        end   
+
+        local builtPaths = {}
 
         for i = 1, getn(paths) do
-            local pathName = "chienloan" .. i
+            local pathName = from .. "_" .. to .. "_" .. i
             local pathNodes = {}
             local foundNodePath = paths[i]
             for j = 1, getn(foundNodePath) do
@@ -479,13 +492,13 @@ SimCityGraphToChienTranh = {
                     --print("Khong tim thay node: " .. node)
                 end
             end
-            worldInfo.presetPaths[pathName] = pathNodes	
-            tinsert(worldInfo.chienTranhPaths, pathName)
+            worldInfo.presetPaths[pathName] = pathNodes	  
+            tinsert(builtPaths, pathName)
         end
 
-        worldInfo.spawn1 = spawn1
-        worldInfo.spawn2 = spawn2
-        return 1
-    end 
+        worldInfo.builtPaths[from .. "_" .. to] = builtPaths
+
+        return builtPaths[random(1, getn(builtPaths))]
+    end
 
 }

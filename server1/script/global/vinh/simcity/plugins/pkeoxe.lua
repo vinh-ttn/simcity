@@ -21,7 +21,7 @@ function createTaskSayKeoxe()
 	local tbOpt = {}
 	local nSettingIdx = 103
 	local nActionId = 1
-	tinsert(tbOpt, 1, "<dec><link=image[0,14]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ ca:<link> Nh©n sinh nh­ méng, tr­êng l­u v« tËn, gÆp gì chØ lµ tho¸ng qua");
+	tinsert(tbOpt, 1, "<dec><link=image[0,14]:#npcspr:?NPCSID="..tostring(nSettingIdx).."?ACTION="..tostring(nActionId)..">V« Kþ:<link> Nh©n sinh nh­ méng, tr­êng l­u v« tËn, gÆp gì chØ lµ tho¸ng qua");
 	return tbOpt
 end
 
@@ -273,12 +273,13 @@ end
 
 function SimCityKeoXe:mainMenu()
 	local tbSay = createTaskSayKeoxe()
-
+	tinsert(tbSay, "KÕt duyªn cïng tiÓu thiÕp/#SimCityTieuThiep:nhanTieuThiep(1)")
+	
 	tinsert(tbSay, "KÕt giao b»ng h÷u/#SimCityKeoXe:ketgiaoPhai(0)")
 	tinsert(tbSay, "KÕt giao nhãm anh hïng/#SimCityKeoXe:goiAnhHungThiepNgoaiTrang()")
 	tinsert(tbSay, "KÕt giao nhãm qu¸i nh©n/#SimCityKeoXe:goiAnhHungThiep()")
+	
 	--tinsert(tbSay, "ThiÕt lËp/#SimCityKeoXe:caidat()")
-	tinsert(tbSay, "T¹o b·i luyÖn c«ng/#SimCityKeoXe:luyencong()")
 	tinsert(tbSay, "Gi¶i t¸n/#SimCityKeoXe:RemoveAll()")
 	tinsert(tbSay, "KÕt thóc ®èi tho¹i./no")
 	CreateTaskSay(tbSay)
@@ -300,87 +301,7 @@ function SimCityKeoXe:RemoveAll()
     end
 end
 
-function SimCityKeoXe:askBaiLevel()
-	g_AskClientNumberEx(0, 110, "CÊp qu¸i", { self.askBaiLevel_confirm , {self}})
-end
-function SimCityKeoXe:askBaiLevel_confirm(inp)
-	local level = tonumber(inp)
-	level = floor(level/10) * 10
-	self:TaoBai(level)
-end
-function SimCityKeoXe:luyencong()
-	local tab_Content = {
-		
-		"Tù ®éng/#SimCityKeoXe:TaoBai(999)",
-		"Chän cÊp/#SimCityKeoXe:askBaiLevel()",
-		"Xãa qu¸i xung quanh/#SimCityKeoXe:XoaBai()",
-		"Tho¸t/no",
-	}
-	Say("Chän nhãm qu¸i", getn(tab_Content), tab_Content);
-end
 
-function SimCityKeoXe:XoaBai()
-	local fighterList = GetAroundNpcList(30)
-	local pW, pX, pY = GetWorldPos()
-
-	local tmpFound = {}
-	local nNpcIdx
-	for i = 1, getn(fighterList) do
-		nNpcIdx = fighterList[i]
-		local kind = GetNpcKind(nNpcIdx)
-		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
-		if nSettingIdx > 0 and kind == 0 then
-			DelNpc(nNpcIdx)
-		end
-	end
-	return 0
-end
-
-function SimCityKeoXe:TaoBai(forceLevel)
-	-- Tam thoi xoa xe de tao NPC tu dong neu khong se copy NPC tu xe vao luon
-	if (forceLevel == 999) then
-		self:RemoveAll()
-	end
-
-	local fighterList = GetAroundNpcList(60)
-	local pW, pX, pY = GetWorldPos()
-
-	local tmpFound = {}
-	local nNpcIdx
-	for i = 1, getn(fighterList) do
-		nNpcIdx = fighterList[i]
-		local nSettingIdx = GetNpcSettingIdx(nNpcIdx)
-		local name = GetNpcName(nNpcIdx)
-		local level = NPCINFO_GetLevel(nNpcIdx)
-		local kind = GetNpcKind(nNpcIdx)
-		if nSettingIdx > 0 and kind == 0 then
-			tinsert(tmpFound, { nSettingIdx, name, level })
-		end
-	end
-	local total = getn(tmpFound)
-
-	if total == 0 then
-		return 0
-	end
-	local j = 0
-	while j < 20 do
-		local data = tmpFound[random(1, total)]
-		local isBoss = 0
-		if (j == 10) then
-			isBoss = 2
-		end
-		local targetLevel = data[3]
-		if (forceLevel < 999 and ((targetLevel > forceLevel) or (targetLevel > 90))) then
-			targetLevel = forceLevel
-		end
-		local nNpcIndex = AddNpcEx(data[1], targetLevel, random(0, 4), SubWorldID2Idx(pW), (pX + random(-5, 5)) * 32,
-			(pY + random(-5, 5)) * 32, 0, data[2], isBoss)
-		if nNpcIndex > 0 then
-			j = j + 1
-		end
-	end
-	return 0
-end
 
 function SimCityKeoXe:ATick()
 	-- Get info for npc in this world
@@ -404,4 +325,4 @@ function SimCityKeoXe:ATick()
 		end
 	end
 
-end
+end 
