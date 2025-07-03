@@ -1,8 +1,8 @@
+Include("\\script\\global\\vinh\\simcity\\config.lua")
 
 SimCityThanhThi = {
 	autoAddThanhThi = STARTUP_AUTOADD_THANHTHI,
-	thanhThiSize = THANHTHI_SIZE,
-	batchesByMap = {}, -- Store batches by map ID
+ 	batchesByMap = {}, -- Store batches by map ID
 	timerIdsByMap = {}, -- Store current batch index for each map
 	masterTimerId = nil, -- Global timer for all batch processing
 	patrolMap = nil,
@@ -526,7 +526,7 @@ function SimCityThanhThi:createNpcSoCapByMap(worldId)
 
 
 		if isThanhThi then
-			total = self.thanhThiSize
+			total = THANHTHI_SIZE or 200
 			map9x = 0
 		end
 
@@ -682,7 +682,7 @@ function processBatches()
 			if batches and currentIndex <= getn(batches) then
 				local batch = batches[currentIndex]
 				local counter = SimCityThanhThi:countMap(mapId)
-				local threshold = SimCityThanhThi.thanhThiSize or 12				
+				local threshold = THANHTHI_SIZE or 12				
 
 				if counter < threshold then
 					-- Process this batch of NPCs
